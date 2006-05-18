@@ -1,0 +1,344 @@
+<!DOCTYPE UI><UI version="3.3" stdsetdef="1">
+<class>ch_add_dlg</class>
+<widget class="QDialog">
+    <property name="name">
+        <cstring>ch_add_dlg</cstring>
+    </property>
+    <property name="geometry">
+        <rect>
+            <x>0</x>
+            <y>0</y>
+            <width>380</width>
+            <height>264</height>
+        </rect>
+    </property>
+    <property name="minimumSize">
+        <size>
+            <width>300</width>
+            <height>200</height>
+        </size>
+    </property>
+    <property name="baseSize">
+        <size>
+            <width>300</width>
+            <height>200</height>
+        </size>
+    </property>
+    <property name="caption">
+        <string>Add Dialog</string>
+    </property>
+    <widget class="QFrame">
+        <property name="name">
+            <cstring>frame3</cstring>
+        </property>
+        <property name="geometry">
+            <rect>
+                <x>10</x>
+                <y>10</y>
+                <width>360</width>
+                <height>220</height>
+            </rect>
+        </property>
+        <property name="frameShape">
+            <enum>StyledPanel</enum>
+        </property>
+        <property name="frameShadow">
+            <enum>Raised</enum>
+        </property>
+        <widget class="QLabel">
+            <property name="name">
+                <cstring>textLabel2</cstring>
+            </property>
+            <property name="geometry">
+                <rect>
+                    <x>20</x>
+                    <y>10</y>
+                    <width>301</width>
+                    <height>30</height>
+                </rect>
+            </property>
+            <property name="font">
+                <font>
+                    <pointsize>8</pointsize>
+                </font>
+            </property>
+            <property name="text">
+                <string>&lt;h1&gt;Add Channel&lt;/h1&gt;</string>
+            </property>
+        </widget>
+        <widget class="QLayoutWidget">
+            <property name="name">
+                <cstring>layout29</cstring>
+            </property>
+            <property name="geometry">
+                <rect>
+                    <x>22</x>
+                    <y>42</y>
+                    <width>322</width>
+                    <height>165</height>
+                </rect>
+            </property>
+            <vbox>
+                <property name="name">
+                    <cstring>unnamed</cstring>
+                </property>
+                <widget class="QLayoutWidget">
+                    <property name="name">
+                        <cstring>layout28</cstring>
+                    </property>
+                    <grid>
+                        <property name="name">
+                            <cstring>unnamed</cstring>
+                        </property>
+                        <widget class="QLayoutWidget" row="0" column="0" rowspan="1" colspan="2">
+                            <property name="name">
+                                <cstring>layout2</cstring>
+                            </property>
+                            <hbox>
+                                <property name="name">
+                                    <cstring>unnamed</cstring>
+                                </property>
+                                <widget class="QLabel">
+                                    <property name="name">
+                                        <cstring>channel_txt</cstring>
+                                    </property>
+                                    <property name="font">
+                                        <font>
+                                            <pointsize>8</pointsize>
+                                        </font>
+                                    </property>
+                                    <property name="text">
+                                        <string>channel name:</string>
+                                    </property>
+                                </widget>
+                                <widget class="QLineEdit">
+                                    <property name="name">
+                                        <cstring>ch_name</cstring>
+                                    </property>
+                                </widget>
+                            </hbox>
+                        </widget>
+                        <spacer row="1" column="1">
+                            <property name="name">
+                                <cstring>spacer26_2</cstring>
+                            </property>
+                            <property name="orientation">
+                                <enum>Vertical</enum>
+                            </property>
+                            <property name="sizeType">
+                                <enum>Expanding</enum>
+                            </property>
+                            <property name="sizeHint">
+                                <size>
+                                    <width>20</width>
+                                    <height>21</height>
+                                </size>
+                            </property>
+                        </spacer>
+                        <widget class="QLayoutWidget" row="2" column="0">
+                            <property name="name">
+                                <cstring>layout1</cstring>
+                            </property>
+                            <vbox>
+                                <property name="name">
+                                    <cstring>unnamed</cstring>
+                                </property>
+                                <widget class="QRadioButton">
+                                    <property name="name">
+                                        <cstring>before</cstring>
+                                    </property>
+                                    <property name="font">
+                                        <font>
+                                            <pointsize>8</pointsize>
+                                        </font>
+                                    </property>
+                                    <property name="text">
+                                        <string>&amp;before channel</string>
+                                    </property>
+                                    <property name="accel">
+                                        <string>Alt+B</string>
+                                    </property>
+                                </widget>
+                                <widget class="QRadioButton">
+                                    <property name="name">
+                                        <cstring>after</cstring>
+                                    </property>
+                                    <property name="font">
+                                        <font>
+                                            <pointsize>8</pointsize>
+                                        </font>
+                                    </property>
+                                    <property name="text">
+                                        <string>b&amp;ehind channel</string>
+                                    </property>
+                                    <property name="accel">
+                                        <string>Alt+E</string>
+                                    </property>
+                                    <property name="checked">
+                                        <bool>true</bool>
+                                    </property>
+                                </widget>
+                            </vbox>
+                        </widget>
+                        <spacer row="1" column="0">
+                            <property name="name">
+                                <cstring>spacer26</cstring>
+                            </property>
+                            <property name="orientation">
+                                <enum>Vertical</enum>
+                            </property>
+                            <property name="sizeType">
+                                <enum>Expanding</enum>
+                            </property>
+                            <property name="sizeHint">
+                                <size>
+                                    <width>20</width>
+                                    <height>21</height>
+                                </size>
+                            </property>
+                        </spacer>
+                        <widget class="QComboBox" row="2" column="1">
+                            <property name="name">
+                                <cstring>ch_source</cstring>
+                            </property>
+                            <property name="font">
+                                <font>
+                                    <pointsize>8</pointsize>
+                                </font>
+                            </property>
+                        </widget>
+                    </grid>
+                </widget>
+                <spacer>
+                    <property name="name">
+                        <cstring>spacer28</cstring>
+                    </property>
+                    <property name="orientation">
+                        <enum>Vertical</enum>
+                    </property>
+                    <property name="sizeType">
+                        <enum>Expanding</enum>
+                    </property>
+                    <property name="sizeHint">
+                        <size>
+                            <width>20</width>
+                            <height>21</height>
+                        </size>
+                    </property>
+                </spacer>
+                <widget class="QLayoutWidget">
+                    <property name="name">
+                        <cstring>layout4</cstring>
+                    </property>
+                    <hbox>
+                        <property name="name">
+                            <cstring>unnamed</cstring>
+                        </property>
+                        <widget class="QLabel">
+                            <property name="name">
+                                <cstring>textLabel1</cstring>
+                            </property>
+                            <property name="font">
+                                <font>
+                                    <pointsize>8</pointsize>
+                                </font>
+                            </property>
+                            <property name="text">
+                                <string>channel mode:</string>
+                            </property>
+                        </widget>
+                        <widget class="QComboBox">
+                            <property name="name">
+                                <cstring>ch_add_type</cstring>
+                            </property>
+                            <property name="font">
+                                <font>
+                                    <pointsize>8</pointsize>
+                                </font>
+                            </property>
+                        </widget>
+                    </hbox>
+                </widget>
+            </vbox>
+        </widget>
+    </widget>
+    <widget class="QPushButton">
+        <property name="name">
+            <cstring>add_button</cstring>
+        </property>
+        <property name="geometry">
+            <rect>
+                <x>197</x>
+                <y>233</y>
+                <width>99</width>
+                <height>23</height>
+            </rect>
+        </property>
+        <property name="font">
+            <font>
+                <pointsize>8</pointsize>
+            </font>
+        </property>
+        <property name="text">
+            <string>&amp;Add channel</string>
+        </property>
+        <property name="accel">
+            <string>Alt+A</string>
+        </property>
+        <property name="default">
+            <bool>true</bool>
+        </property>
+    </widget>
+    <widget class="QPushButton">
+        <property name="name">
+            <cstring>cancel_button</cstring>
+        </property>
+        <property name="geometry">
+            <rect>
+                <x>302</x>
+                <y>233</y>
+                <width>69</width>
+                <height>23</height>
+            </rect>
+        </property>
+        <property name="font">
+            <font>
+                <pointsize>8</pointsize>
+            </font>
+        </property>
+        <property name="text">
+            <string>Ca&amp;ncel</string>
+        </property>
+        <property name="accel">
+            <string>Alt+N</string>
+        </property>
+    </widget>
+</widget>
+<connections>
+    <connection>
+        <sender>before</sender>
+        <signal>clicked()</signal>
+        <receiver>after</receiver>
+        <slot>toggle()</slot>
+    </connection>
+    <connection>
+        <sender>after</sender>
+        <signal>clicked()</signal>
+        <receiver>before</receiver>
+        <slot>toggle()</slot>
+    </connection>
+    <connection>
+        <sender>add_button</sender>
+        <signal>clicked()</signal>
+        <receiver>ch_add_dlg</receiver>
+        <slot>accept()</slot>
+    </connection>
+    <connection>
+        <sender>cancel_button</sender>
+        <signal>clicked()</signal>
+        <receiver>ch_add_dlg</receiver>
+        <slot>reject()</slot>
+    </connection>
+</connections>
+<layoutdefaults spacing="6" margin="11"/>
+</UI>

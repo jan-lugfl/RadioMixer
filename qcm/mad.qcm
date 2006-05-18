@@ -1,0 +1,57 @@
+/*
+-----BEGIN QCMOD-----
+name: mad
+arg: with-libmad-inc=[path],Path to libmad include files
+arg: with-libmad-lib=[path],Path to libmad library files
+-----END QCMOD-----
+*/
+
+//----------------------------------------------------------------------------
+// qc_mad
+//----------------------------------------------------------------------------
+class qc_mad : public ConfObj
+{
+public:
+	qc_mad(Conf *c) : ConfObj(c) {}
+	QString name() const { return "libmad"; }
+	QString shortname() const { return "mad"; }
+	bool exec()
+	{
+		QString inc, lib;
+		QString s;
+
+		s = conf->getenv("QC_WITH_MAD_INC");
+		if(!s.isEmpty()) {
+			if(!conf->checkHeader(s, "mad.h"))
+				return false;
+			inc = s;
+		}
+		else {
+			if(!conf->findHeader("mad.h", QStringList(), &s))
+				return false;
+			inc = s;
+		}
+
+		s = conf->getenv("QC_WITH_MAD_LIB");
+		if(!s.isEmpty()) {
+			if(!conf->checkLibrary(s, "mad"))
+				return false;
+			lib = s;
+		}
+		else {
+			if(!conf->findLibrary("mad", &s))
+				return false;
+			lib = s;
+		}
+
+		if(!inc.isEmpty())
+			conf->addIncludePath(inc);
+		if(!lib.isEmpty())
+			conf->addLib(QString("-L") + s);
+		conf->addLib("-lmad");
+		conf->addDefine("HAVE_MAD");
+		conf->addConfig("madSupport");
+
+		return true;
+	}
+};

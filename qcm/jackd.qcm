@@ -1,0 +1,57 @@
+/*
+-----BEGIN QCMOD-----
+name: jackd
+arg: with-jackd-inc=[path],Path to JackD include files
+arg: with-jackd-lib=[path],Path to JackD library files
+-----END QCMOD-----
+*/
+
+//----------------------------------------------------------------------------
+// qc_jackd
+//----------------------------------------------------------------------------
+class qc_jackd : public ConfObj
+{
+public:
+	qc_jackd(Conf *c) : ConfObj(c) {}
+	QString name() const { return "jackd"; }
+	QString shortname() const { return "jackd"; }
+	bool exec()
+	{
+		QString inc, lib;
+		QString s;
+
+		s = conf->getenv("QC_WITH_JACKD_INC");
+		if(!s.isEmpty()) {
+			if(!conf->checkHeader(s, "jack/jack.h"))
+				return false;
+			inc = s;
+		}
+		else {
+			if(!conf->findHeader("jack/jack.h", QStringList(), &s))
+				return false;
+			inc = s;
+		}
+
+		s = conf->getenv("QC_WITH_ASOUND_LIB");
+		if(!s.isEmpty()) {
+			if(!conf->checkLibrary(s, "jack"))
+				return false;
+			lib = s;
+		}
+		else {
+			if(!conf->findLibrary("jack", &s))
+				return false;
+			lib = s;
+		}
+
+		if(!inc.isEmpty())
+			conf->addIncludePath(inc);
+		if(!lib.isEmpty())
+			conf->addLib(QString("-L") + s);
+		conf->addLib("-ljack");
+		conf->addDefine("HAVE_JACK");
+		conf->addConfig("jackSupport");
+
+		return true;
+	}
+};

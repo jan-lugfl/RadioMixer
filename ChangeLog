@@ -1,0 +1,29 @@
+ChangeLog:
+==========
+
+RadioMixer 1.0_RC2 to 1.0
+-----------------------------------------------------------------------------------------------------------------------
+
+* fixes in the buildsystem that caused wrong definitions after configure if something was not found in the system.
+
+
+RadioMixer 1.0_RC1 to 1.0_RC2
+-----------------------------------------------------------------------------------------------------------------------
+
+* better Error handling on connect of ALSA
+* fixed error that caused playing mpeg files on the wrong speed if the file is not samplet at 44,1KHz
+* playback of file which have the same samplerate as the output works now without disturbing the sound..
+* Hardware Mixingdevice: isConnected now returns the correct status of the Device..
+* various UI fixes.. (translations and item positions)
+* on changing Color of a channel the VUMeter changes it now too
+* MPEG Files can now be added to flaylists.. (thanks to Markus Ullman for reporting this Bug)
+* when the slider of Jack channels is at Volume 0 the VUMeter is resettet to display there ist nothing..
+* status of the mixerdevice is now refreshed when the class sends events...
+* hotfix.. now the correct signal from the hwdevice is connected
+* fixed segfault on stopping Jackd with some connected Jack Channels...
+* hotfix.. the Artist is displayed in the SondDB again
+* corected project URL in about window
+* some layout and description fixs...
+* fixed Segfault when playing mono MPEG files
+
+

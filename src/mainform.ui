@@ -1,0 +1,325 @@
+<!DOCTYPE UI><UI version="3.3" stdsetdef="1">
+<class>RadioMixer</class>
+<widget class="QMainWindow">
+    <property name="name">
+        <cstring>RadioMixer</cstring>
+    </property>
+    <property name="geometry">
+        <rect>
+            <x>0</x>
+            <y>0</y>
+            <width>614</width>
+            <height>550</height>
+        </rect>
+    </property>
+    <property name="caption">
+        <string>RadioMixer</string>
+    </property>
+    <property name="icon">
+        <pixmap>image0</pixmap>
+    </property>
+    <property name="iconText">
+        <string>RadioMixer</string>
+    </property>
+    <widget class="QFrame">
+        <property name="name">
+            <cstring>frame10</cstring>
+        </property>
+        <property name="geometry">
+            <rect>
+                <x>10</x>
+                <y>10</y>
+                <width>590</width>
+                <height>461</height>
+            </rect>
+        </property>
+        <property name="frameShape">
+            <enum>StyledPanel</enum>
+        </property>
+        <property name="frameShadow">
+            <enum>Raised</enum>
+        </property>
+    </widget>
+</widget>
+<menubar>
+    <property name="name">
+        <cstring>MenuBar</cstring>
+    </property>
+    <item text="&amp;Channel" name="Channel">
+        <action name="kanalKanal_hinzufgenAction"/>
+        <action name="kanalKnal_lschenAction"/>
+        <action name="kanalKanal_verschiebenAction"/>
+    </item>
+    <item text="&amp;Alsa" name="Alsa">
+        <action name="alsaStartAction"/>
+    </item>
+    <item text="&amp;Jack" name="Jack">
+        <action name="jackConnectAction"/>
+        <action name="jackDisconnectAction"/>
+    </item>
+    <item text="&amp;Mixer" name="Mixer">
+        <action name="netzwerk_mischpultConnectAction"/>
+        <action name="netzwerk_mischpultStart_Slider_LoopAction"/>
+    </item>
+    <item text="&amp;Window" name="Window">
+        <action name="fensterCuesAction"/>
+        <action name="editPlaylistAction"/>
+        <action name="fensterSongDBAction"/>
+        <action name="editPreferencesAction"/>
+    </item>
+    <item text="&amp;Help" name="Help">
+        <action name="hilfeAboutAction"/>
+    </item>
+</menubar>
+<toolbars>
+</toolbars>
+<actions>
+    <action>
+        <property name="name">
+            <cstring>editPreferencesAction</cstring>
+        </property>
+        <property name="text">
+            <string>S&amp;ettings</string>
+        </property>
+        <property name="menuText">
+            <string>S&amp;ettings</string>
+        </property>
+    </action>
+    <action>
+        <property name="name">
+            <cstring>editPlaylistAction</cstring>
+        </property>
+        <property name="text">
+            <string>P&amp;laylist</string>
+        </property>
+        <property name="menuText">
+            <string>P&amp;laylist</string>
+        </property>
+    </action>
+    <action>
+        <property name="name">
+            <cstring>netzwerk_mischpultConnectAction</cstring>
+        </property>
+        <property name="text">
+            <string>&amp;Connect</string>
+        </property>
+        <property name="menuText">
+            <string>&amp;Connect</string>
+        </property>
+    </action>
+    <action>
+        <property name="name">
+            <cstring>netzwerk_mischpultStart_Slider_LoopAction</cstring>
+        </property>
+        <property name="text">
+            <string>&amp;Start Slider Loop</string>
+        </property>
+        <property name="menuText">
+            <string>&amp;Start Slider Loop</string>
+        </property>
+    </action>
+    <action>
+        <property name="name">
+            <cstring>kanalKanal_hinzufgenAction</cstring>
+        </property>
+        <property name="text">
+            <string>&amp;Add channel</string>
+        </property>
+        <property name="menuText">
+            <string>&amp;Add channel</string>
+        </property>
+    </action>
+    <action>
+        <property name="name">
+            <cstring>kanalKnal_lschenAction</cstring>
+        </property>
+        <property name="text">
+            <string>&amp;Delete channel</string>
+        </property>
+        <property name="menuText">
+            <string>&amp;Delete channel</string>
+        </property>
+    </action>
+    <action>
+        <property name="name">
+            <cstring>kanalKanal_verschiebenAction</cstring>
+        </property>
+        <property name="text">
+            <string>&amp;Move Channel</string>
+        </property>
+        <property name="menuText">
+            <string>&amp;Move Channel</string>
+        </property>
+    </action>
+    <action>
+        <property name="name">
+            <cstring>jackConnectAction</cstring>
+        </property>
+        <property name="text">
+            <string>&amp;Connect</string>
+        </property>
+        <property name="menuText">
+            <string>&amp;Connect</string>
+        </property>
+    </action>
+    <action>
+        <property name="name">
+            <cstring>jackDisconnectAction</cstring>
+        </property>
+        <property name="text">
+            <string>&amp;Disconnect</string>
+        </property>
+        <property name="menuText">
+            <string>&amp;Disconnect</string>
+        </property>
+    </action>
+    <action>
+        <property name="name">
+            <cstring>alsaStartAction</cstring>
+        </property>
+        <property name="text">
+            <string>&amp;Start</string>
+        </property>
+        <property name="menuText">
+            <string>&amp;Start</string>
+        </property>
+    </action>
+    <action>
+        <property name="name">
+            <cstring>fensterCuesAction</cstring>
+        </property>
+        <property name="toggleAction">
+            <bool>false</bool>
+        </property>
+        <property name="text">
+            <string>&amp;Cues</string>
+        </property>
+        <property name="menuText">
+            <string>&amp;Cues</string>
+        </property>
+    </action>
+    <action>
+        <property name="name">
+            <cstring>fensterSongDBAction</cstring>
+        </property>
+        <property name="text">
+            <string>&amp;SongDB</string>
+        </property>
+        <property name="menuText">
+            <string>&amp;SongDB</string>
+        </property>
+    </action>
+    <action>
+        <property name="name">
+            <cstring>hilfeAboutAction</cstring>
+        </property>
+        <property name="text">
+            <string>&amp;About</string>
+        </property>
+        <property name="menuText">
+            <string>&amp;About</string>
+        </property>
+    </action>
+</actions>
+<images>
+    <image name="image0">
+        <data format="PNG" length="3672">89504e470d0a1a0a0000000d4948445200000040000000400806000000aa6971de00000e1f49444154789ced9979ac5dc75dc73f73ce9ced6e6fad9f9f97e78d38f192a4a98b4220751a1a378a221a1a8a28a2511a68a5aaa2e50fc4a636848258aafcd308242a55d050282d114d13104d629196040bbac8492b414962ea56d8b11bdbf7be77dfbdf76c33e70c7f9cc5d72fb663b7d4e18ffb958eee3b33bf3333bfeffcb69907134c30c104134c30c104134c30c104134c30c1042576efde6dbdde6bf8bfc2d2d292bc509f58dbb067cf9eb976bbfdb946a3714008f1a55eaff7fee79f7ffec48f76893f1a1c387060294dd34f2f2f2fdf3a180cbe2884b8efe8d1a3abe332f6f8cbb5d75e2b84104fcccdcdfdf4f6eddbd9ba75eb55535353efd9b265cbb75e7cf1c5a35776f93f1ceebefbee774c4f4f3fe179deee288a8410629731664fb7dbfdfcb8dc39046cdab4e9ee56abf59b8d4603630c699aa2946ae579fe4b0b0b0bceba75eb9e7df9e597cd9555e5f270c71d77b83b77ee7c707979f91383c1a00120a5c4b66df23cbf7a7a7afaabdd6ef73b95fc3904ecdab5ebb3c0629ee79c3c79926eb78b3186b9b939e179defe288a6e69369b07cf9c3933b8c27a5d126ebdf5d66d49927c696565e55d711c0bc771f07d1fa5145a6ba2284229b5b9d7eb3d5c7d53c780db6fbf7d0ff01f4a29b22cab9507585a5ac2755d9224218ee3535aeb7b0f1d3af4e415d7f022d8bf7fff3b87c3e15f0c87c39966b3c9ecec2cbeef331a8d180c06f4fb7d6cdbc6b22ca3b5de78e4c891933066014b4b4bbf2284b8cd711c2cab4800799ed7ae10c7315a6b8c31cd20087e71dbb66dadf5ebd73f73fcf8f1ec75d21980bd7bf7fa5bb76e7dc818f360188681effbf8be4f9aa64451c47038248e639452186330c608e048afd73b0c50a73aa5d48152802ccb68b7dbb4db6de6e7e7f17d1f2925ad560bcff33875ea943d180c7e434af9cc4d37ddb4e5f552fefaebafbfca719c7fd75a7f3049129165195996a1b54629c56834224d53b4d6482931c620a5a4dd6edf568d21016ebef966cbb2ac1b2ccb22cf739224a1d168d06c36711c87344d09c390300cf17d9f56ab459665a469fa13aeeb3e77cd35d7dcf7bdefbc7054da3c2c049e1016966561db36aeebd208025aed165353d3cccece313f3fcb54670ac775ef1702a238fd83d57e9ffe4a8f6eb74bb7b7c27038244d229234254d338cc9b1444e6e4894e6bd5bb65f7d1df049ad753bcb32e238268a22822020cb32841024498265590821b02c0bdff769341ab8ae7bc33904388eb3a4949aa9061a8d46c4715cf90c699ad696313333839412292583c100a5d46c12878f495b0cc0744094130a6cdbc69612d77369341ab45a2d3a9d0e5353d3cccd4e331c86d30678c3dccc5e4b08b4d62449429aa6a42a4529856d67b84e4eaa043a1758c2e039e26bfdfe7220e51b849412a51449929065194a29a494e4794e9aa6388e5313d06834f03c0fadf5d67dfbf64d1f3e7c784502f8bebfc7f7fddacfab8ff33cc7b66d94520821705d17a08e0b8d4683380a39f5ca0991e7a6e34ab02cd09921cb0d880c3753c45144378738d1c451c46abfcb31af41777915db824ebb431885c4e188d168c0ea60c86814157e9b6795ef620c2040601ad1a0875c588f949224490068369b789e4710041863180c06e4790e806ddb1863504a91a6a9ad94da097c5d02743a9d052104699ad62c5a96859412ad355a6b00a6a7a769369b68ad6b33d33a25909a8186410c4dcf10b88638cd59196886a38476304400ff1343aaa1e1158fd20561c614dfe639b47cf01c88121825e04a6807e0c9422651858cef682c5110635916cd66933ccf711c87ca2a1cc729ada870c5ca8ac330244dd30d500641a5d4862ccbb0ed2229044180e779789e4714450c06038c31789e47961541df755dc230248a120cc5a21c1b46314429f82eb43cd0390c22ceca480893e21102e2146c0bda3e58028631a40a8292a4b4245688e27bdb2a6412055996d7565b457f630c6118b2bcbc4c18866459869412d775b12cabdeb83ccf176b021cc759a8fcddf77d3a9d0e4110d469b08aae2b2b2bf4fb7db4d60821c8b20c8360101501652d099e539290952498b33261522812a5c5af6d157d42140aa71a1a2e046e41c8302e086a55444590e56753749665388e03505b711cc7753c88e3f89c742e8498af092819a9d9b12c0bd7756b736ab55a68ad595d5dad736b1886e4794e9e6764e52e63a01514bb3c8a8bddf51c68fa2509f1988c0d2a2b148f4b05a55d5882282d41658515f86eb1e3a3e42c510890d2a915acdcb4725dcbb2eac71853cb54855e9ee78d9a806eb7db1c8d4655a1431445082130c6e0384e6d3e559154455dad359665d30a2cd62fc2b56f72585c0c6a531f25c50ecf4e595cb7d7c708710e090d17d6cd496e7cf30cb18244c3be7d6da69a02cab8a033687a0591715a588eb4a1d3b0eb82ad22a1da40dbb6098200d775ebf458c5b74aceb2ac564dc070386c0d8743945275dd3c1c0eeb4c50c505d775cb5d2fd8b46d1b21049e2338701bec7fabe6c3bf5eece0dc94c02dfdbd3d63b8e186980f7f48a233d0c2025328251dcdfb3fb0c2dedd82bb7ece62df8d03ee7b9fa4d32c5c66184396c34cbb182f4a41e5e04a51efb8effb00c4715cbbadeffb58965507ec344deb6c21e5d9eb011b606e6eee4e21c41b955275e958994de5eb699ad626d5e97400ea58b0bcbcc2e6cd19d33382deb2e2f809f8d81f06ccced86cda9473cfbd1e274e68366d6ad06e2a7ee7a34de6d6657ce3ebe671db85ad5bf8d99b7e5260dbb03a80b9798ffdb738047ec6077fd565d71e9f9f7fb7a07b26e3fe075c6ebcc9e6e92f0b1cb74119c3b06dbbdee1aaf809c3b056b84aa552ca2ac0ffdba953a79eb24a45fa5996311a8d08c3905eafc77038c4719cbab2524ae1791ead56ab76892a76245a10c6b0da376cdeec1034e0b9c331ae9bb07b8fe181fb637406a74f0fb97a97e103ef1be2b8193a2f76b9d783cf7cdaf085cf1787af5e37e2e1bf8cb8eb9d82bffdeb94666bc42ba734d7ecb2f8e67329bffbd1944459d5e10ca554ad7869ded551beae01aa5daf2a54634caf7601dff7cf8c574cb66dd7d55fe54f556668b7dbf560a2acde5c29585e86975e827ffa07c53df7386c5eb2d9b8195e3e26f8f8836db20cc2088e1c11fcd9271bf4baa2c8fb4d4852f8f60b1045608b829477fd82e40b7f9f73cbadf0df2fc1b66d3e596e335805d70229a93354e592955b568a56bf95db561922cf739452a7ea5218e85569c418439224388e533f8d46032144dd5f5588595654698167f1cdc3453477257ce3ab8abcf2dfccf0f8a303a405a31492d4f0f4c1106981ef40ef347cf19142e957baf0d9bf02db8630d1c4293cfb95a22678ecd111fd6111005b1e34bc4241dff7ebc05755ac499260db369ee7d541af22a10aecc6987e6d019ee71db56dbbcea3959f044150bb417988a873e9784c3058046ea150a26010023904b288f8c3a888e60db720687554547a4214d5a02c535b5511665991ffaba2294a8a85066e213f4c2055455a1e2fe03ccf43085195bbb505544f85b246f86e6d0152ca17aafa5e6b8de779b53fa5695aef7e1551b5d6f5049ee791e192a8628142148b36143bd50a0a4b18c685924d1f280b20c72e2a459d17a9aee5177283b8a8075a1e0c4d311e140443f1ae73075b16bb3deeba4288ba14ae2e74aa3e296515b78c31e6c59a803ccf8f455134d25a37ab3c9f65595d068f13327e6628f3ef89348e0e87093f634c51b4548b1c9a42e171c5c6495019c61285d5701ed9f6d87b9814d757be53588a52ea60b3d57e23b06e3c6355565c9d2ca594f57dc6d87dc1c963c78eadd4041c3a7448efd8b1e330b03f0cc3da4faad354955f2bbf1f8d4655107ccab2ac7b24d17b5cc98f8769b95363248ce231c5a2732d21551c7724c429df8f1488a4b084a6571451e3b2c3b86813a22c8f75fa641445bfec79dee7a4946f19df98f100387ebb559d088d315fabdca1ae08c2303ca8b5de5fc580ca57ce291a6cbbaaaa94effb0f1c3b71f28f80539c0b03f481e78187a4e0f16478ae403f642d160106c5b90ae0dbc07552902d8fce155c2dcf1ddaf076e81fafdaaffeb11d3960a5695adf02979b441886b8ae8bebba55c03c587d574786c160f06475a90045baf03c8f46a351d7d0511411c7f1f13ccfdf76f2e4c93f96e2eca5aa1488f2bd05dc05cc018f69c37b5fa5ee053036de6ee0ded710ffc8f8774992dc9165d92bc698da158220408862c8288aaab38c11423cf52a02f23c7fceb6ede72bf68220a82f16802aa83ce1baee0dfd7eff5f2fa2442805cf02f7ac5de865e2f7b4c13f5f8736dc0c6c1e6f3b7efcf8c12449dea4b5fe4a18867570ac8ab5ea3c90a6e9bf1c3d7af4bbaf22200c4363dbf627aa9394e338e4795edd052acbb27ecb719c3b4f9c3871e61215f8aff2f707b9347dae54f04317e8ff08f0f1b58da74f9f3e011c4892e4f7575757f37ebf0f1499aa3ac8398ef3d00567ddb06183b571e3c6a7171717cdf6eddbcd8e1d3bccfcfcfcf7a6a7a77fea42df6883d1a6f6ddf1f6ebcabeffbca8aae71fef40f9dbd386e935fdfbb4e19836b8179a1b607a7afa6d33333327e7e7e7cda64d9bcce2e2a259585878f43517b07efdfaf55bb76efdc79d3b77f6376edcf899999999b94b58b0197b0fb461bf367c4b1b46da70fb25ea5e8f57fefe7339f69face97f541b7eed7c73af45a7d3593f3b3bfbc8dcdcdc607e7efe91858585994b5ec8860d1b5ef59fe30b2df83c8fd6863fd5a688ee97833102deac0db93684dab0a16cdba30ddfd786c6f8dcaf35e6ececec25e9f203617c11da20b4e15a6d38aa0da936bce342f2e3cfdafeb1bfffae94f954f9fe37daf0dbe79bfb75c30594787bd97e5a1bda973bded8df5769832a2deaceb5e3fdbf25a06c7fa6ecbbac34781e32ffbc1c27d1868f5dcadc57141721e0ad6391bc7339e3ad795f5f06d3556d98bd94b9af282eb6086df872d9ffc0e58c779e36571bdccb99fb8ae062c1acec7fcb1a99775fea783fecdc134c30c104134c30c104134c7071fc2fca421add244504040000000049454e44ae426082</data>
+    </image>
+</images>
+<connections>
+    <connection>
+        <sender>editPreferencesAction</sender>
+        <signal>activated()</signal>
+        <receiver>RadioMixer</receiver>
+        <slot>showPreferences()</slot>
+    </connection>
+    <connection>
+        <sender>editPlaylistAction</sender>
+        <signal>activated()</signal>
+        <receiver>RadioMixer</receiver>
+        <slot>showPlaylist()</slot>
+    </connection>
+    <connection>
+        <sender>netzwerk_mischpultConnectAction</sender>
+        <signal>activated()</signal>
+        <receiver>RadioMixer</receiver>
+        <slot>connectNetDevice()</slot>
+    </connection>
+    <connection>
+        <sender>netzwerk_mischpultStart_Slider_LoopAction</sender>
+        <signal>activated()</signal>
+        <receiver>RadioMixer</receiver>
+        <slot>netDeviceSliderLoop()</slot>
+    </connection>
+    <connection>
+        <sender>kanalKanal_hinzufgenAction</sender>
+        <signal>activated()</signal>
+        <receiver>RadioMixer</receiver>
+        <slot>showAddChannel()</slot>
+    </connection>
+    <connection>
+        <sender>kanalKanal_verschiebenAction</sender>
+        <signal>activated()</signal>
+        <receiver>RadioMixer</receiver>
+        <slot>showMoveChannel()</slot>
+    </connection>
+    <connection>
+        <sender>kanalKnal_lschenAction</sender>
+        <signal>activated()</signal>
+        <receiver>RadioMixer</receiver>
+        <slot>showDelChannel()</slot>
+    </connection>
+    <connection>
+        <sender>jackConnectAction</sender>
+        <signal>activated()</signal>
+        <receiver>RadioMixer</receiver>
+        <slot>connectJackd()</slot>
+    </connection>
+    <connection>
+        <sender>jackDisconnectAction</sender>
+        <signal>activated()</signal>
+        <receiver>RadioMixer</receiver>
+        <slot>disconnectJackd()</slot>
+    </connection>
+    <connection>
+        <sender>alsaStartAction</sender>
+        <signal>activated()</signal>
+        <receiver>RadioMixer</receiver>
+        <slot>startALSA()</slot>
+    </connection>
+    <connection>
+        <sender>fensterCuesAction</sender>
+        <signal>activated()</signal>
+        <receiver>RadioMixer</receiver>
+        <slot>showCuesWindow()</slot>
+    </connection>
+    <connection>
+        <sender>fensterSongDBAction</sender>
+        <signal>activated()</signal>
+        <receiver>RadioMixer</receiver>
+        <slot>showSongDBDialog()</slot>
+    </connection>
+    <connection>
+        <sender>hilfeAboutAction</sender>
+        <signal>activated()</signal>
+        <receiver>RadioMixer</receiver>
+        <slot>showAbout()</slot>
+    </connection>
+</connections>
+<slots>
+    <slot>showPreferences()</slot>
+    <slot>showPlaylist()</slot>
+    <slot>connectNetDevice()</slot>
+    <slot>netDeviceSliderLoop()</slot>
+    <slot>showAddChannel()</slot>
+    <slot>showDelChannel()</slot>
+    <slot>showMoveChannel()</slot>
+    <slot>connectJackd()</slot>
+    <slot>disconnectJackd()</slot>
+    <slot>startALSA()</slot>
+    <slot>showCuesWindow()</slot>
+    <slot>showSongDBDialog()</slot>
+    <slot>showAbout()</slot>
+</slots>
+<layoutdefaults spacing="6" margin="11"/>
+</UI>

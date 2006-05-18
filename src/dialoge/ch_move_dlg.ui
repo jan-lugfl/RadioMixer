@@ -1,0 +1,233 @@
+<!DOCTYPE UI><UI version="3.3" stdsetdef="1">
+<class>ch_move_dlg</class>
+<widget class="QDialog">
+    <property name="name">
+        <cstring>ch_move_dlg</cstring>
+    </property>
+    <property name="geometry">
+        <rect>
+            <x>0</x>
+            <y>0</y>
+            <width>537</width>
+            <height>200</height>
+        </rect>
+    </property>
+    <property name="minimumSize">
+        <size>
+            <width>300</width>
+            <height>200</height>
+        </size>
+    </property>
+    <property name="baseSize">
+        <size>
+            <width>300</width>
+            <height>200</height>
+        </size>
+    </property>
+    <property name="caption">
+        <string>Move Dialog</string>
+    </property>
+    <widget class="QPushButton">
+        <property name="name">
+            <cstring>move_button</cstring>
+        </property>
+        <property name="geometry">
+            <rect>
+                <x>319</x>
+                <y>171</y>
+                <width>128</width>
+                <height>26</height>
+            </rect>
+        </property>
+        <property name="text">
+            <string>mo&amp;ve channel</string>
+        </property>
+        <property name="accel">
+            <string>Alt+V</string>
+        </property>
+        <property name="default">
+            <bool>true</bool>
+        </property>
+    </widget>
+    <widget class="QPushButton">
+        <property name="name">
+            <cstring>cancel_button</cstring>
+        </property>
+        <property name="geometry">
+            <rect>
+                <x>453</x>
+                <y>171</y>
+                <width>76</width>
+                <height>26</height>
+            </rect>
+        </property>
+        <property name="text">
+            <string>ca&amp;ncel</string>
+        </property>
+        <property name="accel">
+            <string>Alt+N</string>
+        </property>
+    </widget>
+    <widget class="QFrame">
+        <property name="name">
+            <cstring>frame3</cstring>
+        </property>
+        <property name="geometry">
+            <rect>
+                <x>10</x>
+                <y>10</y>
+                <width>520</width>
+                <height>160</height>
+            </rect>
+        </property>
+        <property name="frameShape">
+            <enum>StyledPanel</enum>
+        </property>
+        <property name="frameShadow">
+            <enum>Raised</enum>
+        </property>
+        <widget class="QLabel">
+            <property name="name">
+                <cstring>textLabel2</cstring>
+            </property>
+            <property name="geometry">
+                <rect>
+                    <x>20</x>
+                    <y>10</y>
+                    <width>301</width>
+                    <height>51</height>
+                </rect>
+            </property>
+            <property name="text">
+                <string>&lt;h1&gt;Move Channel&lt;/h1&gt;</string>
+            </property>
+        </widget>
+        <widget class="QLayoutWidget">
+            <property name="name">
+                <cstring>layout9</cstring>
+            </property>
+            <property name="geometry">
+                <rect>
+                    <x>20</x>
+                    <y>60</y>
+                    <width>482</width>
+                    <height>70</height>
+                </rect>
+            </property>
+            <hbox>
+                <property name="name">
+                    <cstring>unnamed</cstring>
+                </property>
+                <widget class="QLayoutWidget">
+                    <property name="name">
+                        <cstring>layout8</cstring>
+                    </property>
+                    <vbox>
+                        <property name="name">
+                            <cstring>unnamed</cstring>
+                        </property>
+                        <widget class="QLabel">
+                            <property name="name">
+                                <cstring>textLabel3</cstring>
+                            </property>
+                            <property name="text">
+                                <string>Source</string>
+                            </property>
+                        </widget>
+                        <widget class="QComboBox">
+                            <property name="name">
+                                <cstring>ch_source</cstring>
+                            </property>
+                        </widget>
+                    </vbox>
+                </widget>
+                <widget class="QLayoutWidget">
+                    <property name="name">
+                        <cstring>layout1</cstring>
+                    </property>
+                    <vbox>
+                        <property name="name">
+                            <cstring>unnamed</cstring>
+                        </property>
+                        <widget class="QRadioButton">
+                            <property name="name">
+                                <cstring>before</cstring>
+                            </property>
+                            <property name="text">
+                                <string>&amp;before channel</string>
+                            </property>
+                            <property name="accel">
+                                <string>Alt+B</string>
+                            </property>
+                        </widget>
+                        <widget class="QRadioButton">
+                            <property name="name">
+                                <cstring>after</cstring>
+                            </property>
+                            <property name="text">
+                                <string>b&amp;ehind channel</string>
+                            </property>
+                            <property name="accel">
+                                <string>Alt+E</string>
+                            </property>
+                            <property name="checked">
+                                <bool>true</bool>
+                            </property>
+                        </widget>
+                    </vbox>
+                </widget>
+                <widget class="QLayoutWidget">
+                    <property name="name">
+                        <cstring>layout7</cstring>
+                    </property>
+                    <vbox>
+                        <property name="name">
+                            <cstring>unnamed</cstring>
+                        </property>
+                        <widget class="QLabel">
+                            <property name="name">
+                                <cstring>textLabel3_2</cstring>
+                            </property>
+                            <property name="text">
+                                <string>Destination</string>
+                            </property>
+                        </widget>
+                        <widget class="QComboBox">
+                            <property name="name">
+                                <cstring>ch_destination</cstring>
+                            </property>
+                        </widget>
+                    </vbox>
+                </widget>
+            </hbox>
+        </widget>
+    </widget>
+</widget>
+<connections>
+    <connection>
+        <sender>before</sender>
+        <signal>clicked()</signal>
+        <receiver>after</receiver>
+        <slot>toggle()</slot>
+    </connection>
+    <connection>
+        <sender>after</sender>
+        <signal>clicked()</signal>
+        <receiver>before</receiver>
+        <slot>toggle()</slot>
+    </connection>
+    <connection>
+        <sender>move_button</sender>
+        <signal>clicked()</signal>
+        <receiver>ch_move_dlg</receiver>
+        <slot>accept()</slot>
+    </connection>
+    <connection>
+        <sender>cancel_button</sender>
+        <signal>clicked()</signal>
+        <receiver>ch_move_dlg</receiver>
+        <slot>reject()</slot>
+    </connection>
+</connections>
+<layoutdefaults spacing="6" margin="11"/>
+</UI>
