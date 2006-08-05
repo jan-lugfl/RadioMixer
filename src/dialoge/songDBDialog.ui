@@ -8,8 +8,8 @@
         <rect>
             <x>0</x>
             <y>0</y>
-            <width>778</width>
-            <height>376</height>
+            <width>782</width>
+            <height>401</height>
         </rect>
     </property>
     <property name="sizePolicy">
@@ -19,6 +19,12 @@
             <horstretch>65</horstretch>
             <verstretch>75</verstretch>
         </sizepolicy>
+    </property>
+    <property name="minimumSize">
+        <size>
+            <width>780</width>
+            <height>400</height>
+        </size>
     </property>
     <property name="caption">
         <string>songDB</string>
@@ -30,7 +36,7 @@
         <property name="geometry">
             <rect>
                 <x>10</x>
-                <y>270</y>
+                <y>300</y>
                 <width>410</width>
                 <height>90</height>
             </rect>
@@ -187,7 +193,7 @@
         <property name="geometry">
             <rect>
                 <x>430</x>
-                <y>270</y>
+                <y>300</y>
                 <width>340</width>
                 <height>90</height>
             </rect>
@@ -333,8 +339,8 @@
             <rect>
                 <x>10</x>
                 <y>10</y>
-                <width>750</width>
-                <height>250</height>
+                <width>760</width>
+                <height>280</height>
             </rect>
         </property>
     </widget>

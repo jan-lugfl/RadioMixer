@@ -53,6 +53,7 @@ protected:
 	};
 	QValueVector<Genre>	genreList;
 	QString getGenreId( QString genre );
+	virtual void resizeEvent ( QResizeEvent * );
 
 private:
 	int state;
@@ -60,9 +61,9 @@ private:
 protected slots:
 	virtual void displayData( bool );
 	virtual void requestData( QString query );
-    virtual void playListAdd();
-    virtual void cue();
-    virtual void search();
+	virtual void playListAdd();
+	virtual void cue();
+	virtual void search();
 
 signals:
 	void cueTrack( QString , title );

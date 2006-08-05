@@ -56,6 +56,9 @@ void playListViewItem::paintCell( QPainter * p, const QColorGroup & cg, int colu
 	}else{
 		unsigned int playedAgo = QDateTime::currentDateTime().toTime_t() - lastPlayed;
 
+		if( (itemPos()/height())%2 == 1)
+			itemBGColor = cg.highlight().light( 175 );
+
 		if( playedAgo < 7200 )
 		{  // calculate the color of the Item
 			itemBGColor = Qt::red.dark( 150-(int(playedAgo/720)*10) );

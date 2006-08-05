@@ -171,5 +171,12 @@ QString songDBDlg::getGenreId( QString genre )
 	return "";
 }
 
+void songDBDlg::resizeEvent( QResizeEvent *e )
+{
+	songDBListView->resize( e->size().width()-18, e->size().height()-110);
+	frame3->move( frame3->x(), e->size().height()-95);
+	frame4->move( e->size().width()-348, e->size().height()-95);
 
+	songDBDialog::resizeEvent( e );
+}
 
