@@ -152,7 +152,8 @@ void mainFormDlg::showPreferences()
 #ifdef ENABLE_SONGDB
 	// set SongDB Options
 	preferencesDialog->songDBHostname->setText( config->readEntry( "/radiomixer/network/songDBHostname", "localhost" ) );	
-	preferencesDialog->songDBScriptname->setText( config->readEntry( "/radiomixer/network/songDBScriptname", "xmlctrl.pl" ) );
+	preferencesDialog->songDBScriptname->setText( config->readEntry( "/radiomixer/network/songDBScriptname", "/xmlctrl.pl" ) );
+	preferencesDialog->songDBBasePath->setText( config->readEntry( "/radiomixer/network/songDBBasePath", "/songs/" ) );
 #else
 	preferencesDialog->songDBBox->setDisabled(TRUE);
 #endif
@@ -194,10 +195,19 @@ void mainFormDlg::showPreferences()
 			config->writeEntry( "/radiomixer/sound/alsaDevice", preferencesDialog->sndDevice->currentText().section(" ",0,0) );
 		}
 
+#ifdef ENABLE_HWMIXER
+		// set Mixerdevice Options
 		config->writeEntry( "/radiomixer/network/ip", preferencesDialog->Input_IP->text() );
 		config->writeEntry( "/radiomixer/network/port", preferencesDialog->Input_Device_Port->text().toInt() );
+#endif
+
+#ifdef ENABLE_SONGDB
+		// set SongDB Options
 		config->writeEntry( "/radiomixer/network/songDBHostname", preferencesDialog->songDBHostname->text() );
 		config->writeEntry( "/radiomixer/network/songDBScriptname", preferencesDialog->songDBScriptname->text() );
+		config->writeEntry( "/radiomixer/network/songDBBasePath", preferencesDialog->songDBBasePath->text() );
+#endif
+
 		config->writeEntry( "/radiomixer/meta/enable", preferencesDialog->metaEnable->isChecked() );
 		if( preferencesDialog->metaEnable->isChecked() )
 			meta.enable();

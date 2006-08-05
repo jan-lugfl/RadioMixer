@@ -61,6 +61,7 @@ songDBDlg::~ songDBDlg( )
 
 void songDBDlg::displayData( bool )
 {
+	QSettings* config = new QSettings();
 	QDomDocument readdata;
 	readdata.setContent( songDBHndl->readAll() );
         if( !readdata.isDocument() )
@@ -89,7 +90,8 @@ void songDBDlg::displayData( bool )
 		{
 			QDomElement dataroot = readdata.documentElement();
 			QDomElement song = dataroot.childNodes().item(0).toElement();
-			title songObj("/home/trekkie/OpenRadio/Musik/Archiv/OGG/"+song.attribute("filename"));
+			qWarning(config->readEntry( "/radiomixer/network/songDBBasePath", "/songs/" )+song.attribute("relPath")+song.attribute("filename"));
+			title songObj( config->readEntry( "/radiomixer/network/songDBBasePath", "/songs/" )+song.attribute("relPath")+song.attribute("filename") );
 			songObj.setArtist( song.attribute("interpret") );
 			songObj.setTitle( song.attribute("title") );
 
@@ -126,6 +128,7 @@ void songDBDlg::displayData( bool )
 				}
 		}
 	}
+	delete config;
 }
 
 void songDBDlg::requestData( QString query )

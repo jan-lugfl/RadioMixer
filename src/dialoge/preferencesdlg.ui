@@ -573,7 +573,7 @@
                         <x>20</x>
                         <y>20</y>
                         <width>260</width>
-                        <height>171</height>
+                        <height>230</height>
                     </rect>
                 </property>
                 <property name="title">
@@ -611,6 +611,38 @@
                         <string>localhost</string>
                     </property>
                 </widget>
+                <widget class="QLabel">
+                    <property name="name">
+                        <cstring>textLabel4</cstring>
+                    </property>
+                    <property name="geometry">
+                        <rect>
+                            <x>20</x>
+                            <y>90</y>
+                            <width>120</width>
+                            <height>20</height>
+                        </rect>
+                    </property>
+                    <property name="text">
+                        <string>Scriptname URL:</string>
+                    </property>
+                </widget>
+                <widget class="QLabel">
+                    <property name="name">
+                        <cstring>textLabel1_2</cstring>
+                    </property>
+                    <property name="geometry">
+                        <rect>
+                            <x>20</x>
+                            <y>150</y>
+                            <width>150</width>
+                            <height>20</height>
+                        </rect>
+                    </property>
+                    <property name="text">
+                        <string>Song DB Storage:</string>
+                    </property>
+                </widget>
                 <widget class="QLineEdit">
                     <property name="name">
                         <cstring>songDBScriptname</cstring>
@@ -627,20 +659,20 @@
                         <string>/xmlctrl.pl</string>
                     </property>
                 </widget>
-                <widget class="QLabel">
+                <widget class="QLineEdit">
                     <property name="name">
-                        <cstring>textLabel4</cstring>
+                        <cstring>songDBBasePath</cstring>
                     </property>
                     <property name="geometry">
                         <rect>
-                            <x>20</x>
-                            <y>90</y>
-                            <width>120</width>
-                            <height>20</height>
+                            <x>30</x>
+                            <y>170</y>
+                            <width>200</width>
+                            <height>25</height>
                         </rect>
                     </property>
                     <property name="text">
-                        <string>Scriptname URL:</string>
+                        <string>/songs/</string>
                     </property>
                 </widget>
             </widget>
