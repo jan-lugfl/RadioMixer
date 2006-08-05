@@ -33,15 +33,16 @@ songDBDlg::songDBDlg(QWidget *parent, const char *name)
 	songDB = new QHttpRequestHeader( "POST", config->readEntry( "/radiomixer/network/songDBScriptname", "xmlctrl.pl" ) );
 	songDB->setValue( "Host", config->readEntry( "/radiomixer/network/songDBHostname", "localhost" ) );
 
-	songDBView->insertColumns( 0, 5 );
-    	QStringList items;
-    	items << tr("Id") << tr("Artist") << tr("Song") << tr("Genre") << tr("Length");
-	songDBView->setColumnLabels( items );
+	songDBListView->addColumn(tr("Id"));
+	songDBListView->addColumn(tr("Artist"));
+	songDBListView->addColumn(tr("Song"));
+	songDBListView->addColumn(tr("Genre"));
+	songDBListView->addColumn(tr("Length"));
 
-	songDBView->setColumnWidth(0, 30);
-	songDBView->setColumnWidth(1, 200);
-	songDBView->setColumnWidth(2, 300);
-	songDBView->setColumnWidth(4, 80);
+	songDBListView->setColumnWidth(0, 30);
+	songDBListView->setColumnWidth(1, 150);
+	songDBListView->setColumnWidth(2, 150);
+	songDBListView->setColumnWidth(4, 80);
 
 	playlistChannel->insertItem( tr("Global Playlist") );
 	genre->insertItem( tr("all Genres") );
@@ -66,31 +67,23 @@ void songDBDlg::displayData( bool )
         {
             qWarning( tr("Received an invalid Document") );
         }else{
-
 		if( readdata.doctype().name() == "songDBSongList" )
 		{
-			// clear Table..
-			while(songDBView->numRows())
-				songDBView->removeRow( 0 );
+			songDBListView->clear();
 
 			QDomElement dataroot = readdata.documentElement();
 			QDomNodeList songs = dataroot.childNodes();
 
 			if(songs.count() < 1)
 			{
-				songDBView->insertRows( songDBView->numRows(), 1 );
-				songDBView->setText( songDBView->numRows()-1, 2, tr("no songs found") );
+				QListViewItem noSongs = new QListViewItem( songDBListView, "", tr("no songs found") );
 			}
 			else	
 				for(unsigned int i=0;i<songs.count();i++)
 				{
-					songDBView->insertRows( songDBView->numRows(), 1 );
 					QDomElement songAttr = songs.item(i).toElement();
-					songDBView->setText( songDBView->numRows()-1, 0, songAttr.attribute(tr("id")));
-					songDBView->setText( songDBView->numRows()-1, 1, songAttr.attribute(tr("interpret")));
-					songDBView->setText( songDBView->numRows()-1, 2, songAttr.attribute(tr("title")));
-					songDBView->setText( songDBView->numRows()-1, 3, songAttr.attribute(tr("genre")));
-					songDBView->setText( songDBView->numRows()-1, 4, songAttr.attribute(tr("length")));
+					playListViewItem mySongs = new playListViewItem( songDBListView, songAttr.attribute("id"), songAttr.attribute("interpret"), songAttr.attribute("title"),
+															songAttr.attribute("genre"), songAttr.attribute("length"), QString(songAttr.attribute("lastPlayed")).toInt() );
 				}
 		}else if( readdata.doctype().name() == "songDBSongInfo" )
 		{
@@ -142,10 +135,10 @@ void songDBDlg::requestData( QString query )
 
 void songDBDlg::cue()
 {
-	if( songDBView->text( songDBView->currentRow(),0 ) )
+	if( songDBListView->selectedItem()->text( 0 ) )
 	{
 		state = 1;
-		requestData( "getSonginfo=1&songID="+songDBView->text( songDBView->currentRow(),0 ) );
+		requestData( "getSonginfo=1&songID="+songDBListView->selectedItem()->text( 0 ) );
 	}else
 		QMessageBox::critical( this, tr("RadioMixer - Song DB"), tr("no song selected....") );
 }
@@ -159,10 +152,10 @@ void songDBDlg::search()
 
 void songDBDlg::playListAdd()
 {
-	if( songDBView->text( songDBView->currentRow(),0 ) )
+	if( songDBListView->selectedItem()->text( 0 ) )
 	{
 		state = 2;
-		requestData( "getSonginfo=1&songID="+songDBView->text( songDBView->currentRow(),0 ) );
+		requestData( "getSonginfo=1&songID="+songDBListView->selectedItem()->text( 0 ) );
 	}else
 		QMessageBox::critical( this, tr("RadioMixer - Song DB"), tr("no song selected....") );
 }

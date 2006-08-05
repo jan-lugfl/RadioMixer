@@ -23,30 +23,6 @@
     <property name="caption">
         <string>songDB</string>
     </property>
-    <widget class="QTable">
-        <property name="name">
-            <cstring>songDBView</cstring>
-        </property>
-        <property name="geometry">
-            <rect>
-                <x>10</x>
-                <y>10</y>
-                <width>760</width>
-                <height>250</height>
-            </rect>
-        </property>
-        <property name="font">
-            <font>
-                <pointsize>8</pointsize>
-            </font>
-        </property>
-        <property name="numRows">
-            <number>0</number>
-        </property>
-        <property name="numCols">
-            <number>0</number>
-        </property>
-    </widget>
     <widget class="QFrame">
         <property name="name">
             <cstring>frame3</cstring>
@@ -170,10 +146,10 @@
                 </font>
             </property>
             <property name="text">
-                <string>on&amp;ly free marked songs</string>
+                <string>only free mar&amp;ked songs</string>
             </property>
             <property name="accel">
-                <string>Alt+L</string>
+                <string>Alt+K</string>
             </property>
             <property name="checked">
                 <bool>true</bool>
@@ -348,6 +324,19 @@
                 <string>Cue Track in Player:</string>
             </property>
         </widget>
+    </widget>
+    <widget class="QListView">
+        <property name="name">
+            <cstring>songDBListView</cstring>
+        </property>
+        <property name="geometry">
+            <rect>
+                <x>10</x>
+                <y>10</y>
+                <width>750</width>
+                <height>250</height>
+            </rect>
+        </property>
     </widget>
 </widget>
 <connections>

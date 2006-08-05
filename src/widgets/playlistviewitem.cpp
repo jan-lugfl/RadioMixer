@@ -1,7 +1,7 @@
-/* $Id$ */
+/* $Id:$ */
 /***************************************************************************
  *   OpenRadio - RadioMixer                                                *
- *   Copyright (C) 2005, 2006 by Jan Boysen                                *
+ *   Copyright (C) 2006 by Jan Boysen                                *
  *   trekkie@media-mission.de                                              *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
@@ -19,54 +19,43 @@
  *   Free Software Foundation, Inc.,                                       *
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
-#ifndef SONGDBDLG_H
-#define SONGDBDLG_H
-
-#include "title.h"
-#include "songDBDialog.h"
 #include "playlistviewitem.h"
 
-#include <qhttp.h>
-#include <qurloperator.h>
-#include <qdom.h>
-#include <qlistview.h>
-#include <qlineedit.h>
-#include <qcheckbox.h>
-#include <qcombobox.h>
-#include <qvaluevector.h>
-#include <qsettings.h>
-#include <qmessagebox.h>
+playListViewItem::playListViewItem( QListView* parent)
+ : QListViewItem( parent )
+{
+}
 
 
-class songDBDlg: public songDBDialog {
-Q_OBJECT
-public:
-	songDBDlg(QWidget *parent = 0, const char *name = 0);
-	~songDBDlg();
+playListViewItem::playListViewItem( playListViewItem * parent )
+ : QListViewItem( parent )
+{
+	this->lastPlayed = parent->lastPlayed;
+}
 
-protected:
-	QHttp*	songDBHndl;
-	QHttpRequestHeader* songDB;
-	struct Genre {
-		QString id;
-		QString name;
-	};
-	QValueVector<Genre>	genreList;
-	QString getGenreId( QString genre );
 
-private:
-	int state;
+playListViewItem::~playListViewItem()
+{
+}
 
-protected slots:
-	virtual void displayData( bool );
-	virtual void requestData( QString query );
-    virtual void playListAdd();
-    virtual void cue();
-    virtual void search();
+playListViewItem::playListViewItem( QListView * parent, const QString id, const QString artist, const QString title, const QString genre, const QString length, unsigned  int lastPlayedTS )
+ : QListViewItem( parent, id, artist, title, genre, length )
+{
+	lastPlayed = lastPlayedTS;
+}
 
-signals:
-	void cueTrack( QString , title );
-	void addToPlaylist( QString , title );
-};
+void playListViewItem::paintCell( QPainter * p, const QColorGroup & cg, int column, int width, int alignment )
+{
+	QColor itemColor = cg.base();
+	unsigned int playedAgo = QDateTime::currentDateTime().toTime_t() - lastPlayed;
 
-#endif
+	if( playedAgo < 7200 )
+	{  // calculate the color of the Item
+		itemColor = Qt::red.dark( 150-(int(playedAgo/720)*10) );
+	}
+
+	QColorGroup _cg( cg );
+	_cg.setColor( QColorGroup::Base, itemColor );
+
+	QListViewItem::paintCell( p, _cg, column, width, alignment );
+}
