@@ -1,4 +1,4 @@
-/* $Id:$ */
+/* $Id$ */
 /***************************************************************************
  *   OpenRadio - RadioMixer                                                *
  *   Copyright (C) 2006 by Jan Boysen                                *
@@ -46,16 +46,24 @@ playListViewItem::playListViewItem( QListView * parent, const QString id, const 
 
 void playListViewItem::paintCell( QPainter * p, const QColorGroup & cg, int column, int width, int alignment )
 {
-	QColor itemColor = cg.base();
-	unsigned int playedAgo = QDateTime::currentDateTime().toTime_t() - lastPlayed;
+	QColor itemBGColor = cg.base();
+	QColor itemFGColor = cg.text();
 
-	if( playedAgo < 7200 )
-	{  // calculate the color of the Item
-		itemColor = Qt::red.dark( 150-(int(playedAgo/720)*10) );
+	if( isSelected() )
+	{
+		itemBGColor = cg.highlight();
+		itemFGColor = cg.highlightedText();
+	}else{
+		unsigned int playedAgo = QDateTime::currentDateTime().toTime_t() - lastPlayed;
+
+		if( playedAgo < 7200 )
+		{  // calculate the color of the Item
+			itemBGColor = Qt::red.dark( 150-(int(playedAgo/720)*10) );
+		}
 	}
 
 	QColorGroup _cg( cg );
-	_cg.setColor( QColorGroup::Base, itemColor );
-
+	_cg.setColor( QColorGroup::Base, itemBGColor );
+	_cg.setColor( QColorGroup::Text, itemFGColor );
 	QListViewItem::paintCell( p, _cg, column, width, alignment );
 }
