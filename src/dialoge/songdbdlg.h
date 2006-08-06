@@ -55,9 +55,6 @@ protected:
 	QString getGenreId( QString genre );
 	virtual void resizeEvent ( QResizeEvent * );
 
-	//temporary Playlistitem Storage
-	playList* songDBPlaylist;
-
 private:
 	int state;
 

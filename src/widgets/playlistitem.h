@@ -34,9 +34,9 @@
 class playListItem : public QListViewItem
 {
 public:
-	playListItem( playList* parent );
-	playListItem( playList* parent, metaTag metaData );
-	playListItem( playList* parent, QString filename );
+	playListItem( QListView* parent );
+	playListItem( QListView* parent, metaTag metaData );
+	playListItem( QListView* parent, QString filename );
 	playListItem( playListItem* parent );
 
 	~playListItem();

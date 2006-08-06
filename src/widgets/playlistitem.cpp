@@ -21,7 +21,7 @@
  ***************************************************************************/
 #include "playlistitem.h"
 
-playListItem::playListItem( playList* parent)
+playListItem::playListItem( QListView* parent)
  : QListViewItem( parent )
 {
 }
@@ -33,13 +33,13 @@ playListItem::playListItem( playListItem* parent )
 }
 
 
-playListItem::playListItem( playList* parent, QString filename )
+playListItem::playListItem( QListView* parent, QString filename )
  : QListViewItem( parent )
 {
 }
 
-playListItem::playListItem( playList* parent, metaTag metaData )
- : QListViewItem( parent, metaData.getArtist(), metaData.getTitle(), metaData.getGenre(), metaData.getLength().toString(Qt::ISODate) )
+playListItem::playListItem( QListView* parent, metaTag metaData )
+ : QListViewItem( parent, metaData.getArtist()+" - "+metaData.getTitle(), metaData.getGenre(), metaData.getLength().toString(Qt::ISODate) )
 {
 	meta = new metaTag(metaData);
 }

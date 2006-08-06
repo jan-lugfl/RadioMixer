@@ -30,8 +30,8 @@
 class playListItemSongDB : public playListItem
 {
 public:
-	playListItemSongDB( playList* parent );
-	playListItemSongDB( playList* parent, metaTag metaData, const QString id, unsigned  int lastPlayedTS=0);
+	playListItemSongDB( QListView* parent );
+	playListItemSongDB( QListView* parent, metaTag metaData, const QString id, unsigned  int lastPlayedTS=0);
 
 	~playListItemSongDB();
 

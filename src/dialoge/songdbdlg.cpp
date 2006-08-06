@@ -33,16 +33,13 @@ songDBDlg::songDBDlg(QWidget *parent, const char *name)
 	songDB = new QHttpRequestHeader( "POST", config->readEntry( "/radiomixer/network/songDBScriptname", "xmlctrl.pl" ) );
 	songDB->setValue( "Host", config->readEntry( "/radiomixer/network/songDBHostname", "localhost" ) );
 
-	songDBListView->addColumn(tr("Id"));
-	songDBListView->addColumn(tr("Artist"));
-	songDBListView->addColumn(tr("Song"));
+	songDBListView->addColumn(tr("Name"));
 	songDBListView->addColumn(tr("Genre"));
 	songDBListView->addColumn(tr("Length"));
 
-	songDBListView->setColumnWidth(0, 30);
+	songDBListView->setColumnWidth(0, 200);
 	songDBListView->setColumnWidth(1, 150);
-	songDBListView->setColumnWidth(2, 150);
-	songDBListView->setColumnWidth(4, 80);
+	songDBListView->setColumnWidth(2, 30);
 
 	playlistChannel->insertItem( tr("Global Playlist") );
 	genre->insertItem( tr("all Genres") );
@@ -50,8 +47,7 @@ songDBDlg::songDBDlg(QWidget *parent, const char *name)
 	//get Genres from sondDB
 	requestData( "getGenres=1" );
 
-	//temorary Playlist storage
-	songDBPlaylist = new playList( songDBListView );
+	//songDBListView->setRootIsDecorated(TRUE);
 
 	delete config;
 }
@@ -75,6 +71,10 @@ void songDBDlg::displayData( bool )
 		{
 			songDBListView->clear();
 
+			//temorary Playlist storage
+//			playList* songDBPlaylist = new playList( songDBListView );
+//			songDBPlaylist->setOpen(TRUE);
+
 			QDomElement dataroot = readdata.documentElement();
 			QDomNodeList songs = dataroot.childNodes();
 
@@ -86,7 +86,7 @@ void songDBDlg::displayData( bool )
 				for(unsigned int i=0;i<songs.count();i++)
 				{
 					QDomElement songAttr = songs.item(i).toElement();
-					playListItemSongDB* mySongs = new playListItemSongDB( songDBPlaylist,
+					playListItemSongDB* mySongs = new playListItemSongDB( songDBListView,
 										metaTag(
 											songAttr.attribute("interpret"),
 											songAttr.attribute("title"),

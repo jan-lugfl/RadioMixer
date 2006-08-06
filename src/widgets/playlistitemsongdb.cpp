@@ -21,12 +21,12 @@
  ***************************************************************************/
 #include "playlistitemsongdb.h"
 
-playListItemSongDB::playListItemSongDB( playList* parent )
+playListItemSongDB::playListItemSongDB( QListView* parent )
  : playListItem(parent)
 {
 }
 
-playListItemSongDB::playListItemSongDB( playList* parent, metaTag metaData, const QString id,  unsigned int lastPlayedTS )
+playListItemSongDB::playListItemSongDB( QListView* parent, metaTag metaData, const QString id,  unsigned int lastPlayedTS )
  : playListItem(parent, metaData)
 {
 	lastPlayed = lastPlayedTS;
@@ -38,8 +38,8 @@ playListItemSongDB::~playListItemSongDB()
 
 void playListItemSongDB::paintCell( QPainter * p, const QColorGroup & cg, int column, int width, int alignment )
 {
-	playListItem::paintCell( p, cg, column, width, alignment );
-	QColor itemBGColor = cg.base();
+	QColorGroup _cg = cg;
+	playListItem::paintCell( p, _cg, column, width, alignment );
 
 	if( !isSelected() )
 	{
@@ -47,13 +47,9 @@ void playListItemSongDB::paintCell( QPainter * p, const QColorGroup & cg, int co
 
 		if( playedAgo < 7200 )
 		{  // calculate the color of the Item
-			itemBGColor = Qt::red.dark( 150-(int(playedAgo/720)*10) );
+			_cg.setColor( QColorGroup::Base, Qt::red.dark( 150-(int(playedAgo/720)*10) ) );
+			QListViewItem::paintCell( p, _cg, column, width, alignment );
 		}
 	}
-
-	QColorGroup _cg( cg );
-	_cg.setColor( QColorGroup::Base, itemBGColor );
-	QListViewItem::paintCell( p, _cg, column, width, alignment );
 }
-
 
