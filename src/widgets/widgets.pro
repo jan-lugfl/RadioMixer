@@ -7,14 +7,21 @@ HEADERS += glowbutton.h \
            blinkbutton.h \
            timedisplay.h \
            vumeter.h \
-           playlistviewitem.h 
+           playlistitem.h \
+           playlist.h 
 SOURCES += glowbutton.cpp \
            blinkbutton.cpp \
            timedisplay.cpp \
            vumeter.cpp \
-           playlistviewitem.cpp 
+           playlistitem.cpp \
+           playlist.cpp 
+INCLUDEPATH += ../../src 
 CONFIG += release \
-warn_on \
-qt \
-staticlib
-TEMPLATE = lib
+          warn_on \
+          qt \
+          staticlib 
+TEMPLATE = lib 
+songdb{
+  HEADERS += playlistitemsongdb.h 
+  SOURCES += playlistitemsongdb.cpp 
+}

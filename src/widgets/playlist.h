@@ -19,28 +19,21 @@
  *   Free Software Foundation, Inc.,                                       *
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
-#ifndef PLAYLISTVIEWITEM_H
-#define PLAYLISTVIEWITEM_H
+#ifndef PLAYLIST_H
+#define PLAYLIST_H
 
 #include <qlistview.h>
-#include <qdatetime.h>
 
 /**
 	@author Jan Boysen <trekkie@media-mission.de>
 */
-class playListViewItem : public QListViewItem
+class playList : public QListViewItem
 {
 public:
-	playListViewItem( QListView* parent );
-	playListViewItem( QListView* parent, const QString id, const QString artist="", const QString title="", const QString genre="", const QString length="", unsigned  int lastPlayedTS=0);
-	playListViewItem( playListViewItem* parent );
+	playList( QListViewItem* parent );
 
-	~playListViewItem();
+	~playList();
 
-	virtual void paintCell( QPainter *p, const QColorGroup &cg, int column, int width, int alignment );
-
-private:
-	unsigned int lastPlayed;
 };
 
 #endif

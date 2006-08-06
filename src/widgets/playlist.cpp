@@ -1,7 +1,7 @@
-/* $Id$ */
+/* $Id:$ */
 /***************************************************************************
  *   OpenRadio - RadioMixer                                                *
- *   Copyright (C) 2005, 2006 by Jan Boysen                                *
+ *   Copyright (C) 2006 by Jan Boysen                                *
  *   trekkie@media-mission.de                                              *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
@@ -19,55 +19,16 @@
  *   Free Software Foundation, Inc.,                                       *
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
-#include "playlistitem.h"
+#include "playlist.h"
 
-playListItem::playListItem()
-{
-	meta = new title();
-}
-
-playListItem::playListItem( QString file, QString trackName)
-{
-	meta = new title( file );
-	trackName = trackName;
-}
-
-playListItem::~playListItem()
+playList::playList( QListViewItem* parent )
+ : QListViewItem( parent )
 {
 }
 
-const QString playListItem::getFileName( )
+
+playList::~playList()
 {
-	return meta->getFilename();
 }
 
-const QString playListItem::getFilePath( )
-{
-	return meta->getFilepath();
-}
-
-const QString playListItem::getTrackName( )
-{
-	return trackName;
-}
-
-void playListItem::setTrackName( QString trackName )
-{
-	this->trackName = trackName;
-}
-
-const QString playListItem::getFile( )
-{
-	return meta->getFile();
-}
-
-void playListItem::setFile( QString file )
-{
-	meta = new title( file );
-}
-
-title * const playListItem::getMeta( )
-{
-	return meta;
-}
 

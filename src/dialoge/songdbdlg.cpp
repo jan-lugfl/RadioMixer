@@ -83,14 +83,13 @@ void songDBDlg::displayData( bool )
 				for(unsigned int i=0;i<songs.count();i++)
 				{
 					QDomElement songAttr = songs.item(i).toElement();
-					playListViewItem mySongs = new playListViewItem( songDBListView, songAttr.attribute("id"), songAttr.attribute("interpret"), songAttr.attribute("title"),
+					playListItem mySongs = new playListItem( songDBListView, songAttr.attribute("id"), songAttr.attribute("interpret"), songAttr.attribute("title"),
 															songAttr.attribute("genre"), songAttr.attribute("length"), QString(songAttr.attribute("lastPlayed")).toInt() );
 				}
 		}else if( readdata.doctype().name() == "songDBSongInfo" )
 		{
 			QDomElement dataroot = readdata.documentElement();
 			QDomElement song = dataroot.childNodes().item(0).toElement();
-			qWarning(config->readEntry( "/radiomixer/network/songDBBasePath", "/songs/" )+song.attribute("relPath")+song.attribute("filename"));
 			title songObj( config->readEntry( "/radiomixer/network/songDBBasePath", "/songs/" )+song.attribute("relPath")+song.attribute("filename") );
 			songObj.setArtist( song.attribute("interpret") );
 			songObj.setTitle( song.attribute("title") );
@@ -181,5 +180,11 @@ void songDBDlg::resizeEvent( QResizeEvent *e )
 	frame4->move( e->size().width()-348, e->size().height()-95);
 
 	songDBDialog::resizeEvent( e );
+}
+
+void songDBDlg::updateLastPlayed( QString filename )
+{
+	qWarning("updating last played.....");
+	requestData( "updateLastPlayed=1&filename="+filename );
 }
 

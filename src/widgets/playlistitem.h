@@ -1,7 +1,7 @@
 /* $Id$ */
 /***************************************************************************
  *   OpenRadio - RadioMixer                                                *
- *   Copyright (C) 2005, 2006 by Jan Boysen                                *
+ *   Copyright (C) 2006 by Jan Boysen                                *
  *   trekkie@media-mission.de                                              *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
@@ -19,56 +19,48 @@
  *   Free Software Foundation, Inc.,                                       *
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
-#ifndef SONGDBDLG_H
-#define SONGDBDLG_H
+#ifndef PLAYLISTITEM_H
+#define PLAYLISTITEM_H
 
-#include "title.h"
-#include "songDBDialog.h"
-#include "playlistitem.h"
+#include "metatag.h"
+#include "playlist.h"
 
-#include <qhttp.h>
-#include <qurloperator.h>
-#include <qdom.h>
 #include <qlistview.h>
-#include <qlineedit.h>
-#include <qcheckbox.h>
-#include <qcombobox.h>
-#include <qvaluevector.h>
-#include <qsettings.h>
-#include <qmessagebox.h>
+#include <qdatetime.h>
 
-
-class songDBDlg: public songDBDialog {
-Q_OBJECT
+/**
+	@author Jan Boysen <trekkie@media-mission.de>
+*/
+class playListItem : public QListViewItem
+{
 public:
-	songDBDlg(QWidget *parent = 0, const char *name = 0);
-	~songDBDlg();
+	playListItem( playList* parent );
+	playListItem( playList* parent, metaTag metaData );
+	playListItem( playList* parent, QString filename );
+	playListItem( playListItem* parent );
 
-protected:
-	QHttp*	songDBHndl;
-	QHttpRequestHeader* songDB;
-	struct Genre {
-		QString id;
-		QString name;
-	};
-	QValueVector<Genre>	genreList;
-	QString getGenreId( QString genre );
-	virtual void resizeEvent ( QResizeEvent * );
+	~playListItem();
+
+	virtual void paintCell( QPainter *p, const QColorGroup &cg, int column, int width, int alignment );
+
+	virtual metaTag* const getMeta();
+
+
+    const QString getFileName();
+    const QString getFilePath();
+
+    const QString getTrackName();
+    void setTrackName(QString trackName);
+
+    const QString getFile();
+    void setFile(QString file);
+
 
 private:
-	int state;
+    QString trackName;
 
-protected slots:
-	virtual void displayData( bool );
-	virtual void requestData( QString query );
-	virtual void playListAdd();
-	virtual void cue();
-	virtual void search();
-	virtual void updateLastPlayed( QString filename ); 
-
-signals:
-	void cueTrack( QString , title );
-	void addToPlaylist( QString , title );
+	metaTag*	meta;
+	unsigned int lastPlayed;
 };
 
 #endif

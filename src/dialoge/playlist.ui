@@ -250,19 +250,6 @@
                     </widget>
                 </vbox>
             </widget>
-            <widget class="QListBox">
-                <property name="name">
-                    <cstring>Playlist_Global</cstring>
-                </property>
-                <property name="geometry">
-                    <rect>
-                        <x>10</x>
-                        <y>50</y>
-                        <width>360</width>
-                        <height>210</height>
-                    </rect>
-                </property>
-            </widget>
             <widget class="QLayoutWidget">
                 <property name="name">
                     <cstring>layout15</cstring>
@@ -545,12 +532,25 @@
                                     </font>
                                 </property>
                                 <property name="text">
-                                    <string>Load Playlist</string>
+                                    <string>&amp;Load Playlist</string>
                                 </property>
                             </widget>
                         </grid>
                     </widget>
                 </vbox>
+            </widget>
+            <widget class="QListView">
+                <property name="name">
+                    <cstring>Playlist_Global</cstring>
+                </property>
+                <property name="geometry">
+                    <rect>
+                        <x>10</x>
+                        <y>50</y>
+                        <width>360</width>
+                        <height>210</height>
+                    </rect>
+                </property>
             </widget>
         </widget>
         <widget class="QWidget">
@@ -722,19 +722,6 @@
                         </property>
                     </widget>
                 </vbox>
-            </widget>
-            <widget class="QListBox">
-                <property name="name">
-                    <cstring>Playlist_Local</cstring>
-                </property>
-                <property name="geometry">
-                    <rect>
-                        <x>11</x>
-                        <y>51</y>
-                        <width>300</width>
-                        <height>200</height>
-                    </rect>
-                </property>
             </widget>
             <widget class="QLayoutWidget">
                 <property name="name">
@@ -923,7 +910,7 @@
                                     </size>
                                 </property>
                                 <property name="text">
-                                    <string>Load Playlist</string>
+                                    <string>&amp;Load Playlist</string>
                                 </property>
                             </widget>
                             <widget class="QPushButton" row="0" column="2">
@@ -974,6 +961,19 @@
                         </grid>
                     </widget>
                 </vbox>
+            </widget>
+            <widget class="QListView">
+                <property name="name">
+                    <cstring>Playlist_Local</cstring>
+                </property>
+                <property name="geometry">
+                    <rect>
+                        <x>10</x>
+                        <y>50</y>
+                        <width>310</width>
+                        <height>210</height>
+                    </rect>
+                </property>
             </widget>
         </widget>
     </widget>

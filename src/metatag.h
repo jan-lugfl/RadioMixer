@@ -23,6 +23,7 @@
 #define METATAG_H
 
 #include <qobject.h>
+#include <qdatetime.h>
 #include <qstring.h>
 
 /**
@@ -43,11 +44,15 @@ public:
 	virtual QString getArtist();
 	virtual QString getTitle();
 	virtual QString getSong();
+	virtual QString getGenre();
+	virtual QTime getLength();
 	virtual QString getType(){ return "SIMPLE";}
 
 protected:
 	QString Artist;
 	QString Title;
+	QString Genre;
+	QTime Length;
 
 };
 

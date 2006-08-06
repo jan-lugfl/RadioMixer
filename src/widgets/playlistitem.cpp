@@ -19,32 +19,37 @@
  *   Free Software Foundation, Inc.,                                       *
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
-#include "playlistviewitem.h"
+#include "playlistitem.h"
 
-playListViewItem::playListViewItem( QListView* parent)
+playListItem::playListItem( playList* parent)
  : QListViewItem( parent )
 {
 }
 
 
-playListViewItem::playListViewItem( playListViewItem * parent )
+playListItem::playListItem( playListItem* parent )
  : QListViewItem( parent )
 {
 	this->lastPlayed = parent->lastPlayed;
 }
 
 
-playListViewItem::~playListViewItem()
+playListItem::playListItem( playList* parent, QString filename )
+ : QListViewItem( parent )
 {
 }
 
-playListViewItem::playListViewItem( QListView * parent, const QString id, const QString artist, const QString title, const QString genre, const QString length, unsigned  int lastPlayedTS )
- : QListViewItem( parent, id, artist, title, genre, length )
+playListItem::playListItem( playList* parent, metaTag metaData )
+ : QListViewItem( parent, metaData.getArtist(), metaData.getTitle(), metaData.getGenre(), metaData.getLength().toString(Qt::ISODate) )
 {
-	lastPlayed = lastPlayedTS;
+	meta = new metaTag(metaData);
 }
 
-void playListViewItem::paintCell( QPainter * p, const QColorGroup & cg, int column, int width, int alignment )
+playListItem::~playListItem()
+{
+}
+
+void playListItem::paintCell( QPainter * p, const QColorGroup & cg, int column, int width, int alignment )
 {
 	QColor itemBGColor = cg.base();
 	QColor itemFGColor = cg.text();
@@ -53,20 +58,48 @@ void playListViewItem::paintCell( QPainter * p, const QColorGroup & cg, int colu
 	{
 		itemBGColor = cg.highlight();
 		itemFGColor = cg.highlightedText();
-	}else{
-		unsigned int playedAgo = QDateTime::currentDateTime().toTime_t() - lastPlayed;
-
+	}else
 		if( (itemPos()/height())%2 == 1)
 			itemBGColor = cg.highlight().light( 175 );
-
-		if( playedAgo < 7200 )
-		{  // calculate the color of the Item
-			itemBGColor = Qt::red.dark( 150-(int(playedAgo/720)*10) );
-		}
-	}
 
 	QColorGroup _cg( cg );
 	_cg.setColor( QColorGroup::Base, itemBGColor );
 	_cg.setColor( QColorGroup::Text, itemFGColor );
 	QListViewItem::paintCell( p, _cg, column, width, alignment );
 }
+
+const QString playListItem::getFileName( )
+{
+//	return meta->getFilename();
+}
+
+const QString playListItem::getFilePath( )
+{
+//	return meta->getFilepath();
+}
+
+const QString playListItem::getTrackName( )
+{
+	return trackName;
+}
+
+void playListItem::setTrackName( QString trackName )
+{
+	this->trackName = trackName;
+}
+
+const QString playListItem::getFile( )
+{
+//	return meta->getFile();
+}
+
+void playListItem::setFile( QString file )
+{
+//	meta = new title( file );
+}
+
+metaTag * const playListItem::getMeta( )
+{
+	return meta;
+}
+

@@ -70,5 +70,15 @@ void metaTag::setTitle( QString title )
 	Title = title;
 }
 
+QString metaTag::getGenre( )
+{
+	return Genre;
+}
+
+QTime metaTag::getLength( )
+{
+	return Length;
+}
+
 
 

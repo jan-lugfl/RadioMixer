@@ -1,7 +1,7 @@
-/* $Id$ */
+/* $Id:$ */
 /***************************************************************************
  *   OpenRadio - RadioMixer                                                *
- *   Copyright (C) 2005, 2006 by Jan Boysen                                *
+ *   Copyright (C) 2006 by Jan Boysen                                *
  *   trekkie@media-mission.de                                              *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
@@ -19,39 +19,47 @@
  *   Free Software Foundation, Inc.,                                       *
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
-#ifndef PLAYLISTITEM_H
-#define PLAYLISTITEM_H
+#include "playlistitemsongdb.h"
 
-#include <qstring.h>
-#include <qregexp.h>
-
-#include "title.h"
-
-/**
-@author Jan Boysen
-*/
-class playListItem
+playListItemSongDB::playListItemSongDB( QListView * parent )
+ : playListItem(parent)
 {
-public:
-    playListItem();
-    playListItem(QString file, QString trackName = "");
-    virtual ~playListItem();
+}
 
-    const QString getFileName();
-    const QString getFilePath();
+playListItemSongDB::playListItemSongDB( QListView * parent, const QString id, const QString artist, const QString title, const QString genre, const QString length, unsigned int lastPlayedTS )
+ : playListItem(parent, artist, title, genre, length)
+{
+	lastPlayed = lastPlayedTS;
+}
 
-    const QString getTrackName();
-    void setTrackName(QString trackName);
-    
-    const QString getFile();
-    void setFile(QString file);
-    virtual title* const getMeta();
- 
-private:
-    QString trackName;
+playListItemSongDB::playListItemSongDB( playListItem * parent )
+ : playListItem( parent )
+{
+}
 
-    title*	meta;
-  
-};
 
-#endif
+playListItemSongDB::~playListItemSongDB()
+{
+}
+
+void playListItemSongDB::paintCell( QPainter * p, const QColorGroup & cg, int column, int width, int alignment )
+{
+	playListItem::paintCell( p, cg, column, width, alignment );
+	QColor itemBGColor = cg.base();
+
+	if( !isSelected() )
+	{
+		unsigned int playedAgo = QDateTime::currentDateTime().toTime_t() - lastPlayed;
+
+		if( playedAgo < 7200 )
+		{  // calculate the color of the Item
+			itemBGColor = Qt::red.dark( 150-(int(playedAgo/720)*10) );
+		}
+	}
+
+	QColorGroup _cg( cg );
+	_cg.setColor( QColorGroup::Base, itemBGColor );
+	QListViewItem::paintCell( p, _cg, column, width, alignment );
+}
+
+
