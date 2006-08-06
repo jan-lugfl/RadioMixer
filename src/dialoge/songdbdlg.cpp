@@ -50,6 +50,9 @@ songDBDlg::songDBDlg(QWidget *parent, const char *name)
 	//get Genres from sondDB
 	requestData( "getGenres=1" );
 
+	//temorary Playlist storage
+	songDBPlaylist = new playList( songDBListView );
+
 	delete config;
 }
 
@@ -83,8 +86,16 @@ void songDBDlg::displayData( bool )
 				for(unsigned int i=0;i<songs.count();i++)
 				{
 					QDomElement songAttr = songs.item(i).toElement();
-					playListItem mySongs = new playListItem( songDBListView, songAttr.attribute("id"), songAttr.attribute("interpret"), songAttr.attribute("title"),
-															songAttr.attribute("genre"), songAttr.attribute("length"), QString(songAttr.attribute("lastPlayed")).toInt() );
+					playListItemSongDB* mySongs = new playListItemSongDB( songDBPlaylist,
+										metaTag(
+											songAttr.attribute("interpret"),
+											songAttr.attribute("title"),
+											songAttr.attribute("genre"),
+											QTime::fromString(songAttr.attribute("length"))
+										),
+										songAttr.attribute("id"),
+										QString(songAttr.attribute("lastPlayed")).toInt()
+					);
 				}
 		}else if( readdata.doctype().name() == "songDBSongInfo" )
 		{

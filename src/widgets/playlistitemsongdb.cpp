@@ -1,4 +1,4 @@
-/* $Id:$ */
+/* $Id$ */
 /***************************************************************************
  *   OpenRadio - RadioMixer                                                *
  *   Copyright (C) 2006 by Jan Boysen                                *
@@ -21,22 +21,16 @@
  ***************************************************************************/
 #include "playlistitemsongdb.h"
 
-playListItemSongDB::playListItemSongDB( QListView * parent )
+playListItemSongDB::playListItemSongDB( playList* parent )
  : playListItem(parent)
 {
 }
 
-playListItemSongDB::playListItemSongDB( QListView * parent, const QString id, const QString artist, const QString title, const QString genre, const QString length, unsigned int lastPlayedTS )
- : playListItem(parent, artist, title, genre, length)
+playListItemSongDB::playListItemSongDB( playList* parent, metaTag metaData, const QString id,  unsigned int lastPlayedTS )
+ : playListItem(parent, metaData)
 {
 	lastPlayed = lastPlayedTS;
 }
-
-playListItemSongDB::playListItemSongDB( playListItem * parent )
- : playListItem( parent )
-{
-}
-
 
 playListItemSongDB::~playListItemSongDB()
 {

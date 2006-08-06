@@ -34,6 +34,7 @@ class metaTag : public QObject
 Q_OBJECT
 public:
 	metaTag(QString Title="", QObject *parent = 0, const char *name = 0);
+	metaTag(const QString artist, const QString title, const QString genre="", const QTime length=QTime());
 	metaTag( const metaTag& oldMeta ); //copyconstructor
 	~metaTag();
 

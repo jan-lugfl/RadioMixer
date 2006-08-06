@@ -26,7 +26,6 @@
 #include <qobject.h>
 #include <qtextstream.h>
 #include <qfile.h>
-#include "playlistitem.h"
 #include "title.h"
 
 /**
@@ -46,7 +45,7 @@ public:
     
     const int count();
     const title* at( int index );
-    void append( playListItem newItem );
+//    void append( playListItem newItem );
     void append( title newItem );
 
 public slots:    

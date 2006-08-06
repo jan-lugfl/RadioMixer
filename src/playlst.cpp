@@ -65,13 +65,13 @@ const title* playLST::at( int index )
 {
 	return &playList[index];
 }
-
+/*
 void playLST::append( playListItem newItem )
 {
 	playList.append( title( newItem.getFile() ) );
 	emit( changed() );
 }
-
+*/
 void playLST::clear( )
 {
 	playList.clear();
@@ -122,8 +122,8 @@ void playLST::loadFromFile( QString fileName )
 	QFile file( fileName );
 	file.open( IO_ReadOnly );
 	QTextStream stream( &file );
-	while( !stream.atEnd() )
-		append( playListItem(stream.readLine()) );
+//	while( !stream.atEnd() )
+//		append( playListItem(stream.readLine()) );
 	file.close();
 }
 

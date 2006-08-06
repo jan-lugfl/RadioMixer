@@ -34,6 +34,14 @@ metaTag::metaTag( const metaTag & oldMeta )
 	Artist = oldMeta.Artist;
 }
 
+metaTag::metaTag( const QString artist, const QString title, const QString genre, const QTime length )
+{
+	Artist = artist;
+	Title = title;
+	Genre = genre;
+	Length = length;
+}
+
 metaTag::~metaTag()
 {
 }

@@ -23,7 +23,11 @@
 #ifndef PLAYLISTDLG_H
 #define PLAYLISTDLG_H
 
+// workarround so long the new Playlist Manager Gui isnt ready yet..
+#undef PLAYLIST_H
+
 #include "playlist.h"
+
 #include <qfiledialog.h>
 #include <qlistbox.h>
 #include <qlistview.h>

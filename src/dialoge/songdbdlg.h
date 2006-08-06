@@ -24,7 +24,7 @@
 
 #include "title.h"
 #include "songDBDialog.h"
-#include "playlistitem.h"
+#include "playlistitemsongdb.h"
 
 #include <qhttp.h>
 #include <qurloperator.h>
@@ -54,6 +54,9 @@ protected:
 	QValueVector<Genre>	genreList;
 	QString getGenreId( QString genre );
 	virtual void resizeEvent ( QResizeEvent * );
+
+	//temporary Playlistitem Storage
+	playList* songDBPlaylist;
 
 private:
 	int state;

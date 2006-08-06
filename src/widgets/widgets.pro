@@ -21,6 +21,7 @@ CONFIG += release \
           qt \
           staticlib 
 TEMPLATE = lib 
+include (../../conf.pri)
 songdb{
   HEADERS += playlistitemsongdb.h 
   SOURCES += playlistitemsongdb.cpp 

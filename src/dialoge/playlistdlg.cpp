@@ -56,7 +56,7 @@ void playListDlg::addGlobalTrack()
                     tr("Add file to playlist...") );
 	if( s.length() >0)
 	{
-		globalPlaylist->append( playListItem( s) );
+//		globalPlaylist->append( playListItem( s) );
 	}
 }
 
@@ -86,7 +86,7 @@ void playListDlg::addLocalTrack()
                     tr("Add file to playlist...") );
 	if( s.length() >0)
 	{
-		(*localPlaylists)[playerSelect->currentItem()]->append( playListItem( s) );
+//		(*localPlaylists)[playerSelect->currentItem()]->append( playListItem( s) );
 	}
 }
 
@@ -155,7 +155,7 @@ void playListDlg::delLocalEntry()
 
 void playListDlg::delGlobalEntry()
 {
-	globalPlaylist->delItem( Playlist_Global->currentItem() );
+//	globalPlaylist->delItem( Playlist_Global->currentItem() );
 }
 
 void playListDlg::showPlaylistHelp()
@@ -182,7 +182,7 @@ void playListDlg::refreshPlaylists( )
 		Playlist_Local->clear();
        		for( int loc = 0; loc < (*localPlaylists)[playerSelect->currentItem()]->count(); loc++ )
 		{
-			Playlist_Local->insertItem( QString::number( listItemNr )+". "+(*localPlaylists)[playerSelect->currentItem()]->getFileName( loc ) );
+//			Playlist_Local->insertItem( QString::number( listItemNr )+". "+(*localPlaylists)[playerSelect->currentItem()]->getFileName( loc ) );
 			listItemNr++;
 		}
 		LCDGesammt_local->display( (int)(*localPlaylists)[playerSelect->currentItem()]->count() );
@@ -195,10 +195,10 @@ void playListDlg::refreshPlaylists( )
         for( int glob = 0; glob < globalPlaylist->count(); glob++ )
 	{
 		if( (listItemNr-1) == globalPlaylist->getcurrentTrackIndex())
-			playing = "   << CUED >>";
+			playing = "    CUED >>";
 		else
 			playing = "";
-		Playlist_Global->insertItem( QString::number( listItemNr )+". "+globalPlaylist->getFileName( glob )+playing );
+//		Playlist_Global->insertItem( QString::number( listItemNr )+". "+globalPlaylist->getFileName( glob )+playing );
 		listItemNr++;
 	}
 	LCDGesammt_global->display( (int)globalPlaylist->count() );
@@ -223,27 +223,27 @@ void playListDlg::delGlobalAll()
 
 void playListDlg::globalMoveUp()
 {
-	globalPlaylist->itemUp( Playlist_Global->currentItem() );
+//	globalPlaylist->itemUp( Playlist_Global->currentItem() );
 }
 
 void playListDlg::globalMoveDown()
 {
-	globalPlaylist->itemDown( Playlist_Global->currentItem() );
+//	globalPlaylist->itemDown( Playlist_Global->currentItem() );
 }
 
 void playListDlg::localMoveDown()
 {
-	(*localPlaylists)[playerSelect->currentItem()]->itemUp( Playlist_Local->currentItem() );
+//	(*localPlaylists)[playerSelect->currentItem()]->itemUp( Playlist_Local->currentItem() );
 }
 
 void playListDlg::localMoveUp()
 {
-	(*localPlaylists)[playerSelect->currentItem()]->itemDown( Playlist_Local->currentItem() );
+//	(*localPlaylists)[playerSelect->currentItem()]->itemDown( Playlist_Local->currentItem() );
 }
 
 void playListDlg::localCueNext()
 {
-	(*localPlaylists)[playerSelect->currentItem()]->cueNext( Playlist_Local->currentItem() );
+//	(*localPlaylists)[playerSelect->currentItem()]->cueNext( Playlist_Local->currentItem() );
 }
 
 

@@ -1,4 +1,4 @@
-/* $Id:$ */
+/* $Id$ */
 /***************************************************************************
  *   OpenRadio - RadioMixer                                                *
  *   Copyright (C) 2006 by Jan Boysen                                *
@@ -30,14 +30,15 @@
 class playListItemSongDB : public playListItem
 {
 public:
-	playListItemSongDB( QListView* parent );
-	playListItemSongDB( QListView* parent, const QString id, metaTag metaData, unsigned  int lastPlayedTS=0);
-	playListItemSongDB( playListItem* parent );
+	playListItemSongDB( playList* parent );
+	playListItemSongDB( playList* parent, metaTag metaData, const QString id, unsigned  int lastPlayedTS=0);
 
 	~playListItemSongDB();
 
 	virtual void paintCell( QPainter *p, const QColorGroup &cg, int column, int width, int alignment );
 
+protected:
+	unsigned int lastPlayed;
 };
 
 #endif

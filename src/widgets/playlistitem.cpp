@@ -30,7 +30,6 @@ playListItem::playListItem( playList* parent)
 playListItem::playListItem( playListItem* parent )
  : QListViewItem( parent )
 {
-	this->lastPlayed = parent->lastPlayed;
 }
 
 

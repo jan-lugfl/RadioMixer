@@ -1,4 +1,4 @@
-/* $Id:$ */
+/* $Id$ */
 /***************************************************************************
  *   OpenRadio - RadioMixer                                                *
  *   Copyright (C) 2006 by Jan Boysen                                *
@@ -21,8 +21,8 @@
  ***************************************************************************/
 #include "playlist.h"
 
-playList::playList( QListViewItem* parent )
- : QListViewItem( parent )
+playList::playList( QListView* parent )
+ : QListViewItem( parent, "I am a playlist" )
 {
 }
 

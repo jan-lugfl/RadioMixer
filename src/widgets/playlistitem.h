@@ -23,7 +23,7 @@
 #define PLAYLISTITEM_H
 
 #include "metatag.h"
-#include "playlist.h"
+#include "../widgets/playlist.h"
 
 #include <qlistview.h>
 #include <qdatetime.h>
@@ -56,11 +56,10 @@ public:
     void setFile(QString file);
 
 
-private:
+protected:
     QString trackName;
 
 	metaTag*	meta;
-	unsigned int lastPlayed;
 };
 
 #endif
