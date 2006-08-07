@@ -130,7 +130,7 @@ void mixerGuiPlayer::cueNewTrack( )
 				emit global_getNextTrack( player->getName() );
 				break;
 			case 2:
-				player->open( player->playList.getNextTrack() );
+//				player->open( player->playList.getNextTrack() );
 				break;
 		}
     	}
@@ -195,8 +195,8 @@ void mixerGuiPlayer::fileOpen( )
                     this,
                     tr("load file dialog"),
                     player->getName()+": "+tr("load File")+"..." );
-	if( s.length() >0)
-		player->open( title(s) );
+//	if( s.length() >0)
+//		player->open( title(s) );
 }
 
 void mixerGuiPlayer::showPrefs( )

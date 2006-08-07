@@ -25,8 +25,9 @@
 #include "playerchannelstd.h"
 #include "channelbufmngr.h"
 #include "filedecoder.h"
-#include "playlst.h"
-#include "title.h"
+#include "playlst.h" // depricated
+#include "playlistitem.h"
+
 #include <stdio.h>
 #include <qregexp.h>
 
@@ -71,7 +72,7 @@ public:
 	// Playlist
 	playLST playList;
 
-private:
+protected:
 	QString fileName;
 	FILE* fHandle;
 	bool fileOpen;
@@ -82,9 +83,11 @@ private:
 
 	// Buffer Manager
 	channelBufMngr* bufferThread;
-	
+
+	playListItem* track;
+
 public slots:
-	virtual void open( title file);
+	virtual void open( playListItem* track );
 	virtual void close();
 	virtual void stop( );
 	virtual void play();

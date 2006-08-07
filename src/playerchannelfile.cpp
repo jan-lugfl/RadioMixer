@@ -36,22 +36,24 @@ playerChannelFile::~playerChannelFile()
 {
 }
 
-void playerChannelFile::open( title file )
+void playerChannelFile::open( playListItem* track )
 {
-	meta = file;
+	this->track = track;
+	meta = track->getMeta();
+
 	soundBuffers[0].flush();
 	soundBuffers[1].flush();
 
 	if(fileOpen)
 		close();
 
-	fHandle = fopen( file.getFile(), "r");
-	fileName = file.getFile();
+	fHandle = fopen( track->getFile(), "r");
+	fileName = track->getFile();
 
 	try
 	{
 		QRegExp rx( "^(.*)\\.(\\w+)$" );
-		if ( rx.search( file.getFilename() ) != -1 ) {
+		if ( rx.search( track->getFilename() ) != -1 ) {
 #ifdef HAVE_VORBIS
 			if( rx.cap(2).lower() == "ogg" )
 			{
@@ -71,9 +73,9 @@ void playerChannelFile::open( title file )
 				QMessageBox::warning( NULL, tr("RadioMixer - Playerchannel File"), tr("unknown Filetype: ")+rx.cap(2).lower(), QMessageBox::Ok, QMessageBox::NoButton, QMessageBox::NoButton);
 				fileOpen = FALSE;
 			}else{
-				decoder->setMetaInfos( &file );
-				smplRate = file.getSamplerate();
-				channels = file.getChannels();
+//				decoder->setMetaInfos( &meta );
+				smplRate = track->getSamplerate();
+				channels = track->getChannels();
 				fileOpen = TRUE;
 				emit( cued( meta ) );
 				state = 3;
@@ -192,6 +194,7 @@ void playerChannelFile::setName( QString newName )
 void playerChannelFile::play( )
 {
 	playerChannelStd::play();
+	track->startPlaying();
 	emit( newMeta( meta ) );
 	emit( playing() );
 }

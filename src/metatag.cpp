@@ -21,17 +21,9 @@
  ***************************************************************************/
 #include "metatag.h"
 
-metaTag::metaTag(QString Title, QObject *parent, const char *name)
- : QObject(parent, name)
+metaTag::metaTag(QString Title)
 {
 	this->Title = Title;
-}
-
-metaTag::metaTag( const metaTag & oldMeta )
-: QObject()
-{
-	Title = oldMeta.Title;
-	Artist = oldMeta.Artist;
 }
 
 metaTag::metaTag( const QString artist, const QString title, const QString genre, const QTime length )
@@ -54,13 +46,6 @@ QString metaTag::getArtist( )
 QString metaTag::getTitle( )
 {
 	return Title;
-}
-
-metaTag & metaTag::operator =( const metaTag oldMeta )
-{
-	Title = oldMeta.Title;
-	Artist = oldMeta.Artist;
-	return *this;
 }
 
 QString metaTag::getSong( )

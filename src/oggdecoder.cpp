@@ -63,6 +63,7 @@ const float oggDecoder::getTotal_Samples( )
 	return ov_pcm_total( decoder, -1);
 }
 
+// depricated
 void oggDecoder::setMetaInfos( title * titel )
 {
 	// first open the File and read the File Infos

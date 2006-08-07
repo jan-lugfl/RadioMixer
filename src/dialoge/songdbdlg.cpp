@@ -101,17 +101,17 @@ void songDBDlg::displayData( bool )
 		{
 			QDomElement dataroot = readdata.documentElement();
 			QDomElement song = dataroot.childNodes().item(0).toElement();
-			title songObj( config->readEntry( "/radiomixer/network/songDBBasePath", "/songs/" )+song.attribute("relPath")+song.attribute("filename") );
-			songObj.setArtist( song.attribute("interpret") );
-			songObj.setTitle( song.attribute("title") );
+//			title songObj( config->readEntry( "/radiomixer/network/songDBBasePath", "/songs/" )+song.attribute("relPath")+song.attribute("filename") );
+//			songObj.setArtist( song.attribute("interpret") );
+//			songObj.setTitle( song.attribute("title") );
 
 			switch(state)
 			{
 				case 1: //cue response
-					emit cueTrack( cueChannel->currentText(),  songObj );
+//					emit cueTrack( cueChannel->currentText(),  songObj );
 					break;
 				case 2: //Add to playlist response
-					emit addToPlaylist( playlistChannel->currentText(),  songObj );
+//					emit addToPlaylist( playlistChannel->currentText(),  songObj );
 					break;
 				default:
 					break;

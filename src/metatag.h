@@ -22,23 +22,18 @@
 #ifndef METATAG_H
 #define METATAG_H
 
-#include <qobject.h>
 #include <qdatetime.h>
 #include <qstring.h>
 
 /**
 @author Jan Boysen
 */
-class metaTag : public QObject
+class metaTag
 {
-Q_OBJECT
 public:
-	metaTag(QString Title="", QObject *parent = 0, const char *name = 0);
+	metaTag(QString Title="");
 	metaTag(const QString artist, const QString title, const QString genre="", const QTime length=QTime());
-	metaTag( const metaTag& oldMeta ); //copyconstructor
-	~metaTag();
-
-	virtual metaTag& operator=(const metaTag oldMeta);
+	virtual ~metaTag();
 
 	virtual void setArtist( QString artist );
 	virtual void setTitle( QString title);
@@ -47,7 +42,6 @@ public:
 	virtual QString getSong();
 	virtual QString getGenre();
 	virtual QTime getLength();
-	virtual QString getType(){ return "SIMPLE";}
 
 protected:
 	QString Artist;

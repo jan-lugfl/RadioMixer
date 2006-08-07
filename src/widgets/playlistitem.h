@@ -43,16 +43,23 @@ public:
 
 	virtual void paintCell( QPainter *p, const QColorGroup &cg, int column, int width, int alignment );
 
-	virtual metaTag* const getMeta();
+	virtual const metaTag getMeta();
 
 
-    const QString getFileName();
-    const QString getFilePath();
+	virtual const QString getFilepath();
+	virtual const QString getFilename();
+	virtual const QTime getTotalTime();
+	virtual const QString getFile();
+	virtual unsigned int getChannels();
+	virtual void setChannels( unsigned int chans);
+	virtual unsigned int getSamplerate();
+	virtual void setSamplerate( unsigned int rate );
+
+	virtual QString getType(){ return "STD";}
 
     const QString getTrackName();
     void setTrackName(QString trackName);
 
-    const QString getFile();
     void setFile(QString file);
 
 
@@ -60,6 +67,12 @@ protected:
     QString trackName;
 
 	metaTag*	meta;
+
+public slots:
+	virtual void startPlaying();
+
+signals:
+	void startToPlay();
 };
 
 #endif

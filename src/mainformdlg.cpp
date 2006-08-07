@@ -639,11 +639,11 @@ void mainFormDlg::showSongDBDialog()
 
 void mainFormDlg::cueTitle(QString player, title song )
 {
-	QValueVector<mixerChannelGUI*>::iterator playerIt;
+/*	QValueVector<mixerChannelGUI*>::iterator playerIt;
 	for( playerIt = playerGuis.begin(); playerIt != playerGuis.end(); ++playerIt )
 		if( (*playerIt)->getName() == player && (*playerIt)->getType() == "PLAYER" )
 			(dynamic_cast<mixerGuiPlayer*>(*playerIt))->player->open( song );
-}
+*/}
 
 void mainFormDlg::playlistAddTitle( QString player, title song )
 {

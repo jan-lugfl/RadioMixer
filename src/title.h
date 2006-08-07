@@ -19,10 +19,12 @@
  *   Free Software Foundation, Inc.,                                       *
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
+
+// NOTE: Use of his class is depricated !!!!!!!!!!!!!!!
+
 #ifndef TITLE_H
 #define TITLE_H
 
-#include <qobject.h>
 #include <qregexp.h>
 #include "metatag.h"
 
@@ -31,9 +33,8 @@
 */
 class title : public metaTag
 {
-Q_OBJECT
 public:
-	title(QString file="", QObject *parent = 0, const char *name = 0);
+	title(QString file="");
 	title( const title& oldTitle ); //copyconstructor
 	~title();
 

@@ -67,16 +67,6 @@ void playListItem::paintCell( QPainter * p, const QColorGroup & cg, int column, 
 	QListViewItem::paintCell( p, _cg, column, width, alignment );
 }
 
-const QString playListItem::getFileName( )
-{
-//	return meta->getFilename();
-}
-
-const QString playListItem::getFilePath( )
-{
-//	return meta->getFilepath();
-}
-
 const QString playListItem::getTrackName( )
 {
 	return trackName;
@@ -87,18 +77,49 @@ void playListItem::setTrackName( QString trackName )
 	this->trackName = trackName;
 }
 
-const QString playListItem::getFile( )
-{
-//	return meta->getFile();
-}
-
 void playListItem::setFile( QString file )
 {
 //	meta = new title( file );
 }
 
-metaTag * const playListItem::getMeta( )
+ const metaTag playListItem::getMeta( )
 {
-	return meta;
+	return *meta;
+}
+
+const QString playListItem::getFilepath( )
+{
+}
+
+const QString playListItem::getFilename( )
+{
+}
+
+const QTime playListItem::getTotalTime( )
+{
+}
+
+const QString playListItem::getFile( )
+{
+}
+
+unsigned int playListItem::getChannels( )
+{
+}
+
+void playListItem::setChannels( unsigned int chans )
+{
+}
+
+unsigned int playListItem::getSamplerate( )
+{
+}
+
+void playListItem::setSamplerate( unsigned int rate )
+{
+}
+
+void playListItem::startPlaying( )
+{
 }
 

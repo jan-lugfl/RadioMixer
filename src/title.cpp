@@ -21,8 +21,8 @@
  ***************************************************************************/
 #include "title.h"
 
-title::title( QString file, QObject *parent, const char *name)
- : metaTag("", parent, name)
+title::title( QString file)
+ : metaTag("", "", "", QTime())
 {
 	if( !file.isEmpty())
 	{
@@ -33,7 +33,7 @@ title::title( QString file, QObject *parent, const char *name)
 		}
 		else
 		{
-				qWarning( QString( tr("unknown Filetype !!!") ) );
+				qWarning( QString( "unknown Filetype !!!" ) );
 		}
 		QRegExp rx( "^(.*)/(.*)[ |_]*\\-[ |_]*(.*)$" );
 	 	if ( rx.search( Filename ) != -1 ) {

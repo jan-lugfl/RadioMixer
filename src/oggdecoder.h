@@ -53,7 +53,8 @@ public:
 	virtual const float getPlayedFrames();
 	virtual const float getRemainFrames();
 
-	virtual void setMetaInfos( title* titel);
+	//depricated
+	virtual void setMetaInfos( title * titel);
 
 private:
 	// OGGVorbis Decoder

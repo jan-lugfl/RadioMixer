@@ -170,6 +170,7 @@ inline float mpgDecoder::scale(mad_fixed_t sample)
    return (float) (sample / (float) (1L << MAD_F_FRACBITS));
 }
 
+// depricated
 void mpgDecoder::setMetaInfos( title * titel )
 {
 	titel->setSamplerate( sampleRate );

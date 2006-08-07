@@ -52,6 +52,7 @@ public:
 	virtual const float getPlayedFrames() = 0;
 	virtual const float getRemainFrames() = 0;
 
+	//depricated
 	virtual void setMetaInfos( title* titel) = 0;
 
 protected:
