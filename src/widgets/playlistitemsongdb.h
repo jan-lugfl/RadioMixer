@@ -29,6 +29,7 @@
 */
 class playListItemSongDB : public playListItem
 {
+Q_OBJECT
 public:
 	playListItemSongDB( QListView* parent );
 	playListItemSongDB( QListView* parent, metaTag metaData, const QString id, unsigned  int lastPlayedTS=0);

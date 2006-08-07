@@ -25,14 +25,16 @@
 #include "metatag.h"
 #include "../widgets/playlist.h"
 
+#include <qobject.h>
 #include <qlistview.h>
 #include <qdatetime.h>
 
 /**
 	@author Jan Boysen <trekkie@media-mission.de>
 */
-class playListItem : public QListViewItem
+class playListItem : public QObject, public QListViewItem
 {
+Q_OBJECT
 public:
 	playListItem( QListView* parent );
 	playListItem( QListView* parent, metaTag metaData );
@@ -72,7 +74,7 @@ public slots:
 	virtual void startPlaying();
 
 signals:
-	void startToPlay();
+	void startToPlay( playListItem* );
 };
 
 #endif

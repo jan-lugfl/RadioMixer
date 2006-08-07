@@ -64,7 +64,7 @@ protected slots:
 	virtual void playListAdd();
 	virtual void cue();
 	virtual void search();
-	virtual void updateLastPlayed( QString filename ); 
+	virtual void updateLastPlayed( playListItem* item ); 
 
 signals:
 	void cueTrack( QString , title );

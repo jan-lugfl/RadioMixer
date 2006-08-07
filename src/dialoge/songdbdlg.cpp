@@ -82,11 +82,11 @@ void songDBDlg::displayData( bool )
 			{
 				QListViewItem noSongs = new QListViewItem( songDBListView, "", tr("no songs found") );
 			}
-			else	
+			else
 				for(unsigned int i=0;i<songs.count();i++)
 				{
 					QDomElement songAttr = songs.item(i).toElement();
-					playListItemSongDB* mySongs = new playListItemSongDB( songDBListView,
+					playListItemSongDB* mySong = new playListItemSongDB( songDBListView,
 										metaTag(
 											songAttr.attribute("interpret"),
 											songAttr.attribute("title"),
@@ -96,6 +96,7 @@ void songDBDlg::displayData( bool )
 										songAttr.attribute("id"),
 										QString(songAttr.attribute("lastPlayed")).toInt()
 					);
+					connect( mySong, SIGNAL( startToPlay( playListItem* ) ), this, SLOT( updateLastPlayed( playListItem* ) ) );
 				}
 		}else if( readdata.doctype().name() == "songDBSongInfo" )
 		{
@@ -193,9 +194,9 @@ void songDBDlg::resizeEvent( QResizeEvent *e )
 	songDBDialog::resizeEvent( e );
 }
 
-void songDBDlg::updateLastPlayed( QString filename )
+void songDBDlg::updateLastPlayed( playListItem* item )
 {
 	qWarning("updating last played.....");
-	requestData( "updateLastPlayed=1&filename="+filename );
+	requestData( "updateLastPlayed=1&filename="+item->getFilename() );
 }
 

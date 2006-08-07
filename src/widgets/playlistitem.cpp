@@ -121,5 +121,6 @@ void playListItem::setSamplerate( unsigned int rate )
 
 void playListItem::startPlaying( )
 {
+	emit startToPlay( this );
 }
 
