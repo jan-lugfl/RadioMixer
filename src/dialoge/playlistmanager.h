@@ -1,4 +1,4 @@
-/* $Id:$ */
+/* $Id$ */
 /***************************************************************************
  *   OpenRadio - RadioMixer                                                *
  *   Copyright (C) 2006 by Jan Boysen                                *
@@ -25,10 +25,50 @@
 
 #include "playlistng.h"
 
+#include "playlistitemsongdb.h"
+
+#include <qhttp.h>
+#include <qurloperator.h>
+#include <qdom.h>
+#include <qlistview.h>
+#include <qlineedit.h>
+#include <qcheckbox.h>
+#include <qcombobox.h>
+#include <qsettings.h>
+#include <qvaluevector.h>
+#include <qmessagebox.h>
+
 class playListManager: public playListNG {
 Q_OBJECT
+
 public:
-    playListManager(QWidget *parent = 0, const char *name = 0);
+	playListManager(QWidget *parent = 0, const char *name = 0);
+	~playListManager();
+
+protected:
+	QHttp*	songDBHndl;
+	QHttpRequestHeader* songDB;
+	struct Genre {
+		QString id;
+		QString name;
+	};
+	QValueVector<Genre>	genreList;
+	QString getGenreId( QString genre );
+	virtual void resizeEvent ( QResizeEvent *e );
+
+private:
+	int state;
+
+protected slots:
+	virtual void displayData( bool );
+	virtual void requestData( QString query );
+	virtual void playListAdd();
+	virtual void cue();
+	virtual void search();
+	virtual void updateLastPlayed( playListItem* item ); 
+
+signals:
+	void cueTrack( QString, playListItem* );
 
 };
 

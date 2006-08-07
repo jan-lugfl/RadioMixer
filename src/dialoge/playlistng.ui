@@ -407,5 +407,30 @@
         </property>
     </widget>
 </widget>
+<connections>
+    <connection>
+        <sender>searchButton</sender>
+        <signal>clicked()</signal>
+        <receiver>playListNG</receiver>
+        <slot>search()</slot>
+    </connection>
+    <connection>
+        <sender>cueButton</sender>
+        <signal>clicked()</signal>
+        <receiver>playListNG</receiver>
+        <slot>cue()</slot>
+    </connection>
+    <connection>
+        <sender>pushButton3</sender>
+        <signal>clicked()</signal>
+        <receiver>playListNG</receiver>
+        <slot>playListAdd()</slot>
+    </connection>
+</connections>
+<slots>
+    <slot>search()</slot>
+    <slot>cue()</slot>
+    <slot>playListAdd()</slot>
+</slots>
 <layoutdefaults spacing="6" margin="11"/>
 </UI>
