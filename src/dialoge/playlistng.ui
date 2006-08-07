@@ -1,421 +1,44 @@
 <!DOCTYPE UI><UI version="3.3" stdsetdef="1">
-<class>interface</class>
-<widget class="QMainWindow">
+<class>playListNG</class>
+<widget class="QDialog">
     <property name="name">
-        <cstring>interface</cstring>
+        <cstring>playListNG</cstring>
     </property>
     <property name="geometry">
         <rect>
             <x>0</x>
             <y>0</y>
-            <width>1024</width>
-            <height>815</height>
+            <width>1022</width>
+            <height>740</height>
         </rect>
     </property>
     <property name="minimumSize">
         <size>
-            <width>21</width>
-            <height>155</height>
+            <width>1022</width>
+            <height>740</height>
         </size>
     </property>
     <property name="caption">
-        <string>radiomixer-interface</string>
+        <string>RadioMixer - Playlist Manager</string>
     </property>
     <widget class="QSplitter">
         <property name="name">
-            <cstring>splitter2</cstring>
+            <cstring>splitter4</cstring>
         </property>
         <property name="geometry">
             <rect>
                 <x>10</x>
-                <y>10</y>
-                <width>1000</width>
-                <height>720</height>
+                <y>20</y>
+                <width>790</width>
+                <height>710</height>
             </rect>
         </property>
         <property name="orientation">
-            <enum>Horizontal</enum>
+            <enum>Vertical</enum>
         </property>
-        <widget class="QSplitter">
-            <property name="name">
-                <cstring>splitter1</cstring>
-            </property>
-            <property name="orientation">
-                <enum>Vertical</enum>
-            </property>
-            <widget class="QFrame">
-                <property name="name">
-                    <cstring>frame23</cstring>
-                </property>
-                <property name="frameShape">
-                    <enum>StyledPanel</enum>
-                </property>
-                <property name="frameShadow">
-                    <enum>Raised</enum>
-                </property>
-                <widget class="QListView">
-                    <column>
-                        <property name="text">
-                            <string>Column 1</string>
-                        </property>
-                        <property name="clickable">
-                            <bool>true</bool>
-                        </property>
-                        <property name="resizable">
-                            <bool>true</bool>
-                        </property>
-                    </column>
-                <item>
-                    <property name="text">
-                        <string>New Item</string>
-                    </property>
-                    <property name="pixmap">
-                        <pixmap></pixmap>
-                    </property>
-                </item>
-                    <property name="name">
-                        <cstring>PlayList</cstring>
-                    </property>
-                    <property name="geometry">
-                        <rect>
-                            <x>10</x>
-                            <y>17</y>
-                            <width>760</width>
-                            <height>250</height>
-                        </rect>
-                    </property>
-                </widget>
-            </widget>
-            <widget class="QFrame">
-                <property name="name">
-                    <cstring>frame11</cstring>
-                </property>
-                <property name="frameShape">
-                    <enum>StyledPanel</enum>
-                </property>
-                <property name="frameShadow">
-                    <enum>Raised</enum>
-                </property>
-                <widget class="QFrame">
-                    <property name="name">
-                        <cstring>frame4</cstring>
-                    </property>
-                    <property name="geometry">
-                        <rect>
-                            <x>430</x>
-                            <y>320</y>
-                            <width>340</width>
-                            <height>90</height>
-                        </rect>
-                    </property>
-                    <property name="frameShape">
-                        <enum>StyledPanel</enum>
-                    </property>
-                    <property name="frameShadow">
-                        <enum>Raised</enum>
-                    </property>
-                    <widget class="QLabel">
-                        <property name="name">
-                            <cstring>textLabel1_2</cstring>
-                        </property>
-                        <property name="geometry">
-                            <rect>
-                                <x>20</x>
-                                <y>40</y>
-                                <width>100</width>
-                                <height>27</height>
-                            </rect>
-                        </property>
-                        <property name="font">
-                            <font>
-                                <pointsize>8</pointsize>
-                            </font>
-                        </property>
-                        <property name="text">
-                            <string>Add to Playlist:</string>
-                        </property>
-                    </widget>
-                    <widget class="QComboBox">
-                        <property name="name">
-                            <cstring>cueChannel</cstring>
-                        </property>
-                        <property name="geometry">
-                            <rect>
-                                <x>130</x>
-                                <y>10</y>
-                                <width>106</width>
-                                <height>25</height>
-                            </rect>
-                        </property>
-                        <property name="font">
-                            <font>
-                                <pointsize>8</pointsize>
-                            </font>
-                        </property>
-                    </widget>
-                    <widget class="QComboBox">
-                        <property name="name">
-                            <cstring>playlistChannel</cstring>
-                        </property>
-                        <property name="geometry">
-                            <rect>
-                                <x>130</x>
-                                <y>40</y>
-                                <width>106</width>
-                                <height>25</height>
-                            </rect>
-                        </property>
-                        <property name="font">
-                            <font>
-                                <pointsize>8</pointsize>
-                            </font>
-                        </property>
-                    </widget>
-                    <widget class="QPushButton">
-                        <property name="name">
-                            <cstring>pushButton3</cstring>
-                        </property>
-                        <property name="geometry">
-                            <rect>
-                                <x>240</x>
-                                <y>40</y>
-                                <width>79</width>
-                                <height>27</height>
-                            </rect>
-                        </property>
-                        <property name="font">
-                            <font>
-                                <pointsize>8</pointsize>
-                            </font>
-                        </property>
-                        <property name="text">
-                            <string>&amp;Add</string>
-                        </property>
-                        <property name="accel">
-                            <string>Alt+A</string>
-                        </property>
-                    </widget>
-                    <widget class="QPushButton">
-                        <property name="name">
-                            <cstring>cueButton</cstring>
-                        </property>
-                        <property name="geometry">
-                            <rect>
-                                <x>240</x>
-                                <y>10</y>
-                                <width>79</width>
-                                <height>27</height>
-                            </rect>
-                        </property>
-                        <property name="font">
-                            <font>
-                                <pointsize>8</pointsize>
-                            </font>
-                        </property>
-                        <property name="text">
-                            <string>&amp;Cue</string>
-                        </property>
-                        <property name="accel">
-                            <string>Alt+C</string>
-                        </property>
-                    </widget>
-                    <widget class="QLabel">
-                        <property name="name">
-                            <cstring>textLabel3</cstring>
-                        </property>
-                        <property name="geometry">
-                            <rect>
-                                <x>10</x>
-                                <y>10</y>
-                                <width>113</width>
-                                <height>27</height>
-                            </rect>
-                        </property>
-                        <property name="font">
-                            <font>
-                                <pointsize>8</pointsize>
-                            </font>
-                        </property>
-                        <property name="text">
-                            <string>Cue Track in Player:</string>
-                        </property>
-                    </widget>
-                </widget>
-                <widget class="QListView">
-                    <property name="name">
-                        <cstring>songDBListView</cstring>
-                    </property>
-                    <property name="geometry">
-                        <rect>
-                            <x>10</x>
-                            <y>20</y>
-                            <width>760</width>
-                            <height>280</height>
-                        </rect>
-                    </property>
-                </widget>
-                <widget class="QFrame">
-                    <property name="name">
-                        <cstring>frame3</cstring>
-                    </property>
-                    <property name="geometry">
-                        <rect>
-                            <x>10</x>
-                            <y>320</y>
-                            <width>410</width>
-                            <height>90</height>
-                        </rect>
-                    </property>
-                    <property name="frameShape">
-                        <enum>StyledPanel</enum>
-                    </property>
-                    <property name="frameShadow">
-                        <enum>Raised</enum>
-                    </property>
-                    <widget class="QComboBox">
-                        <property name="name">
-                            <cstring>genre</cstring>
-                        </property>
-                        <property name="geometry">
-                            <rect>
-                                <x>200</x>
-                                <y>30</y>
-                                <width>106</width>
-                                <height>25</height>
-                            </rect>
-                        </property>
-                        <property name="font">
-                            <font>
-                                <pointsize>8</pointsize>
-                            </font>
-                        </property>
-                    </widget>
-                    <widget class="QLineEdit">
-                        <property name="name">
-                            <cstring>searchFor</cstring>
-                        </property>
-                        <property name="geometry">
-                            <rect>
-                                <x>10</x>
-                                <y>30</y>
-                                <width>180</width>
-                                <height>25</height>
-                            </rect>
-                        </property>
-                        <property name="font">
-                            <font>
-                                <pointsize>8</pointsize>
-                            </font>
-                        </property>
-                    </widget>
-                    <widget class="QLabel">
-                        <property name="name">
-                            <cstring>textLabel1</cstring>
-                        </property>
-                        <property name="geometry">
-                            <rect>
-                                <x>10</x>
-                                <y>10</y>
-                                <width>100</width>
-                                <height>18</height>
-                            </rect>
-                        </property>
-                        <property name="font">
-                            <font>
-                                <pointsize>8</pointsize>
-                            </font>
-                        </property>
-                        <property name="text">
-                            <string>Fulltextsearch</string>
-                        </property>
-                    </widget>
-                    <widget class="QCheckBox">
-                        <property name="name">
-                            <cstring>onlyFree</cstring>
-                        </property>
-                        <property name="geometry">
-                            <rect>
-                                <x>10</x>
-                                <y>60</y>
-                                <width>180</width>
-                                <height>23</height>
-                            </rect>
-                        </property>
-                        <property name="font">
-                            <font>
-                                <pointsize>8</pointsize>
-                            </font>
-                        </property>
-                        <property name="text">
-                            <string>only free mar&amp;ked songs</string>
-                        </property>
-                        <property name="accel">
-                            <string>Alt+K</string>
-                        </property>
-                        <property name="checked">
-                            <bool>true</bool>
-                        </property>
-                        <property name="tristate">
-                            <bool>false</bool>
-                        </property>
-                    </widget>
-                    <widget class="QLabel">
-                        <property name="name">
-                            <cstring>textLabel2</cstring>
-                        </property>
-                        <property name="geometry">
-                            <rect>
-                                <x>200</x>
-                                <y>10</y>
-                                <width>106</width>
-                                <height>18</height>
-                            </rect>
-                        </property>
-                        <property name="font">
-                            <font>
-                                <pointsize>8</pointsize>
-                            </font>
-                        </property>
-                        <property name="text">
-                            <string>Genre:</string>
-                        </property>
-                    </widget>
-                    <widget class="QPushButton">
-                        <property name="name">
-                            <cstring>searchButton</cstring>
-                        </property>
-                        <property name="geometry">
-                            <rect>
-                                <x>320</x>
-                                <y>30</y>
-                                <width>83</width>
-                                <height>27</height>
-                            </rect>
-                        </property>
-                        <property name="font">
-                            <font>
-                                <pointsize>8</pointsize>
-                            </font>
-                        </property>
-                        <property name="text">
-                            <string>S&amp;earch</string>
-                        </property>
-                        <property name="accel">
-                            <string>Alt+E</string>
-                        </property>
-                        <property name="on">
-                            <bool>false</bool>
-                        </property>
-                        <property name="default">
-                            <bool>true</bool>
-                        </property>
-                    </widget>
-                </widget>
-            </widget>
-        </widget>
         <widget class="QFrame">
             <property name="name">
-                <cstring>frame22</cstring>
+                <cstring>playListFrame</cstring>
             </property>
             <property name="frameShape">
                 <enum>StyledPanel</enum>
@@ -423,361 +46,366 @@
             <property name="frameShadow">
                 <enum>Raised</enum>
             </property>
+            <widget class="QListView">
+                <property name="name">
+                    <cstring>PlayListView</cstring>
+                </property>
+                <property name="geometry">
+                    <rect>
+                        <x>10</x>
+                        <y>17</y>
+                        <width>770</width>
+                        <height>320</height>
+                    </rect>
+                </property>
+            </widget>
+        </widget>
+        <widget class="QFrame">
+            <property name="name">
+                <cstring>songDBFrame</cstring>
+            </property>
+            <property name="frameShape">
+                <enum>StyledPanel</enum>
+            </property>
+            <property name="frameShadow">
+                <enum>Raised</enum>
+            </property>
+            <widget class="QFrame">
+                <property name="name">
+                    <cstring>frame3</cstring>
+                </property>
+                <property name="geometry">
+                    <rect>
+                        <x>10</x>
+                        <y>250</y>
+                        <width>410</width>
+                        <height>90</height>
+                    </rect>
+                </property>
+                <property name="frameShape">
+                    <enum>StyledPanel</enum>
+                </property>
+                <property name="frameShadow">
+                    <enum>Raised</enum>
+                </property>
+                <widget class="QComboBox">
+                    <property name="name">
+                        <cstring>genre</cstring>
+                    </property>
+                    <property name="geometry">
+                        <rect>
+                            <x>200</x>
+                            <y>30</y>
+                            <width>106</width>
+                            <height>25</height>
+                        </rect>
+                    </property>
+                    <property name="font">
+                        <font>
+                            <pointsize>8</pointsize>
+                        </font>
+                    </property>
+                </widget>
+                <widget class="QLineEdit">
+                    <property name="name">
+                        <cstring>searchFor</cstring>
+                    </property>
+                    <property name="geometry">
+                        <rect>
+                            <x>10</x>
+                            <y>30</y>
+                            <width>180</width>
+                            <height>25</height>
+                        </rect>
+                    </property>
+                    <property name="font">
+                        <font>
+                            <pointsize>8</pointsize>
+                        </font>
+                    </property>
+                </widget>
+                <widget class="QLabel">
+                    <property name="name">
+                        <cstring>textLabel1</cstring>
+                    </property>
+                    <property name="geometry">
+                        <rect>
+                            <x>10</x>
+                            <y>10</y>
+                            <width>100</width>
+                            <height>18</height>
+                        </rect>
+                    </property>
+                    <property name="font">
+                        <font>
+                            <pointsize>8</pointsize>
+                        </font>
+                    </property>
+                    <property name="text">
+                        <string>Fulltextsearch</string>
+                    </property>
+                </widget>
+                <widget class="QCheckBox">
+                    <property name="name">
+                        <cstring>onlyFree</cstring>
+                    </property>
+                    <property name="geometry">
+                        <rect>
+                            <x>10</x>
+                            <y>60</y>
+                            <width>180</width>
+                            <height>23</height>
+                        </rect>
+                    </property>
+                    <property name="font">
+                        <font>
+                            <pointsize>8</pointsize>
+                        </font>
+                    </property>
+                    <property name="text">
+                        <string>only free mar&amp;ked songs</string>
+                    </property>
+                    <property name="accel">
+                        <string>Alt+K</string>
+                    </property>
+                    <property name="checked">
+                        <bool>true</bool>
+                    </property>
+                    <property name="tristate">
+                        <bool>false</bool>
+                    </property>
+                </widget>
+                <widget class="QLabel">
+                    <property name="name">
+                        <cstring>textLabel2</cstring>
+                    </property>
+                    <property name="geometry">
+                        <rect>
+                            <x>200</x>
+                            <y>10</y>
+                            <width>106</width>
+                            <height>18</height>
+                        </rect>
+                    </property>
+                    <property name="font">
+                        <font>
+                            <pointsize>8</pointsize>
+                        </font>
+                    </property>
+                    <property name="text">
+                        <string>Genre:</string>
+                    </property>
+                </widget>
+                <widget class="QPushButton">
+                    <property name="name">
+                        <cstring>searchButton</cstring>
+                    </property>
+                    <property name="geometry">
+                        <rect>
+                            <x>320</x>
+                            <y>30</y>
+                            <width>83</width>
+                            <height>27</height>
+                        </rect>
+                    </property>
+                    <property name="font">
+                        <font>
+                            <pointsize>8</pointsize>
+                        </font>
+                    </property>
+                    <property name="text">
+                        <string>S&amp;earch</string>
+                    </property>
+                    <property name="accel">
+                        <string>Alt+E</string>
+                    </property>
+                    <property name="on">
+                        <bool>false</bool>
+                    </property>
+                    <property name="default">
+                        <bool>true</bool>
+                    </property>
+                </widget>
+            </widget>
+            <widget class="QFrame">
+                <property name="name">
+                    <cstring>frame4</cstring>
+                </property>
+                <property name="geometry">
+                    <rect>
+                        <x>440</x>
+                        <y>250</y>
+                        <width>340</width>
+                        <height>90</height>
+                    </rect>
+                </property>
+                <property name="frameShape">
+                    <enum>StyledPanel</enum>
+                </property>
+                <property name="frameShadow">
+                    <enum>Raised</enum>
+                </property>
+                <widget class="QLabel">
+                    <property name="name">
+                        <cstring>textLabel1_2</cstring>
+                    </property>
+                    <property name="geometry">
+                        <rect>
+                            <x>20</x>
+                            <y>40</y>
+                            <width>100</width>
+                            <height>27</height>
+                        </rect>
+                    </property>
+                    <property name="font">
+                        <font>
+                            <pointsize>8</pointsize>
+                        </font>
+                    </property>
+                    <property name="text">
+                        <string>Add to Playlist:</string>
+                    </property>
+                </widget>
+                <widget class="QComboBox">
+                    <property name="name">
+                        <cstring>cueChannel</cstring>
+                    </property>
+                    <property name="geometry">
+                        <rect>
+                            <x>130</x>
+                            <y>10</y>
+                            <width>106</width>
+                            <height>25</height>
+                        </rect>
+                    </property>
+                    <property name="font">
+                        <font>
+                            <pointsize>8</pointsize>
+                        </font>
+                    </property>
+                </widget>
+                <widget class="QComboBox">
+                    <property name="name">
+                        <cstring>playlistChannel</cstring>
+                    </property>
+                    <property name="geometry">
+                        <rect>
+                            <x>130</x>
+                            <y>40</y>
+                            <width>106</width>
+                            <height>25</height>
+                        </rect>
+                    </property>
+                    <property name="font">
+                        <font>
+                            <pointsize>8</pointsize>
+                        </font>
+                    </property>
+                </widget>
+                <widget class="QPushButton">
+                    <property name="name">
+                        <cstring>pushButton3</cstring>
+                    </property>
+                    <property name="geometry">
+                        <rect>
+                            <x>240</x>
+                            <y>40</y>
+                            <width>79</width>
+                            <height>27</height>
+                        </rect>
+                    </property>
+                    <property name="font">
+                        <font>
+                            <pointsize>8</pointsize>
+                        </font>
+                    </property>
+                    <property name="text">
+                        <string>&amp;Add</string>
+                    </property>
+                    <property name="accel">
+                        <string>Alt+A</string>
+                    </property>
+                </widget>
+                <widget class="QPushButton">
+                    <property name="name">
+                        <cstring>cueButton</cstring>
+                    </property>
+                    <property name="geometry">
+                        <rect>
+                            <x>240</x>
+                            <y>10</y>
+                            <width>79</width>
+                            <height>27</height>
+                        </rect>
+                    </property>
+                    <property name="font">
+                        <font>
+                            <pointsize>8</pointsize>
+                        </font>
+                    </property>
+                    <property name="text">
+                        <string>&amp;Cue</string>
+                    </property>
+                    <property name="accel">
+                        <string>Alt+C</string>
+                    </property>
+                </widget>
+                <widget class="QLabel">
+                    <property name="name">
+                        <cstring>textLabel3</cstring>
+                    </property>
+                    <property name="geometry">
+                        <rect>
+                            <x>10</x>
+                            <y>10</y>
+                            <width>113</width>
+                            <height>27</height>
+                        </rect>
+                    </property>
+                    <property name="font">
+                        <font>
+                            <pointsize>8</pointsize>
+                        </font>
+                    </property>
+                    <property name="text">
+                        <string>Cue Track in Player:</string>
+                    </property>
+                </widget>
+            </widget>
+            <widget class="QListView">
+                <property name="name">
+                    <cstring>songDBListView</cstring>
+                </property>
+                <property name="geometry">
+                    <rect>
+                        <x>10</x>
+                        <y>10</y>
+                        <width>770</width>
+                        <height>230</height>
+                    </rect>
+                </property>
+            </widget>
         </widget>
     </widget>
+    <widget class="QFrame">
+        <property name="name">
+            <cstring>miscFrame</cstring>
+        </property>
+        <property name="geometry">
+            <rect>
+                <x>810</x>
+                <y>20</y>
+                <width>200</width>
+                <height>710</height>
+            </rect>
+        </property>
+        <property name="frameShape">
+            <enum>StyledPanel</enum>
+        </property>
+        <property name="frameShadow">
+            <enum>Raised</enum>
+        </property>
+    </widget>
 </widget>
-<menubar>
-    <property name="name">
-        <cstring>MenuBar</cstring>
-    </property>
-    <item text="&amp;Edit" name="editMenu">
-        <action name="editUndoAction"/>
-        <action name="editRedoAction"/>
-        <separator/>
-        <action name="editCutAction"/>
-        <action name="editCopyAction"/>
-        <action name="editPasteAction"/>
-        <separator/>
-        <action name="editFindAction"/>
-    </item>
-    <item text="Menu" name="PopupMenuEditor">
-    </item>
-</menubar>
-<toolbars>
-    <toolbar dock="2">
-        <property name="name">
-            <cstring>toolBar</cstring>
-        </property>
-        <property name="label">
-            <string>Tools</string>
-        </property>
-        <action name="fileNewAction"/>
-        <action name="fileOpenAction"/>
-        <action name="fileSaveAction"/>
-        <action name="fileSaveAsAction"/>
-        <action name="filePrintAction"/>
-        <action name="fileExitAction"/>
-    </toolbar>
-</toolbars>
-<actions>
-    <action>
-        <property name="name">
-            <cstring>editUndoAction</cstring>
-        </property>
-        <property name="iconSet">
-            <iconset>image0</iconset>
-        </property>
-        <property name="text">
-            <string>Undo</string>
-        </property>
-        <property name="menuText">
-            <string>&amp;Undo</string>
-        </property>
-        <property name="accel">
-            <string>Ctrl+Z</string>
-        </property>
-    </action>
-    <action>
-        <property name="name">
-            <cstring>editRedoAction</cstring>
-        </property>
-        <property name="iconSet">
-            <iconset>image1</iconset>
-        </property>
-        <property name="text">
-            <string>Redo</string>
-        </property>
-        <property name="menuText">
-            <string>&amp;Redo</string>
-        </property>
-        <property name="accel">
-            <string>Ctrl+Y</string>
-        </property>
-    </action>
-    <action>
-        <property name="name">
-            <cstring>editCutAction</cstring>
-        </property>
-        <property name="iconSet">
-            <iconset>image2</iconset>
-        </property>
-        <property name="text">
-            <string>Cut</string>
-        </property>
-        <property name="menuText">
-            <string>Cu&amp;t</string>
-        </property>
-        <property name="accel">
-            <string>Ctrl+X</string>
-        </property>
-    </action>
-    <action>
-        <property name="name">
-            <cstring>editCopyAction</cstring>
-        </property>
-        <property name="iconSet">
-            <iconset>image3</iconset>
-        </property>
-        <property name="text">
-            <string>Copy</string>
-        </property>
-        <property name="menuText">
-            <string>&amp;Copy</string>
-        </property>
-        <property name="accel">
-            <string>Ctrl+C</string>
-        </property>
-    </action>
-    <action>
-        <property name="name">
-            <cstring>editPasteAction</cstring>
-        </property>
-        <property name="iconSet">
-            <iconset>image4</iconset>
-        </property>
-        <property name="text">
-            <string>Paste</string>
-        </property>
-        <property name="menuText">
-            <string>&amp;Paste</string>
-        </property>
-        <property name="accel">
-            <string>Ctrl+V</string>
-        </property>
-    </action>
-    <action>
-        <property name="name">
-            <cstring>editFindAction</cstring>
-        </property>
-        <property name="iconSet">
-            <iconset>image5</iconset>
-        </property>
-        <property name="text">
-            <string>Find</string>
-        </property>
-        <property name="menuText">
-            <string>&amp;Find...</string>
-        </property>
-        <property name="accel">
-            <string>Ctrl+F</string>
-        </property>
-    </action>
-    <action>
-        <property name="name">
-            <cstring>fileNewAction</cstring>
-        </property>
-        <property name="iconSet">
-            <iconset>image6</iconset>
-        </property>
-        <property name="text">
-            <string>New</string>
-        </property>
-        <property name="menuText">
-            <string>&amp;New</string>
-        </property>
-        <property name="accel">
-            <string>Ctrl+N</string>
-        </property>
-    </action>
-    <action>
-        <property name="name">
-            <cstring>fileOpenAction</cstring>
-        </property>
-        <property name="iconSet">
-            <iconset>image7</iconset>
-        </property>
-        <property name="text">
-            <string>Open</string>
-        </property>
-        <property name="menuText">
-            <string>&amp;Open...</string>
-        </property>
-        <property name="accel">
-            <string>Ctrl+O</string>
-        </property>
-    </action>
-    <action>
-        <property name="name">
-            <cstring>fileSaveAction</cstring>
-        </property>
-        <property name="iconSet">
-            <iconset>image8</iconset>
-        </property>
-        <property name="text">
-            <string>Save</string>
-        </property>
-        <property name="menuText">
-            <string>&amp;Save</string>
-        </property>
-        <property name="accel">
-            <string>Ctrl+S</string>
-        </property>
-    </action>
-    <action>
-        <property name="name">
-            <cstring>fileSaveAsAction</cstring>
-        </property>
-        <property name="text">
-            <string>Save As</string>
-        </property>
-        <property name="menuText">
-            <string>Save &amp;As...</string>
-        </property>
-        <property name="accel">
-            <string></string>
-        </property>
-    </action>
-    <action>
-        <property name="name">
-            <cstring>filePrintAction</cstring>
-        </property>
-        <property name="iconSet">
-            <iconset>image9</iconset>
-        </property>
-        <property name="text">
-            <string>Print</string>
-        </property>
-        <property name="menuText">
-            <string>&amp;Print...</string>
-        </property>
-        <property name="accel">
-            <string>Ctrl+P</string>
-        </property>
-    </action>
-    <action>
-        <property name="name">
-            <cstring>fileExitAction</cstring>
-        </property>
-        <property name="text">
-            <string>Exit</string>
-        </property>
-        <property name="menuText">
-            <string>E&amp;xit</string>
-        </property>
-        <property name="accel">
-            <string></string>
-        </property>
-    </action>
-</actions>
-<images>
-    <image name="image0">
-        <data format="PNG" length="216">89504e470d0a1a0a0000000d4948445200000016000000160806000000c4b46c3b0000009f49444154388ded93b10e85300845af6fe2873b9a9786d11f76ab0341285a6d47a36721d872b99616f8782cd3d8762e1209c0ba7f5d3221fd53a5e592a500a9d1888b895d45ab9f8ec529343367c07cd1b8767e22a2e231bf43f74bf39f2dac2e7aa73da2be5e70c2e4a23a6dfdfa195465c1b19fb63aef45eb0fc2141635ef15afaf60e38c479dcb4c38f759b885331711d5680cbebc88bf3d2383fe78271bebb943a65dfb4a6c0000000049454e44ae426082</data>
-    </image>
-    <image name="image1">
-        <data format="PNG" length="216">89504e470d0a1a0a0000000d4948445200000016000000160806000000c4b46c3b0000009f49444154388ded93bb0e80300845a9933fecd8988638f587dd703014e8cbea66d2bb98b670b8100498faad5c7e8101c9ef2b009cea96cfbe881f042309a4f7dd1a0590b8780ab04e5bce22d94e741c9bda2c589246dad59d79579e0116093e6b8486bc93780d1529f0fa02cc70cee3d957c1e5635fb9539b9f391e1d47be3d657e0263d033fbe2b46b0ae9de0ea478c487027d55564b3b1effd3a6a69e75011a8141ba9e169c2b0000000049454e44ae426082</data>
-    </image>
-    <image name="image2">
-        <data format="PNG" length="217">89504e470d0a1a0a0000000d4948445200000016000000160806000000c4b46c3b000000a049444154388dcd92b10e83300c442f15437f98b193c7fc70363340110a97e60cb4e5168493bc3c3906fe140fd6d73c2e16b927b8db0615cc40e92cb80b380a7ec7ab6f37aad116289df9da544422b701908d6d8166192e80575802caf26f217b92da740b3c0ccf0452c3c2f01680f598c3877d293b303666b590da93ee248ff7e9f02bed0dd97e0a6606a5b16e3e5f26457920eb8e5ce336f3d9ac2060f49b4ccf2535eb95f82c8c0000000049454e44ae426082</data>
-    </image>
-    <image name="image3">
-        <data format="PNG" length="274">89504e470d0a1a0a0000000d4948445200000016000000160806000000c4b46c3b000000d949444154388dd5943d0e83300c469f11430ed5a56ba5de067582896ef44e5d2af54ad9dc218282b0f92d433f29b282cde7172b00ff26017441cd366355db5b44fa75ab941b2690ba75514474ad7967ec516f35ef466111a7670d1081e0c4ca6da69e00857a22df28d4e651b30e5d64b4927730f34991f3a9c4325f30e33899bf5c2152f27ea1fdb1b8b7e26b16cc7cdba8b8a57da0e4d933df491c10b90ff6692c95ec22562d46ef883cf801b15fbf99d852bffe30e2aca5f196778fed5a06c433678cba85389fa962f78ce7080e214e1f81f777b3e281fa0056d7aed78a5954ac0000000049454e44ae426082</data>
-    </image>
-    <image name="image4">
-        <data format="PNG" length="361">89504e470d0a1a0a0000000d4948445200000016000000160806000000c4b46c3b0000013049444154388db595c18e832018843f1a0fbc4f6fdba44fb5dc4a8cc19ed8e7da5bdf8783c9bf07c445c4aadbed2464f8058661d0086f82da18973fac594caa8920d953b52eb918490f36458f8a9f92a8bf7b5c17b9144a2d4765fecc8602c4779e80011cb6b53cbe1f8421a01bbdcae78f33ae738045e331ad99b93e01040cbaf180059816333013cbeb088b6e92a9399a488e3018341e305cae97d52073683c6188274da60ae171e7c1e0ef9153bd974b9cca9d93f3a375090588eb5875625b0f04406fb04d7af58c974e0222b7d59c95ea11b98dafe36fce8b8c97d9f951e06be154e473ac49e202564dc2cf328c228c223584a9978b3771e8d96def735c8aefca78cbb152fdd8d7d3fc9733ae5dac52fd7f645c83e6a58c6b1c4f905de87a737214e064c76fc6cbbe2fafe437e107ffe5542f3a2267690000000049454e44ae426082</data>
-    </image>
-    <image name="image5">
-        <data format="PNG" length="785">89504e470d0a1a0a0000000d4948445200000016000000160806000000c4b46c3b000002d849444154388dd594c16b5c5514c67f13dee20666711f8cf01e449881069c4517932a74a65ac88488c42a38d44d77623776e7baff46830b5742521786099461849619456d0ac6761696bc8503776002ef8181771717de815c782eaa55a8612216c16f77e0f23b1f87efbbf07f53e5afc3603828b379869919c443e185b8aa89eb31cdd52657ae5ea99c053a13bcd7df2b278709ea4248eb8d365205152866d384a3071342a0bbde65e3ed8d73c12b7f4087fb43d6dee9b07ee30600722a58271008a9cb997c358499a5f741ef5cce9746e35139399cd0f9a847ebbd2d6c6191f932761aa2a631e90f202796c666075634078707e73ac5523a4f511762baebef82077d12934e53727f84098ed03e82ef2370058d761333cb180c07e54270726c68bdd52627471c244f0d592dc1d6326c60b0418626243fb6a86a0891c2a676b16304c26a889c0a2630c8eb39541538503e460511897d0235105710d63426330bc1817821f705b802e5c18a4579e03842fb06e697315ccc10af2844100f1ab5d8b10a409c050fd6e5280fb92bd03ec4fc3c412e5aa406ca8304024e38079725ad35e638c53a0b7e99fc244702302e8128c77a411c586fc1419aa534579b8bc1cdd526d937137090bb148267f10a7d84cca07042e104bc229d1b1a4148580d1783afbd7fadd2a8c51c3c182281c23a4105909c3ec2ea84e5006c5e90fe9a223f191aaf35d02b9abdfe5ef9f0bb8767c66e09a0d96a125b45beff08ed0107d1ab1ad508d15e118ba0be3574deec70f3e39b95e469c2f8eb31db9f6d33b8f7f7997e5ecdd1785426938427d323945e7e1639147292a204ba9b5daef7ae57001efff8b8eceff7e9eff7d15ad3fbb0c75a6b8d8dee9fffc80b9d1fdd1f95666e10271040f44a4463a5c1a5cea517deeeecee94773fbf8bc90c5b9b5bb4d7dbcf97ff6b8dc6a3f2f6a7b7cb7abd5eb62fb7cb3bdb7716d6fd1f69e78b9db27db95dd6ebf5f2d627b7ca9763fb778dee8fcadd2f7711919789fd8ff41bbbd8637ccf4c31d20000000049454e44ae426082</data>
-    </image>
-    <image name="image6">
-        <data format="PNG" length="188">89504e470d0a1a0a0000000d4948445200000016000000160806000000c4b46c3b0000008349444154388dedd53d0ac0200c05e06771f02815bae8d6b1ab07ee490a5ec5a1904e758a3f443a147c2048c0cf2001818fa2981a0d9ccd59b82211151700d8cd361b60e1569c734d5c4b60bb5a186d0000f18a04e659447038024e9c48772ae222d8ef3eef4b9d8b60a5aa032183dfc9685d269a8a9e4c78c213ae64e407e9f57e9207b4b42e9c9c6950390000000049454e44ae426082</data>
-    </image>
-    <image name="image7">
-        <data format="PNG" length="227">89504e470d0a1a0a0000000d4948445200000016000000160806000000c4b46c3b000000aa49444154388ded94bb12c3200c04570c857f3a93c9e4a7d3c905e080c11818a5cb35e2619d962b0c7f45c9428fde78e88aefd9349de979bd423c3254dc0f4c01f01717332f69c58300aa9aee055044867d2f3ff4dfa172d43049aaf399e12e039fac7db916f158edab99f142d6959a19e7a6ef176cc0276beaed1fcf509b1917a63e346d11a1b74fa680c428ec48a351496c419a2f54d58e34c98540ec480b624bd2ca785196bfdd31edf7bd60b7b8b7597d0000000049454e44ae426082</data>
-    </image>
-    <image name="image8">
-        <data format="PNG" length="345">89504e470d0a1a0a0000000d4948445200000016000000160806000000c4b46c3b0000012049444154388db595314ec43010455f908ba15bca3d473a22e5565408a128da8a5b212ddd9e63db744c61090aef6ce29824362c23459e1f79be7f7e4663f8a7a82eebd7ad799d656f07500f2faf707c3f224ec0030ed4eb2aae1f6b4e1f27f050b735007746ac1ee4928b13d46b44b286437dc016d7545c2007c08fe4a66c8e77ba679073c040d336911791e2e971579241107d48941aa929eebbf024c432f98c58e93dea3f17959be2697d96c7839c61a7191e8ff589623590e17184e7f5391e6775c7bc3ecfe36de53f79ec46b2e051dfa5adb3157d977a9cf4b1b8b0718a4bd6c40a7b6927ff16af2a7e7a2e720218674d42bc74f252d8a052af346db3ddc7f3bfbb14c57d9cabb8b88f4b1417cd8a12c56bb3a29ae4b7ba9eaaed2d7f886f6c7efb3e1557ff160000000049454e44ae426082</data>
-    </image>
-    <image name="image9">
-        <data format="PNG" length="925">89504e470d0a1a0a0000000d4948445200000016000000160806000000c4b46c3b0000036449444154388d8d94cf8b1c4514c73fb3d6c02b68a11bf63073db05854c40c88a07d720c1f536ac1e2427975cdc2898e41f1036376f5e3dba27231e5c37b70d28b928998b260be6c7084a3ab042372a74814dea8105e5a17b7a779319b02eafabbbdfb7bfeffbfd56f758b06e7f773b6260b03c800018d0a0cd7568ae3528bef66449c6f98df3bd93fd66113006d65f5bc7d50e318206ed6a9aa4ddbefcbba4f8a398d73e7f8911a60fa61dd334493ba679c81123dd7e1eca42e0aaaec8920cd563663349c408852bb0c652d515c3e5e173fd2fcc03bd3bb91bebbac6261683418c202260c0602080158b11439f3e17362ef49ec598cb588362138bd6c763ce98cfb49d31af423577e285c0043a933ab040074a685f0ef3106069decd34493bd34ea6e164e466cf16b9f49c36007bfb7b71f4d288e1f2f038bb33966d9d7d70f2f304fd57495f1cb2f9eedb1ddea9efddf9e14e9cfe36e5f0fb4344042bb64b47e54e574cd35d1e954c7e9c50b8822b1f5f89e377c66c8e377bbd93a087f7a7f8b2c2d58a184ec970da382133195e94b22c98fc34a1281daa15a333ab6c7fb8dd4831633a7e730c491bfcda81117c50ecac06f0010ecd3d0ec23e1b6103b92fec7eb94bfe6bde18afcaea995103fac5ee8df8f4cfa7f1ffacc7f1711cc5519428711447f1e12f0fe3679f7c1ed7ceadc5c16025a6691a57062bd1144705db97b6a03fdfdd679720bcc53a823066ccd957ce92c910a705bb5f7f85738e749062e80b8f7e2f2028d41e120bc6634dd6e4360109821aa0564884abf5a76c999c613de491c9d1ba62b8b20aaa8d1c80298f9e9089a50a1ef1e05044059529a2cd4b82a0e2104d511c420a28b916381c5e217f700feda682a5e6587ac4589c2ad297a63980d21e0a1c04c1d118ea706868eea74640156b6c2797a22ca951a8c0fd552180fbc721082e345c3528a8a0c13593d4ae992434cc5ded00f0c1232df0abe7de604982a0d2e616455a661204d5b68a43422b8349db4904a72518013c36c950603018f0c147ef63d428c5931c012c195e0ad00cc8b1925169097810c52228251ec1b65a57c10119bece11819deb3b5c7cef62cf8c5e1e7170f3806f6f1da0ea1101b0d8ce0841856e4c9186f16c0fcd6488b0737d876b57aff5e0c44f686f7f2fee7f734091e79d014d7ab483d0364e5e41b5f90fab53d65e5f63ebd21697b72f7778ff01a8d511b442b900cb0000000049454e44ae426082</data>
-    </image>
-</images>
-<connections>
-    <connection>
-        <sender>editUndoAction</sender>
-        <signal>activated()</signal>
-        <receiver>interface</receiver>
-        <slot>editUndo()</slot>
-    </connection>
-    <connection>
-        <sender>editRedoAction</sender>
-        <signal>activated()</signal>
-        <receiver>interface</receiver>
-        <slot>editRedo()</slot>
-    </connection>
-    <connection>
-        <sender>editCutAction</sender>
-        <signal>activated()</signal>
-        <receiver>interface</receiver>
-        <slot>editCut()</slot>
-    </connection>
-    <connection>
-        <sender>editCopyAction</sender>
-        <signal>activated()</signal>
-        <receiver>interface</receiver>
-        <slot>editCopy()</slot>
-    </connection>
-    <connection>
-        <sender>editPasteAction</sender>
-        <signal>activated()</signal>
-        <receiver>interface</receiver>
-        <slot>editPaste()</slot>
-    </connection>
-    <connection>
-        <sender>editFindAction</sender>
-        <signal>activated()</signal>
-        <receiver>interface</receiver>
-        <slot>editFind()</slot>
-    </connection>
-    <connection>
-        <sender>fileNewAction</sender>
-        <signal>activated()</signal>
-        <receiver>interface</receiver>
-        <slot>fileNew()</slot>
-    </connection>
-    <connection>
-        <sender>fileOpenAction</sender>
-        <signal>activated()</signal>
-        <receiver>interface</receiver>
-        <slot>fileOpen()</slot>
-    </connection>
-    <connection>
-        <sender>fileSaveAction</sender>
-        <signal>activated()</signal>
-        <receiver>interface</receiver>
-        <slot>fileSave()</slot>
-    </connection>
-    <connection>
-        <sender>fileSaveAsAction</sender>
-        <signal>activated()</signal>
-        <receiver>interface</receiver>
-        <slot>fileSaveAs()</slot>
-    </connection>
-    <connection>
-        <sender>filePrintAction</sender>
-        <signal>activated()</signal>
-        <receiver>interface</receiver>
-        <slot>filePrint()</slot>
-    </connection>
-    <connection>
-        <sender>fileExitAction</sender>
-        <signal>activated()</signal>
-        <receiver>interface</receiver>
-        <slot>fileExit()</slot>
-    </connection>
-</connections>
-<slots>
-    <slot>editUndo()</slot>
-    <slot>editRedo()</slot>
-    <slot>editCut()</slot>
-    <slot>editCopy()</slot>
-    <slot>editPaste()</slot>
-    <slot>editFind()</slot>
-    <slot>fileNew()</slot>
-    <slot>fileOpen()</slot>
-    <slot>fileSave()</slot>
-    <slot>fileSaveAs()</slot>
-    <slot>filePrint()</slot>
-    <slot>fileExit()</slot>
-</slots>
 <layoutdefaults spacing="6" margin="11"/>
 </UI>

@@ -103,6 +103,9 @@ mainFormDlg::mainFormDlg(QWidget* parent, const char* name, WFlags fl)
 			addNewJackChannel( config->readEntry( "/radiomixer/channel_"+QString::number(i)+"/name", "JACKPORT_"+QString::number(i+1) ) );
 #endif
 	}
+
+	playListMgr = new playListManager(this);
+
 	delete config;
 }
 
@@ -264,7 +267,7 @@ void mainFormDlg::addNewFilePlayer( )
 {
 	mixerGuiPlayer* channel = new mixerGuiPlayer( playerGuis.count()+1, player, frame10, "channelXY");
 	playerGuis.append( channel );
-	localPlaylistPointers.append( &(channel->player->playList) );
+//	localPlaylistPointers.append( &(channel->player->playList) );
 	connect( channel, SIGNAL(global_getNextTrack( QString )), this, SLOT(globalPlaylist_getNextTrack( QString )) );
 #ifdef ENABLE_HWMIXER
 	connect( miPu, SIGNAL( butPres( int, int )), channel, SLOT( buttonPressed( int, int ) ) );
@@ -649,14 +652,14 @@ void mainFormDlg::playlistAddTitle( QString player, title song )
 {
 	if( player == "Global Playlist")
 		globalPlaylist.append( song );
-	else
+/*	else
 	{
 		QValueVector<mixerChannelGUI*>::iterator playerIt;
 		for( playerIt = playerGuis.begin(); playerIt != playerGuis.end(); ++playerIt )
 			if( (*playerIt)->getName() == player && (*playerIt)->getType() == "PLAYER" )
 				(dynamic_cast<mixerGuiPlayer*>(*playerIt))->player->playList.append( song );
 	}
-}
+*/}
 
 void mainFormDlg::showAbout()
 {
@@ -708,5 +711,11 @@ void mainFormDlg::networkDeviceStatusRefresh( )
 	mixerStatus->setText(tr("Mixer device status: %1").arg( miPu->isConnected()?tr("connected"):tr("disconnected") ));
 	mixerStatus->setPaletteBackgroundColor( (miPu->isConnected()?green:red).dark(120) );
 #endif
+}
+
+void mainFormDlg::show( )
+{
+	playListMgr->show();
+	RadioMixer::show();
 }
 

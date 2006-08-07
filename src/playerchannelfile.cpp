@@ -29,7 +29,7 @@ playerChannelFile::playerChannelFile(QObject *parent, const char *name)
 	loopMode = FALSE;
 	decoder = NULL;
 
-	connect( &playList, SIGNAL( changed() ), this, SLOT( refresh() ) );
+//	connect( &playList, SIGNAL( changed() ), this, SLOT( refresh() ) );
 }
 
 playerChannelFile::~playerChannelFile()
@@ -186,7 +186,7 @@ const int playerChannelFile::getTime( )
 void playerChannelFile::setName( QString newName )
 {
 	playerChannelStd::setName( newName );
-	playList.setPlayerName( newName );
+//	playList.setPlayerName( newName );
 	emit( nameChanged( newName ) );
 	emit( refreshed() );
 }

@@ -56,6 +56,7 @@
 #include <qtabwidget.h>
 
 // Andere Dialoge einbinden
+#include "playlistmanager.h"
 #include "prefdlg.h"
 #include "playlistdlg.h"
 #include "metainfo.h"
@@ -89,7 +90,9 @@ protected:
 #endif
 	QValueVector<playLST*> localPlaylistPointers;
 	QValueVector<mixerChannelGUI*> playerGuis;
-		
+
+	playListManager*	playListMgr;
+
 	// Settings storage
 	QSettings* config;
 
@@ -98,6 +101,7 @@ protected:
 
 public slots:
   /*$PUBLIC_SLOTS$*/
+    virtual void show ();
     virtual void showPreferences();
     virtual void showPlaylist();
     virtual void addNewFilePlayer();

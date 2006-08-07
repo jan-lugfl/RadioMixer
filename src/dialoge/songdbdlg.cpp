@@ -30,7 +30,7 @@ songDBDlg::songDBDlg(QWidget *parent, const char *name)
 	songDBHndl->setHost( config->readEntry( "/radiomixer/network/songDBHostname", "localhost" ) );
 	connect( songDBHndl, SIGNAL(done(bool)), this, SLOT(displayData(bool)));
 
-	songDB = new QHttpRequestHeader( "POST", config->readEntry( "/radiomixer/network/songDBScriptname", "xmlctrl.pl" ) );
+	songDB = new QHttpRequestHeader( "POST", config->readEntry( "/radiomixer/network/songDBScriptname", "/xmlctrl.pl" ) );
 	songDB->setValue( "Host", config->readEntry( "/radiomixer/network/songDBHostname", "localhost" ) );
 
 	songDBListView->addColumn(tr("Name"));
@@ -109,7 +109,7 @@ void songDBDlg::displayData( bool )
 			switch(state)
 			{
 				case 1: //cue response
-//					emit cueTrack( cueChannel->currentText(),  songObj );
+					emit cueTrack( cueChannel->currentText(),  dynamic_cast<playListItem*>(songDBListView->selectedItem()) );
 					break;
 				case 2: //Add to playlist response
 //					emit addToPlaylist( playlistChannel->currentText(),  songObj );

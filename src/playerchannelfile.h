@@ -25,7 +25,6 @@
 #include "playerchannelstd.h"
 #include "channelbufmngr.h"
 #include "filedecoder.h"
-#include "playlst.h" // depricated
 #include "playlistitem.h"
 
 #include <stdio.h>
@@ -68,9 +67,6 @@ public:
 	virtual const float getTotalFrames();
 	virtual const float getPlayedFrames();
 	virtual const float getRemainFrames();
-	
-	// Playlist
-	playLST playList;
 
 protected:
 	QString fileName;

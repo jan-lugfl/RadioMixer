@@ -3,14 +3,6 @@
 # Unterordner relativ zum Projektordner: ./src/dialoge
 # Das Target ist eine Bibliothek:  
 
-INCLUDEPATH += ../../src \
-               ../../src/widgets \
-               .. 
-CONFIG += release \
-          warn_on \
-          qt \
-          staticlib 
-TEMPLATE = lib 
 FORMS += preferencesdlg.ui \
          playlist.ui \
          help_playlist_dlg.ui \
@@ -19,15 +11,26 @@ FORMS += preferencesdlg.ui \
          ch_del_dlg.ui \
          ch_move_dlg.ui \
          cuelist.ui \
-         aboutDialog.ui 
+         aboutDialog.ui \
+         playlistng.ui 
 HEADERS += prefdlg.h \
            playlistdlg.h \
            chanprefdlg.h \
-           cuelistdlg.h 
+           cuelistdlg.h \
+           playlistmanager.h 
 SOURCES += playlistdlg.cpp \
            prefdlg.cpp \
            chanprefdlg.cpp \
-           cuelistdlg.cpp 
+           cuelistdlg.cpp \
+           playlistmanager.cpp 
+INCLUDEPATH += ../../src \
+../../src/widgets \
+..
+CONFIG += release \
+warn_on \
+qt \
+staticlib
+TEMPLATE = lib
 include (../../conf.pri)
 songdb{
   FORMS += songDBDialog.ui
