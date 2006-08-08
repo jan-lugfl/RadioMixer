@@ -124,6 +124,7 @@ public slots:
 protected slots:
   /*$PROTECTED_SLOTS$*/
 	virtual void windowResize();
+	virtual void showPlaylistManager( bool state );
 
 private slots:
     virtual void handleNetworkDeviceErrors( int error );
@@ -133,7 +134,6 @@ private slots:
     virtual void startALSA();
     virtual void disconnectJackd();
     virtual void connectJackd();
-
 };
 
 #endif

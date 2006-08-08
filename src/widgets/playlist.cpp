@@ -21,9 +21,12 @@
  ***************************************************************************/
 #include "playlist.h"
 
-playList::playList( QListView* parent )
- : QListViewItem( parent, "I am a playlist" )
+playList::playList( QListView* parent, QString name )
+ : QListViewItem( parent, name )
 {
+	setDragEnabled( TRUE);
+	setDropEnabled( TRUE);
+	setRenameEnabled( 0, TRUE );
 }
 
 

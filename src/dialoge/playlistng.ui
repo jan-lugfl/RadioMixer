@@ -103,6 +103,9 @@
                         <property name="acceptDrops">
                             <bool>true</bool>
                         </property>
+                        <property name="defaultRenameAction">
+                            <enum>Accept</enum>
+                        </property>
                     </widget>
                 </grid>
             </widget>
@@ -430,11 +433,25 @@
         <receiver>playListNG</receiver>
         <slot>playListAdd()</slot>
     </connection>
+    <connection>
+        <sender>playListView</sender>
+        <signal>contextMenuRequested(QListViewItem*,const QPoint&amp;,int)</signal>
+        <receiver>playListNG</receiver>
+        <slot>showPlaylistContextmenu(QListViewItem*,const QPoint&amp;,int)</slot>
+    </connection>
+    <connection>
+        <sender>songDBListView</sender>
+        <signal>contextMenuRequested(QListViewItem*,const QPoint&amp;,int)</signal>
+        <receiver>playListNG</receiver>
+        <slot>showSongDBContextmenu(QListViewItem*,const QPoint&amp;,int)</slot>
+    </connection>
 </connections>
 <slots>
-    <slot>search()</slot>
-    <slot>cue()</slot>
-    <slot>playListAdd()</slot>
+    <slot access="protected">search()</slot>
+    <slot access="protected">cue()</slot>
+    <slot access="protected">playListAdd()</slot>
+    <slot access="protected">showPlaylistContextmenu( QListViewItem*, const QPoint&amp;, int )</slot>
+    <slot access="protected">showSongDBContextmenu( QListViewItem*, const QPoint&amp;, int )</slot>
 </slots>
 <layoutdefaults spacing="6" margin="11"/>
 </UI>

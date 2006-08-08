@@ -59,12 +59,15 @@
     </item>
     <item text="&amp;Mixer" name="Mixer">
         <action name="netzwerk_mischpultConnectAction"/>
+        <separator/>
         <action name="netzwerk_mischpultStart_Slider_LoopAction"/>
     </item>
     <item text="&amp;Window" name="Window">
+        <action name="playListManagerAction"/>
         <action name="fensterCuesAction"/>
         <action name="editPlaylistAction"/>
         <action name="fensterSongDBAction"/>
+        <separator/>
         <action name="editPreferencesAction"/>
     </item>
     <item text="&amp;Help" name="Help">
@@ -220,6 +223,23 @@
             <string>&amp;About</string>
         </property>
     </action>
+    <action>
+        <property name="name">
+            <cstring>playListManagerAction</cstring>
+        </property>
+        <property name="toggleAction">
+            <bool>true</bool>
+        </property>
+        <property name="on">
+            <bool>true</bool>
+        </property>
+        <property name="text">
+            <string></string>
+        </property>
+        <property name="menuText">
+            <string>&amp;Playlist manager</string>
+        </property>
+    </action>
 </actions>
 <images>
     <image name="image0">
@@ -305,21 +325,28 @@
         <receiver>RadioMixer</receiver>
         <slot>showAbout()</slot>
     </connection>
+    <connection>
+        <sender>playListManagerAction</sender>
+        <signal>toggled(bool)</signal>
+        <receiver>RadioMixer</receiver>
+        <slot>showPlaylistManager(bool)</slot>
+    </connection>
 </connections>
 <slots>
-    <slot>showPreferences()</slot>
-    <slot>showPlaylist()</slot>
-    <slot>connectNetDevice()</slot>
-    <slot>netDeviceSliderLoop()</slot>
-    <slot>showAddChannel()</slot>
-    <slot>showDelChannel()</slot>
-    <slot>showMoveChannel()</slot>
-    <slot>connectJackd()</slot>
-    <slot>disconnectJackd()</slot>
-    <slot>startALSA()</slot>
-    <slot>showCuesWindow()</slot>
-    <slot>showSongDBDialog()</slot>
-    <slot>showAbout()</slot>
+    <slot access="protected">showPreferences()</slot>
+    <slot access="protected">showPlaylist()</slot>
+    <slot access="protected">connectNetDevice()</slot>
+    <slot access="protected">netDeviceSliderLoop()</slot>
+    <slot access="protected">showAddChannel()</slot>
+    <slot access="protected">showDelChannel()</slot>
+    <slot access="protected">showMoveChannel()</slot>
+    <slot access="protected">connectJackd()</slot>
+    <slot access="protected">disconnectJackd()</slot>
+    <slot access="protected">startALSA()</slot>
+    <slot access="protected">showCuesWindow()</slot>
+    <slot access="protected">showSongDBDialog()</slot>
+    <slot access="protected">showAbout()</slot>
+    <slot access="protected">showPlaylistManager( bool state )</slot>
 </slots>
 <layoutdefaults spacing="6" margin="11"/>
 </UI>

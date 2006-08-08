@@ -719,3 +719,12 @@ void mainFormDlg::show( )
 	RadioMixer::show();
 }
 
+void mainFormDlg::showPlaylistManager( bool state )
+{
+	if( state )
+		playListMgr->show();
+	else
+		playListMgr->hide();
+}
+
+

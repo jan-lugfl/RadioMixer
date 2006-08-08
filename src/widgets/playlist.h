@@ -23,6 +23,7 @@
 #define PLAYLIST_H
 
 #include <qlistview.h>
+#include <qobject.h>
 
 /**
 	@author Jan Boysen <trekkie@media-mission.de>
@@ -30,7 +31,7 @@
 class playList : public QListViewItem
 {
 public:
-	playList( QListView* parent );
+	playList( QListView* parent, QString name = QObject::tr("unnamed Playlist") );
 
 	~playList();
 

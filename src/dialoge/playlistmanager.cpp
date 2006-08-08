@@ -25,7 +25,6 @@
 playListManager::playListManager(QWidget *parent, const char *name)
  : playListNG(parent, name)
 {
-	setWFlags( WStyle_Tool );
 	QSettings* config = new QSettings();
 
 #ifdef ENABLE_SONGDB
@@ -41,21 +40,26 @@ playListManager::playListManager(QWidget *parent, const char *name)
 
 	//get Genres from sondDB
 	requestData( "getGenres=1" );
+
+	songDBPopup = new QPopupMenu( songDBListView );
 #else
 	delete songDBFrame;
 #endif
 
-	//songDBListView->setRootIsDecorated(TRUE);
+	// setup the Popup menu of the playListView
+	playListPopup = new QPopupMenu( playListView );
+	playListPopup->insertItem( tr("new &Playlist"), this, SLOT(createNewPlaylist()) );
+	playListPopup->insertItem( tr("&rename Playlist"), this, SLOT(renamePlaylist()) );
+	playListPopup->insertItem( tr("&load Playlist"), this, SLOT(loadPlaylist()) );
+	playListPopup->insertItem( tr("&save Playlist"), this, SLOT(savePlaylist()) );
 
+	playListView->setRootIsDecorated(TRUE);
 	delete config;
 }
 
 playListManager::~ playListManager( )
 {
-#ifdef ENABLE_SONGDB
-	delete songDBHndl;
-	delete songDB;
-#endif
+	qWarning("destruktor");
 }
 
 #ifdef ENABLE_SONGDB
@@ -82,10 +86,6 @@ void playListManager::displayData( bool )
 		if( readdata.doctype().name() == "songDBSongList" )
 		{
 			songDBListView->clear();
-
-			//temorary Playlist storage
-//			playList* songDBPlaylist = new playList( songDBListView );
-//			songDBPlaylist->setOpen(TRUE);
 
 			QDomElement dataroot = readdata.documentElement();
 			QDomNodeList songs = dataroot.childNodes();
@@ -199,4 +199,33 @@ void playListManager::updateLastPlayed( playListItem * item )
 	requestData( "updateLastPlayed=1&filename="+item->getFilename() );
 }
 
+void playListManager::showSongDBContextmenu( QListViewItem * item, const QPoint & pos, int col )
+{
+	songDBPopup->popup( pos );
+}
+
+
+void playListManager::showPlaylistContextmenu( QListViewItem * item, const QPoint & pos, int col )
+{
+	playListPopup->popup( pos );
+}
+
+void playListManager::createNewPlaylist( QString name )
+{
+	playList* newPlaylist = new playList( playListView, name );
+	newPlaylist->setOpen(TRUE);
+}
+
+void playListManager::loadPlaylist( )
+{
+}
+
+void playListManager::savePlaylist( )
+{
+}
+
+void playListManager::renamePlaylist( )
+{
+	playListView->selectedItem()->startRename(0);
+}
 

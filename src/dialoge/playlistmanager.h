@@ -25,7 +25,7 @@
 
 #include "playlistng.h"
 
-#include "playlist.h"
+#include "widgets/playlist.h"
 #include "playlistitem.h"
 
 #ifdef ENABLE_SONGDB
@@ -43,6 +43,7 @@
 #include <qvaluevector.h>
 #include <qmessagebox.h>
 #include <qsplitter.h>
+#include <qpopupmenu.h>
 
 class playListManager: public playListNG {
 Q_OBJECT
@@ -52,6 +53,8 @@ public:
 	~playListManager();
 
 protected:
+	QPopupMenu*	playListPopup;
+
 #ifdef ENABLE_SONGDB
 	QHttp*	songDBHndl;
 	QHttpRequestHeader* songDB;
@@ -60,14 +63,20 @@ protected:
 		QString name;
 	};
 	QValueVector<Genre>	genreList;
+	QPopupMenu*	songDBPopup;
+
 	QString getGenreId( QString genre );
 #endif
 	virtual void resizeEvent ( QResizeEvent *e );
+
 
 private:
 #ifdef ENABLE_SONGDB
 	int state;
 #endif
+
+public slots:
+	virtual void createNewPlaylist( QString name=tr("unnamed Playlist") );
 
 protected slots:
 #ifdef ENABLE_SONGDB
@@ -76,8 +85,13 @@ protected slots:
 	virtual void playListAdd();
 	virtual void cue();
 	virtual void search();
+	virtual void showSongDBContextmenu( QListViewItem * item, const QPoint & pos, int col );
 #endif
 	virtual void updateLastPlayed( playListItem* item ); 
+	virtual void showPlaylistContextmenu( QListViewItem * item, const QPoint & pos, int col );
+	virtual void loadPlaylist();
+	virtual void savePlaylist();
+	virtual void renamePlaylist();	
 
 signals:
 	void cueTrack( QString, playListItem* );
