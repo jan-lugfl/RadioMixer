@@ -23,388 +23,392 @@
     </property>
     <widget class="QSplitter">
         <property name="name">
-            <cstring>splitter4</cstring>
+            <cstring>miscSplitter</cstring>
         </property>
         <property name="geometry">
             <rect>
                 <x>10</x>
-                <y>20</y>
-                <width>790</width>
-                <height>710</height>
-            </rect>
-        </property>
-        <property name="orientation">
-            <enum>Vertical</enum>
-        </property>
-        <widget class="QFrame">
-            <property name="name">
-                <cstring>playListFrame</cstring>
-            </property>
-            <property name="frameShape">
-                <enum>StyledPanel</enum>
-            </property>
-            <property name="frameShadow">
-                <enum>Raised</enum>
-            </property>
-            <widget class="QListView">
-                <property name="name">
-                    <cstring>PlayListView</cstring>
-                </property>
-                <property name="geometry">
-                    <rect>
-                        <x>10</x>
-                        <y>17</y>
-                        <width>770</width>
-                        <height>320</height>
-                    </rect>
-                </property>
-            </widget>
-        </widget>
-        <widget class="QFrame">
-            <property name="name">
-                <cstring>songDBFrame</cstring>
-            </property>
-            <property name="frameShape">
-                <enum>StyledPanel</enum>
-            </property>
-            <property name="frameShadow">
-                <enum>Raised</enum>
-            </property>
-            <widget class="QFrame">
-                <property name="name">
-                    <cstring>frame3</cstring>
-                </property>
-                <property name="geometry">
-                    <rect>
-                        <x>10</x>
-                        <y>250</y>
-                        <width>410</width>
-                        <height>90</height>
-                    </rect>
-                </property>
-                <property name="frameShape">
-                    <enum>StyledPanel</enum>
-                </property>
-                <property name="frameShadow">
-                    <enum>Raised</enum>
-                </property>
-                <widget class="QComboBox">
-                    <property name="name">
-                        <cstring>genre</cstring>
-                    </property>
-                    <property name="geometry">
-                        <rect>
-                            <x>200</x>
-                            <y>30</y>
-                            <width>106</width>
-                            <height>25</height>
-                        </rect>
-                    </property>
-                    <property name="font">
-                        <font>
-                            <pointsize>8</pointsize>
-                        </font>
-                    </property>
-                </widget>
-                <widget class="QLineEdit">
-                    <property name="name">
-                        <cstring>searchFor</cstring>
-                    </property>
-                    <property name="geometry">
-                        <rect>
-                            <x>10</x>
-                            <y>30</y>
-                            <width>180</width>
-                            <height>25</height>
-                        </rect>
-                    </property>
-                    <property name="font">
-                        <font>
-                            <pointsize>8</pointsize>
-                        </font>
-                    </property>
-                </widget>
-                <widget class="QLabel">
-                    <property name="name">
-                        <cstring>textLabel1</cstring>
-                    </property>
-                    <property name="geometry">
-                        <rect>
-                            <x>10</x>
-                            <y>10</y>
-                            <width>100</width>
-                            <height>18</height>
-                        </rect>
-                    </property>
-                    <property name="font">
-                        <font>
-                            <pointsize>8</pointsize>
-                        </font>
-                    </property>
-                    <property name="text">
-                        <string>Fulltextsearch</string>
-                    </property>
-                </widget>
-                <widget class="QCheckBox">
-                    <property name="name">
-                        <cstring>onlyFree</cstring>
-                    </property>
-                    <property name="geometry">
-                        <rect>
-                            <x>10</x>
-                            <y>60</y>
-                            <width>180</width>
-                            <height>23</height>
-                        </rect>
-                    </property>
-                    <property name="font">
-                        <font>
-                            <pointsize>8</pointsize>
-                        </font>
-                    </property>
-                    <property name="text">
-                        <string>only free mar&amp;ked songs</string>
-                    </property>
-                    <property name="accel">
-                        <string>Alt+K</string>
-                    </property>
-                    <property name="checked">
-                        <bool>true</bool>
-                    </property>
-                    <property name="tristate">
-                        <bool>false</bool>
-                    </property>
-                </widget>
-                <widget class="QLabel">
-                    <property name="name">
-                        <cstring>textLabel2</cstring>
-                    </property>
-                    <property name="geometry">
-                        <rect>
-                            <x>200</x>
-                            <y>10</y>
-                            <width>106</width>
-                            <height>18</height>
-                        </rect>
-                    </property>
-                    <property name="font">
-                        <font>
-                            <pointsize>8</pointsize>
-                        </font>
-                    </property>
-                    <property name="text">
-                        <string>Genre:</string>
-                    </property>
-                </widget>
-                <widget class="QPushButton">
-                    <property name="name">
-                        <cstring>searchButton</cstring>
-                    </property>
-                    <property name="geometry">
-                        <rect>
-                            <x>320</x>
-                            <y>30</y>
-                            <width>83</width>
-                            <height>27</height>
-                        </rect>
-                    </property>
-                    <property name="font">
-                        <font>
-                            <pointsize>8</pointsize>
-                        </font>
-                    </property>
-                    <property name="text">
-                        <string>S&amp;earch</string>
-                    </property>
-                    <property name="accel">
-                        <string>Alt+E</string>
-                    </property>
-                    <property name="on">
-                        <bool>false</bool>
-                    </property>
-                    <property name="default">
-                        <bool>true</bool>
-                    </property>
-                </widget>
-            </widget>
-            <widget class="QFrame">
-                <property name="name">
-                    <cstring>frame4</cstring>
-                </property>
-                <property name="geometry">
-                    <rect>
-                        <x>440</x>
-                        <y>250</y>
-                        <width>340</width>
-                        <height>90</height>
-                    </rect>
-                </property>
-                <property name="frameShape">
-                    <enum>StyledPanel</enum>
-                </property>
-                <property name="frameShadow">
-                    <enum>Raised</enum>
-                </property>
-                <widget class="QLabel">
-                    <property name="name">
-                        <cstring>textLabel1_2</cstring>
-                    </property>
-                    <property name="geometry">
-                        <rect>
-                            <x>20</x>
-                            <y>40</y>
-                            <width>100</width>
-                            <height>27</height>
-                        </rect>
-                    </property>
-                    <property name="font">
-                        <font>
-                            <pointsize>8</pointsize>
-                        </font>
-                    </property>
-                    <property name="text">
-                        <string>Add to Playlist:</string>
-                    </property>
-                </widget>
-                <widget class="QComboBox">
-                    <property name="name">
-                        <cstring>cueChannel</cstring>
-                    </property>
-                    <property name="geometry">
-                        <rect>
-                            <x>130</x>
-                            <y>10</y>
-                            <width>106</width>
-                            <height>25</height>
-                        </rect>
-                    </property>
-                    <property name="font">
-                        <font>
-                            <pointsize>8</pointsize>
-                        </font>
-                    </property>
-                </widget>
-                <widget class="QComboBox">
-                    <property name="name">
-                        <cstring>playlistChannel</cstring>
-                    </property>
-                    <property name="geometry">
-                        <rect>
-                            <x>130</x>
-                            <y>40</y>
-                            <width>106</width>
-                            <height>25</height>
-                        </rect>
-                    </property>
-                    <property name="font">
-                        <font>
-                            <pointsize>8</pointsize>
-                        </font>
-                    </property>
-                </widget>
-                <widget class="QPushButton">
-                    <property name="name">
-                        <cstring>pushButton3</cstring>
-                    </property>
-                    <property name="geometry">
-                        <rect>
-                            <x>240</x>
-                            <y>40</y>
-                            <width>79</width>
-                            <height>27</height>
-                        </rect>
-                    </property>
-                    <property name="font">
-                        <font>
-                            <pointsize>8</pointsize>
-                        </font>
-                    </property>
-                    <property name="text">
-                        <string>&amp;Add</string>
-                    </property>
-                    <property name="accel">
-                        <string>Alt+A</string>
-                    </property>
-                </widget>
-                <widget class="QPushButton">
-                    <property name="name">
-                        <cstring>cueButton</cstring>
-                    </property>
-                    <property name="geometry">
-                        <rect>
-                            <x>240</x>
-                            <y>10</y>
-                            <width>79</width>
-                            <height>27</height>
-                        </rect>
-                    </property>
-                    <property name="font">
-                        <font>
-                            <pointsize>8</pointsize>
-                        </font>
-                    </property>
-                    <property name="text">
-                        <string>&amp;Cue</string>
-                    </property>
-                    <property name="accel">
-                        <string>Alt+C</string>
-                    </property>
-                </widget>
-                <widget class="QLabel">
-                    <property name="name">
-                        <cstring>textLabel3</cstring>
-                    </property>
-                    <property name="geometry">
-                        <rect>
-                            <x>10</x>
-                            <y>10</y>
-                            <width>113</width>
-                            <height>27</height>
-                        </rect>
-                    </property>
-                    <property name="font">
-                        <font>
-                            <pointsize>8</pointsize>
-                        </font>
-                    </property>
-                    <property name="text">
-                        <string>Cue Track in Player:</string>
-                    </property>
-                </widget>
-            </widget>
-            <widget class="QListView">
-                <property name="name">
-                    <cstring>songDBListView</cstring>
-                </property>
-                <property name="geometry">
-                    <rect>
-                        <x>10</x>
-                        <y>10</y>
-                        <width>770</width>
-                        <height>230</height>
-                    </rect>
-                </property>
-            </widget>
-        </widget>
-    </widget>
-    <widget class="QFrame">
-        <property name="name">
-            <cstring>miscFrame</cstring>
-        </property>
-        <property name="geometry">
-            <rect>
-                <x>810</x>
-                <y>20</y>
-                <width>200</width>
-                <height>710</height>
+                <y>10</y>
+                <width>1000</width>
+                <height>720</height>
             </rect>
         </property>
         <property name="frameShape">
-            <enum>StyledPanel</enum>
+            <enum>NoFrame</enum>
         </property>
         <property name="frameShadow">
-            <enum>Raised</enum>
+            <enum>Plain</enum>
         </property>
+        <property name="orientation">
+            <enum>Horizontal</enum>
+        </property>
+        <widget class="QSplitter">
+            <property name="name">
+                <cstring>listsSplitter</cstring>
+            </property>
+            <property name="orientation">
+                <enum>Vertical</enum>
+            </property>
+            <widget class="QFrame">
+                <property name="name">
+                    <cstring>playListFrame</cstring>
+                </property>
+                <property name="frameShape">
+                    <enum>StyledPanel</enum>
+                </property>
+                <property name="frameShadow">
+                    <enum>Raised</enum>
+                </property>
+                <grid>
+                    <property name="name">
+                        <cstring>unnamed</cstring>
+                    </property>
+                    <widget class="QListView" row="0" column="0">
+                        <column>
+                            <property name="text">
+                                <string>Name</string>
+                            </property>
+                            <property name="clickable">
+                                <bool>true</bool>
+                            </property>
+                            <property name="resizable">
+                                <bool>true</bool>
+                            </property>
+                        </column>
+                        <column>
+                            <property name="text">
+                                <string>Genre</string>
+                            </property>
+                            <property name="clickable">
+                                <bool>true</bool>
+                            </property>
+                            <property name="resizable">
+                                <bool>true</bool>
+                            </property>
+                        </column>
+                        <column>
+                            <property name="text">
+                                <string>Length</string>
+                            </property>
+                            <property name="clickable">
+                                <bool>true</bool>
+                            </property>
+                            <property name="resizable">
+                                <bool>true</bool>
+                            </property>
+                        </column>
+                        <property name="name">
+                            <cstring>playListView</cstring>
+                        </property>
+                        <property name="acceptDrops">
+                            <bool>true</bool>
+                        </property>
+                    </widget>
+                </grid>
+            </widget>
+            <widget class="QFrame">
+                <property name="name">
+                    <cstring>songDBFrame</cstring>
+                </property>
+                <property name="frameShape">
+                    <enum>StyledPanel</enum>
+                </property>
+                <property name="frameShadow">
+                    <enum>Raised</enum>
+                </property>
+                <grid>
+                    <property name="name">
+                        <cstring>unnamed</cstring>
+                    </property>
+                    <widget class="QLayoutWidget" row="0" column="0">
+                        <property name="name">
+                            <cstring>layout14</cstring>
+                        </property>
+                        <vbox>
+                            <property name="name">
+                                <cstring>unnamed</cstring>
+                            </property>
+                            <widget class="QListView">
+                                <column>
+                                    <property name="text">
+                                        <string>Name</string>
+                                    </property>
+                                    <property name="clickable">
+                                        <bool>true</bool>
+                                    </property>
+                                    <property name="resizable">
+                                        <bool>true</bool>
+                                    </property>
+                                </column>
+                                <column>
+                                    <property name="text">
+                                        <string>Genre</string>
+                                    </property>
+                                    <property name="clickable">
+                                        <bool>true</bool>
+                                    </property>
+                                    <property name="resizable">
+                                        <bool>true</bool>
+                                    </property>
+                                </column>
+                                <column>
+                                    <property name="text">
+                                        <string>Length</string>
+                                    </property>
+                                    <property name="clickable">
+                                        <bool>true</bool>
+                                    </property>
+                                    <property name="resizable">
+                                        <bool>true</bool>
+                                    </property>
+                                </column>
+                                <property name="name">
+                                    <cstring>songDBListView</cstring>
+                                </property>
+                            </widget>
+                            <widget class="QLayoutWidget">
+                                <property name="name">
+                                    <cstring>layout12</cstring>
+                                </property>
+                                <hbox>
+                                    <property name="name">
+                                        <cstring>unnamed</cstring>
+                                    </property>
+                                    <widget class="QFrame">
+                                        <property name="name">
+                                            <cstring>frame3</cstring>
+                                        </property>
+                                        <property name="frameShape">
+                                            <enum>StyledPanel</enum>
+                                        </property>
+                                        <property name="frameShadow">
+                                            <enum>Raised</enum>
+                                        </property>
+                                        <grid>
+                                            <property name="name">
+                                                <cstring>unnamed</cstring>
+                                            </property>
+                                            <widget class="QComboBox" row="1" column="1">
+                                                <property name="name">
+                                                    <cstring>genre</cstring>
+                                                </property>
+                                                <property name="font">
+                                                    <font>
+                                                        <pointsize>8</pointsize>
+                                                    </font>
+                                                </property>
+                                            </widget>
+                                            <widget class="QLineEdit" row="1" column="0">
+                                                <property name="name">
+                                                    <cstring>searchFor</cstring>
+                                                </property>
+                                                <property name="font">
+                                                    <font>
+                                                        <pointsize>8</pointsize>
+                                                    </font>
+                                                </property>
+                                            </widget>
+                                            <widget class="QLabel" row="0" column="0">
+                                                <property name="name">
+                                                    <cstring>textLabel1</cstring>
+                                                </property>
+                                                <property name="font">
+                                                    <font>
+                                                        <pointsize>8</pointsize>
+                                                    </font>
+                                                </property>
+                                                <property name="text">
+                                                    <string>Fulltextsearch</string>
+                                                </property>
+                                            </widget>
+                                            <widget class="QCheckBox" row="2" column="0">
+                                                <property name="name">
+                                                    <cstring>onlyFree</cstring>
+                                                </property>
+                                                <property name="font">
+                                                    <font>
+                                                        <pointsize>8</pointsize>
+                                                    </font>
+                                                </property>
+                                                <property name="text">
+                                                    <string>only free mar&amp;ked songs</string>
+                                                </property>
+                                                <property name="accel">
+                                                    <string>Alt+K</string>
+                                                </property>
+                                                <property name="checked">
+                                                    <bool>true</bool>
+                                                </property>
+                                                <property name="tristate">
+                                                    <bool>false</bool>
+                                                </property>
+                                            </widget>
+                                            <widget class="QLabel" row="0" column="1">
+                                                <property name="name">
+                                                    <cstring>textLabel2</cstring>
+                                                </property>
+                                                <property name="font">
+                                                    <font>
+                                                        <pointsize>8</pointsize>
+                                                    </font>
+                                                </property>
+                                                <property name="text">
+                                                    <string>Genre:</string>
+                                                </property>
+                                            </widget>
+                                            <widget class="QPushButton" row="1" column="2">
+                                                <property name="name">
+                                                    <cstring>searchButton</cstring>
+                                                </property>
+                                                <property name="font">
+                                                    <font>
+                                                        <pointsize>8</pointsize>
+                                                    </font>
+                                                </property>
+                                                <property name="text">
+                                                    <string>S&amp;earch</string>
+                                                </property>
+                                                <property name="accel">
+                                                    <string>Alt+E</string>
+                                                </property>
+                                                <property name="on">
+                                                    <bool>false</bool>
+                                                </property>
+                                                <property name="default">
+                                                    <bool>true</bool>
+                                                </property>
+                                            </widget>
+                                        </grid>
+                                    </widget>
+                                    <spacer>
+                                        <property name="name">
+                                            <cstring>spacer1</cstring>
+                                        </property>
+                                        <property name="orientation">
+                                            <enum>Horizontal</enum>
+                                        </property>
+                                        <property name="sizeType">
+                                            <enum>Expanding</enum>
+                                        </property>
+                                        <property name="sizeHint">
+                                            <size>
+                                                <width>110</width>
+                                                <height>21</height>
+                                            </size>
+                                        </property>
+                                    </spacer>
+                                    <widget class="QFrame">
+                                        <property name="name">
+                                            <cstring>frame4</cstring>
+                                        </property>
+                                        <property name="frameShape">
+                                            <enum>StyledPanel</enum>
+                                        </property>
+                                        <property name="frameShadow">
+                                            <enum>Raised</enum>
+                                        </property>
+                                        <grid>
+                                            <property name="name">
+                                                <cstring>unnamed</cstring>
+                                            </property>
+                                            <widget class="QLabel" row="1" column="0">
+                                                <property name="name">
+                                                    <cstring>textLabel1_2</cstring>
+                                                </property>
+                                                <property name="font">
+                                                    <font>
+                                                        <pointsize>8</pointsize>
+                                                    </font>
+                                                </property>
+                                                <property name="text">
+                                                    <string>Add to Playlist:</string>
+                                                </property>
+                                            </widget>
+                                            <widget class="QLabel" row="0" column="0">
+                                                <property name="name">
+                                                    <cstring>textLabel3</cstring>
+                                                </property>
+                                                <property name="font">
+                                                    <font>
+                                                        <pointsize>8</pointsize>
+                                                    </font>
+                                                </property>
+                                                <property name="text">
+                                                    <string>Cue Track in Player:</string>
+                                                </property>
+                                            </widget>
+                                            <widget class="QComboBox" row="0" column="1">
+                                                <property name="name">
+                                                    <cstring>cueChannel</cstring>
+                                                </property>
+                                                <property name="font">
+                                                    <font>
+                                                        <pointsize>8</pointsize>
+                                                    </font>
+                                                </property>
+                                            </widget>
+                                            <widget class="QComboBox" row="1" column="1">
+                                                <property name="name">
+                                                    <cstring>playlistChannel</cstring>
+                                                </property>
+                                                <property name="font">
+                                                    <font>
+                                                        <pointsize>8</pointsize>
+                                                    </font>
+                                                </property>
+                                            </widget>
+                                            <widget class="QPushButton" row="1" column="2">
+                                                <property name="name">
+                                                    <cstring>pushButton3</cstring>
+                                                </property>
+                                                <property name="font">
+                                                    <font>
+                                                        <pointsize>8</pointsize>
+                                                    </font>
+                                                </property>
+                                                <property name="text">
+                                                    <string>&amp;Add</string>
+                                                </property>
+                                                <property name="accel">
+                                                    <string>Alt+A</string>
+                                                </property>
+                                            </widget>
+                                            <widget class="QPushButton" row="0" column="2">
+                                                <property name="name">
+                                                    <cstring>cueButton</cstring>
+                                                </property>
+                                                <property name="font">
+                                                    <font>
+                                                        <pointsize>8</pointsize>
+                                                    </font>
+                                                </property>
+                                                <property name="text">
+                                                    <string>&amp;Cue</string>
+                                                </property>
+                                                <property name="accel">
+                                                    <string>Alt+C</string>
+                                                </property>
+                                            </widget>
+                                        </grid>
+                                    </widget>
+                                </hbox>
+                            </widget>
+                        </vbox>
+                    </widget>
+                </grid>
+            </widget>
+        </widget>
+        <widget class="QFrame">
+            <property name="name">
+                <cstring>miscFrame</cstring>
+            </property>
+            <property name="frameShape">
+                <enum>StyledPanel</enum>
+            </property>
+            <property name="frameShadow">
+                <enum>Raised</enum>
+            </property>
+        </widget>
     </widget>
 </widget>
 <connections>

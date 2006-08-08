@@ -28,6 +28,7 @@ playListManager::playListManager(QWidget *parent, const char *name)
 	setWFlags( WStyle_Tool );
 	QSettings* config = new QSettings();
 
+#ifdef ENABLE_SONGDB
 	songDBHndl = new QHttp( this, "httpSocket" );
 	songDBHndl->setHost( config->readEntry( "/radiomixer/network/songDBHostname", "localhost" ) );
 	connect( songDBHndl, SIGNAL(done(bool)), this, SLOT(displayData(bool)));
@@ -35,19 +36,14 @@ playListManager::playListManager(QWidget *parent, const char *name)
 	songDB = new QHttpRequestHeader( "POST", config->readEntry( "/radiomixer/network/songDBScriptname", "/xmlctrl.pl" ) );
 	songDB->setValue( "Host", config->readEntry( "/radiomixer/network/songDBHostname", "localhost" ) );
 
-	songDBListView->addColumn(tr("Name"));
-	songDBListView->addColumn(tr("Genre"));
-	songDBListView->addColumn(tr("Length"));
-
-	songDBListView->setColumnWidth(0, 200);
-	songDBListView->setColumnWidth(1, 150);
-	songDBListView->setColumnWidth(2, 30);
-
 	playlistChannel->insertItem( tr("Global Playlist") );
 	genre->insertItem( tr("all Genres") );
 
 	//get Genres from sondDB
 	requestData( "getGenres=1" );
+#else
+	delete songDBFrame;
+#endif
 
 	//songDBListView->setRootIsDecorated(TRUE);
 
@@ -56,10 +52,13 @@ playListManager::playListManager(QWidget *parent, const char *name)
 
 playListManager::~ playListManager( )
 {
+#ifdef ENABLE_SONGDB
 	delete songDBHndl;
 	delete songDB;
+#endif
 }
 
+#ifdef ENABLE_SONGDB
 QString playListManager::getGenreId( QString genre )
 {
 	QValueVector<Genre>::iterator It;
@@ -69,15 +68,6 @@ QString playListManager::getGenreId( QString genre )
 			return It->id;
 	}
 	return "";
-}
-
-void playListManager::resizeEvent( QResizeEvent *e )
-{
-//	songDBListView->resize( e->size().width()-18, e->size().height()-110);
-//	frame3->move( frame3->x(), e->size().height()-95);
-//	frame4->move( e->size().width()-348, e->size().height()-95);
-
-	playListNG::resizeEvent( e );
 }
 
 void playListManager::displayData( bool )
@@ -194,6 +184,13 @@ void playListManager::search( )
 	QString freigabe = onlyFree->isChecked()?"freigabe=1&":"";
 	QString searchGenre = genre->currentItem()>0?"genre="+getGenreId(genre->currentText())+"&":"";
 	requestData( freigabe+searchGenre+"query="+searchFor->text() );
+}
+#endif
+
+void playListManager::resizeEvent( QResizeEvent *e )
+{
+	miscSplitter->resize( e->size().width()-20, e->size().height()-20);
+	playListNG::resizeEvent( e );
 }
 
 void playListManager::updateLastPlayed( playListItem * item )
