@@ -55,8 +55,16 @@ public:
 
 protected:
 	QPopupMenu*	playListPopup;
+	virtual void resizeEvent ( QResizeEvent *e );
 
 #ifdef ENABLE_SONGDB
+private:
+	int state;
+
+private slots:
+	void refreshPlaylists();
+
+protected:
 	QHttp*	songDBHndl;
 	QHttpRequestHeader* songDB;
 	struct Genre {
@@ -65,22 +73,9 @@ protected:
 	};
 	QValueVector<Genre>	genreList;
 	QPopupMenu*	songDBPopup;
-
 	QString getGenreId( QString genre );
-#endif
-	virtual void resizeEvent ( QResizeEvent *e );
-
-
-private:
-#ifdef ENABLE_SONGDB
-	int state;
-#endif
-
-public slots:
-	virtual void createNewPlaylist( QString name=tr("unnamed Playlist") );
 
 protected slots:
-#ifdef ENABLE_SONGDB
 	virtual void displayData( bool );
 	virtual void requestData( QString query );
 	virtual void playListAdd();
@@ -88,6 +83,11 @@ protected slots:
 	virtual void search();
 	virtual void showSongDBContextmenu( QListViewItem * item, const QPoint & pos, int col );
 #endif
+
+public slots:
+	virtual void createNewPlaylist( QString name=tr("unnamed Playlist") );
+
+protected slots:
 	virtual void updateLastPlayed( playListItem* item ); 
 	virtual void showPlaylistContextmenu( QListViewItem * item, const QPoint & pos, int col );
 	virtual void loadPlaylist();

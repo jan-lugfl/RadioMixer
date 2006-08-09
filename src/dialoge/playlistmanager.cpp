@@ -41,6 +41,10 @@ playListManager::playListManager(QWidget *parent, const char *name)
 	requestData( "getGenres=1" );
 
 	songDBPopup = new QPopupMenu( songDBListView );
+
+	playlistChannel->insertItem(tr("-- selected --"));
+
+	connect( playListView, SIGNAL( itemRenamed( QListViewItem*, int) ), this, SLOT( refreshPlaylists() ) );
 #else
 	delete songDBFrame;
 #endif
@@ -53,6 +57,7 @@ playListManager::playListManager(QWidget *parent, const char *name)
 	playListPopup->insertItem( tr("&save Playlist"), this, SLOT(savePlaylist()) );
 
 	playListView->setRootIsDecorated(TRUE);
+
 	delete config;
 }
 
@@ -162,12 +167,34 @@ void playListManager::requestData( QString query )
 
 void playListManager::playListAdd( )
 {
-	if( songDBListView->selectedItem()->text( 0 ) )
-	{
-		state = 2;
-		requestData( "getSonginfo=1&songID="+songDBListView->selectedItem()->text( 0 ) );
-	}else
-		QMessageBox::critical( this, tr("RadioMixer - Song DB"), tr("no song selected....") );
+	if( songDBListView->selectedItem() )
+		if( playlistChannel->currentItem() == 0)
+		{
+			if( playListView->selectedItem() )
+			{
+				playListViewItem* item = dynamic_cast<playListViewItem*>(songDBListView->selectedItem());
+				songDBListView->takeItem( item );
+				playListView->selectedItem()->insertItem( item );
+			}
+			else
+				QMessageBox::critical( this, tr("RadioMixer - Playlist Manager"), tr("no playlist selected....") );
+		}else{
+			QListViewItemIterator it( playListView );
+			while( it.current() )
+			{
+				if( (*it)->text(0) == playlistChannel->currentText())
+				{
+					playListViewItem* item = dynamic_cast<playListViewItem*>(songDBListView->selectedItem());
+					songDBListView->takeItem( item );
+					(*it)->insertItem( item );
+					break;
+				}
+				++it;
+			}
+
+		}
+	else
+		QMessageBox::critical( this, tr("RadioMixer - Playlist Manager"), tr("no song selected....") );
 }
 
 void playListManager::cue( )
@@ -185,6 +212,19 @@ void playListManager::search( )
 	QString freigabe = onlyFree->isChecked()?"freigabe=1&":"";
 	QString searchGenre = genre->currentItem()>0?"genre="+getGenreId(genre->currentText())+"&":"";
 	requestData( freigabe+searchGenre+"query="+searchFor->text() );
+}
+
+void playListManager::refreshPlaylists()
+{
+	playlistChannel->clear();
+	playlistChannel->insertItem(tr("-- selected --"));
+
+	QListViewItemIterator it( playListView );
+	while( it.current() )
+	{
+		playlistChannel->insertItem( (*it)->text(0) );
+		++it;
+	}
 }
 #endif
 
@@ -215,7 +255,7 @@ void playListManager::createNewPlaylist( QString name )
 {
 	playList* newPlaylist = new playList( playListView, name );
 	newPlaylist->setOpen(TRUE);
-	playlistChannel->insertItem( name );
+	refreshPlaylists();
 }
 
 void playListManager::loadPlaylist( )

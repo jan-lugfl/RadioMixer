@@ -25,24 +25,22 @@
 playListViewItem::playListViewItem( QListView * parent )
  : QListViewItem( parent )
 {
+	setDragEnabled(TRUE);
 }
 
 playListViewItem::playListViewItem( QListView * parent, playListItem * item )
  : QListViewItem( parent ), playListEntry( item )
 {
+	setDragEnabled(TRUE);
 	setText( 0, item->getSong() );
 	setText( 1, item->getGenre() );
 	setText( 2, item->getLength().toString() );
 }
 
-playListViewItem::playListViewItem( QListView * parent, QString filename )
- : QListViewItem( parent )
-{
-}
-
 playListViewItem::playListViewItem( playListViewItem * parent )
  : QListViewItem( parent )
 {
+	setDragEnabled(TRUE);
 }
 
 playListViewItem::~playListViewItem()
