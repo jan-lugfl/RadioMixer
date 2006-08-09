@@ -1,4 +1,4 @@
-/* $Id:$ */
+/* $Id$ */
 /***************************************************************************
  *   OpenRadio - RadioMixer                                                *
  *   Copyright (C) 2006 by Jan Boysen                                *
@@ -34,6 +34,7 @@ class playListViewItem : public QListViewItem
 {
 public:
 	playListViewItem( QListView* parent );
+	playListViewItem( QListView* parent, playListItem* item );
 	playListViewItem( QListView* parent, QString filename );
 	playListViewItem( playListViewItem* parent );
 	~playListViewItem();

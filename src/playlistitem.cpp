@@ -26,28 +26,8 @@ playListItem::playListItem( QString fileName, QObject * parent, const char * nam
 {
 	if( !fileName.isEmpty())
 	{
-		QRegExp rx1( "^(.*)/(.*\\..*)$" );
-	 	if ( rx1.search( fileName ) != -1 ) {
-			Path = rx1.cap(1);
-			Filename = rx1.cap(2);
-		}
-		else
-		{
-				qWarning( QString( "unknown Filetype !!!" ) );
-		}
-		QRegExp rx( "^(.*)/(.*)[ |_]*\\-[ |_]*(.*)$" );
-	 	if ( rx.search( Filename ) != -1 ) {
-			Artist = rx.cap(2);
-			Title = rx.cap(3);
-			Artist.replace("_", " ");
-			Title.replace("_", " ");
-		}
-		else
-		{
-			Title = Filename;
-			Title.replace("_", " ");
-			Title = Title.left( Title.length()-4);
-		}
+		parseAbsFile( fileName );
+		readMeta();
 	}
 }
 
@@ -57,7 +37,8 @@ playListItem::~playListItem()
 
 void playListItem::setFile( QString file )
 {
-//	meta = new title( file );
+	parseAbsFile( file );
+	readMeta();
 }
 
 const QString playListItem::getFilepath( )
@@ -104,4 +85,42 @@ void playListItem::startPlaying( )
 const QString playListItem::getId( )
 {
 	return getFile();
+}
+
+void playListItem::readMeta( )
+{
+	qWarning("playListItem::readMeta( )");
+	if( !Filename.isEmpty())
+	{
+		QRegExp rx( "^(.*)/(.*)[ |_]*\\-[ |_]*(.*)$" );
+	 	if ( rx.search( Filename ) != -1 ) {
+			Artist = rx.cap(2);
+			Title = rx.cap(3);
+			Artist.replace("_", " ");
+			Title.replace("_", " ");
+		}
+		else
+		{
+			Title = Filename;
+			Title.replace("_", " ");
+			Title = Title.left( Title.length()-4);
+		}
+	}
+	emit refreshed();
+}
+
+void playListItem::parseAbsFile( QString file )
+{
+	if( !file.isEmpty())
+	{
+		QRegExp rx1( "^(.*)/(.*\\..*)$" );
+	 	if ( rx1.search( file ) != -1 ) {
+			Path = rx1.cap(1);
+			Filename = rx1.cap(2);
+		}
+		else
+		{
+			qWarning( QString( "unknown Filepath: " )+file );
+		}
+	}
 }

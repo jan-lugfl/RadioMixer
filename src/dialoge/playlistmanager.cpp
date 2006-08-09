@@ -96,19 +96,21 @@ void playListManager::displayData( bool )
 				for(unsigned int i=0;i<songs.count();i++)
 				{
 					QDomElement songAttr = songs.item(i).toElement();
-/*					playListItemSongDB* mySong = new playListItemSongDB( songDBListView,
-										metaTag(
-											songAttr.attribute("interpret"),
-											songAttr.attribute("title"),
-											songAttr.attribute("genre"),
-											QTime::fromString(songAttr.attribute("length"))
-										),
-										songAttr.attribute("id"),
-										QString(songAttr.attribute("lastPlayed")).toInt()
-					);
-					connect( mySong, SIGNAL( startToPlay( playListItem* ) ), this, SLOT( updateLastPlayed( playListItem* ) ) );
-*/				}
-		}else if( readdata.doctype().name() == "songDBSongInfo" )
+					playListItemSongDB* listEntry = new playListItemSongDB(
+											QString(songAttr.attribute("id")).toInt(),
+											QString(songAttr.attribute("lastPlayed")).toInt()
+										);
+					listEntry->setFile(config->readEntry( "/radiomixer/network/songDBBasePath", "/songs/" )+songAttr.attribute("relPath")+songAttr.attribute("filename"));
+					listEntry->setArtist(songAttr.attribute("interpret"));
+					listEntry->setTitle(songAttr.attribute("title"));
+					listEntry->setGenre(songAttr.attribute("genre"));
+					listEntry->setLength(songAttr.attribute("length"));
+
+					playListViewItem* mySong = new playListViewItem( songDBListView, listEntry);
+					connect( listEntry, SIGNAL( startToPlay( playListItem* ) ), this, SLOT( updateLastPlayed( playListItem* ) ) );
+				}
+// depricated
+/*		}else if( readdata.doctype().name() == "songDBSongInfo" )
 		{
 			QDomElement dataroot = readdata.documentElement();
 			QDomElement song = dataroot.childNodes().item(0).toElement();
@@ -128,6 +130,7 @@ void playListManager::displayData( bool )
 					break;
 			}
 			state = 0;
+*/
 		}else if( readdata.doctype().name() == "songDBGenreList" )
 		{
 			QDomElement dataroot = readdata.documentElement();

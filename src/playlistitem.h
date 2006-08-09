@@ -42,6 +42,7 @@ public:
 	virtual const QString getId();
 	virtual const QString getFilepath();
 	virtual const QString getFilename();
+	virtual void setFile(QString file);
 	virtual const QString getFile();
 	virtual unsigned int getChannels();
 	virtual void setChannels( unsigned int chans);
@@ -53,7 +54,6 @@ public:
 	virtual bool hasCostumBackgroundColor(){return FALSE;}
 	virtual QColor getBackgroundColor(){}
 
-    void setFile(QString file);
 
 protected:
 	QString Path;
@@ -62,12 +62,15 @@ protected:
 	unsigned int channels;
 	unsigned int Samplerate;
 
+	virtual void readMeta();
+	virtual void parseAbsFile( QString file );
 
 public slots:
 	virtual void startPlaying();
 
 signals:
 	void startToPlay( playListItem* );
+	void refreshed();
 };
 
 #endif

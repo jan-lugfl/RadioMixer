@@ -73,5 +73,18 @@ QTime metaTag::getLength( )
 	return Length;
 }
 
+void metaTag::setGenre( QString genre )
+{
+	Genre = genre;
+}
 
+void metaTag::setLength( QString length )
+{
+	Length = QTime::fromString( length );
+}
+
+void metaTag::setLength( QTime length )
+{
+	Length = length;
+}
 

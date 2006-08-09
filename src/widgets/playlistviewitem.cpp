@@ -1,4 +1,4 @@
-/* $Id:$ */
+/* $Id$ */
 /***************************************************************************
  *   OpenRadio - RadioMixer                                                *
  *   Copyright (C) 2006 by Jan Boysen                                *
@@ -27,6 +27,14 @@ playListViewItem::playListViewItem( QListView * parent )
 {
 }
 
+playListViewItem::playListViewItem( QListView * parent, playListItem * item )
+ : QListViewItem( parent ), playListEntry( item )
+{
+	setText( 0, item->getSong() );
+	setText( 1, item->getGenre() );
+	setText( 2, item->getLength().toString() );
+}
+
 playListViewItem::playListViewItem( QListView * parent, QString filename )
  : QListViewItem( parent )
 {
@@ -39,6 +47,7 @@ playListViewItem::playListViewItem( playListViewItem * parent )
 
 playListViewItem::~playListViewItem()
 {
+	delete playListEntry;
 }
 
 void playListViewItem::paintCell( QPainter * p, const QColorGroup & cg, int column, int width, int alignment )
@@ -62,5 +71,6 @@ void playListViewItem::paintCell( QPainter * p, const QColorGroup & cg, int colu
 	_cg.setColor( QColorGroup::Text, itemFGColor );
 	QListViewItem::paintCell( p, _cg, column, width, alignment );
 }
+
 
 

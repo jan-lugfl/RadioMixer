@@ -24,6 +24,11 @@
 
 #include <playlistitem.h>
 
+#include <qsettings.h>
+#include <qdom.h>
+#include <qhttp.h>
+#include <qurloperator.h>
+
 /**
 	@author Jan Boysen <trekkie@media-mission.de>
 */
@@ -35,6 +40,7 @@ public:
 	~playListItemSongDB();
 
 	virtual const QString getId();
+	virtual void setFile(QString file);
 	virtual bool hasCostumBackgroundColor();
 	virtual QColor getBackgroundColor();
 
@@ -42,6 +48,18 @@ public:
 protected:
 	unsigned int songDBId;
 	unsigned int lastPlayed;
+	QHttp*	songDBHndl;
+	QHttpRequestHeader* songDB;
+
+	virtual void readMeta();
+
+protected slots:
+	virtual void receiveData( bool );
+
+
+signals:
+	
+
 };
 
 #endif

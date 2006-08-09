@@ -36,11 +36,18 @@ public:
 	virtual ~metaTag();
 
 	virtual void setArtist( QString artist );
-	virtual void setTitle( QString title);
 	virtual QString getArtist();
+
+	virtual void setTitle( QString title);
 	virtual QString getTitle();
+
 	virtual QString getSong();
+
+	virtual void setGenre( QString genre );
 	virtual QString getGenre();
+
+	virtual void setLength( QTime length );
+	virtual void setLength( QString length );
 	virtual QTime getLength();
 
 protected:

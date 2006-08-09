@@ -25,8 +25,7 @@
 
 #include "playlistng.h"
 
-#include "widgets/playlist.h"
-#include "playlistitem.h"
+#include "playlistviewitem.h"
 
 #ifdef ENABLE_SONGDB
 #include "playlistitemsongdb.h"
