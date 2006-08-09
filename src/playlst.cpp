@@ -46,13 +46,15 @@ title const playLST::getNextTrack( )
 {
 	if( count() < 1 || nextTrack >= (count()) )
 	{
-		return title("");;
+// Class title is depricated
+//		return title("");;
 	}
 	else
 	{
 		nextTrack++;
 		emit( changed() );
-		return playList[ nextTrack-1];
+// Class title is depricated
+//		return playList[ nextTrack-1];
 	}
 }
 
@@ -94,9 +96,10 @@ void playLST::itemUp( int index )
 {
 	if(index > 0)
 	{
-		title temp = playList.at( index );
-		playList.erase( &playList.at( index ) );
-		playList.insert( &playList.at( index-1 ), temp);
+// Class title is depricated
+//		title temp = playList.at( index );
+//		playList.erase( &playList.at( index ) );
+//		playList.insert( &playList.at( index-1 ), temp);
 	}
 	emit( changed() );
 }
@@ -105,9 +108,10 @@ void playLST::itemDown( int index )
 {
 	if(index < int(playList.size()-1) )
 	{
-		title temp = playList.at( index );
-		playList.erase( &playList.at( index ) );
-		playList.insert( &playList.at( index+1 ), temp);
+// Class title is depricated
+//		title temp = playList.at( index );
+//		playList.erase( &playList.at( index ) );
+//		playList.insert( &playList.at( index+1 ), temp);
 	}
 	emit( changed() );
 }

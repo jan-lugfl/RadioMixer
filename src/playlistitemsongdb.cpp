@@ -19,62 +19,34 @@
  *   Free Software Foundation, Inc.,                                       *
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
-#ifndef PLAYLISTITEM_H
-#define PLAYLISTITEM_H
+#include "playlistitemsongdb.h"
 
-#include "metatag.h"
-#include "../widgets/playlist.h"
-
-#include <qobject.h>
-#include <qlistview.h>
-#include <qdatetime.h>
-
-/**
-	@author Jan Boysen <trekkie@media-mission.de>
-*/
-class playListItem : public QObject, public QListViewItem
+playListItemSongDB::playListItemSongDB( const unsigned int id,  unsigned int lastPlayedTS, QObject *parent, const char *name  )
+ : playListItem( "", parent, name )
 {
-Q_OBJECT
-public:
-	playListItem( QListView* parent );
-	playListItem( QListView* parent, metaTag metaData );
-	playListItem( QListView* parent, QString filename );
-	playListItem( playListItem* parent );
+	lastPlayed = lastPlayedTS;
+	songDBId = id;
+}
 
-	~playListItem();
+playListItemSongDB::~playListItemSongDB()
+{
+}
 
-	virtual void paintCell( QPainter *p, const QColorGroup &cg, int column, int width, int alignment );
+bool playListItemSongDB::hasCostumBackgroundColor( )
+{
+	return ((QDateTime::currentDateTime().toTime_t() - lastPlayed) < 7200);
+}
 
-	virtual const metaTag getMeta();
+QColor playListItemSongDB::getBackgroundColor( )
+{
+	unsigned int playedAgo = QDateTime::currentDateTime().toTime_t() - lastPlayed;
 
+	  // calculate the color of the Item
+	if( playedAgo < 7200 )
+		return Qt::red.dark( 150-(int(playedAgo/720)*10) );
+}
 
-	virtual const QString getFilepath();
-	virtual const QString getFilename();
-	virtual const QTime getTotalTime();
-	virtual const QString getFile();
-	virtual unsigned int getChannels();
-	virtual void setChannels( unsigned int chans);
-	virtual unsigned int getSamplerate();
-	virtual void setSamplerate( unsigned int rate );
-
-	virtual QString getType(){ return "STD";}
-
-    const QString getTrackName();
-    void setTrackName(QString trackName);
-
-    void setFile(QString file);
-
-
-protected:
-    QString trackName;
-
-	metaTag*	meta;
-
-public slots:
-	virtual void startPlaying();
-
-signals:
-	void startToPlay( playListItem* );
-};
-
-#endif
+const QString playListItemSongDB::getId( )
+{
+	return QString::number(songDBId);
+}

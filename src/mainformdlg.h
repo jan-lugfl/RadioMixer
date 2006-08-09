@@ -45,7 +45,8 @@
 #include "songdbdlg.h"
 #endif
 
-#include "playlst.h"
+// Class playLST is depricated
+//#include "playlst.h"
 #include <qlineedit.h>
 #include <qvaluevector.h>
 #include <qmessagebox.h>
@@ -83,12 +84,14 @@ protected:
 
  private:
  	soundPlayer* player;
-	playLST globalPlaylist;
+// Class playLST is depricated
+//playLST globalPlaylist;
 #ifdef ENABLE_HWMIXER
 	mipuCom* miPu;
 	QTimer refTimer;
 #endif
-	QValueVector<playLST*> localPlaylistPointers;
+// Class playLST is depricated
+//	QValueVector<playLST*> localPlaylistPointers;
 	QValueVector<mixerChannelGUI*> playerGuis;
 
 	playListManager*	playListMgr;
@@ -103,7 +106,8 @@ public slots:
   /*$PUBLIC_SLOTS$*/
     virtual void show ();
     virtual void showPreferences();
-    virtual void showPlaylist();
+// Class playLST is depricated
+// virtual void showPlaylist();
     virtual void addNewFilePlayer();
     virtual void addNewMixerChannel();
     virtual void addNewJackChannel( QString chName );
@@ -117,8 +121,9 @@ public slots:
     virtual void showAddChannel();
     virtual void showSongDBDialog();
 
-    virtual void cueTitle( QString player, title song );
-    virtual void playlistAddTitle( QString player, title song );
+// class title is depricated
+//    virtual void cueTitle( QString player, title song );
+//    virtual void playlistAddTitle( QString player, title song );
     virtual void showAbout();
 
 protected slots:

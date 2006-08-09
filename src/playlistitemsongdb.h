@@ -1,7 +1,7 @@
 /* $Id$ */
 /***************************************************************************
  *   OpenRadio - RadioMixer                                                *
- *   Copyright (C) 2005, 2006 by Jan Boysen                                *
+ *   Copyright (C) 2006 by Jan Boysen                                *
  *   trekkie@media-mission.de                                              *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
@@ -19,59 +19,29 @@
  *   Free Software Foundation, Inc.,                                       *
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
-#ifndef PLAYLST_H
-#define PLAYLST_H
+#ifndef PLAYLISTITEMSONGDB_H
+#define PLAYLISTITEMSONGDB_H
 
-// NOTE: This Class is depricated...
-
-#include <qvaluevector.h>
-#include <qobject.h>
-#include <qtextstream.h>
-#include <qfile.h>
-// Class title is depricated
-//#include "title.h"
+#include <playlistitem.h>
 
 /**
-@author Jan Boysen
+	@author Jan Boysen <trekkie@media-mission.de>
 */
-class playLST : public QObject
+class playListItemSongDB : public playListItem
 {
-  Q_OBJECT
+Q_OBJECT
 public:
-    playLST(QObject *parent = 0, const char *name = 0);
-    ~playLST();
+	playListItemSongDB( const unsigned int id,  unsigned  int lastPlayedTS=0, QObject *parent = 0, const char *name = 0);
+	~playListItemSongDB();
 
-    const QString getPlayerName();
-// Class title is depricated
-//    title const getNextTrack();
-    const int getcurrentTrackIndex();
-    const QString getFileName( int index );
-    
-    const int count();
-    // Class title is depricated
-//const title* at( int index );
-//    void append( playListItem newItem );
-    void append( title newItem );
+	virtual const QString getId();
+	virtual bool hasCostumBackgroundColor();
+	virtual QColor getBackgroundColor();
 
-public slots:    
-    virtual void setPlayerName( QString name );
-    virtual void itemUp( int index );
-    virtual void itemDown( int index );
-    virtual void delItem( int index );
-    virtual void clear();
-    virtual void loadFromFile( QString fileName );
-    virtual void saveToFile( QString fileName );
-    virtual void cueNext( int index );
 
-private:
-	// Class title is depricated
-//QValueVector<title> playList;
-	
-	QString playerName;
-	int nextTrack;
-	
-signals:
-	void changed();
+protected:
+	unsigned int songDBId;
+	unsigned int lastPlayed;
 };
 
 #endif

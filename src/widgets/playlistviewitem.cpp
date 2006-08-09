@@ -1,4 +1,4 @@
-/* $Id$ */
+/* $Id:$ */
 /***************************************************************************
  *   OpenRadio - RadioMixer                                                *
  *   Copyright (C) 2006 by Jan Boysen                                *
@@ -19,37 +19,48 @@
  *   Free Software Foundation, Inc.,                                       *
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
-#include "playlistitemsongdb.h"
+#include "playlistviewitem.h"
 
-playListItemSongDB::playListItemSongDB( QListView* parent )
- : playListItem(parent)
+
+playListViewItem::playListViewItem( QListView * parent )
+ : QListViewItem( parent )
 {
 }
 
-playListItemSongDB::playListItemSongDB( QListView* parent, metaTag metaData, const QString id,  unsigned int lastPlayedTS )
- : playListItem(parent, metaData)
-{
-	lastPlayed = lastPlayedTS;
-}
-
-playListItemSongDB::~playListItemSongDB()
+playListViewItem::playListViewItem( QListView * parent, QString filename )
+ : QListViewItem( parent )
 {
 }
 
-void playListItemSongDB::paintCell( QPainter * p, const QColorGroup & cg, int column, int width, int alignment )
+playListViewItem::playListViewItem( playListViewItem * parent )
+ : QListViewItem( parent )
 {
-	QColorGroup _cg = cg;
-	playListItem::paintCell( p, _cg, column, width, alignment );
+}
 
-	if( !isSelected() )
+playListViewItem::~playListViewItem()
+{
+}
+
+void playListViewItem::paintCell( QPainter * p, const QColorGroup & cg, int column, int width, int alignment )
+{
+	QColor itemBGColor = cg.base();
+	QColor itemFGColor = cg.text();
+
+	if( isSelected() )
 	{
-		unsigned int playedAgo = QDateTime::currentDateTime().toTime_t() - lastPlayed;
+		itemBGColor = cg.highlight();
+		itemFGColor = cg.highlightedText();
+	}else
+		if( playListEntry->hasCostumBackgroundColor() )
+			itemBGColor = playListEntry->getBackgroundColor();
+		else
+			if( (itemPos()/height())%2 == 1)
+				itemBGColor = cg.highlight().light( 175 );
 
-		if( playedAgo < 7200 )
-		{  // calculate the color of the Item
-			_cg.setColor( QColorGroup::Base, Qt::red.dark( 150-(int(playedAgo/720)*10) ) );
-			QListViewItem::paintCell( p, _cg, column, width, alignment );
-		}
-	}
+	QColorGroup _cg( cg );
+	_cg.setColor( QColorGroup::Base, itemBGColor );
+	_cg.setColor( QColorGroup::Text, itemFGColor );
+	QListViewItem::paintCell( p, _cg, column, width, alignment );
 }
+
 

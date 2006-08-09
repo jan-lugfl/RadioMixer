@@ -86,7 +86,7 @@ void songDBDlg::displayData( bool )
 				for(unsigned int i=0;i<songs.count();i++)
 				{
 					QDomElement songAttr = songs.item(i).toElement();
-					playListItemSongDB* mySong = new playListItemSongDB( songDBListView,
+/*					playListItemSongDB* mySong = new playListItemSongDB( songDBListView,
 										metaTag(
 											songAttr.attribute("interpret"),
 											songAttr.attribute("title"),
@@ -97,7 +97,7 @@ void songDBDlg::displayData( bool )
 										QString(songAttr.attribute("lastPlayed")).toInt()
 					);
 					connect( mySong, SIGNAL( startToPlay( playListItem* ) ), this, SLOT( updateLastPlayed( playListItem* ) ) );
-				}
+*/				}
 		}else if( readdata.doctype().name() == "songDBSongInfo" )
 		{
 			QDomElement dataroot = readdata.documentElement();

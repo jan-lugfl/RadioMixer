@@ -80,8 +80,6 @@ protected:
 	// Buffer Manager
 	channelBufMngr* bufferThread;
 
-	playListItem* track;
-
 public slots:
 	virtual void open( playListItem* track );
 	virtual void close();

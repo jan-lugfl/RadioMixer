@@ -111,7 +111,6 @@ mainFormDlg::mainFormDlg(QWidget* parent, const char* name, WFlags fl)
 
 mainFormDlg::~mainFormDlg()
 {
-	qDebug("mainFormDlg::~mainFormDlg()");
 	QValueVector<mixerChannelGUI*>::iterator playerIt;
        	for( playerIt = playerGuis.begin(); playerIt != playerGuis.end(); ++playerIt )
 		delete (*playerIt);
@@ -245,6 +244,8 @@ void mainFormDlg::showPreferences()
 	delete config;
 }
 
+// Class title is depricated
+/*
 void mainFormDlg::showPlaylist()
 {
 	playListDlg* playlist = new playListDlg(this);
@@ -262,6 +263,7 @@ void mainFormDlg::showPlaylist()
 	
 	playlist->show();
 }
+*/
 
 void mainFormDlg::addNewFilePlayer( )
 {
@@ -305,7 +307,8 @@ void mainFormDlg::addNewJackChannel( QString chName )
 
 void mainFormDlg::globalPlaylist_getNextTrack( QString player )
 {
-	cueTitle( player, globalPlaylist.getNextTrack() );
+// Class title is depricated
+//	cueTitle( player, globalPlaylist.getNextTrack() );
 }
 
 
@@ -640,26 +643,30 @@ void mainFormDlg::showSongDBDialog()
 #endif
 }
 
+// Class title is depricated
+/*
 void mainFormDlg::cueTitle(QString player, title song )
 {
-/*	QValueVector<mixerChannelGUI*>::iterator playerIt;
+	QValueVector<mixerChannelGUI*>::iterator playerIt;
 	for( playerIt = playerGuis.begin(); playerIt != playerGuis.end(); ++playerIt )
 		if( (*playerIt)->getName() == player && (*playerIt)->getType() == "PLAYER" )
 			(dynamic_cast<mixerGuiPlayer*>(*playerIt))->player->open( song );
-*/}
+}
 
 void mainFormDlg::playlistAddTitle( QString player, title song )
 {
+
 	if( player == "Global Playlist")
 		globalPlaylist.append( song );
-/*	else
+	else
 	{
 		QValueVector<mixerChannelGUI*>::iterator playerIt;
 		for( playerIt = playerGuis.begin(); playerIt != playerGuis.end(); ++playerIt )
 			if( (*playerIt)->getName() == player && (*playerIt)->getType() == "PLAYER" )
 				(dynamic_cast<mixerGuiPlayer*>(*playerIt))->player->playList.append( song );
 	}
-*/}
+}
+*/
 
 void mainFormDlg::showAbout()
 {

@@ -10,14 +10,13 @@ HEADERS += mainformdlg.h \
            playerchannelfile.h \
            mixerchannelgui.h \
            channelbufmngr.h \
-           playlst.h \
            mixerguiplayer.h \
            metainfo.h \
-           title.h \
            metatag.h \
            ringbuffer.h \
            filedecoder.h \
-           version.h 
+           version.h \
+           playlistitem.h 
 SOURCES += radiomixer.cpp \
            mainformdlg.cpp \
            soundplayer.cpp \
@@ -25,12 +24,11 @@ SOURCES += radiomixer.cpp \
            playerchannelfile.cpp \
            mixerchannelgui.cpp \
            channelbufmngr.cpp \
-           playlst.cpp \
            mixerguiplayer.cpp \
            metainfo.cpp \
-           title.cpp \
            metatag.cpp \
-           filedecoder.cpp 
+           filedecoder.cpp \
+           playlistitem.cpp 
 TARGETDEPS += ../src/widgets/libwidgets.a \
 ../src/dialoge/libdialoge.a
 LIBS += ../src/dialoge/libdialoge.a \
@@ -72,4 +70,8 @@ jackSupport{
 hwmixer{
   HEADERS += mipucom.h
   SOURCES += mipucom.cpp
+}
+songdb{
+  HEADERS += playlistitemsongdb.h
+  SOURCES += playlistitemsongdb.cpp
 }

@@ -72,7 +72,7 @@ protected:
 	unsigned int channels;
 	QString name;
 
-	metaTag	meta;
+	metaTag*	meta;
 
 	// States for the Channels
 	// 0 = Channel is stopped

@@ -35,7 +35,6 @@ playListManager::playListManager(QWidget *parent, const char *name)
 	songDB = new QHttpRequestHeader( "POST", config->readEntry( "/radiomixer/network/songDBScriptname", "/xmlctrl.pl" ) );
 	songDB->setValue( "Host", config->readEntry( "/radiomixer/network/songDBHostname", "localhost" ) );
 
-	playlistChannel->insertItem( tr("Global Playlist") );
 	genre->insertItem( tr("all Genres") );
 
 	//get Genres from sondDB
@@ -59,7 +58,6 @@ playListManager::playListManager(QWidget *parent, const char *name)
 
 playListManager::~ playListManager( )
 {
-	qWarning("destruktor");
 }
 
 #ifdef ENABLE_SONGDB
@@ -98,7 +96,7 @@ void playListManager::displayData( bool )
 				for(unsigned int i=0;i<songs.count();i++)
 				{
 					QDomElement songAttr = songs.item(i).toElement();
-					playListItemSongDB* mySong = new playListItemSongDB( songDBListView,
+/*					playListItemSongDB* mySong = new playListItemSongDB( songDBListView,
 										metaTag(
 											songAttr.attribute("interpret"),
 											songAttr.attribute("title"),
@@ -109,7 +107,7 @@ void playListManager::displayData( bool )
 										QString(songAttr.attribute("lastPlayed")).toInt()
 					);
 					connect( mySong, SIGNAL( startToPlay( playListItem* ) ), this, SLOT( updateLastPlayed( playListItem* ) ) );
-				}
+*/				}
 		}else if( readdata.doctype().name() == "songDBSongInfo" )
 		{
 			QDomElement dataroot = readdata.documentElement();
@@ -214,18 +212,40 @@ void playListManager::createNewPlaylist( QString name )
 {
 	playList* newPlaylist = new playList( playListView, name );
 	newPlaylist->setOpen(TRUE);
+	playlistChannel->insertItem( name );
 }
 
 void playListManager::loadPlaylist( )
 {
+   QString s = QFileDialog::getOpenFileName(
+                    "",
+                    "RadioMixer Playlist (*.plst)",
+                    this,
+                    tr("open File Dialog"),
+                    tr("load playlist...") );
+	if( s.length() >0)
+	{
+		qWarning("not implemented...");
+	}
 }
 
 void playListManager::savePlaylist( )
 {
+   QString s = QFileDialog::getSaveFileName(
+                    "",
+                    "RadioMixer Playlist (*.plst)",
+                    this,
+                    tr("save file Dialog"),
+                    tr("save playlist...") );
+	if( s.length() >0)
+	{
+		qWarning("not implemented...");
+	}
 }
 
 void playListManager::renamePlaylist( )
 {
-	playListView->selectedItem()->startRename(0);
+	if(playListView->selectedItem())
+		playListView->selectedItem()->startRename(0);
 }
 

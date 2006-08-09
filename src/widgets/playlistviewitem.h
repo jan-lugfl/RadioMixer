@@ -1,4 +1,4 @@
-/* $Id$ */
+/* $Id:$ */
 /***************************************************************************
  *   OpenRadio - RadioMixer                                                *
  *   Copyright (C) 2006 by Jan Boysen                                *
@@ -19,27 +19,28 @@
  *   Free Software Foundation, Inc.,                                       *
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
-#ifndef PLAYLISTITEMSONGDB_H
-#define PLAYLISTITEMSONGDB_H
+#ifndef PLAYLISTVIEWITEM_H
+#define PLAYLISTVIEWITEM_H
 
 #include <playlistitem.h>
+#include <qlistview.h>
+#include <qdatetime.h>
+
 
 /**
 	@author Jan Boysen <trekkie@media-mission.de>
 */
-class playListItemSongDB : public playListItem
+class playListViewItem : public QListViewItem
 {
-Q_OBJECT
 public:
-	playListItemSongDB( QListView* parent );
-	playListItemSongDB( QListView* parent, metaTag metaData, const QString id, unsigned  int lastPlayedTS=0);
+	playListViewItem( QListView* parent );
+	playListViewItem( QListView* parent, QString filename );
+	playListViewItem( playListViewItem* parent );
+	~playListViewItem();
 
-	~playListItemSongDB();
+	playListItem* playListEntry;
 
 	virtual void paintCell( QPainter *p, const QColorGroup &cg, int column, int width, int alignment );
-
-protected:
-	unsigned int lastPlayed;
 };
 
 #endif

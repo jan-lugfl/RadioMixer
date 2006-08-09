@@ -44,6 +44,8 @@
 #include <qmessagebox.h>
 #include <qsplitter.h>
 #include <qpopupmenu.h>
+#include <qfiledialog.h>
+
 
 class playListManager: public playListNG {
 Q_OBJECT

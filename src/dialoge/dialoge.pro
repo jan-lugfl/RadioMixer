@@ -4,7 +4,6 @@
 # Das Target ist eine Bibliothek:  
 
 FORMS += preferencesdlg.ui \
-         playlist.ui \
          help_playlist_dlg.ui \
          kanalpreferences.ui \
          ch_add_dlg.ui \
@@ -14,12 +13,10 @@ FORMS += preferencesdlg.ui \
          aboutDialog.ui \
          playlistng.ui 
 HEADERS += prefdlg.h \
-           playlistdlg.h \
            chanprefdlg.h \
            cuelistdlg.h \
            playlistmanager.h 
-SOURCES += playlistdlg.cpp \
-           prefdlg.cpp \
+SOURCES += prefdlg.cpp \
            chanprefdlg.cpp \
            cuelistdlg.cpp \
            playlistmanager.cpp 

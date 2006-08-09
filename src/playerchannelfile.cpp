@@ -38,8 +38,7 @@ playerChannelFile::~playerChannelFile()
 
 void playerChannelFile::open( playListItem* track )
 {
-	this->track = track;
-	meta = track->getMeta();
+	meta = track;
 
 	soundBuffers[0].flush();
 	soundBuffers[1].flush();
@@ -77,7 +76,7 @@ void playerChannelFile::open( playListItem* track )
 				smplRate = track->getSamplerate();
 				channels = track->getChannels();
 				fileOpen = TRUE;
-				emit( cued( meta ) );
+				emit( cued( *meta ) );
 				state = 3;
 
 				if(!bufferThread->running())
@@ -194,8 +193,8 @@ void playerChannelFile::setName( QString newName )
 void playerChannelFile::play( )
 {
 	playerChannelStd::play();
-	track->startPlaying();
-	emit( newMeta( meta ) );
+	dynamic_cast<playListItem*>(meta)->startPlaying();
+	emit( newMeta( *meta ) );
 	emit( playing() );
 }
 

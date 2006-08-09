@@ -21,60 +21,38 @@
  ***************************************************************************/
 #include "playlistitem.h"
 
-playListItem::playListItem( QListView* parent)
- : QListViewItem( parent )
+playListItem::playListItem( QString fileName, QObject * parent, const char * name )
+ : QObject( parent, name )
 {
-}
-
-
-playListItem::playListItem( playListItem* parent )
- : QListViewItem( parent )
-{
-}
-
-
-playListItem::playListItem( QListView* parent, QString filename )
- : QListViewItem( parent )
-{
-}
-
-playListItem::playListItem( QListView* parent, metaTag metaData )
- : QListViewItem( parent, metaData.getArtist()+" - "+metaData.getTitle(), metaData.getGenre(), metaData.getLength().toString(Qt::ISODate) )
-{
-	meta = new metaTag(metaData);
+	if( !fileName.isEmpty())
+	{
+		QRegExp rx1( "^(.*)/(.*\\..*)$" );
+	 	if ( rx1.search( fileName ) != -1 ) {
+			Path = rx1.cap(1);
+			Filename = rx1.cap(2);
+		}
+		else
+		{
+				qWarning( QString( "unknown Filetype !!!" ) );
+		}
+		QRegExp rx( "^(.*)/(.*)[ |_]*\\-[ |_]*(.*)$" );
+	 	if ( rx.search( Filename ) != -1 ) {
+			Artist = rx.cap(2);
+			Title = rx.cap(3);
+			Artist.replace("_", " ");
+			Title.replace("_", " ");
+		}
+		else
+		{
+			Title = Filename;
+			Title.replace("_", " ");
+			Title = Title.left( Title.length()-4);
+		}
+	}
 }
 
 playListItem::~playListItem()
 {
-}
-
-void playListItem::paintCell( QPainter * p, const QColorGroup & cg, int column, int width, int alignment )
-{
-	QColor itemBGColor = cg.base();
-	QColor itemFGColor = cg.text();
-
-	if( isSelected() )
-	{
-		itemBGColor = cg.highlight();
-		itemFGColor = cg.highlightedText();
-	}else
-		if( (itemPos()/height())%2 == 1)
-			itemBGColor = cg.highlight().light( 175 );
-
-	QColorGroup _cg( cg );
-	_cg.setColor( QColorGroup::Base, itemBGColor );
-	_cg.setColor( QColorGroup::Text, itemFGColor );
-	QListViewItem::paintCell( p, _cg, column, width, alignment );
-}
-
-const QString playListItem::getTrackName( )
-{
-	return trackName;
-}
-
-void playListItem::setTrackName( QString trackName )
-{
-	this->trackName = trackName;
 }
 
 void playListItem::setFile( QString file )
@@ -82,41 +60,40 @@ void playListItem::setFile( QString file )
 //	meta = new title( file );
 }
 
- const metaTag playListItem::getMeta( )
-{
-	return *meta;
-}
-
 const QString playListItem::getFilepath( )
 {
+	return Path;
 }
 
 const QString playListItem::getFilename( )
 {
-}
-
-const QTime playListItem::getTotalTime( )
-{
+	return Filename;
 }
 
 const QString playListItem::getFile( )
 {
+	return Path+"/"+Filename;
 }
 
 unsigned int playListItem::getChannels( )
 {
+	return channels?channels:2;
 }
 
 void playListItem::setChannels( unsigned int chans )
 {
+	channels = chans;
 }
 
 unsigned int playListItem::getSamplerate( )
 {
+	//return e defaul rate of 44100
+	return Samplerate?Samplerate:44100;
 }
 
 void playListItem::setSamplerate( unsigned int rate )
 {
+	Samplerate = rate;
 }
 
 void playListItem::startPlaying( )
@@ -124,3 +101,7 @@ void playListItem::startPlaying( )
 	emit startToPlay( this );
 }
 
+const QString playListItem::getId( )
+{
+	return getFile();
+}
