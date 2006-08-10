@@ -26,6 +26,9 @@
 mainFormDlg::mainFormDlg(QWidget* parent, const char* name, WFlags fl)
     : RadioMixer(parent,name,fl)
 {
+	// Init playlist Manager
+	playListMgr = new playListManager(this);
+
 	//Setup statusBar
 	statusBar()->setSizeGripEnabled( false );
 	soundStatus = new QLabel( statusBar(), "SoundStatus");
@@ -103,9 +106,6 @@ mainFormDlg::mainFormDlg(QWidget* parent, const char* name, WFlags fl)
 			addNewJackChannel( config->readEntry( "/radiomixer/channel_"+QString::number(i)+"/name", "JACKPORT_"+QString::number(i+1) ) );
 #endif
 	}
-
-	playListMgr = new playListManager(this);
-
 	delete config;
 }
 
@@ -277,6 +277,9 @@ void mainFormDlg::addNewFilePlayer( )
 #endif
 	connect( channel, SIGNAL(newMeta( metaTag )), &meta, SLOT( setMeta( metaTag ) ) );
 	windowResize();
+
+	playListManager::filePlayer playerInfo = { channel->getPlayerID(), channel->getName(), channel->getColor() };
+	playListMgr->addPlayer( playerInfo );
 }
 
 void mainFormDlg::addNewMixerChannel( )

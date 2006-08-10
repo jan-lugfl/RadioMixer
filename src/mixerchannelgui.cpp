@@ -270,3 +270,9 @@ void mixerChannelGUI::saveSettings( )
 	save();
 	delete config;
 }
+
+QColor mixerChannelGUI::getColor( )
+{
+	return paletteBackgroundColor();
+}
+

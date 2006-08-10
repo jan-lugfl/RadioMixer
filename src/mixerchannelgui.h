@@ -53,6 +53,7 @@ public:
 	int currentPosition();
 	virtual QString getName();
 	virtual int getPlayerID();
+	virtual QColor getColor();
 	virtual QString getType() = 0;
 
 protected:

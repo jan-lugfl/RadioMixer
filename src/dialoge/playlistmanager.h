@@ -53,8 +53,19 @@ public:
 	playListManager(QWidget *parent = 0, const char *name = 0);
 	~playListManager();
 
+	struct filePlayer {
+		unsigned int id;
+		QString name;
+		QColor color;
+	};
+	virtual void addPlayer( filePlayer player );
+	virtual void removePlayer( unsigned int playerId );
+	virtual void updatePlayer( filePlayer player );
+
 protected:
 	QPopupMenu*	playListPopup;
+	QValueVector<filePlayer>	filePlayers;
+
 	virtual void resizeEvent ( QResizeEvent *e );
 
 #ifdef ENABLE_SONGDB
@@ -95,7 +106,7 @@ protected slots:
 	virtual void renamePlaylist();	
 
 signals:
-	void cueTrack( QString, playListItem* );
+	void cueTrack( unsigned int, playListItem* );
 
 };
 

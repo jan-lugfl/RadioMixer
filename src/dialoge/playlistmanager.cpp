@@ -58,6 +58,10 @@ playListManager::playListManager(QWidget *parent, const char *name)
 
 	playListView->setRootIsDecorated(TRUE);
 
+	playList* newPlaylist = new playList( playListView, tr("default playlist") );
+	newPlaylist->setOpen(TRUE);
+	refreshPlaylists();
+
 	delete config;
 }
 
@@ -114,28 +118,6 @@ void playListManager::displayData( bool )
 					playListViewItem* mySong = new playListViewItem( songDBListView, listEntry);
 					connect( listEntry, SIGNAL( startToPlay( playListItem* ) ), this, SLOT( updateLastPlayed( playListItem* ) ) );
 				}
-// depricated
-/*		}else if( readdata.doctype().name() == "songDBSongInfo" )
-		{
-			QDomElement dataroot = readdata.documentElement();
-			QDomElement song = dataroot.childNodes().item(0).toElement();
-//			title songObj( config->readEntry( "/radiomixer/network/songDBBasePath", "/songs/" )+song.attribute("relPath")+song.attribute("filename") );
-//			songObj.setArtist( song.attribute("interpret") );
-//			songObj.setTitle( song.attribute("title") );
-
-			switch(state)
-			{
-				case 1: //cue response
-					emit cueTrack( cueChannel->currentText(),  dynamic_cast<playListItem*>(songDBListView->selectedItem()) );
-					break;
-				case 2: //Add to playlist response
-//					emit addToPlaylist( playlistChannel->currentText(),  songObj );
-					break;
-				default:
-					break;
-			}
-			state = 0;
-*/
 		}else if( readdata.doctype().name() == "songDBGenreList" )
 		{
 			QDomElement dataroot = readdata.documentElement();
@@ -290,5 +272,27 @@ void playListManager::renamePlaylist( )
 {
 	if(playListView->selectedItem())
 		playListView->selectedItem()->startRename(0);
+}
+
+void playListManager::addPlayer( filePlayer player )
+{
+	filePlayers.append( player );
+	cueChannel->insertItem( player.name );
+}
+
+void playListManager::removePlayer( unsigned int playerId )
+{
+	QValueVector<filePlayer>::iterator playerIt;
+	for( playerIt = filePlayers.begin(); playerIt != filePlayers.end(); ++playerIt )
+		if( playerId == (*playerIt).id )
+			filePlayers.erase( playerIt );
+}
+
+void playListManager::updatePlayer( filePlayer player )
+{
+	QValueVector<filePlayer>::iterator playerIt;
+	for( playerIt = filePlayers.begin(); playerIt != filePlayers.end(); ++playerIt )
+		if( player.id == (*playerIt).id )
+			( *playerIt ) = player;
 }
 
