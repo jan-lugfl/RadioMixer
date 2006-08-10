@@ -58,9 +58,6 @@ protected:
 	vuMeter* levelMeterLeft;
 	vuMeter* levelMeterRight;
 
-	// Playlist Selection 1= Global; 2= Local;
-	unsigned short playListSelection;
-
 protected slots:
 	virtual void fileOpen();
 	virtual void buttonBlinker();
@@ -71,10 +68,11 @@ protected slots:
 
 public slots:
 	virtual void buttonPressed( int hwChannel, int button );
+	virtual void cueTrack( unsigned int playerId, playListItem* song );
 	virtual void cueNewTrack();
 
 signals:
-	void global_getNextTrack( QString );
+	void getNextTrack( unsigned int );
 	void sixSecondsLeft();
 	void onCue( metaTag, QString );
 

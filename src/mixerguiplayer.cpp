@@ -81,7 +81,6 @@ mixerGuiPlayer::mixerGuiPlayer( int chID, soundPlayer* soundplayer, QWidget* par
 	loopButton->setActivatedColor( QColor(255, 240, 0) );
 	connect( loopButton, SIGNAL(clicked()), player, SLOT(toggleLoop()) );
 
-	playListSelection = config->readNumEntry( "/radiomixer/channel_"+QString::number( playerID )+"/playList", 1 );
 	player->setName( config->readEntry( "/radiomixer/channel_"+QString::number( playerID )+"/name", tr("Kanal")+" "+QString::number(playerID) ) );
 
 	if( config->readNumEntry( "/radiomixer/channel_"+QString::number( playerID )+"/autoRecue", 0 ) )
@@ -123,17 +122,7 @@ void mixerGuiPlayer::buttonBlinker( )
 void mixerGuiPlayer::cueNewTrack( )
 {
 	if( player->isStopped() )
-	{
-		switch( playListSelection )
-		{
-			case 1:
-				emit global_getNextTrack( player->getName() );
-				break;
-			case 2:
-//				player->open( player->playList.getNextTrack() );
-				break;
-		}
-    	}
+		emit getNextTrack( playerID );
 }
 
 void mixerGuiPlayer::buttonPressed( int hwChannel, int button )
@@ -203,43 +192,16 @@ void mixerGuiPlayer::showPrefs( )
 {
 	mixerChannelGUI::createPrefDlg( );
 
-	QRadioButton* globalSelect = new QRadioButton( prefDlg->DynamicBox ,  "globalSelect" );
-	globalSelect->setText( tr("global Playlist") );
-	globalSelect->setGeometry( QRect( 10, 30, 200, 25 ) );
-
-	QRadioButton* localSelect = new QRadioButton( prefDlg->DynamicBox, "globalSelect" );
-	localSelect->setText( tr("local Playlist") );
-	localSelect->setGeometry( QRect( 10, 50, 200, 25 ) );
-
 	QCheckBox* autoRecue = new QCheckBox( prefDlg->DynamicBox, "autoRecue" );
 	autoRecue->setText( tr("Auto Recue ?") );
 	autoRecue->setGeometry( QRect( 10, 90, 250, 25) );
 
-	switch( playListSelection )
-	{
-		case 1:
-			globalSelect->setChecked( TRUE );
-			break;
-		case 2:
-			localSelect->setChecked( TRUE );
-			break;
-	}
-
 	if( config->readNumEntry( "/radiomixer/channel_"+QString::number( playerID )+"/autoRecue", 0 ) )
 		autoRecue->setChecked(1);
-
-	connect( globalSelect, SIGNAL( pressed() ), localSelect, SLOT( toggle() ) );
-	connect( localSelect, SIGNAL( pressed() ), globalSelect, SLOT( toggle() ) );
 
 	if( mixerChannelGUI::execPrefDlg() == QDialog::Accepted)
 	{	
 		player->setName( prefDlg->EditName->text());
-		if( globalSelect->isChecked() )
-			playListSelection = 1;
-		else if( localSelect->isChecked() )
-			playListSelection = 2;
-		config->writeEntry( "/radiomixer/channel_"+QString::number( playerID )+"/playList", playListSelection );
-
 		if( autoRecue->isChecked() )
 		{
 			config->writeEntry( "/radiomixer/channel_"+QString::number( playerID )+"/autoRecue", 1 );
@@ -278,4 +240,12 @@ QString mixerGuiPlayer::getType( )
 void mixerGuiPlayer::cued( metaTag meta )
 {
 	emit( onCue( meta, getName() ) );
+}
+
+void mixerGuiPlayer::cueTrack( unsigned int playerID, playListItem * song )
+{
+	if( this->playerID == playerID )
+	{
+		player->open( song );
+	}
 }

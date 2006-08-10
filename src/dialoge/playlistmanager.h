@@ -25,6 +25,7 @@
 
 #include "playlistng.h"
 
+#include "widgets/playlist.h"
 #include "playlistviewitem.h"
 
 #ifdef ENABLE_SONGDB
@@ -64,6 +65,7 @@ public:
 
 protected:
 	QPopupMenu*	playListPopup;
+	QPopupMenu*	playListPopupChannelList;
 	QValueVector<filePlayer>	filePlayers;
 
 	virtual void resizeEvent ( QResizeEvent *e );
@@ -71,6 +73,8 @@ protected:
 #ifdef ENABLE_SONGDB
 private:
 	int state;
+	// this is used to know in Contextmenu handling which Item to handle.
+	QListViewItem*	currentlySelectedItem;
 
 private slots:
 	void refreshPlaylists();
@@ -97,13 +101,15 @@ protected slots:
 
 public slots:
 	virtual void createNewPlaylist( QString name=tr("unnamed Playlist") );
+	virtual void cueNewTrack( unsigned int playerId );
 
 protected slots:
 	virtual void updateLastPlayed( playListItem* item ); 
 	virtual void showPlaylistContextmenu( QListViewItem * item, const QPoint & pos, int col );
 	virtual void loadPlaylist();
 	virtual void savePlaylist();
-	virtual void renamePlaylist();	
+	virtual void renamePlaylist();
+	virtual void cuePlaylist( int item );
 
 signals:
 	void cueTrack( unsigned int, playListItem* );

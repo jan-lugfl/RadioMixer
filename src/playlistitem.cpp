@@ -22,7 +22,7 @@
 #include "playlistitem.h"
 
 playListItem::playListItem( QString fileName, QObject * parent, const char * name )
- : QObject( parent, name )
+ : QObject( parent, name ), state( Normal )
 {
 	if( !fileName.isEmpty())
 	{
@@ -79,6 +79,7 @@ void playListItem::setSamplerate( unsigned int rate )
 
 void playListItem::startPlaying( )
 {
+	state = Playing;
 	emit startToPlay( this );
 }
 
@@ -123,4 +124,9 @@ void playListItem::parseAbsFile( QString file )
 			qWarning( QString( "unknown Filepath: " )+file );
 		}
 	}
+}
+
+bool playListItem::isPlayReady( )
+{
+	return( state == Normal );
 }

@@ -26,6 +26,7 @@
 #include <qlistview.h>
 #include <qdatetime.h>
 
+#define PLAYLISTVIEWITEM_RTTI 1101
 
 /**
 	@author Jan Boysen <trekkie@media-mission.de>
@@ -40,6 +41,7 @@ public:
 
 	playListItem* playListEntry;
 
+	virtual int rtti() const {return PLAYLISTVIEWITEM_RTTI;}
 	virtual void paintCell( QPainter *p, const QColorGroup &cg, int column, int width, int alignment );
 };
 

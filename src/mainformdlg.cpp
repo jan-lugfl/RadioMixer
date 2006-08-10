@@ -270,7 +270,8 @@ void mainFormDlg::addNewFilePlayer( )
 	mixerGuiPlayer* channel = new mixerGuiPlayer( playerGuis.count()+1, player, frame10, "channelXY");
 	playerGuis.append( channel );
 //	localPlaylistPointers.append( &(channel->player->playList) );
-	connect( channel, SIGNAL(global_getNextTrack( QString )), this, SLOT(globalPlaylist_getNextTrack( QString )) );
+	connect( channel, SIGNAL(getNextTrack( unsigned int )), playListMgr, SLOT(cueNewTrack( unsigned int ) ));
+	connect( playListMgr, SIGNAL(cueTrack( unsigned int, playListItem* )), channel, SLOT(cueTrack( unsigned int, playListItem* ) ));
 #ifdef ENABLE_HWMIXER
 	connect( miPu, SIGNAL( butPres( int, int )), channel, SLOT( buttonPressed( int, int ) ) );
 	connect( miPu, SIGNAL( sliderMove( int, int )), channel, SLOT( setSlider( int, int ) ) );

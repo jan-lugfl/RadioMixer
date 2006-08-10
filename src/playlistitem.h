@@ -23,11 +23,10 @@
 #define PLAYLISTITEM_H
 
 #include "metatag.h"
-#include "widgets/playlist.h"
 
 #include <qobject.h>
 #include <qregexp.h>
-
+#include <qcolor.h>
 
 /**
 	@author Jan Boysen <trekkie@media-mission.de>
@@ -48,6 +47,7 @@ public:
 	virtual void setChannels( unsigned int chans);
 	virtual unsigned int getSamplerate();
 	virtual void setSamplerate( unsigned int rate );
+	virtual bool isPlayReady();
 
 	virtual QString getType(){ return "STD";}
 
@@ -61,6 +61,9 @@ protected:
 	QString Format;
 	unsigned int channels;
 	unsigned int Samplerate;
+
+	enum songState { Normal, Cued, Playing, Played };
+	songState state;
 
 	virtual void readMeta();
 	virtual void parseAbsFile( QString file );

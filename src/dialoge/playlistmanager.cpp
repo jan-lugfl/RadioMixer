@@ -51,11 +51,21 @@ playListManager::playListManager(QWidget *parent, const char *name)
 
 	// setup the Popup menu of the playListView
 	playListPopup = new QPopupMenu( playListView );
-	playListPopup->insertItem( tr("new &Playlist"), this, SLOT(createNewPlaylist()) );
-	playListPopup->insertItem( tr("&rename Playlist"), this, SLOT(renamePlaylist()) );
-	playListPopup->insertItem( tr("&load Playlist"), this, SLOT(loadPlaylist()) );
-	playListPopup->insertItem( tr("&save Playlist"), this, SLOT(savePlaylist()) );
+	playListPopup->insertItem( tr("new &Playlist"), 0);
+	playListPopup->connectItem(0, this, SLOT(createNewPlaylist()) );
+	playListPopup->insertItem( tr("&rename Playlist"), 1);
+	playListPopup->connectItem(1,  this, SLOT(renamePlaylist()) );
+	playListPopup->insertItem( tr("&load Playlist"), 2);
+	playListPopup->connectItem(2, this, SLOT(loadPlaylist()) );
+	playListPopup->insertItem( tr("&save Playlist"), 3);
+	playListPopup->connectItem(3, this, SLOT(savePlaylist()) );
+	playListPopup->insertSeparator();
 
+	playListPopupChannelList = new QPopupMenu( playListPopup );
+	connect( playListPopupChannelList, SIGNAL(activated(int)), this, SLOT(cuePlaylist(int)) );
+	playListPopup->insertItem( tr("&cue playlist in"), playListPopupChannelList, 4 );
+
+	// setup the playlist View
 	playListView->setRootIsDecorated(TRUE);
 
 	playList* newPlaylist = new playList( playListView, tr("default playlist") );
@@ -204,7 +214,8 @@ void playListManager::refreshPlaylists()
 	QListViewItemIterator it( playListView );
 	while( it.current() )
 	{
-		playlistChannel->insertItem( (*it)->text(0) );
+		if( (*it)->rtti() == PLAYLIST_RTTI )
+			playlistChannel->insertItem( (*it)->text(0) );
 		++it;
 	}
 }
@@ -230,6 +241,32 @@ void playListManager::showSongDBContextmenu( QListViewItem * item, const QPoint 
 
 void playListManager::showPlaylistContextmenu( QListViewItem * item, const QPoint & pos, int col )
 {
+	// enable all Items
+	for(int i=0;i<5;i++)
+		playListPopup->setItemEnabled( i, TRUE );
+
+	if( item )
+	{
+		currentlySelectedItem = item;
+		switch(item->rtti()) 
+		{
+		case PLAYLISTVIEWITEM_RTTI:  // is the currently selected Item a Playlist Item ?
+			for(int i=0;i<5;i++)
+				playListPopup->setItemEnabled( i, FALSE);
+			break;
+		case PLAYLIST_RTTI:  // is the currently selected Item a Playlist ?
+			playListPopupChannelList->clear();
+			QValueVector<filePlayer>::iterator playerIt;
+			for( playerIt = filePlayers.begin(); playerIt != filePlayers.end(); ++playerIt )
+				playListPopupChannelList->insertItem( (*playerIt).name, (*playerIt).id );
+			break;
+		}
+	}else
+	{
+		playListPopup->setItemEnabled( 1, FALSE);
+		playListPopup->setItemEnabled( 3, FALSE);
+		playListPopup->setItemEnabled( 4, FALSE);
+	}
 	playListPopup->popup( pos );
 }
 
@@ -294,5 +331,30 @@ void playListManager::updatePlayer( filePlayer player )
 	for( playerIt = filePlayers.begin(); playerIt != filePlayers.end(); ++playerIt )
 		if( player.id == (*playerIt).id )
 			( *playerIt ) = player;
+}
+
+void playListManager::cuePlaylist( int item )
+{
+	dynamic_cast<playList*>(currentlySelectedItem)->cueInChannel( item );
+}
+
+void playListManager::cueNewTrack( unsigned int playerId )
+{
+	QListViewItemIterator it( playListView );
+	while( it.current() )
+	{
+		if( (*it)->rtti() == PLAYLIST_RTTI )
+		{
+			playList* pl = dynamic_cast<playList*>(*it);
+			if( pl->serveChannel( playerId) )
+			{
+				playListItem* pli = pl->getNextSong();
+				if( pli )
+					emit cueTrack( playerId, pli );
+				break;
+			}
+		}
+		++it;
+	}
 }
 

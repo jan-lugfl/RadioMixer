@@ -22,7 +22,7 @@
 #include "playlist.h"
 
 playList::playList( QListView* parent, QString name )
- : QListViewItem( parent, name )
+ : QListViewItem( parent, name ), cuedInChannel(-1)
 {
 	setDragEnabled( TRUE);
 	setDropEnabled( TRUE);
@@ -33,5 +33,44 @@ playList::playList( QListView* parent, QString name )
 playList::~playList()
 {
 }
+
+void playList::cueInChannel( int playerId )
+{
+	cuedInChannel = playerId;
+}
+
+void playList::paintCell( QPainter * p, const QColorGroup & cg, int column, int width, int alignment )
+{
+	QColor itemBGColor = cg.base();
+	QColor itemFGColor = cg.text();
+
+	if( isSelected() )
+	{
+		itemBGColor = cg.highlight();
+		itemFGColor = cg.highlightedText();
+	}
+	QColorGroup _cg( cg );
+	_cg.setColor( QColorGroup::Base, itemBGColor );
+	_cg.setColor( QColorGroup::Text, itemFGColor );
+	QListViewItem::paintCell( p, _cg, column, width, alignment );
+}
+
+bool playList::serveChannel( int channelID )
+{
+	return( channelID == cuedInChannel );
+}
+
+playListItem * playList::getNextSong( )
+{
+	QListViewItemIterator it( this );
+	while( it.current() )
+	{
+		if( (*it)->rtti() == PLAYLISTVIEWITEM_RTTI)
+			return dynamic_cast<playListViewItem*>(*it)->playListEntry;
+		++it;
+	}
+	return NULL;
+}
+
 
 

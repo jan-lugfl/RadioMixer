@@ -22,8 +22,12 @@
 #ifndef PLAYLIST_H
 #define PLAYLIST_H
 
+#include "playlistviewitem.h"
+
 #include <qlistview.h>
 #include <qobject.h>
+
+#define PLAYLIST_RTTI 1001
 
 /**
 	@author Jan Boysen <trekkie@media-mission.de>
@@ -32,9 +36,16 @@ class playList : public QListViewItem
 {
 public:
 	playList( QListView* parent, QString name = QObject::tr("unnamed Playlist") );
-
 	~playList();
 
+	virtual int rtti() const {return PLAYLIST_RTTI;}
+	virtual void cueInChannel( int playerId );
+	virtual void paintCell( QPainter *p, const QColorGroup &cg, int column, int width, int alignment );
+	virtual bool serveChannel( int channelID );
+	virtual playListItem* getNextSong();
+
+protected:
+	unsigned int	cuedInChannel;
 };
 
 #endif

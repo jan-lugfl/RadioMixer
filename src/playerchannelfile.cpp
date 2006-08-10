@@ -47,6 +47,11 @@ void playerChannelFile::open( playListItem* track )
 		close();
 
 	fHandle = fopen( track->getFile(), "r");
+	if( !fHandle )
+	{
+		qWarning(tr("file open error.. proberly not found..")+track->getFile());
+		return;
+	}
 	fileName = track->getFile();
 
 	try
