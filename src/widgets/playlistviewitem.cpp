@@ -37,6 +37,16 @@ playListViewItem::playListViewItem( QListView * parent, playListItem * item )
 	setText( 2, item->getLength().toString() );
 }
 
+playListViewItem::playListViewItem( QListViewItem * parent, QString newSong )
+ : QListViewItem( parent )
+{
+	playListEntry = new playListItem( newSong );
+	setDragEnabled(TRUE);
+	setText( 0, playListEntry->getSong() );
+	setText( 1, playListEntry->getGenre() );
+	setText( 2, playListEntry->getLength().toString() );
+}
+
 playListViewItem::playListViewItem( playListViewItem * parent )
  : QListViewItem( parent )
 {

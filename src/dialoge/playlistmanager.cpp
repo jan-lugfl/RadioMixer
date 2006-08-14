@@ -64,6 +64,10 @@ playListManager::playListManager(QWidget *parent, const char *name)
 	playListPopupChannelList = new QPopupMenu( playListPopup );
 	connect( playListPopupChannelList, SIGNAL(activated(int)), this, SLOT(cuePlaylist(int)) );
 	playListPopup->insertItem( tr("&cue playlist in"), playListPopupChannelList, 4 );
+	playListPopup->insertSeparator();
+
+	playListPopup->insertItem( tr("&add Track"), 5);
+	playListPopup->connectItem(5, this, SLOT(addNewTrackToPlaylist()) );
 
 	// setup the playlist View
 	playListView->setRootIsDecorated(TRUE);
@@ -242,7 +246,7 @@ void playListManager::showSongDBContextmenu( QListViewItem * item, const QPoint 
 void playListManager::showPlaylistContextmenu( QListViewItem * item, const QPoint & pos, int col )
 {
 	// enable all Items
-	for(int i=0;i<5;i++)
+	for(int i=0;i<6;i++)
 		playListPopup->setItemEnabled( i, TRUE );
 
 	if( item )
@@ -266,6 +270,7 @@ void playListManager::showPlaylistContextmenu( QListViewItem * item, const QPoin
 		playListPopup->setItemEnabled( 1, FALSE);
 		playListPopup->setItemEnabled( 3, FALSE);
 		playListPopup->setItemEnabled( 4, FALSE);
+		playListPopup->setItemEnabled( 5, FALSE);
 	}
 	playListPopup->popup( pos );
 }
@@ -355,6 +360,44 @@ void playListManager::cueNewTrack( unsigned int playerId )
 			}
 		}
 		++it;
+	}
+}
+
+void playListManager::addNewTrackToPlaylist( )
+{
+	QString extensions = ""
+#ifdef HAVE_VORBIS
+   +QString(" *.ogg")
+#endif
+#ifdef HAVE_MAD
+   +QString(" *.mp2 *.mp3")
+#endif
+   ;
+   QString fileTypes = tr("all supported soundfiles (%1)").arg(extensions)
+#ifdef HAVE_VORBIS
+   +QString(";;OGG/Vorbis (*.ogg)")
+#endif
+#ifdef HAVE_MAD
+   +QString(";;MPEG-1 Layer III (*.mp2 *.mp3)")
+#endif
+   ;
+	QString s = QFileDialog::getOpenFileName(
+		"",
+		fileTypes,
+		this,
+		tr("load file dialog"),
+		tr("append File to Playlist")+"..." );
+	if( s.length() >0)
+	{
+		switch(currentlySelectedItem->rtti()) 
+		{
+		case PLAYLISTVIEWITEM_RTTI:  // is the currently selected Item a Playlist Item ?
+			new playListViewItem(currentlySelectedItem->parent(), s);
+			break;
+		case PLAYLIST_RTTI:  // is the currently selected Item a Playlist ?
+			new playListViewItem(currentlySelectedItem, s);
+			break;
+		}
 	}
 }
 

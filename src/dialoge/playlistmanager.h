@@ -110,6 +110,7 @@ protected slots:
 	virtual void savePlaylist();
 	virtual void renamePlaylist();
 	virtual void cuePlaylist( int item );
+	virtual void addNewTrackToPlaylist();
 
 signals:
 	void cueTrack( unsigned int, playListItem* );
