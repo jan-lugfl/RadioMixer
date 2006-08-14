@@ -30,6 +30,7 @@ oggDecoder::oggDecoder(FILE* File, QObject *parent, const char *name)
 	{
 		throw( new decoderException("OGGDecoder", tr("error opening File")) );
 	}
+	sampleRate = decoder->vi->rate;
 }
 
 oggDecoder::~oggDecoder()
@@ -66,14 +67,6 @@ const float oggDecoder::getTotal_Samples( )
 // depricated
 void oggDecoder::setMetaInfos( title * titel )
 {
-	// first open the File and read the File Infos
-	FILE* fHandle = fopen( titel->getFile(), "r");
-	OggVorbis_File oggInfo;
-	ov_open( fHandle, &oggInfo, NULL, 0 );
-	titel->setChannels( oggInfo.vi->channels );
-	sampleRate = oggInfo.vi->rate;
-	titel->setSamplerate( oggInfo.vi->rate);
-	ov_clear( &oggInfo );
 }
 
 const float oggDecoder::getTotalFrames( )
