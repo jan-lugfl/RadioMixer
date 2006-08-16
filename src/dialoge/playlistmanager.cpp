@@ -227,7 +227,6 @@ void playListManager::refreshPlaylists()
 
 void playListManager::songDBViewdoubleClicked( QListViewItem * item, const QPoint &, int )
 {
-	qWarning("Slot entered");
 	if( item )
 		playListAdd();
 }

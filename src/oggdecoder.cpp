@@ -64,11 +64,6 @@ const float oggDecoder::getTotal_Samples( )
 	return ov_pcm_total( decoder, -1);
 }
 
-// depricated
-void oggDecoder::setMetaInfos( title * titel )
-{
-}
-
 const float oggDecoder::getTotalFrames( )
 {
 	return (ov_pcm_total( decoder, -1)/( sampleRate/25) );
@@ -87,6 +82,11 @@ const float oggDecoder::getRemainFrames( )
 void oggDecoder::reset( )
 {
 	ov_raw_seek( decoder, 0);
+}
+
+void oggDecoder::readMetaFromFile( playListItem * pli )
+{
+	// TODO: implement this...
 }
 
 

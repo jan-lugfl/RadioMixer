@@ -24,8 +24,9 @@
 
 #include <qobject.h>
 #include <qstring.h>
-#include "title.h"
 #include <stdio.h>
+
+#include "playlistitem.h"
 
 /**
 abstract Base Class of all our File Decoders
@@ -52,8 +53,8 @@ public:
 	virtual const float getPlayedFrames() = 0;
 	virtual const float getRemainFrames() = 0;
 
-	//depricated
-	virtual void setMetaInfos( title* titel) = 0;
+//	Implement in subclasses to read Infos from files...
+	static void readMetaFromFile( playListItem* pli );
 
 protected:
 	FILE* fHandle;

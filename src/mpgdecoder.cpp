@@ -170,13 +170,6 @@ inline float mpgDecoder::scale(mad_fixed_t sample)
    return (float) (sample / (float) (1L << MAD_F_FRACBITS));
 }
 
-// depricated
-void mpgDecoder::setMetaInfos( title * titel )
-{
-	titel->setSamplerate( sampleRate );
-	titel->setChannels( channels );
-}
-
 const float mpgDecoder::getTotalFrames( )
 {
 	return maxFrames;
@@ -271,4 +264,9 @@ void mpgDecoder::reset( )
 	mad_stream_init( madStream );
 	mad_frame_init( madFrame );
 	frameCounter = 0;
+}
+
+void mpgDecoder::readMetaFromFile( playListItem * pli )
+{
+	// TODO: implement this...
 }

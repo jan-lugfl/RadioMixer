@@ -31,3 +31,8 @@ fileDecoder::fileDecoder( FILE * File, QObject * parent, const char * name )
 fileDecoder::~ fileDecoder( )
 {
 }
+
+void fileDecoder::readMetaFromFile( playListItem * pli )
+{
+}
+
