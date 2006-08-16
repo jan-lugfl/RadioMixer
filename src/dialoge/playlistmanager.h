@@ -97,6 +97,7 @@ protected slots:
 	virtual void cue();
 	virtual void search();
 	virtual void showSongDBContextmenu( QListViewItem * item, const QPoint & pos, int col );
+	virtual void songDBViewdoubleClicked( QListViewItem *, const QPoint &, int );
 #endif
 
 public slots:
@@ -106,6 +107,7 @@ public slots:
 protected slots:
 	virtual void updateLastPlayed( playListItem* item ); 
 	virtual void showPlaylistContextmenu( QListViewItem * item, const QPoint & pos, int col );
+	virtual void playlistViewdoubleClicked( QListViewItem *, const QPoint &, int );
 	virtual void loadPlaylist();
 	virtual void savePlaylist();
 	virtual void renamePlaylist();

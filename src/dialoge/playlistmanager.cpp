@@ -45,6 +45,7 @@ playListManager::playListManager(QWidget *parent, const char *name)
 	playlistChannel->insertItem(tr("-- selected --"));
 
 	connect( playListView, SIGNAL( itemRenamed( QListViewItem*, int) ), this, SLOT( refreshPlaylists() ) );
+	connect( songDBListView, SIGNAL( doubleClicked( QListViewItem*, const QPoint& , int) ), this, SLOT( songDBViewdoubleClicked( QListViewItem *, const QPoint &, int ) ) );
 #else
 	delete songDBFrame;
 #endif
@@ -223,6 +224,13 @@ void playListManager::refreshPlaylists()
 		++it;
 	}
 }
+
+void playListManager::songDBViewdoubleClicked( QListViewItem * item, const QPoint &, int )
+{
+	qWarning("Slot entered");
+	if( item )
+		playListAdd();
+}
 #endif
 
 void playListManager::resizeEvent( QResizeEvent *e )
@@ -399,5 +407,9 @@ void playListManager::addNewTrackToPlaylist( )
 			break;
 		}
 	}
+}
+
+void playListManager::playlistViewdoubleClicked( QListViewItem *, const QPoint &, int )
+{
 }
 
