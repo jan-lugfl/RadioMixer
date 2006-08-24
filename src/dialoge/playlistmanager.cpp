@@ -259,7 +259,7 @@ void playListManager::showPlaylistContextmenu( QListViewItem * item, const QPoin
 	if( item )
 	{
 		currentlySelectedItem = item;
-		switch(item->rtti()) 
+		switch(item->rtti())
 		{
 		case PLAYLISTVIEWITEM_RTTI:  // is the currently selected Item a Playlist Item ?
 			for(int i=0;i<5;i++)
@@ -305,7 +305,10 @@ void playListManager::loadPlaylist( )
 
 void playListManager::savePlaylist( )
 {
-   QString s = QFileDialog::getSaveFileName(
+	if( !currentlySelectedItem->rtti() == PLAYLIST_RTTI )
+		return;
+
+	QString s = QFileDialog::getSaveFileName(
                     "",
                     "RadioMixer Playlist (*.plst)",
                     this,
@@ -313,7 +316,7 @@ void playListManager::savePlaylist( )
                     tr("save playlist...") );
 	if( s.length() >0)
 	{
-		qWarning("not implemented...");
+		dynamic_cast<playList*>(currentlySelectedItem)->saveToFile( s );
 	}
 }
 

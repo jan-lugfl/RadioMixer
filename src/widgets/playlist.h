@@ -26,6 +26,9 @@
 
 #include <qlistview.h>
 #include <qobject.h>
+#include <qfile.h>
+#include <qdom.h>
+#include <qmessagebox.h>
 
 #define PLAYLIST_RTTI 1001
 
@@ -35,17 +38,22 @@
 class playList : public QListViewItem
 {
 public:
-	playList( QListView* parent, QString name = QObject::tr("unnamed Playlist") );
+	playList( QListView* parent, QString name = QObject::tr("unnamed Playlist"), QString file = "" );
 	~playList();
 
 	virtual int rtti() const {return PLAYLIST_RTTI;}
 	virtual void cueInChannel( int playerId );
 	virtual void paintCell( QPainter *p, const QColorGroup &cg, int column, int width, int alignment );
-	virtual bool serveChannel( int channelID );
+	virtual bool serveChannel( unsigned int channelID );
 	virtual playListItem* getNextSong();
+
+	virtual void loadFromFile( QString fileName );
+	virtual void saveToFile( QString fileName );
+	virtual void save();
 
 protected:
 	unsigned int	cuedInChannel;
+	QString	fileName;
 };
 
 #endif

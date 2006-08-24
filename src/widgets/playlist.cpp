@@ -21,12 +21,14 @@
  ***************************************************************************/
 #include "playlist.h"
 
-playList::playList( QListView* parent, QString name )
+playList::playList( QListView* parent, QString name, QString file )
  : QListViewItem( parent, name ), cuedInChannel(-1)
 {
 	setDragEnabled( TRUE);
 	setDropEnabled( TRUE);
 	setRenameEnabled( 0, TRUE );
+	if( !file.isEmpty() )
+		loadFromFile( file );
 }
 
 
@@ -55,7 +57,7 @@ void playList::paintCell( QPainter * p, const QColorGroup & cg, int column, int 
 	QListViewItem::paintCell( p, _cg, column, width, alignment );
 }
 
-bool playList::serveChannel( int channelID )
+bool playList::serveChannel( unsigned int channelID )
 {
 	return( channelID == cuedInChannel );
 }
@@ -72,5 +74,55 @@ playListItem * playList::getNextSong( )
 	return NULL;
 }
 
+void playList::loadFromFile( QString fileName )
+{
+	QDomDocument playListDocument;
+	QFile playListFile( fileName );
 
+	playListDocument.setContent( playListFile.readAll() );
+	if( !playListDocument.isDocument() || !(playListDocument.doctype().name() == "RadioMixerPlayList") )
+	{
+		QMessageBox::information( NULL, QObject::tr("RadioMixer - Playlist Manager"), QObject::tr("This seems not to be a valid playlist") );
+		return;
+	}
+
+}
+
+void playList::saveToFile( QString fileName )
+{
+	this->fileName = fileName;
+	save();
+}
+
+void playList::save( )
+{
+	QDomDocument playListDocument("RadioMixerPlayList");
+	QDomElement playList = playListDocument.createElement("playlist");
+	playListDocument.appendChild(playList);
+	QFile playListFile( fileName );
+
+	if( !playListFile.open( IO_WriteOnly ) )
+	{
+		QMessageBox::information( NULL, QObject::tr("RadioMixer - Playlist Manager"), QObject::tr("error on saving Playlist..") );
+		return;
+	}
+
+	QListViewItemIterator it( this );
+	while( it.current() )
+	{
+		if( (*it)->rtti() == PLAYLISTVIEWITEM_RTTI )
+		{
+			QDomElement entry = playListDocument.createElement("playlistEntry");
+			playListItem* pli = dynamic_cast<playListViewItem*>((*it))->playListEntry;
+
+			entry.setAttribute("file", pli->getFile());
+
+			playList.appendChild(entry);
+		}
+		++it;
+	}
+	QTextStream stream( &playListFile );
+	stream << playListDocument.toString();
+	playListFile.close();
+}
 
