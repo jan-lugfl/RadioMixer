@@ -291,7 +291,7 @@ void playListManager::createNewPlaylist( QString name )
 
 void playListManager::loadPlaylist( )
 {
-   QString s = QFileDialog::getOpenFileName(
+	QString s = QFileDialog::getOpenFileName(
                     "",
                     "RadioMixer Playlist (*.plst)",
                     this,
@@ -299,8 +299,10 @@ void playListManager::loadPlaylist( )
                     tr("load playlist...") );
 	if( s.length() >0)
 	{
-		qWarning("not implemented...");
+		playList* newPlaylist = new playList( playListView, "", s );
+		newPlaylist->setOpen(TRUE);
 	}
+	refreshPlaylists();
 }
 
 void playListManager::savePlaylist( )

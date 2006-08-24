@@ -78,6 +78,11 @@ void playList::loadFromFile( QString fileName )
 {
 	QDomDocument playListDocument;
 	QFile playListFile( fileName );
+	if( !playListFile.open( IO_ReadOnly ) )
+	{
+		QMessageBox::information( NULL, QObject::tr("RadioMixer - Playlist Manager"), QObject::tr("Error on opening playlist...") );
+		return;
+	}
 
 	playListDocument.setContent( playListFile.readAll() );
 	if( !playListDocument.isDocument() || !(playListDocument.doctype().name() == "RadioMixerPlayList") )
@@ -85,7 +90,16 @@ void playList::loadFromFile( QString fileName )
 		QMessageBox::information( NULL, QObject::tr("RadioMixer - Playlist Manager"), QObject::tr("This seems not to be a valid playlist") );
 		return;
 	}
-
+	
+	QDomElement dataroot = playListDocument.documentElement();
+	// get files from playlist
+	QDomNode node = dataroot.firstChild();
+	while( !node.isNull() )
+	{
+		QDomElement song = node.toElement();
+		new playListViewItem( this, song.attribute("file") );
+		node = node.nextSibling();
+	}
 }
 
 void playList::saveToFile( QString fileName )
