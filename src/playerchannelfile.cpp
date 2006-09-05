@@ -81,6 +81,7 @@ void playerChannelFile::open( playListItem* track )
 				smplRate = track->getSamplerate();
 				channels = track->getChannels();
 				fileOpen = TRUE;
+				dynamic_cast<playListItem*>(meta)->cueing();
 				emit( cued( *meta ) );
 				state = 3;
 
@@ -158,6 +159,7 @@ void playerChannelFile::checkBuffer( )
 void playerChannelFile::stop( )
 {
 	playerChannelStd::stop();
+	dynamic_cast<playListItem*>(meta)->stopped();
 	close();
 	emit( stopped() );
 }

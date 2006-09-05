@@ -77,7 +77,7 @@ void playListItem::setSamplerate( unsigned int rate )
 	Samplerate = rate;
 }
 
-void playListItem::startPlaying( )
+void playListItem::startPlaying()
 {
 	state = Playing;
 	emit startToPlay( this );
@@ -126,7 +126,25 @@ void playListItem::parseAbsFile( QString file )
 	}
 }
 
-bool playListItem::isPlayReady( )
+playListItem::songState playListItem::getState()
 {
-	return( state == Normal );
+	return state;
+}
+
+void playListItem::stopped( )
+{
+	switch( state )
+	{
+		case Cued:
+			state = Normal;
+			break;
+		case Playing:
+			state = Played;
+			break;
+	}
+}
+
+void playListItem::cueing( )
+{
+	state = Cued;
 }

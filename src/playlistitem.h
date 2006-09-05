@@ -38,6 +38,8 @@ public:
 	playListItem( QString fileName, QObject *parent = 0, const char *name = 0 );
 	~playListItem();
 
+	enum songState { Normal, Cued, Playing, Played };
+
 	virtual const QString getId();
 	virtual const QString getFilepath();
 	virtual const QString getFilename();
@@ -47,7 +49,8 @@ public:
 	virtual void setChannels( unsigned int chans);
 	virtual unsigned int getSamplerate();
 	virtual void setSamplerate( unsigned int rate );
-	virtual bool isPlayReady();
+
+	virtual songState getState();
 
 	virtual QString getType(){ return "STD";}
 
@@ -62,7 +65,6 @@ protected:
 	unsigned int channels;
 	unsigned int Samplerate;
 
-	enum songState { Normal, Cued, Playing, Played };
 	songState state;
 
 	virtual void readMeta();
@@ -70,6 +72,8 @@ protected:
 
 public slots:
 	virtual void startPlaying();
+	virtual void cueing();
+	virtual void stopped();
 
 signals:
 	void startToPlay( playListItem* );

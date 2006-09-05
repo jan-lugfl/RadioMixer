@@ -68,7 +68,11 @@ playListItem * playList::getNextSong( )
 	while( it.current() )
 	{
 		if( (*it)->rtti() == PLAYLISTVIEWITEM_RTTI)
-			return dynamic_cast<playListViewItem*>(*it)->playListEntry;
+		{
+			playListItem* item = dynamic_cast<playListViewItem*>(*it)->playListEntry;
+			if( item->getState() == playListItem::Normal )
+				return item;
+		}
 		++it;
 	}
 	return NULL;
@@ -92,6 +96,7 @@ void playList::loadFromFile( QString fileName )
 	}
 	
 	QDomElement dataroot = playListDocument.documentElement();
+	setName(dataroot.attribute("name"));
 	// get files from playlist
 	QDomNode node = dataroot.firstChild();
 	while( !node.isNull() )
@@ -112,6 +117,7 @@ void playList::save( )
 {
 	QDomDocument playListDocument("RadioMixerPlayList");
 	QDomElement playList = playListDocument.createElement("playlist");
+	playList.setAttribute("name", text(0) );
 	playListDocument.appendChild(playList);
 	QFile playListFile( fileName );
 
@@ -138,5 +144,15 @@ void playList::save( )
 	QTextStream stream( &playListFile );
 	stream << playListDocument.toString();
 	playListFile.close();
+}
+
+void playList::setName( QString name )
+{
+	setText(0, name );
+}
+
+QString playList::getName( )
+{
+	return text(0);;
 }
 

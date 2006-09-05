@@ -47,6 +47,8 @@ public:
 	virtual bool serveChannel( unsigned int channelID );
 	virtual playListItem* getNextSong();
 
+	virtual void setName( QString );
+	virtual QString getName();
 	virtual void loadFromFile( QString fileName );
 	virtual void saveToFile( QString fileName );
 	virtual void save();
