@@ -54,8 +54,8 @@ public:
 
 	virtual QString getType(){ return "STD";}
 
-	virtual bool hasCostumBackgroundColor(){return FALSE;}
-	virtual QColor getBackgroundColor(){}
+	virtual bool hasCostumBackgroundColor();
+	virtual QColor getBackgroundColor();
 
 
 protected:

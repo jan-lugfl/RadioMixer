@@ -80,6 +80,7 @@ void playListItem::setSamplerate( unsigned int rate )
 void playListItem::startPlaying()
 {
 	state = Playing;
+	emit( refreshed() );
 	emit startToPlay( this );
 }
 
@@ -142,9 +143,30 @@ void playListItem::stopped( )
 			state = Played;
 			break;
 	}
+	emit( refreshed() );
 }
 
 void playListItem::cueing( )
 {
 	state = Cued;
+	emit( refreshed() );
+}
+
+QColor playListItem::getBackgroundColor( )
+{
+	switch( state )
+	{
+		case Played:
+			return lightGray;
+		case Cued:
+			return  yellow.light( 175 );
+		case playListItem::Playing:
+			return green.light( 175 );
+	}
+	return white;
+}
+
+bool playListItem::hasCostumBackgroundColor( )
+{
+	return ( state != Normal );
 }
