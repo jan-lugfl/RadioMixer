@@ -170,3 +170,10 @@ bool playListItem::hasCostumBackgroundColor( )
 {
 	return ( state != Normal );
 }
+
+void playListItem::resetState( )
+{
+	if( state == Played )
+		state = Normal;
+	emit( refreshed() );
+}

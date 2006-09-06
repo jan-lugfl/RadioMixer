@@ -50,6 +50,7 @@ public:
 	virtual unsigned int getSamplerate();
 	virtual void setSamplerate( unsigned int rate );
 
+	virtual void resetState();
 	virtual songState getState();
 
 	virtual QString getType(){ return "STD";}

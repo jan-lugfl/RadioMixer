@@ -450,7 +450,18 @@ void playListManager::setCuePlayed( )
 
 void playListManager::resetPlaylistStates( )
 {
-
+	if( currentlySelectedItem->rtti() ==PLAYLIST_RTTI )
+	{
+		QListViewItemIterator it( currentlySelectedItem );
+		while( it.current() )
+		{
+			if( (*it)->rtti() == PLAYLISTVIEWITEM_RTTI )
+			{
+				dynamic_cast<playListViewItem*>((*it))->playListEntry->resetState();
+			}
+			++it;
+		}
+	}
 }
 
 void playListManager::cueAsNextTreck( )
