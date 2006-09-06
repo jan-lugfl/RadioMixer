@@ -192,3 +192,17 @@ void playList::notCueInChannel( int playerId )
 {
 	cuedInChannel.remove( playerId );
 }
+
+void playList::removePlayed( )
+{
+	QListViewItemIterator it( this );
+	while( it.current() )
+	{
+		if( (*it)->rtti() == PLAYLISTVIEWITEM_RTTI )
+		{
+			if( dynamic_cast<playListViewItem*>(*it)->playListEntry->getState() == playListItem::Played )
+				takeItem( *it );
+		}
+		++it;
+	}
+}

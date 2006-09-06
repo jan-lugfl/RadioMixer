@@ -52,6 +52,7 @@ playListViewItem::playListViewItem( playListViewItem * parent )
  : QListViewItem( parent )
 {
 	setDragEnabled(TRUE);
+	setText( 3, QString::number( parent->childCount()+1) );
 }
 
 playListViewItem::~playListViewItem()

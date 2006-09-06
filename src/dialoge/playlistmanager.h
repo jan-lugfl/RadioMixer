@@ -68,6 +68,7 @@ protected:
 	QPopupMenu*	playListPopup;
 	QPopupMenu*	playListPopupChannelList;
 	QPopupMenu*	playListPopupOptions;
+	QPopupMenu*	playListPopupPlayList;
 	QValueVector<filePlayer>	filePlayers;
 
 	virtual void resizeEvent ( QResizeEvent *e );
@@ -119,6 +120,7 @@ protected slots:
 	virtual void setCuePlayed();
 	virtual void resetPlaylistStates();
 	virtual void cueAsNextTreck();
+	virtual void removePlayed();
 
 signals:
 	void cueTrack( unsigned int, playListItem* );

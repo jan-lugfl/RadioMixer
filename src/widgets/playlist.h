@@ -59,6 +59,7 @@ public:
 	virtual bool cuePlayed();
 
 	virtual void nextCueSelected();
+	virtual void removePlayed();
 
 protected:
 	QValueList<unsigned int>	cuedInChannel;

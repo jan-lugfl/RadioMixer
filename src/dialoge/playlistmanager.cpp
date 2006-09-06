@@ -73,9 +73,12 @@ playListManager::playListManager(QWidget *parent, const char *name)
 
 	playListPopup->insertSeparator();
 
+	playListPopupPlayList = new QPopupMenu( playListPopup );
+	playListPopup->insertItem( tr("&Playlist"), playListPopupPlayList, 6 );
+
 	playListPopupOptions = new QPopupMenu( playListPopup );
 	playListPopupOptions->setCheckable( TRUE );
-	playListPopup->insertItem( tr("&Options"), playListPopupOptions, 6 );
+	playListPopup->insertItem( tr("&Options"), playListPopupOptions, 7 );
 
 	// setup the playlist View
 	playListView->setRootIsDecorated(TRUE);
@@ -293,8 +296,12 @@ void playListManager::showPlaylistContextmenu( QListViewItem * item, const QPoin
 			playListPopupOptions->setItemChecked( 1, plst->cuePlayed() );
 			playListPopupOptions->connectItem(1, this, SLOT(setCuePlayed()) );
 
-			playListPopupOptions->insertItem( tr("reset states"), 2 );
-			playListPopupOptions->connectItem(2, this, SLOT(resetPlaylistStates()) );
+			playListPopupPlayList->clear();
+			playListPopupPlayList->insertItem( tr("reset states"), 1 );
+			playListPopupPlayList->connectItem(1, this, SLOT(resetPlaylistStates()) );
+
+			playListPopupPlayList->insertItem( tr("remove played"), 2 );
+			playListPopupPlayList->connectItem(2, this, SLOT(removePlayed()) );
 
 			break;
 		}
@@ -476,5 +483,11 @@ void playListManager::cueAsNextTreck( )
 {
 	if( currentlySelectedItem->parent()->rtti() ==PLAYLIST_RTTI )
 		dynamic_cast<playList*>(currentlySelectedItem->parent())->nextCueSelected();
+}
+
+void playListManager::removePlayed( )
+{
+	if( currentlySelectedItem->rtti() ==PLAYLIST_RTTI )
+		dynamic_cast<playList*>(currentlySelectedItem)->removePlayed();
 }
 
