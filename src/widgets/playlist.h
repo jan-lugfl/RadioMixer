@@ -53,9 +53,16 @@ public:
 	virtual void saveToFile( QString fileName );
 	virtual void save();
 
+	virtual void setCuePlayed( bool playedDisable );
+	virtual bool cuePlayed();
+
+	virtual void nextCueSelected();
+
 protected:
 	unsigned int	cuedInChannel;
 	QString	fileName;
+	playListItem* manualNextSongPtr;
+	bool recuePlayed;
 };
 
 #endif

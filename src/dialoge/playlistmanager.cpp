@@ -65,10 +65,17 @@ playListManager::playListManager(QWidget *parent, const char *name)
 	playListPopupChannelList = new QPopupMenu( playListPopup );
 	connect( playListPopupChannelList, SIGNAL(activated(int)), this, SLOT(cuePlaylist(int)) );
 	playListPopup->insertItem( tr("&cue playlist in"), playListPopupChannelList, 4 );
+
 	playListPopup->insertSeparator();
 
 	playListPopup->insertItem( tr("&add Track"), 5);
 	playListPopup->connectItem(5, this, SLOT(addNewTrackToPlaylist()) );
+
+	playListPopup->insertSeparator();
+
+	playListPopupOptions = new QPopupMenu( playListPopup );
+	playListPopupOptions->setCheckable( TRUE );
+	playListPopup->insertItem( tr("&Options"), playListPopupOptions, 6 );
 
 	// setup the playlist View
 	playListView->setRootIsDecorated(TRUE);
@@ -267,12 +274,27 @@ void playListManager::showPlaylistContextmenu( QListViewItem * item, const QPoin
 		case PLAYLISTVIEWITEM_RTTI:  // is the currently selected Item a Playlist Item ?
 			for(int i=0;i<5;i++)
 				playListPopup->setItemEnabled( i, FALSE);
+			playListPopupOptions->clear();
+
+			playListPopupOptions->insertItem( tr("cue next"), 1 );
+			playListPopupOptions->connectItem(1, this, SLOT( cueAsNextTreck() ) );
+
 			break;
 		case PLAYLIST_RTTI:  // is the currently selected Item a Playlist ?
 			playListPopupChannelList->clear();
 			QValueVector<filePlayer>::iterator playerIt;
 			for( playerIt = filePlayers.begin(); playerIt != filePlayers.end(); ++playerIt )
 				playListPopupChannelList->insertItem( (*playerIt).name, (*playerIt).id );
+
+			playList* plst = dynamic_cast<playList*>(item);
+			playListPopupOptions->clear();
+			playListPopupOptions->insertItem( tr("recue played"), 1 );
+			playListPopupOptions->setItemChecked( 1, plst->cuePlayed() );
+			playListPopupOptions->connectItem(1, this, SLOT(setCuePlayed()) );
+
+			playListPopupOptions->insertItem( tr("reset states"), 2 );
+			playListPopupOptions->connectItem(2, this, SLOT(resetPlaylistStates()) );
+
 			break;
 		}
 	}else
@@ -418,5 +440,22 @@ void playListManager::addNewTrackToPlaylist( )
 
 void playListManager::playlistViewdoubleClicked( QListViewItem *, const QPoint &, int )
 {
+}
+
+void playListManager::setCuePlayed( )
+{
+	if( currentlySelectedItem )
+		dynamic_cast<playList*>(currentlySelectedItem)->setCuePlayed( !playListPopupOptions->isItemChecked( 1 ) );
+}
+
+void playListManager::resetPlaylistStates( )
+{
+
+}
+
+void playListManager::cueAsNextTreck( )
+{
+	if( currentlySelectedItem->parent()->rtti() ==PLAYLIST_RTTI )
+		dynamic_cast<playList*>(currentlySelectedItem->parent())->nextCueSelected();
 }
 

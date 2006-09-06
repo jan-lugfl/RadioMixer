@@ -22,7 +22,7 @@
 #include "playlist.h"
 
 playList::playList( QListView* parent, QString name, QString file )
- : QListViewItem( parent, name ), cuedInChannel(-1)
+ : QListViewItem( parent, name ), cuedInChannel(-1), manualNextSongPtr( NULL ), recuePlayed( FALSE )
 {
 	setDragEnabled( TRUE);
 	setDropEnabled( TRUE);
@@ -64,16 +64,23 @@ bool playList::serveChannel( unsigned int channelID )
 
 playListItem * playList::getNextSong( )
 {
-	QListViewItemIterator it( this );
-	while( it.current() )
+	if( manualNextSongPtr )
 	{
-		if( (*it)->rtti() == PLAYLISTVIEWITEM_RTTI)
+		playListItem* tmp = manualNextSongPtr;
+		manualNextSongPtr = NULL;
+		return tmp;
+	}else{
+		QListViewItemIterator it( this );
+		while( it.current() )
 		{
-			playListItem* item = dynamic_cast<playListViewItem*>(*it)->playListEntry;
-			if( item->getState() == playListItem::Normal )
-				return item;
+			if( (*it)->rtti() == PLAYLISTVIEWITEM_RTTI)
+			{
+				playListItem* item = dynamic_cast<playListViewItem*>(*it)->playListEntry;
+				if( item->getState() == playListItem::Normal || ( item->getState() == playListItem::Played && recuePlayed ) )
+					return item;
+			}
+			++it;
 		}
-		++it;
 	}
 	return NULL;
 }
@@ -153,6 +160,30 @@ void playList::setName( QString name )
 
 QString playList::getName( )
 {
-	return text(0);;
+	return text(0);
 }
 
+void playList::setCuePlayed( bool playedDisable )
+{
+	recuePlayed = playedDisable;
+}
+
+bool playList::cuePlayed( )
+{
+	return recuePlayed;
+}
+
+void playList::nextCueSelected( )
+{
+	QListViewItemIterator it( this );
+	while( it.current() )
+	{
+		if( (*it)->rtti() == PLAYLISTVIEWITEM_RTTI )
+		{
+			playListViewItem* plvi = dynamic_cast<playListViewItem*>((*it));
+			if( plvi->isSelected() )
+				manualNextSongPtr = plvi->playListEntry;
+		}
+		++it;
+	}
+}

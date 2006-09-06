@@ -46,6 +46,7 @@
 #include <qpopupmenu.h>
 #include <qfiledialog.h>
 #include <qtimer.h>
+#include <qpainter.h>
 
 class playListManager: public playListNG {
 Q_OBJECT
@@ -66,6 +67,7 @@ public:
 protected:
 	QPopupMenu*	playListPopup;
 	QPopupMenu*	playListPopupChannelList;
+	QPopupMenu*	playListPopupOptions;
 	QValueVector<filePlayer>	filePlayers;
 
 	virtual void resizeEvent ( QResizeEvent *e );
@@ -114,10 +116,12 @@ protected slots:
 	virtual void renamePlaylist();
 	virtual void cuePlaylist( int item );
 	virtual void addNewTrackToPlaylist();
+	virtual void setCuePlayed();
+	virtual void resetPlaylistStates();
+	virtual void cueAsNextTreck();
 
 signals:
 	void cueTrack( unsigned int, playListItem* );
 
 };
-
 #endif
