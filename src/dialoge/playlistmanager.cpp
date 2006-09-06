@@ -377,6 +377,13 @@ void playListManager::updatePlayer( filePlayer player )
 
 void playListManager::cuePlaylist( int item )
 {
+	QListViewItemIterator it( playListView );
+	while( it.current() )
+	{
+		if( (*it)->rtti() == PLAYLIST_RTTI )
+			dynamic_cast<playList*>((*it))->notCueInChannel( item );
+		++it;
+	}
 	dynamic_cast<playList*>(currentlySelectedItem)->cueInChannel( item );
 }
 

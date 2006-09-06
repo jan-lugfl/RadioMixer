@@ -22,7 +22,7 @@
 #include "playlist.h"
 
 playList::playList( QListView* parent, QString name, QString file )
- : QListViewItem( parent, name ), cuedInChannel(-1), manualNextSongPtr( NULL ), recuePlayed( FALSE )
+ : QListViewItem( parent, name ), manualNextSongPtr( NULL ), recuePlayed( FALSE )
 {
 	setDragEnabled( TRUE);
 	setDropEnabled( TRUE);
@@ -38,7 +38,7 @@ playList::~playList()
 
 void playList::cueInChannel( int playerId )
 {
-	cuedInChannel = playerId;
+	cuedInChannel.append( playerId );
 }
 
 void playList::paintCell( QPainter * p, const QColorGroup & cg, int column, int width, int alignment )
@@ -59,7 +59,7 @@ void playList::paintCell( QPainter * p, const QColorGroup & cg, int column, int 
 
 bool playList::serveChannel( unsigned int channelID )
 {
-	return( channelID == cuedInChannel );
+	return( cuedInChannel.findIndex( channelID ) != -1 );
 }
 
 playListItem * playList::getNextSong( )
@@ -186,4 +186,9 @@ void playList::nextCueSelected( )
 		}
 		++it;
 	}
+}
+
+void playList::notCueInChannel( int playerId )
+{
+	cuedInChannel.remove( playerId );
 }

@@ -29,6 +29,7 @@
 #include <qfile.h>
 #include <qdom.h>
 #include <qmessagebox.h>
+#include <qvaluelist.h>
 
 #define PLAYLIST_RTTI 1001
 
@@ -43,6 +44,7 @@ public:
 
 	virtual int rtti() const {return PLAYLIST_RTTI;}
 	virtual void cueInChannel( int playerId );
+	virtual void notCueInChannel( int playerId );
 	virtual void paintCell( QPainter *p, const QColorGroup &cg, int column, int width, int alignment );
 	virtual bool serveChannel( unsigned int channelID );
 	virtual playListItem* getNextSong();
@@ -59,7 +61,7 @@ public:
 	virtual void nextCueSelected();
 
 protected:
-	unsigned int	cuedInChannel;
+	QValueList<unsigned int>	cuedInChannel;
 	QString	fileName;
 	playListItem* manualNextSongPtr;
 	bool recuePlayed;
