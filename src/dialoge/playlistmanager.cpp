@@ -79,6 +79,7 @@ playListManager::playListManager(QWidget *parent, const char *name)
 
 	// setup the playlist View
 	playListView->setRootIsDecorated(TRUE);
+	playListView->setSortColumn( 3 );
 
 	playList* newPlaylist = new playList( playListView, tr("default playlist") );
 	newPlaylist->setOpen(TRUE);
