@@ -45,16 +45,23 @@ playListItemSongDB::~playListItemSongDB()
 
 bool playListItemSongDB::hasCostumBackgroundColor( )
 {
-	return ((QDateTime::currentDateTime().toTime_t() - lastPlayed) < 7200);
+	if( state == Normal )
+		return ((QDateTime::currentDateTime().toTime_t() - lastPlayed) < 7200);
+	else
+		return playListItem::hasCostumBackgroundColor( );
 }
 
 QColor playListItemSongDB::getBackgroundColor( )
 {
-	unsigned int playedAgo = QDateTime::currentDateTime().toTime_t() - lastPlayed;
+	if( state == Normal )
+	{
+		unsigned int playedAgo = QDateTime::currentDateTime().toTime_t() - lastPlayed;
 
-	  // calculate the color of the Item
-	if( playedAgo < 7200 )
-		return Qt::red.dark( 150-(int(playedAgo/720)*10) );
+		// calculate the color of the Item
+		if( playedAgo < 7200 )
+			return Qt::red.dark( 150-(int(playedAgo/720)*10) );
+	}
+	return playListItem::getBackgroundColor();
 }
 
 const QString playListItemSongDB::getId( )
