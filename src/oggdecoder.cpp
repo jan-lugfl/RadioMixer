@@ -99,5 +99,5 @@ void oggDecoder::readMetaFromFile( playListItem * pli )
 	}
 	pli->setSamplerate( decoder.vi->rate );
 	pli->setChannels( decoder.vi->channels );
-	delete fHandle;
+	ov_clear( &decoder );
 }
