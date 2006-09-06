@@ -62,6 +62,7 @@ void playerChannelFile::open( playListItem* track )
 			if( rx.cap(2).lower() == "ogg" )
 			{
 				qWarning( tr("OGG/Vorbis File detected") );
+				oggDecoder::readMetaFromFile( track );
 				decoder = new oggDecoder( fHandle, this, "OGGDecoder" );
 			}
 #endif
@@ -69,6 +70,7 @@ void playerChannelFile::open( playListItem* track )
 			if( rx.cap(2).lower() == "mp3" )
 			{
 				qWarning( tr("MPEG-1 Layer III File detected") );
+				mpgDecoder::readMetaFromFile( track );
 				decoder = new mpgDecoder( fHandle, this, "MPGDecoder" );
 			}
 #endif
@@ -81,7 +83,8 @@ void playerChannelFile::open( playListItem* track )
 				smplRate = track->getSamplerate();
 				channels = track->getChannels();
 				fileOpen = TRUE;
-				dynamic_cast<playListItem*>(meta)->cueing();
+				if( meta )
+					dynamic_cast<playListItem*>(meta)->cueing();
 				emit( cued( *meta ) );
 				state = 3;
 
@@ -159,7 +162,8 @@ void playerChannelFile::checkBuffer( )
 void playerChannelFile::stop( )
 {
 	playerChannelStd::stop();
-	dynamic_cast<playListItem*>(meta)->stopped();
+	if( meta )
+		dynamic_cast<playListItem*>(meta)->stopped();
 	close();
 	emit( stopped() );
 }
@@ -200,7 +204,8 @@ void playerChannelFile::setName( QString newName )
 void playerChannelFile::play( )
 {
 	playerChannelStd::play();
-	dynamic_cast<playListItem*>(meta)->startPlaying();
+	if( meta )
+		dynamic_cast<playListItem*>(meta)->startPlaying();
 	emit( newMeta( *meta ) );
 	emit( playing() );
 }

@@ -86,7 +86,18 @@ void oggDecoder::reset( )
 
 void oggDecoder::readMetaFromFile( playListItem * pli )
 {
-	// TODO: implement this...
+	FILE* fHandle = fopen( pli->getFile(), "r");
+	OggVorbis_File decoder;
+	if( !fHandle )
+	{
+		qWarning(tr("file open error.. proberly not found..")+pli->getFile());
+		return;
+	}
+	if(ov_open( fHandle, &decoder, NULL, 0) != 0 )
+	{
+		throw( new decoderException("OGGDecoder", tr("error opening File")) );
+	}
+	pli->setSamplerate( decoder.vi->rate );
+	pli->setChannels( decoder.vi->channels );
+	delete fHandle;
 }
-
-

@@ -266,7 +266,39 @@ void mpgDecoder::reset( )
 	frameCounter = 0;
 }
 
+// This is a shorter and faster version of scanFile(), that only scans the samplerate and number of Channels of the stream.
 void mpgDecoder::readMetaFromFile( playListItem * pli )
 {
-	// TODO: implement this...
+	// use QFile as input Buffer, which is needed by libMad, cause it cannot detect EOF....
+	QFile madFile(pli->getFile());
+	madFile.open( IO_ReadOnly );
+
+	unsigned char buffer[8192];
+
+	mad_stream scanStream;
+	mad_header scanHeader;
+
+	mad_stream_init (&scanStream);
+	mad_header_init (&scanHeader);
+
+	// get some more Byte from File...
+	int readCnt = 0;
+	while( !madFile.atEnd() && readCnt < 8192 )
+	{
+		buffer[readCnt] = madFile.getch();
+		readCnt++;
+	}
+
+	if (madFile.atEnd())
+		return;
+
+	mad_stream_buffer (&scanStream, buffer, readCnt );
+	mad_header_decode (&scanHeader, &scanStream);
+	mad_header_decode (&scanHeader, &scanStream);
+
+	pli->setSamplerate( scanHeader.samplerate );
+	pli->setChannels( MAD_NCHANNELS(&scanHeader) );
+
+	mad_header_finish (&scanHeader);
+	mad_stream_finish (&scanStream);
 }

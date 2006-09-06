@@ -22,7 +22,7 @@
 #include "playlistitem.h"
 
 playListItem::playListItem( QString fileName, QObject * parent, const char * name )
- : QObject( parent, name ), state( Normal )
+ : QObject( parent, name ), state( Normal ), Samplerate( 0 ), channels( 0 )
 {
 	if( !fileName.isEmpty())
 	{
@@ -58,6 +58,7 @@ const QString playListItem::getFile( )
 
 unsigned int playListItem::getChannels( )
 {
+	// by default we play Stereo Tracks
 	return channels?channels:2;
 }
 
@@ -68,7 +69,7 @@ void playListItem::setChannels( unsigned int chans )
 
 unsigned int playListItem::getSamplerate( )
 {
-	//return e defaul rate of 44100
+	// return a default rate of 44100
 	return Samplerate?Samplerate:44100;
 }
 
@@ -91,7 +92,6 @@ const QString playListItem::getId( )
 
 void playListItem::readMeta( )
 {
-	qWarning("playListItem::readMeta( )");
 	if( !Filename.isEmpty())
 	{
 		QRegExp rx( "^(.*)/(.*)[ |_]*\\-[ |_]*(.*)$" );

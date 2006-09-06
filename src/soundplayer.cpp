@@ -120,7 +120,7 @@ void soundPlayer::fetchSampleData( playerChannelStd * channel, float * bufferLef
 		channel->getDataRight(  fetchBufR, dataToRead );
 	}
 	else
-		qWarning( tr("soundPlayer::mixChannels( ): Buffer underrun in Channel ")+channel->getName()+tr(" while Mixing....") );
+		qWarning( tr("soundPlayer::mixChannels( ): Buffer underrun in Channel ")+channel->getName()+tr(" while Mixing....")+QString::number(channel->getSmplRate()) );
 
 	// resample the Channels Data....
 	SRC_DATA* resamplerData;
