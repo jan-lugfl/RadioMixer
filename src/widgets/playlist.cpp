@@ -70,16 +70,16 @@ playListItem * playList::getNextSong( )
 		manualNextSongPtr = NULL;
 		return tmp;
 	}else{
-		QListViewItemIterator it( this );
-		while( it.current() )
+		QListViewItem* child = firstChild();
+		while( child )
 		{
-			if( (*it)->rtti() == PLAYLISTVIEWITEM_RTTI)
+			if( child->rtti() == PLAYLISTVIEWITEM_RTTI )
 			{
-				playListItem* item = dynamic_cast<playListViewItem*>(*it)->playListEntry;
+				playListItem* item = dynamic_cast<playListViewItem*>(child)->playListEntry;
 				if( item->getState() == playListItem::Normal || ( item->getState() == playListItem::Played && recuePlayed ) )
 					return item;
 			}
-			++it;
+			child = child->nextSibling();
 		}
 	}
 	return NULL;
@@ -134,19 +134,19 @@ void playList::save( )
 		return;
 	}
 
-	QListViewItemIterator it( this );
-	while( it.current() )
+	QListViewItem* child = firstChild();
+	while( child )
 	{
-		if( (*it)->rtti() == PLAYLISTVIEWITEM_RTTI )
+		if( child->rtti() == PLAYLISTVIEWITEM_RTTI )
 		{
 			QDomElement entry = playListDocument.createElement("playlistEntry");
-			playListItem* pli = dynamic_cast<playListViewItem*>((*it))->playListEntry;
+			playListItem* pli = dynamic_cast<playListViewItem*>(child)->playListEntry;
 
 			entry.setAttribute("file", pli->getFile());
 
 			playList.appendChild(entry);
 		}
-		++it;
+		child = child->nextSibling();
 	}
 	QTextStream stream( &playListFile );
 	stream << playListDocument.toString();

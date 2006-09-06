@@ -467,14 +467,12 @@ void playListManager::resetPlaylistStates( )
 {
 	if( currentlySelectedItem->rtti() ==PLAYLIST_RTTI )
 	{
-		QListViewItemIterator it( currentlySelectedItem );
-		while( it.current() )
+		QListViewItem* child = currentlySelectedItem->firstChild();
+		while( child )
 		{
-			if( (*it)->rtti() == PLAYLISTVIEWITEM_RTTI )
-			{
-				dynamic_cast<playListViewItem*>((*it))->playListEntry->resetState();
-			}
-			++it;
+			if( child->rtti() == PLAYLISTVIEWITEM_RTTI )
+				dynamic_cast<playListViewItem*>(child)->playListEntry->resetState();
+			child = child->nextSibling();
 		}
 	}
 }
