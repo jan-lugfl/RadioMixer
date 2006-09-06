@@ -77,6 +77,9 @@ playListManager::playListManager(QWidget *parent, const char *name)
 	newPlaylist->setOpen(TRUE);
 	refreshPlaylists();
 
+	connect( &refreshTimer, SIGNAL(timeout()), playListView, SLOT(triggerUpdate()) );
+	refreshTimer.start(1000);
+
 	delete config;
 }
 

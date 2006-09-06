@@ -45,7 +45,7 @@
 #include <qsplitter.h>
 #include <qpopupmenu.h>
 #include <qfiledialog.h>
-
+#include <qtimer.h>
 
 class playListManager: public playListNG {
 Q_OBJECT
@@ -78,6 +78,7 @@ private:
 
 private slots:
 	void refreshPlaylists();
+	QTimer refreshTimer;
 
 protected:
 	QHttp*	songDBHndl;
