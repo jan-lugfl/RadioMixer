@@ -102,3 +102,9 @@ void playListItemSongDB::setFile( QString file )
 {
 	parseAbsFile(file);
 }
+
+void playListItemSongDB::startPlaying( )
+{
+	playListItem::startPlaying();
+	songDBHndl->request( *songDB, QString("updateLastPlayed=1&songID="+QString::number(songDBId)).utf8() );
+}

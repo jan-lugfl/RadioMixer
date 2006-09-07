@@ -56,9 +56,9 @@ protected:
 protected slots:
 	virtual void receiveData( bool );
 
+public slots:
+	virtual void startPlaying();
 
-signals:
-	
 
 };
 
