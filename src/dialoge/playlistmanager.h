@@ -121,6 +121,7 @@ protected slots:
 	virtual void resetPlaylistStates();
 	virtual void cueAsNextTreck();
 	virtual void removePlayed();
+	virtual void removeItem();
 
 signals:
 	void cueTrack( unsigned int, playListItem* );

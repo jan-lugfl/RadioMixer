@@ -61,6 +61,8 @@ playListManager::playListManager(QWidget *parent, const char *name)
 	playListPopup->insertItem( tr("&save Playlist"), 3);
 	playListPopup->connectItem(3, this, SLOT(savePlaylist()) );
 	playListPopup->insertSeparator();
+	playListPopup->insertItem( tr("re&move"), 8 );
+	playListPopup->connectItem(8, this, SLOT( removeItem() ) );
 
 	playListPopupChannelList = new QPopupMenu( playListPopup );
 	connect( playListPopupChannelList, SIGNAL(activated(int)), this, SLOT(cuePlaylist(int)) );
@@ -487,5 +489,12 @@ void playListManager::removePlayed( )
 {
 	if( currentlySelectedItem->rtti() ==PLAYLIST_RTTI )
 		dynamic_cast<playList*>(currentlySelectedItem)->removePlayed();
+}
+
+void playListManager::removeItem( )
+{
+	if( currentlySelectedItem )
+		delete currentlySelectedItem;
+	currentlySelectedItem = NULL;
 }
 
