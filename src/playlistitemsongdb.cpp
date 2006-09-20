@@ -108,3 +108,4 @@ void playListItemSongDB::startPlaying( )
 	playListItem::startPlaying();
 	songDBHndl->request( *songDB, QString("updateLastPlayed=1&songID="+QString::number(songDBId)).utf8() );
 }
+

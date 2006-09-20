@@ -50,11 +50,16 @@ public:
 	virtual void setLength( QString length );
 	virtual QTime getLength();
 
+	virtual void setPreLength( QTime length );
+	virtual void setPreLength( QString length );
+	virtual QTime getPreLength();
+
 protected:
 	QString Artist;
 	QString Title;
 	QString Genre;
 	QTime Length;
+	QTime preLength;
 
 };
 

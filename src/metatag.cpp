@@ -88,3 +88,18 @@ void metaTag::setLength( QTime length )
 	Length = length;
 }
 
+void metaTag::setPreLength( QTime length )
+{
+	preLength = length;
+}
+
+void metaTag::setPreLength( QString length )
+{
+	preLength = QTime::fromString( length );
+}
+
+QTime metaTag::getPreLength( )
+{
+	return preLength;
+}
+

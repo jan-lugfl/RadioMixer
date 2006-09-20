@@ -145,6 +145,7 @@ void playListManager::displayData( bool )
 					listEntry->setTitle(songAttr.attribute("title"));
 					listEntry->setGenre(songAttr.attribute("genre"));
 					listEntry->setLength(songAttr.attribute("length"));
+					listEntry->setPreLength(songAttr.attribute("preTime"));
 
 					playListViewItem* mySong = new playListViewItem( songDBListView, listEntry);
 					connect( listEntry, SIGNAL( startToPlay( playListItem* ) ), this, SLOT( updateLastPlayed( playListItem* ) ) );
