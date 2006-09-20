@@ -77,24 +77,31 @@ void timeDisplay::refresh( )
 				QString sekString;
 				QString framString;
 
-				unsigned int frames = frMax?( (frMax<curPos)?0:(unsigned int)(frMax-curPos) ):(unsigned int)(((saMax-curPos)/sampleRate)*25);
-				unsigned int dMin = frames/1500;
-				unsigned int dSec = (frames/25)%60;
+				unsigned int disFrames=0;
+				QColor disColor = QColor("black");
+				if( curPos < preroll )
+				{
+					disFrames = preroll-curPos;
+					disColor = QColor("orange");
+				}else
+				{
+					disFrames = frMax?( (frMax<curPos)?0:(unsigned int)(frMax-curPos) ):(unsigned int)(((saMax-curPos)/sampleRate)*25);
+					if( disFrames < 400 ) // 400 Frames = 16 seconds...
+						disColor = QColor("red");
+				}
+				unsigned int dMin = disFrames/1500;
+				unsigned int dSec = (disFrames/25)%60;
 				if( dSec < 10 )
 					sekString = "0"+QString::number( dSec );
 				else
 					sekString = QString::number( dSec );
-				unsigned int dFra = frames%25;
+				unsigned int dFra = disFrames%25;
 				if( dFra < 10 )
 					framString = "0"+QString::number( dFra );
 				else
 					framString = QString::number( dFra );
 
-				if( dSec < 16 && dMin == 0)
-					setPaletteForegroundColor( QColor( 255, 0, 0 ) );
-				else
-					setPaletteForegroundColor( QColor( 0, 0, 0 ) );
-
+				setPaletteForegroundColor( disColor );
 				setText("-"+QString::number( dMin)+":"+sekString+"."+framString);
 			}
 			break;
@@ -128,6 +135,11 @@ void timeDisplay::setPosition_Frames( float frames )
 void timeDisplay::setTotal_Frames( float frames )
 {
 	frMax = frames;
+}
+
+void timeDisplay::setPreroll_Frames( float frames )
+{
+	preroll = frames;
 }
 
 

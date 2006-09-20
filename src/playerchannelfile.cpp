@@ -254,3 +254,7 @@ void playerChannelFile::toggleLoop( )
 		loopMode = TRUE;
 }
 
+const float playerChannelFile::getPrerollFrames( )
+{
+	return meta->getPreLength().second()*25;
+}

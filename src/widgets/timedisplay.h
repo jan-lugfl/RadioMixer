@@ -43,6 +43,7 @@ public slots:
 	virtual void setTotal_Samples( float samples );
 	virtual void setTotal_Seconds( float seconds );
 	virtual void setTotal_Frames( float frames );
+	virtual void setPreroll_Frames( float frames );
 	virtual void setSamplerate( unsigned int sRate );
 	virtual void setDisplayMode( displayMode dMode );
 	virtual void refresh();
@@ -54,6 +55,7 @@ protected:
 	float seMax;
 	float frMax;
 	float curPos;
+	float preroll;
 	unsigned int sampleRate;
 
 };

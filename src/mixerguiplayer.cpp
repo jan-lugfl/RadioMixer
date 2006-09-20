@@ -107,6 +107,7 @@ void mixerGuiPlayer::buttonBlinker( )
 	{
 		tDisplay->setPosition_Frames( player->getPlayedFrames() );
 		tDisplay->setTotal_Frames( player->getTotalFrames() );
+		tDisplay->setPreroll_Frames( player->getPrerollFrames() );
 		tDisplay->setSamplerate( player->getSmplRate() );
 	}
 

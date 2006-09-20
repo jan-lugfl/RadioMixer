@@ -64,6 +64,7 @@ public:
 	const float getPosition_Samples();
 	const float getTotal_Samples();
 
+	virtual const float getPrerollFrames();
 	virtual const float getTotalFrames();
 	virtual const float getPlayedFrames();
 	virtual const float getRemainFrames();
