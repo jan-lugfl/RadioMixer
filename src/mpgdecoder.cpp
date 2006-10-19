@@ -273,7 +273,7 @@ void mpgDecoder::readMetaFromFile( playListItem * pli )
 	QFile madFile(pli->getFile());
 	madFile.open( IO_ReadOnly );
 
-	unsigned char buffer[8192];
+	unsigned char buffer[65536];
 
 	mad_stream scanStream;
 	mad_header scanHeader;
@@ -283,7 +283,7 @@ void mpgDecoder::readMetaFromFile( playListItem * pli )
 
 	// get some more Byte from File...
 	int readCnt = 0;
-	while( !madFile.atEnd() && readCnt < 8192 )
+	while( !madFile.atEnd() && readCnt < 65536 )
 	{
 		buffer[readCnt] = madFile.getch();
 		readCnt++;
@@ -293,8 +293,18 @@ void mpgDecoder::readMetaFromFile( playListItem * pli )
 		return;
 
 	mad_stream_buffer (&scanStream, buffer, readCnt );
-	mad_header_decode (&scanHeader, &scanStream);
-	mad_header_decode (&scanHeader, &scanStream);
+
+	while (1)
+        {
+		if (mad_header_decode (&scanHeader, &scanStream) == -1)
+		{
+			if (scanStream.error == MAD_ERROR_BUFLEN)
+				break;
+			if (!MAD_RECOVERABLE (scanStream.error))
+				break;
+			continue;
+		}
+	}
 
 	pli->setSamplerate( scanHeader.samplerate );
 	pli->setChannels( MAD_NCHANNELS(&scanHeader) );
