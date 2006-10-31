@@ -90,7 +90,11 @@ mixerChannelGUI::mixerChannelGUI( int chID, QWidget* parent , const char* name ,
 
 mixerChannelGUI::~mixerChannelGUI()
 {
-	qDebug("mixerChannelGUI::~mixerChannelGUI()");
+	delete trebleSlider;
+	delete vuSlider;
+	delete prefButton;
+	delete chName;
+	delete buttonBlinkTimer;
 }
 
 void mixerChannelGUI::languageChange()

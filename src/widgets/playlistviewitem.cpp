@@ -35,6 +35,7 @@ playListViewItem::playListViewItem( QListView * parent, playListItem * item )
 	setText( 0, item->getSong() );
 	setText( 1, item->getGenre() );
 	setText( 2, item->getLength().toString()+( item->getPreLength() > QTime()?" ("+item->getPreLength().toString()+")":"" ) );
+	setText( 3, QString::number( parent->childCount()+1) );
 }
 
 playListViewItem::playListViewItem( QListViewItem * parent, QString newSong )

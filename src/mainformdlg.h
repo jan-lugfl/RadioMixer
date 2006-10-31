@@ -84,14 +84,10 @@ protected:
 
  private:
  	soundPlayer* player;
-// Class playLST is depricated
-//playLST globalPlaylist;
 #ifdef ENABLE_HWMIXER
 	mipuCom* miPu;
 	QTimer refTimer;
 #endif
-// Class playLST is depricated
-//	QValueVector<playLST*> localPlaylistPointers;
 	QValueVector<mixerChannelGUI*> playerGuis;
 
 	playListManager*	playListMgr;
@@ -106,8 +102,6 @@ public slots:
   /*$PUBLIC_SLOTS$*/
     virtual void show ();
     virtual void showPreferences();
-// Class playLST is depricated
-// virtual void showPlaylist();
     virtual void addNewFilePlayer();
     virtual void addNewMixerChannel();
     virtual void addNewJackChannel( QString chName );
@@ -121,9 +115,6 @@ public slots:
     virtual void showAddChannel();
     virtual void showSongDBDialog();
 
-// class title is depricated
-//    virtual void cueTitle( QString player, title song );
-//    virtual void playlistAddTitle( QString player, title song );
     virtual void showAbout();
 
 protected slots:

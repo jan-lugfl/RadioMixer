@@ -34,6 +34,9 @@ playerChannelFile::playerChannelFile(QObject *parent, const char *name)
 
 playerChannelFile::~playerChannelFile()
 {
+	if(!isStopped())
+		stop();
+	bufferThread->terminate();
 }
 
 void playerChannelFile::open( playListItem* track )

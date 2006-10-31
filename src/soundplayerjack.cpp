@@ -28,7 +28,7 @@ soundPlayerJack::soundPlayerJack( )
 
 soundPlayerJack::~soundPlayerJack()
 {
-	jack_client_close ( jack );
+	close();
 }
 
 void soundPlayerJack::open( QString device )

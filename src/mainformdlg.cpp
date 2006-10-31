@@ -111,6 +111,7 @@ mainFormDlg::mainFormDlg(QWidget* parent, const char* name, WFlags fl)
 
 mainFormDlg::~mainFormDlg()
 {
+	player->close();
 	QValueVector<mixerChannelGUI*>::iterator playerIt;
        	for( playerIt = playerGuis.begin(); playerIt != playerGuis.end(); ++playerIt )
 		delete (*playerIt);

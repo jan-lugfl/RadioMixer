@@ -36,9 +36,10 @@
 
 int main( int argc, char ** argv ) {
     QApplication a( argc, argv );
-    mainFormDlg * mw = new mainFormDlg();
-    mw->setCaption( "RadioMixer" );
-    mw->show();
+    mainFormDlg mw;
+    a.setMainWidget( &mw );
+    mw.setCaption( "RadioMixer" );
+    mw.show();
     a.connect( &a, SIGNAL(lastWindowClosed()), &a, SLOT(quit()) );
     return a.exec();
 }
