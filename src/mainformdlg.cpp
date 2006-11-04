@@ -245,32 +245,10 @@ void mainFormDlg::showPreferences()
 	delete config;
 }
 
-// Class title is depricated
-/*
-void mainFormDlg::showPlaylist()
-{
-	playListDlg* playlist = new playListDlg(this);
-	playlist->setPlaylistPointers(&globalPlaylist, &localPlaylistPointers);
-	
-	playlist->refreshPlaylists();
-	
-	// Connect Each Player to the Refresh of the Playlist so name Changes of Channes wil be shown in the Playlist to...
-	QValueVector<mixerChannelGUI*>::iterator playerIt;
-       	for( playerIt = playerGuis.begin(); playerIt != playerGuis.end(); ++playerIt )
-	{
-		connect( (*playerIt), SIGNAL( refreshed() ), playlist, SLOT( refreshPlaylists() ) );
-	}
-	connect( &globalPlaylist, SIGNAL( changed( ) ), playlist, SLOT( refreshPlaylists() ) );
-	
-	playlist->show();
-}
-*/
-
 void mainFormDlg::addNewFilePlayer( )
 {
 	mixerGuiPlayer* channel = new mixerGuiPlayer( playerGuis.count()+1, player, frame10, "channelXY");
 	playerGuis.append( channel );
-//	localPlaylistPointers.append( &(channel->player->playList) );
 	connect( channel, SIGNAL(getNextTrack( unsigned int )), playListMgr, SLOT(cueNewTrack( unsigned int ) ));
 	connect( playListMgr, SIGNAL(cueTrack( unsigned int, playListItem* )), channel, SLOT(cueTrack( unsigned int, playListItem* ) ));
 #ifdef ENABLE_HWMIXER
@@ -312,8 +290,6 @@ void mainFormDlg::addNewJackChannel( QString chName )
 
 void mainFormDlg::globalPlaylist_getNextTrack( QString player )
 {
-// Class title is depricated
-//	cueTitle( player, globalPlaylist.getNextTrack() );
 }
 
 
@@ -647,31 +623,6 @@ void mainFormDlg::showSongDBDialog()
 	songDBDialog->show();
 #endif
 }
-
-// Class title is depricated
-/*
-void mainFormDlg::cueTitle(QString player, title song )
-{
-	QValueVector<mixerChannelGUI*>::iterator playerIt;
-	for( playerIt = playerGuis.begin(); playerIt != playerGuis.end(); ++playerIt )
-		if( (*playerIt)->getName() == player && (*playerIt)->getType() == "PLAYER" )
-			(dynamic_cast<mixerGuiPlayer*>(*playerIt))->player->open( song );
-}
-
-void mainFormDlg::playlistAddTitle( QString player, title song )
-{
-
-	if( player == "Global Playlist")
-		globalPlaylist.append( song );
-	else
-	{
-		QValueVector<mixerChannelGUI*>::iterator playerIt;
-		for( playerIt = playerGuis.begin(); playerIt != playerGuis.end(); ++playerIt )
-			if( (*playerIt)->getName() == player && (*playerIt)->getType() == "PLAYER" )
-				(dynamic_cast<mixerGuiPlayer*>(*playerIt))->player->playList.append( song );
-	}
-}
-*/
 
 void mainFormDlg::showAbout()
 {

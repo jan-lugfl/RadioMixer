@@ -45,8 +45,6 @@
 #include "songdbdlg.h"
 #endif
 
-// Class playLST is depricated
-//#include "playlst.h"
 #include <qlineedit.h>
 #include <qvaluevector.h>
 #include <qmessagebox.h>
@@ -59,7 +57,6 @@
 // Andere Dialoge einbinden
 #include "playlistmanager.h"
 #include "prefdlg.h"
-#include "playlistdlg.h"
 #include "metainfo.h"
 #include "ch_add_dlg.h"
 #include "ch_del_dlg.h"

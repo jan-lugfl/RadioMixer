@@ -29,8 +29,3 @@ qt \
 staticlib
 TEMPLATE = lib
 include (../../conf.pri)
-songdb{
-  FORMS += songDBDialog.ui
-  HEADERS += songdbdlg.h
-  SOURCES += songdbdlg.cpp
-}
