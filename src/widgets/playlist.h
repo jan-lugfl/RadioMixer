@@ -43,6 +43,9 @@ public:
 	~playList();
 
 	virtual int rtti() const {return PLAYLIST_RTTI;}
+
+	// Overloaded Version of insertItem to set the new order number on insertion,
+	virtual void insertItem ( playListViewItem* newItem );
 	virtual void cueInChannel( int playerId );
 	virtual void notCueInChannel( int playerId );
 	virtual void paintCell( QPainter *p, const QColorGroup &cg, int column, int width, int alignment );
@@ -60,6 +63,9 @@ public:
 
 	virtual void nextCueSelected();
 	virtual void removePlayed();
+
+private:
+	virtual playListViewItem* lastItem();
 
 protected:
 	QValueList<unsigned int>	cuedInChannel;

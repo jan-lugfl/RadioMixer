@@ -84,7 +84,7 @@ playListManager::playListManager(QWidget *parent, const char *name)
 
 	// setup the playlist View
 	playListView->setRootIsDecorated(TRUE);
-	playListView->setSortColumn( 3 );
+	playListView->setSorting(-1);
 
 	playList* newPlaylist = new playList( playListView, tr("default playlist") );
 	newPlaylist->setOpen(TRUE);
@@ -188,7 +188,7 @@ void playListManager::playListAdd( )
 			{
 				playListViewItem* item = dynamic_cast<playListViewItem*>(songDBListView->selectedItem());
 				songDBListView->takeItem( item );
-				playListView->selectedItem()->insertItem( item );
+				dynamic_cast<playList*>(playListView->selectedItem())->insertItem( item );
 			}
 			else
 				QMessageBox::critical( this, tr("RadioMixer - Playlist Manager"), tr("no playlist selected....") );
@@ -200,7 +200,7 @@ void playListManager::playListAdd( )
 				{
 					playListViewItem* item = dynamic_cast<playListViewItem*>(songDBListView->selectedItem());
 					songDBListView->takeItem( item );
-					(*it)->insertItem( item );
+					dynamic_cast<playList*>(*it)->insertItem( item );
 					break;
 				}
 				++it;

@@ -51,11 +51,6 @@ mainFormDlg::mainFormDlg(QWidget* parent, const char* name, WFlags fl)
 	delete Mixer;
 #endif
 	
-#ifndef ENABLE_SONGDB
-	// hide the SongDB Menuitem if no support for it is compiled....
-	delete fensterSongDBAction;
-#endif
-
 	config = new QSettings();
 	if( config->readBoolEntry( "/radiomixer/meta/enable", FALSE ) )
 		meta.enable();
@@ -604,24 +599,6 @@ void mainFormDlg::showCuesWindow()
 	}
 
 	cueListDialog->show();
-}
-
-void mainFormDlg::showSongDBDialog()
-{
-#ifdef ENABLE_SONGDB
-	songDBDlg* songDBDialog = new songDBDlg(this);
-	connect( songDBDialog, SIGNAL( cueTrack( QString, title) ), this, SLOT(cueTitle( QString, title) ) );
-	connect( songDBDialog, SIGNAL( addToPlaylist( QString, title) ), this, SLOT(playlistAddTitle( QString, title) ) );
-
-	QValueVector<mixerChannelGUI*>::iterator playerIt;
-       	for( playerIt = playerGuis.begin(); playerIt != playerGuis.end(); ++playerIt )
-		if( (*playerIt)->getType() == "PLAYER" )
-		{
-			songDBDialog->cueChannel->insertItem( (*playerIt)->getName() );
-			songDBDialog->playlistChannel->insertItem( (*playerIt)->getName() );
-		}
-	songDBDialog->show();
-#endif
 }
 
 void mainFormDlg::showAbout()

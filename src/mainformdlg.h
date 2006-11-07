@@ -41,10 +41,6 @@
 #include "mipucom.h"
 #endif
 
-#ifdef ENABLE_SONGDB
-#include "songdbdlg.h"
-#endif
-
 #include <qlineedit.h>
 #include <qvaluevector.h>
 #include <qmessagebox.h>
@@ -110,7 +106,6 @@ public slots:
     virtual void showMoveChannel();
     virtual void showDelChannel();
     virtual void showAddChannel();
-    virtual void showSongDBDialog();
 
     virtual void showAbout();
 

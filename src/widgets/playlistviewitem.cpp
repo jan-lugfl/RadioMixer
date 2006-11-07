@@ -35,7 +35,6 @@ playListViewItem::playListViewItem( QListView * parent, playListItem * item )
 	setText( 0, item->getSong() );
 	setText( 1, item->getGenre() );
 	setText( 2, item->getLength().toString()+( item->getPreLength() > QTime()?" ("+item->getPreLength().toString()+")":"" ) );
-	setText( 3, QString::number( parent->childCount()+1) );
 }
 
 playListViewItem::playListViewItem( QListViewItem * parent, QString newSong )
@@ -46,14 +45,12 @@ playListViewItem::playListViewItem( QListViewItem * parent, QString newSong )
 	setText( 0, playListEntry->getSong() );
 	setText( 1, playListEntry->getGenre() );
 	setText( 2, playListEntry->getLength().toString()+( playListEntry->getPreLength() > QTime()?" ("+playListEntry->getPreLength().toString()+")":"" ) );
-	setText( 3, QString::number( parent->childCount()+1) );
 }
 
 playListViewItem::playListViewItem( playListViewItem * parent )
  : QListViewItem( parent )
 {
 	setDragEnabled(TRUE);
-	setText( 3, QString::number( parent->childCount()+1) );
 }
 
 playListViewItem::~playListViewItem()
@@ -82,6 +79,3 @@ void playListViewItem::paintCell( QPainter * p, const QColorGroup & cg, int colu
 	_cg.setColor( QColorGroup::Text, itemFGColor );
 	QListViewItem::paintCell( p, _cg, column, width, alignment );
 }
-
-
-

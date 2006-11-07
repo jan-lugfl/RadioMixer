@@ -27,8 +27,6 @@
 #include "glowbutton.h"
 #include "blinkbutton.h"
 #include "timedisplay.h"
-#include "title.h"
-
 
 /**
 @author Jan Boysen

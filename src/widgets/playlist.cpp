@@ -109,7 +109,7 @@ void playList::loadFromFile( QString fileName )
 	while( !node.isNull() )
 	{
 		QDomElement song = node.toElement();
-		new playListViewItem( this, song.attribute("file") );
+		(new playListViewItem( this, song.attribute("file")))->moveItem( lastItem() );
 		node = node.nextSibling();
 	}
 }
@@ -205,4 +205,21 @@ void playList::removePlayed( )
 		}
 		++it;
 	}
+}
+
+void playList::insertItem( playListViewItem * newItem )
+{
+	QListViewItem::insertItem( newItem );
+	newItem->moveItem( lastItem() );
+}
+
+playListViewItem * playList::lastItem( )
+{
+	QListViewItem* item = firstChild();
+	while(item)
+		if( item->nextSibling() )
+			item = item->nextSibling();
+		else
+			break;
+	return dynamic_cast<playListViewItem*>(item);
 }
