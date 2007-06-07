@@ -162,8 +162,10 @@ void playerChannelFile::checkBuffer( )
 
 void playerChannelFile::stop( )
 {
+	if( isStopped() )
+		return;
 	playerChannelStd::stop();
-	if( meta )
+	if( fileOpen )
 		dynamic_cast<playListItem*>(meta)->stopped();
 	close();
 	emit( stopped() );
@@ -203,8 +205,10 @@ void playerChannelFile::setName( QString newName )
 
 void playerChannelFile::play( )
 {
+	if( !fileOpen || isPlaying() )
+		return;
 	playerChannelStd::play();
-	if( meta )
+	if( fileOpen )
 		dynamic_cast<playListItem*>(meta)->startPlaying();
 	emit( newMeta( *meta ) );
 	emit( playing() );
@@ -237,6 +241,9 @@ const float playerChannelFile::getRemainFrames( )
 
 void playerChannelFile::pause( )
 {
+	// pausing if we are not in Play mode makes no sence............
+	if( !isPlaying() )
+		return;
 	playerChannelStd::pause();
 	emit( paused() );
 }

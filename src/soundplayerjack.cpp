@@ -131,8 +131,8 @@ jackPort::jackPort( jack_client_t* jackClient, jack_port_t* jPort )
 
 jackPort::~ jackPort( )
 {
-	if( jack_port_unregister( jack, jackport) == 0)
-		qDebug("successfully unregistered Jack Port..");
+//	if( jack_port_unregister( jack, jackport) == 0)
+//		qDebug("successfully unregistered Jack Port..");
 }
 
 void jackPort::process( jack_nframes_t frames )
@@ -142,9 +142,9 @@ void jackPort::process( jack_nframes_t frames )
 
 void soundPlayerJack::jackShutdown( void * arg )
 {
-//	soundPlayerJack* self = (soundPlayerJack*)arg;
+	soundPlayerJack* self = (soundPlayerJack*)arg;
 	qWarning("got shotdown signal from jackd in connected state");
-//	self->devOpened = FALSE;
+	self->devOpened = FALSE;
 //	emit self->onDisconnect();
 }
 
