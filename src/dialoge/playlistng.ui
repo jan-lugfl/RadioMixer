@@ -14,8 +14,8 @@
     </property>
     <property name="minimumSize">
         <size>
-            <width>1022</width>
-            <height>740</height>
+            <width>640</width>
+            <height>520</height>
         </size>
     </property>
     <property name="caption">
@@ -439,12 +439,6 @@
         <receiver>playListNG</receiver>
         <slot>showPlaylistContextmenu(QListViewItem*,const QPoint&amp;,int)</slot>
     </connection>
-    <connection>
-        <sender>songDBListView</sender>
-        <signal>contextMenuRequested(QListViewItem*,const QPoint&amp;,int)</signal>
-        <receiver>playListNG</receiver>
-        <slot>showSongDBContextmenu(QListViewItem*,const QPoint&amp;,int)</slot>
-    </connection>
 </connections>
 <slots>
     <slot access="protected">search()</slot>
@@ -452,6 +446,10 @@
     <slot access="protected">playListAdd()</slot>
     <slot access="protected">showPlaylistContextmenu( QListViewItem*, const QPoint&amp;, int )</slot>
     <slot access="protected">showSongDBContextmenu( QListViewItem*, const QPoint&amp;, int )</slot>
+    <slot>songDBViewdoubleClicked( QListViewItem *, const QPoint &amp;, int )</slot>
+    <slot>displayData( bool )</slot>
+    <slot>requestData( QString query )</slot>
+    <slot>refreshPlaylists()</slot>
 </slots>
 <layoutdefaults spacing="6" margin="11"/>
 </UI>

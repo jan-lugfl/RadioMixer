@@ -46,6 +46,7 @@ playListManager::playListManager(QWidget *parent, const char *name)
 
 	connect( playListView, SIGNAL( itemRenamed( QListViewItem*, int) ), this, SLOT( refreshPlaylists() ) );
 	connect( songDBListView, SIGNAL( doubleClicked( QListViewItem*, const QPoint& , int) ), this, SLOT( songDBViewdoubleClicked( QListViewItem *, const QPoint &, int ) ) );
+	connect( songDBListView, SIGNAL( contextMenuRequested(  QListViewItem* , const QPoint&, int ), this, SLOT( showShowDBContextMenu(  QListViewItem* , const QPoint&, int )  ) );
 #else
 	delete songDBFrame;
 #endif
@@ -88,7 +89,10 @@ playListManager::playListManager(QWidget *parent, const char *name)
 
 	playList* newPlaylist = new playList( playListView, tr("default playlist") );
 	newPlaylist->setOpen(TRUE);
+
+#ifdef ENABLE_SONGDB
 	refreshPlaylists();
+#endif
 
 	connect( &refreshTimer, SIGNAL(timeout()), playListView, SLOT(triggerUpdate()) );
 	refreshTimer.start(1000);
@@ -228,6 +232,17 @@ void playListManager::search( )
 	requestData( freigabe+searchGenre+"query="+searchFor->text() );
 }
 
+void playListManager::songDBViewdoubleClicked( QListViewItem * item, const QPoint &, int )
+{
+	if( item )
+		playListAdd();
+}
+
+void playListManager::showSongDBContextmenu( QListViewItem * item, const QPoint & pos, int col )
+{
+	songDBPopup->popup( pos );
+}
+
 void playListManager::refreshPlaylists()
 {
 	playlistChannel->clear();
@@ -241,12 +256,6 @@ void playListManager::refreshPlaylists()
 		++it;
 	}
 }
-
-void playListManager::songDBViewdoubleClicked( QListViewItem * item, const QPoint &, int )
-{
-	if( item )
-		playListAdd();
-}
 #endif
 
 void playListManager::resizeEvent( QResizeEvent *e )
@@ -258,14 +267,12 @@ void playListManager::resizeEvent( QResizeEvent *e )
 void playListManager::updateLastPlayed( playListItem * item )
 {
 	qWarning("updating last played.....");
+#ifdef ENABLE_SONGDB
 	requestData( "updateLastPlayed=1&filename="+item->getFilename() );
+#else
+	qWarning("Not implemented yet for regular playlists....");
+#endif
 }
-
-void playListManager::showSongDBContextmenu( QListViewItem * item, const QPoint & pos, int col )
-{
-	songDBPopup->popup( pos );
-}
-
 
 void playListManager::showPlaylistContextmenu( QListViewItem * item, const QPoint & pos, int col )
 {
@@ -322,7 +329,9 @@ void playListManager::createNewPlaylist( QString name )
 {
 	playList* newPlaylist = new playList( playListView, name );
 	newPlaylist->setOpen(TRUE);
+#ifdef ENABLE_SONGDB
 	refreshPlaylists();
+#endif
 }
 
 void playListManager::loadPlaylist( )
@@ -338,7 +347,9 @@ void playListManager::loadPlaylist( )
 		playList* newPlaylist = new playList( playListView, "", s );
 		newPlaylist->setOpen(TRUE);
 	}
+#ifdef ENABLE_SONGDB
 	refreshPlaylists();
+#endif
 }
 
 void playListManager::savePlaylist( )
@@ -367,7 +378,9 @@ void playListManager::renamePlaylist( )
 void playListManager::addPlayer( filePlayer player )
 {
 	filePlayers.append( player );
+#ifdef ENABLE_SONGDB
 	cueChannel->insertItem( player.name );
+#endif
 }
 
 void playListManager::removePlayer( unsigned int playerId )
@@ -498,4 +511,9 @@ void playListManager::removeItem( )
 		delete currentlySelectedItem;
 	currentlySelectedItem = NULL;
 }
+
+void playListManager::refreshPlaylists()
+{
+}
+
 

@@ -76,12 +76,9 @@ protected:
 #ifdef ENABLE_SONGDB
 private:
 	int state;
-	// this is used to know in Contextmenu handling which Item to handle.
-	QListViewItem*	currentlySelectedItem;
 
 private slots:
 	void refreshPlaylists();
-	QTimer refreshTimer;
 
 protected:
 	QHttp*	songDBHndl;
@@ -104,7 +101,15 @@ protected slots:
 	virtual void songDBViewdoubleClicked( QListViewItem *, const QPoint &, int );
 #endif
 
+private:
+	// this is used to know in Contextmenu handling which Item to handle.
+	QListViewItem*	currentlySelectedItem;
+
+private slots:
+	QTimer refreshTimer;
+
 public slots:
+    virtual void refreshPlaylists();
 	virtual void createNewPlaylist( QString name=tr("unnamed Playlist") );
 	virtual void cueNewTrack( unsigned int playerId );
 
