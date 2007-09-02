@@ -8,17 +8,19 @@ HEADERS += glowbutton.h \
            timedisplay.h \
            vumeter.h \
            playlist.h \
-           playlistviewitem.h 
+           playlistviewitem.h  \
+ songlistview.h
 SOURCES += glowbutton.cpp \
            blinkbutton.cpp \
            timedisplay.cpp \
            vumeter.cpp \
            playlist.cpp \
-           playlistviewitem.cpp 
+           playlistviewitem.cpp  \
+ songlistview.cpp
 INCLUDEPATH += ../../src
 CONFIG += release \
 warn_on \
 qt \
 staticlib
 TEMPLATE = lib
-include (../../conf.pri)
+include(../../conf.pri)

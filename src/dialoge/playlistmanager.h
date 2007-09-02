@@ -27,6 +27,7 @@
 
 #include "widgets/playlist.h"
 #include "playlistviewitem.h"
+#include "songlistview.h"
 
 #ifdef ENABLE_SONGDB
 #include "playlistitemsongdb.h"
@@ -47,6 +48,7 @@
 #include <qfiledialog.h>
 #include <qtimer.h>
 #include <qpainter.h>
+#include <qlayout.h>
 
 class playListManager: public playListNG {
 Q_OBJECT
@@ -54,6 +56,8 @@ Q_OBJECT
 public:
 	playListManager(QWidget *parent = 0, const char *name = 0);
 	~playListManager();
+
+	songListView* playListView;
 
 	struct filePlayer {
 		unsigned int id;
@@ -74,6 +78,9 @@ protected:
 	virtual void resizeEvent ( QResizeEvent *e );
 
 #ifdef ENABLE_SONGDB
+public:
+	songListView* songDBListView;
+
 private:
 	int state;
 
@@ -115,7 +122,6 @@ public slots:
 protected slots:
 	virtual void updateLastPlayed( playListItem* item ); 
 	virtual void showPlaylistContextmenu( QListViewItem * item, const QPoint & pos, int col );
-	virtual void playlistViewdoubleClicked( QListViewItem *, const QPoint &, int );
 	virtual void loadPlaylist();
 	virtual void savePlaylist();
 	virtual void renamePlaylist();

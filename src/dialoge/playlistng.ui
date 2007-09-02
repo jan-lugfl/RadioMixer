@@ -44,7 +44,7 @@
         </property>
         <widget class="QSplitter">
             <property name="name">
-                <cstring>listsSplitter</cstring>
+                <cstring>songDBSplitter</cstring>
             </property>
             <property name="orientation">
                 <enum>Vertical</enum>
@@ -63,50 +63,6 @@
                     <property name="name">
                         <cstring>unnamed</cstring>
                     </property>
-                    <widget class="QListView" row="0" column="0">
-                        <column>
-                            <property name="text">
-                                <string>Name</string>
-                            </property>
-                            <property name="clickable">
-                                <bool>true</bool>
-                            </property>
-                            <property name="resizable">
-                                <bool>true</bool>
-                            </property>
-                        </column>
-                        <column>
-                            <property name="text">
-                                <string>Genre</string>
-                            </property>
-                            <property name="clickable">
-                                <bool>true</bool>
-                            </property>
-                            <property name="resizable">
-                                <bool>true</bool>
-                            </property>
-                        </column>
-                        <column>
-                            <property name="text">
-                                <string>Length</string>
-                            </property>
-                            <property name="clickable">
-                                <bool>true</bool>
-                            </property>
-                            <property name="resizable">
-                                <bool>true</bool>
-                            </property>
-                        </column>
-                        <property name="name">
-                            <cstring>playListView</cstring>
-                        </property>
-                        <property name="acceptDrops">
-                            <bool>true</bool>
-                        </property>
-                        <property name="defaultRenameAction">
-                            <enum>Accept</enum>
-                        </property>
-                    </widget>
                 </grid>
             </widget>
             <widget class="QFrame">
@@ -125,64 +81,15 @@
                     </property>
                     <widget class="QLayoutWidget" row="0" column="0">
                         <property name="name">
-                            <cstring>layout14</cstring>
+                            <cstring>layout15</cstring>
                         </property>
                         <vbox>
                             <property name="name">
                                 <cstring>unnamed</cstring>
                             </property>
-                            <widget class="QListView">
-                                <column>
-                                    <property name="text">
-                                        <string>Name</string>
-                                    </property>
-                                    <property name="clickable">
-                                        <bool>true</bool>
-                                    </property>
-                                    <property name="resizable">
-                                        <bool>true</bool>
-                                    </property>
-                                </column>
-                                <column>
-                                    <property name="text">
-                                        <string>Genre</string>
-                                    </property>
-                                    <property name="clickable">
-                                        <bool>true</bool>
-                                    </property>
-                                    <property name="resizable">
-                                        <bool>true</bool>
-                                    </property>
-                                </column>
-                                <column>
-                                    <property name="text">
-                                        <string>Length</string>
-                                    </property>
-                                    <property name="clickable">
-                                        <bool>true</bool>
-                                    </property>
-                                    <property name="resizable">
-                                        <bool>true</bool>
-                                    </property>
-                                </column>
-                                <column>
-                                    <property name="text">
-                                        <string>Vote</string>
-                                    </property>
-                                    <property name="clickable">
-                                        <bool>true</bool>
-                                    </property>
-                                    <property name="resizable">
-                                        <bool>true</bool>
-                                    </property>
-                                </column>
-                                <property name="name">
-                                    <cstring>songDBListView</cstring>
-                                </property>
-                            </widget>
                             <widget class="QLayoutWidget">
                                 <property name="name">
-                                    <cstring>layout12</cstring>
+                                    <cstring>layout14</cstring>
                                 </property>
                                 <hbox>
                                     <property name="name">
@@ -280,10 +187,10 @@
                                                     </font>
                                                 </property>
                                                 <property name="text">
-                                                    <string>S&amp;earch</string>
+                                                    <string>Sea&amp;rch</string>
                                                 </property>
                                                 <property name="accel">
-                                                    <string>Alt+E</string>
+                                                    <string>Alt+R</string>
                                                 </property>
                                                 <property name="on">
                                                     <bool>false</bool>
@@ -306,7 +213,7 @@
                                         </property>
                                         <property name="sizeHint">
                                             <size>
-                                                <width>110</width>
+                                                <width>223</width>
                                                 <height>21</height>
                                             </size>
                                         </property>
@@ -444,20 +351,11 @@
         <receiver>playListNG</receiver>
         <slot>playListAdd()</slot>
     </connection>
-    <connection>
-        <sender>playListView</sender>
-        <signal>contextMenuRequested(QListViewItem*,const QPoint&amp;,int)</signal>
-        <receiver>playListNG</receiver>
-        <slot>showPlaylistContextmenu(QListViewItem*,const QPoint&amp;,int)</slot>
-    </connection>
 </connections>
 <slots>
     <slot access="protected">search()</slot>
     <slot access="protected">cue()</slot>
     <slot access="protected">playListAdd()</slot>
-    <slot access="protected">showPlaylistContextmenu( QListViewItem*, const QPoint&amp;, int )</slot>
-    <slot access="protected">showSongDBContextmenu( QListViewItem*, const QPoint&amp;, int )</slot>
-    <slot>songDBViewdoubleClicked( QListViewItem *, const QPoint &amp;, int )</slot>
     <slot>displayData( bool )</slot>
     <slot>requestData( QString query )</slot>
     <slot>refreshPlaylists()</slot>

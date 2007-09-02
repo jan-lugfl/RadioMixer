@@ -27,7 +27,24 @@ playListManager::playListManager(QWidget *parent, const char *name)
 {
 	QSettings* config = new QSettings();
 
+	playListView = new songListView( playListFrame, "playListView" );
+	playListView->addColumn( tr( "Name" ) );
+	playListView->addColumn( tr( "Genre" ) );
+	playListView->addColumn( tr( "Length" ) );
+	playListView->setAcceptDrops( TRUE );
+	playListView->setDefaultRenameAction( QListView::Accept );
+	playListFrameLayout->addWidget( playListView, 0, 0 );
+
+	connect( playListView, SIGNAL( rightButtonPressed ( QListViewItem *, const QPoint &, int ) ), this, SLOT( showPlaylistContextmenu( QListViewItem*, const QPoint&, int ) ));
+
 #ifdef ENABLE_SONGDB
+	songDBListView = new songListView( songDBFrame, "songDBListView" );
+	songDBListView->addColumn( tr( "Name" ) );
+	songDBListView->addColumn( tr( "Genre" ) );
+	songDBListView->addColumn( tr( "Length" ) );
+	songDBListView->addColumn( tr( "Vote" ) );
+	layout15->insertWidget( 0, songDBListView, Qt::AlignTop );
+
 	songDBHndl = new QHttp( this, "httpSocket" );
 	songDBHndl->setHost( config->readEntry( "/radiomixer/network/songDBHostname", "localhost" ) );
 	connect( songDBHndl, SIGNAL(done(bool)), this, SLOT(displayData(bool)));
@@ -468,10 +485,6 @@ void playListManager::addNewTrackToPlaylist( )
 			break;
 		}
 	}
-}
-
-void playListManager::playlistViewdoubleClicked( QListViewItem *, const QPoint &, int )
-{
 }
 
 void playListManager::setCuePlayed( )
