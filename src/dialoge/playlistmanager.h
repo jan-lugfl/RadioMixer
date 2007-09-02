@@ -109,7 +109,6 @@ private slots:
 	QTimer refreshTimer;
 
 public slots:
-    virtual void refreshPlaylists();
 	virtual void createNewPlaylist( QString name=tr("unnamed Playlist") );
 	virtual void cueNewTrack( unsigned int playerId );
 

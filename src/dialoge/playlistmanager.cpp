@@ -46,7 +46,7 @@ playListManager::playListManager(QWidget *parent, const char *name)
 
 	connect( playListView, SIGNAL( itemRenamed( QListViewItem*, int) ), this, SLOT( refreshPlaylists() ) );
 	connect( songDBListView, SIGNAL( doubleClicked( QListViewItem*, const QPoint& , int) ), this, SLOT( songDBViewdoubleClicked( QListViewItem *, const QPoint &, int ) ) );
-	connect( songDBListView, SIGNAL( contextMenuRequested(  QListViewItem* , const QPoint&, int ), this, SLOT( showShowDBContextMenu(  QListViewItem* , const QPoint&, int )  ) );
+	connect( songDBListView, SIGNAL( contextMenuRequested(  QListViewItem* , const QPoint&, int )) , this, SLOT( showShowDBContextMenu(  QListViewItem* , const QPoint&, int )  ) );
 #else
 	delete songDBFrame;
 #endif
@@ -150,6 +150,7 @@ void playListManager::displayData( bool )
 					listEntry->setGenre(songAttr.attribute("genre"));
 					listEntry->setLength(songAttr.attribute("length"));
 					listEntry->setPreLength(songAttr.attribute("preTime"));
+					listEntry->setVote(songAttr.attribute("rated").toInt());
 
 					playListViewItem* mySong = new playListViewItem( songDBListView, listEntry);
 					connect( listEntry, SIGNAL( startToPlay( playListItem* ) ), this, SLOT( updateLastPlayed( playListItem* ) ) );
@@ -511,9 +512,3 @@ void playListManager::removeItem( )
 		delete currentlySelectedItem;
 	currentlySelectedItem = NULL;
 }
-
-void playListManager::refreshPlaylists()
-{
-}
-
-

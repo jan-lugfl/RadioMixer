@@ -25,6 +25,7 @@
 #include <playlistitem.h>
 #include <qlistview.h>
 #include <qdatetime.h>
+#include <qpixmap.h>
 
 #define PLAYLISTVIEWITEM_RTTI 1101
 
@@ -44,6 +45,14 @@ public:
 
 	virtual int rtti() const {return PLAYLISTVIEWITEM_RTTI;}
 	virtual void paintCell( QPainter *p, const QColorGroup &cg, int column, int width, int alignment );
+	virtual QString key ( int column, bool ascending ) const;
+
+private:
+	void setVote( int vote );
+
+protected:
+	QPixmap voteImage;
+
 };
 
 #endif

@@ -165,6 +165,17 @@
                                         <bool>true</bool>
                                     </property>
                                 </column>
+                                <column>
+                                    <property name="text">
+                                        <string>Vote</string>
+                                    </property>
+                                    <property name="clickable">
+                                        <bool>true</bool>
+                                    </property>
+                                    <property name="resizable">
+                                        <bool>true</bool>
+                                    </property>
+                                </column>
                                 <property name="name">
                                     <cstring>songDBListView</cstring>
                                 </property>

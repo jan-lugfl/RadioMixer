@@ -94,6 +94,7 @@ void playListItemSongDB::receiveData( bool )
 			Filename = config->readEntry( "/radiomixer/network/songDBBasePath", "/songs/" )+song.attribute("relPath")+song.attribute("filename");
 			Artist = song.attribute("interpret");
 			Title = song.attribute("title");
+			vote = song.attribute("rated").toInt();
 		}
 	delete config;
 }

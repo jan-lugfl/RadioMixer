@@ -58,6 +58,8 @@ public:
 	virtual bool hasCostumBackgroundColor();
 	virtual QColor getBackgroundColor();
 
+	virtual int getVote();
+	virtual void setVote( int vote );
 
 protected:
 	QString Path;
@@ -65,6 +67,7 @@ protected:
 	QString Format;
 	unsigned int channels;
 	unsigned int Samplerate;
+	int vote;
 
 	songState state;
 

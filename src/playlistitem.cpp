@@ -177,3 +177,13 @@ void playListItem::resetState( )
 		state = Normal;
 	emit( refreshed() );
 }
+
+int playListItem::getVote()
+{
+	return vote;
+}
+
+void playListItem::setVote(int vote)
+{
+	this->vote = vote;
+}
