@@ -333,6 +333,9 @@ void playListViewItem::setVote(int vote)
 
 QString playListViewItem::key(int column, bool ascending) const
 {
+	if(!playListEntry)
+		return("0");
+
 	switch( column )
 	{
 		case 1:
@@ -348,3 +351,25 @@ QString playListViewItem::key(int column, bool ascending) const
 			return( playListEntry->getSong() );
 	}
 }
+
+//
+// songDragObject Class Below
+//
+
+songDragObject::songDragObject( playListViewItem* item, QWidget* dragSource = 0, const char * name = 0) :
+QStoredDrag( "application/x-radiomixer-playlistitem", dragSource, name )
+{
+	QDomDocument songDocument("RadioMixerPlayList");
+	songDocument.appendChild( item->playListEntry->toDomElement( &songDocument ) );
+
+	QString str = songDocument.toString();
+	QByteArray* data = new QByteArray( str.length() );
+
+	memcpy( data->data(), str.latin1(), str.length() );
+	setEncodedData( *data );
+}
+
+songDragObject::~songDragObject()
+{
+}
+

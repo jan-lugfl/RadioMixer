@@ -187,3 +187,11 @@ void playListItem::setVote(int vote)
 {
 	this->vote = vote;
 }
+
+QDomElement playListItem::toDomElement( QDomDocument* doc )
+{
+	QDomElement entry = doc->createElement("playListEntry");
+	entry.setAttribute("file", getFile());
+
+	return entry;
+}

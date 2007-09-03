@@ -26,6 +26,7 @@
 #include <qlistview.h>
 #include <qdatetime.h>
 #include <qpixmap.h>
+#include <qdragobject.h>
 
 #define PLAYLISTVIEWITEM_RTTI 1101
 
@@ -52,6 +53,14 @@ private:
 
 protected:
 	QPixmap voteImage;
+
+};
+
+class songDragObject : public QStoredDrag
+{
+public:
+	songDragObject( playListViewItem* item, QWidget* dragSource, const char * name );
+	~songDragObject();
 
 };
 

@@ -1,4 +1,4 @@
-/* $Id: playlistviewitem.h 130 2007-09-02 19:26:24Z trekkie_lugfl $ */
+/* $Id$ */
 /***************************************************************************
  *   OpenRadio - RadioMixer                                                *
  *   Copyright (C) 2007 by Jan Boysen                                *
@@ -22,6 +22,9 @@
 #ifndef SONGLISTVIEW_H
 #define SONGLISTVIEW_H
 
+#include "playlistviewitem.h"
+#include "playlist.h"
+
 #include <qlistview.h>
 
 /**
@@ -34,6 +37,9 @@ public:
     songListView(QWidget *parent = 0, const char *name = 0);
 
     ~songListView();
+
+protected:
+	virtual QDragObject* dragObject ();
 
 };
 

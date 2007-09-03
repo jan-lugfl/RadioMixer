@@ -41,6 +41,7 @@ public:
 
 	virtual const QString getId();
 	virtual void setFile(QString file);
+	virtual QDomElement toDomElement( QDomDocument* doc );
 	virtual bool hasCostumBackgroundColor();
 	virtual QColor getBackgroundColor();
 

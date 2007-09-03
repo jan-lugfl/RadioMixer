@@ -58,6 +58,8 @@ public:
 	virtual void saveToFile( QString fileName );
 	virtual void save();
 
+	virtual QString toString();
+
 	virtual void setCuePlayed( bool playedDisable );
 	virtual bool cuePlayed();
 
@@ -72,6 +74,14 @@ protected:
 	QString	fileName;
 	playListItem* manualNextSongPtr;
 	bool recuePlayed;
+};
+
+class playlistDragObject : public QStoredDrag
+{
+public:
+	playlistDragObject(  playList* pl, QWidget* dragSource, const char * name );
+	~playlistDragObject();
+
 };
 
 #endif

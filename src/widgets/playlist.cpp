@@ -122,10 +122,6 @@ void playList::saveToFile( QString fileName )
 
 void playList::save( )
 {
-	QDomDocument playListDocument("RadioMixerPlayList");
-	QDomElement playList = playListDocument.createElement("playlist");
-	playList.setAttribute("name", text(0) );
-	playListDocument.appendChild(playList);
 	QFile playListFile( fileName );
 
 	if( !playListFile.open( IO_WriteOnly ) )
@@ -134,22 +130,8 @@ void playList::save( )
 		return;
 	}
 
-	QListViewItem* child = firstChild();
-	while( child )
-	{
-		if( child->rtti() == PLAYLISTVIEWITEM_RTTI )
-		{
-			QDomElement entry = playListDocument.createElement("playlistEntry");
-			playListItem* pli = dynamic_cast<playListViewItem*>(child)->playListEntry;
-
-			entry.setAttribute("file", pli->getFile());
-
-			playList.appendChild(entry);
-		}
-		child = child->nextSibling();
-	}
 	QTextStream stream( &playListFile );
-	stream << playListDocument.toString();
+	stream << toString();
 	playListFile.close();
 }
 
@@ -223,3 +205,44 @@ playListViewItem * playList::lastItem( )
 			break;
 	return dynamic_cast<playListViewItem*>(item);
 }
+
+QString playList::toString()
+{
+	QDomDocument playListDocument("RadioMixerPlayList");
+	QDomElement playList = playListDocument.createElement("playlist");
+	playList.setAttribute("name", getName() );
+	playListDocument.appendChild(playList);
+
+	QListViewItem* child = firstChild();
+	while( child )
+	{
+		if( child->rtti() == PLAYLISTVIEWITEM_RTTI )
+		{
+			QDomElement entry = playListDocument.createElement("playlistEntry");
+			playListItem* pli = dynamic_cast<playListViewItem*>(child)->playListEntry;
+			playList.appendChild( pli->toDomElement( &playListDocument ) );
+		}
+		child = child->nextSibling();
+	}
+	return playListDocument.toString();
+}
+
+//
+// playlistDragObject Class Below
+//
+
+playlistDragObject::playlistDragObject( playList* pl, QWidget* dragSource = 0, const char * name = 0) :
+QStoredDrag( "application/x-radiomixer-playlist", dragSource, name )
+{
+	QString str = pl->toString();
+	QByteArray* data = new QByteArray( str.length() );
+
+	memcpy( data->data(), str.latin1(), str.length() );
+	setEncodedData( *data );
+}
+
+playlistDragObject::~playlistDragObject()
+{
+}
+
+

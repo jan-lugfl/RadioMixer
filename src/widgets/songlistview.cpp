@@ -1,4 +1,4 @@
-/* $Id: playlistviewitem.h 130 2007-09-02 19:26:24Z trekkie_lugfl $ */
+/* $Id$ */
 /***************************************************************************
  *   OpenRadio - RadioMixer                                                *
  *   Copyright (C) 2007 by Jan Boysen                                *
@@ -26,9 +26,24 @@ songListView::songListView(QWidget *parent, const char *name)
 {
 }
 
-
 songListView::~songListView()
 {
 }
 
+QDragObject* songListView::dragObject()
+{
+	QListViewItem* item = selectedItem();
+	QDragObject* dragged = 0;
 
+	switch(item->rtti())
+	{
+		case PLAYLISTVIEWITEM_RTTI:  // is the currently selected Item a Playlist Item ?
+			dragged = new songDragObject( dynamic_cast<playListViewItem*>(item), this, item->text(0) );
+			break;
+
+		case PLAYLIST_RTTI:  // is the currently selected Item a Playlist ?
+			dragged = new playlistDragObject( dynamic_cast<playList*>(item), this, item->text(0) );
+			break;
+	};
+	return(dragged);
+}

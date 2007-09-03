@@ -110,3 +110,11 @@ void playListItemSongDB::startPlaying( )
 	songDBHndl->request( *songDB, QString("updateLastPlayed=1&songID="+QString::number(songDBId)).utf8() );
 }
 
+QDomElement playListItemSongDB::toDomElement( QDomDocument* doc )
+{
+	QDomElement entry = doc->createElement("songdbEntry");
+	entry.setAttribute("id", songDBId );
+
+	return entry;
+}
+

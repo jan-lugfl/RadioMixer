@@ -27,6 +27,7 @@
 #include <qobject.h>
 #include <qregexp.h>
 #include <qcolor.h>
+#include <qdom.h>
 
 /**
 	@author Jan Boysen <trekkie@media-mission.de>
@@ -60,6 +61,8 @@ public:
 
 	virtual int getVote();
 	virtual void setVote( int vote );
+
+	virtual QDomElement toDomElement( QDomDocument* doc );
 
 protected:
 	QString Path;
