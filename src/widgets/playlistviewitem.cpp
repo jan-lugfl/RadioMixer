@@ -359,7 +359,7 @@ QString playListViewItem::key(int column, bool ascending) const
 songDragObject::songDragObject( playListViewItem* item, QWidget* dragSource = 0, const char * name = 0) :
 QStoredDrag( "application/x-radiomixer-playlistitem", dragSource, name )
 {
-	QDomDocument songDocument("RadioMixerPlayList");
+	QDomDocument songDocument("RadioMixerPlayListItem");
 	songDocument.appendChild( item->playListEntry->toDomElement( &songDocument ) );
 
 	QString str = songDocument.toString();
