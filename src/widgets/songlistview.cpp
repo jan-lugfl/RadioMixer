@@ -47,3 +47,8 @@ QDragObject* songListView::dragObject()
 	};
 	return(dragged);
 }
+
+void songListView::setAcceptDrops(bool state)
+{
+	viewport()->setAcceptDrops( state );
+}

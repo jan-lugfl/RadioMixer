@@ -122,6 +122,7 @@ public slots:
 protected slots:
 	virtual void updateLastPlayed( playListItem* item ); 
 	virtual void showPlaylistContextmenu( QListViewItem * item, const QPoint & pos, int col );
+	virtual void playListDopped( QDropEvent* e );
 	virtual void loadPlaylist();
 	virtual void savePlaylist();
 	virtual void renamePlaylist();

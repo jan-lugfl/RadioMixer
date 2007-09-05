@@ -35,6 +35,8 @@ public:
 	metaTag(const QString artist, const QString title, const QString genre="", const QTime length=QTime());
 	virtual ~metaTag();
 
+	virtual void refreshMeta();
+
 	virtual void setArtist( QString artist );
 	virtual QString getArtist();
 

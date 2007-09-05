@@ -44,7 +44,7 @@ public:
 	virtual QDomElement toDomElement( QDomDocument* doc );
 	virtual bool hasCostumBackgroundColor();
 	virtual QColor getBackgroundColor();
-
+	virtual void refreshMeta();
 
 protected:
 	unsigned int songDBId;

@@ -103,3 +103,6 @@ QTime metaTag::getPreLength( )
 	return preLength;
 }
 
+void metaTag::refreshMeta()
+{
+}

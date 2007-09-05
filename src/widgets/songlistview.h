@@ -26,6 +26,7 @@
 #include "playlist.h"
 
 #include <qlistview.h>
+#include <qheader.h>
 
 /**
 	@author Jan Boysen <trekkie@media-mission.de>
@@ -34,9 +35,10 @@ class songListView : public QListView
 {
 Q_OBJECT
 public:
-    songListView(QWidget *parent = 0, const char *name = 0);
+	songListView(QWidget *parent = 0, const char *name = 0);
+	~songListView();
 
-    ~songListView();
+	virtual void setAcceptDrops( bool state );
 
 protected:
 	virtual QDragObject* dragObject ();

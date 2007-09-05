@@ -26,6 +26,7 @@ playList::playList( QListView* parent, QString name, QString file )
 {
 	setDragEnabled( TRUE);
 	setDropEnabled( TRUE);
+
 	setRenameEnabled( 0, TRUE );
 	if( !file.isEmpty() )
 		loadFromFile( file );
@@ -227,6 +228,38 @@ QString playList::toString()
 	return playListDocument.toString();
 }
 
+bool playList::acceptDrop(const QMimeSource * mime) const
+{
+	return mime->provides("application/x-radiomixer-playlistitem");
+}
+
+void playList::dropped(QDropEvent * evt)
+{
+	if( evt->provides("application/x-radiomixer-playlistitem") )
+	{
+		if( evt->source() == listView() ) // do we move the Item in our own list ?
+		{
+			QListView* sender = dynamic_cast<QListView*>(evt->source());
+			sender->selectedItem()->moveItem( this->itemAbove() );
+		}else
+		{
+			QDomDocument doc;
+			doc.setContent( evt->encodedData("application/x-radiomixer-playlistitem") );
+			if( !doc.isDocument() )
+			{
+				qWarning( QObject::tr("Received an invalid Document") );
+				return;
+			}
+			playListViewItem* pli = new playListViewItem( this, doc );
+			pli->moveItem( lastItem() );
+
+			QListView* sender = dynamic_cast<QListView*>(evt->source());
+			if( sender )
+				sender->takeItem( sender->selectedItem() );
+		}
+	}
+}
+
 //
 // playlistDragObject Class Below
 //
@@ -244,5 +277,3 @@ QStoredDrag( "application/x-radiomixer-playlist", dragSource, name )
 playlistDragObject::~playlistDragObject()
 {
 }
-
-

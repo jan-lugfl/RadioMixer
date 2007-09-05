@@ -66,10 +66,12 @@ public:
 	virtual void nextCueSelected();
 	virtual void removePlayed();
 
+	virtual bool acceptDrop ( const QMimeSource * mime ) const;
 private:
 	virtual playListViewItem* lastItem();
 
 protected:
+	virtual void dropped ( QDropEvent * e );
 	QValueList<unsigned int>	cuedInChannel;
 	QString	fileName;
 	playListItem* manualNextSongPtr;

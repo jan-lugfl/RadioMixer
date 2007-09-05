@@ -36,6 +36,7 @@ playListManager::playListManager(QWidget *parent, const char *name)
 	playListFrameLayout->addWidget( playListView, 0, 0 );
 
 	connect( playListView, SIGNAL( rightButtonPressed ( QListViewItem *, const QPoint &, int ) ), this, SLOT( showPlaylistContextmenu( QListViewItem*, const QPoint&, int ) ));
+	connect( playListView, SIGNAL( dropped ( QDropEvent* ) ), this, SLOT( playListDopped( QDropEvent* ) ) );
 
 #ifdef ENABLE_SONGDB
 	songDBListView = new songListView( songDBFrame, "songDBListView" );
@@ -210,7 +211,10 @@ void playListManager::playListAdd( )
 			{
 				playListViewItem* item = dynamic_cast<playListViewItem*>(songDBListView->selectedItem());
 				songDBListView->takeItem( item );
-				dynamic_cast<playList*>(playListView->selectedItem())->insertItem( item );
+				if( playListView->selectedItem()->rtti() == PLAYLISTVIEWITEM_RTTI )
+					dynamic_cast<playList*>(playListView->selectedItem()->parent())->insertItem( item );
+				else if( playListView->selectedItem()->rtti() == PLAYLIST_RTTI)
+					dynamic_cast<playList*>(playListView->selectedItem())->insertItem( item );
 			}
 			else
 				QMessageBox::critical( this, tr("RadioMixer - Playlist Manager"), tr("no playlist selected....") );
@@ -524,4 +528,9 @@ void playListManager::removeItem( )
 	if( currentlySelectedItem )
 		delete currentlySelectedItem;
 	currentlySelectedItem = NULL;
+}
+
+void playListManager::playListDopped(QDropEvent * e)
+{
+	qWarning( QString( e->format(0) ) );
 }

@@ -245,12 +245,14 @@ playListViewItem::playListViewItem( QListView * parent )
  : QListViewItem( parent )
 {
 	setDragEnabled(TRUE);
+	setDropEnabled(TRUE);
 }
 
 playListViewItem::playListViewItem( QListView * parent, playListItem * item )
  : QListViewItem( parent ), playListEntry( item )
 {
 	setDragEnabled(TRUE);
+	setDropEnabled(TRUE);
 
 	setText( 0, item->getSong() );
 	setText( 1, item->getGenre() );
@@ -263,6 +265,7 @@ playListViewItem::playListViewItem( QListViewItem * parent, QString newSong )
 {
 	playListEntry = new playListItem( newSong );
 	setDragEnabled(TRUE);
+	setDropEnabled(TRUE);
 
 	setText( 0, playListEntry->getSong() );
 	setText( 1, playListEntry->getGenre() );
@@ -274,6 +277,25 @@ playListViewItem::playListViewItem( playListViewItem * parent )
  : QListViewItem( parent )
 {
 	setDragEnabled(TRUE);
+	setDropEnabled(TRUE);
+}
+
+playListViewItem::playListViewItem(QListViewItem * parent, QDomDocument domdoc )
+: QListViewItem( parent )
+{
+	setDragEnabled(TRUE);
+	setDropEnabled(TRUE);
+
+	QDomElement item = domdoc.documentElement();
+	if( item.tagName() == "playListEntry" )
+		qWarning("playListEntry");
+	else if( item.tagName() == "songdbEntry" )
+		playListEntry = new playListItemSongDB( item.attribute("id").toInt() );
+
+	connect( playListEntry, SIGNAL( refreshed()), this, SLOT(refresh()));
+
+	playListEntry->refreshMeta();
+	setText( 0, tr("retriving data from songDB...") );
 }
 
 playListViewItem::~playListViewItem()
@@ -352,6 +374,55 @@ QString playListViewItem::key(int column, bool ascending) const
 	}
 }
 
+void playListViewItem::refresh()
+{
+	setText( 0, playListEntry->getSong() );
+	setText( 1, playListEntry->getGenre() );
+	setText( 2, playListEntry->getLength().toString()+( playListEntry->getPreLength() > QTime()?" ("+playListEntry->getPreLength().toString()+")":"" ) );
+	setVote( playListEntry->getVote() );
+}
+
+bool playListViewItem::acceptDrop(const QMimeSource * mime) const
+{
+	return mime->provides("application/x-radiomixer-playlistitem");
+}
+
+void playListViewItem::dropped(QDropEvent * evt)
+{
+	if( evt->provides("application/x-radiomixer-playlistitem") )
+	{
+		if( evt->source() == listView() ) // do we move the Item in our own list ?
+		{
+			QListView* sender = dynamic_cast<QListView*>(evt->source());
+			QListViewItem* item = sender->selectedItem();
+			if( item == QListViewItem::parent() )
+			{
+				
+				QListViewItem::parent()->takeItem( item );
+				QListViewItem::parent()->insertItem( item );
+			}
+			else
+				item->moveItem( this->itemAbove() );
+		}else
+		{
+			QDomDocument doc;
+			doc.setContent( evt->encodedData("application/x-radiomixer-playlistitem") );
+			if( !doc.isDocument() )
+			{
+				qWarning( QObject::tr("Received an invalid Document") );
+				return;
+			}
+			playListViewItem* pli = new playListViewItem( this, doc );
+			pli->moveItem( itemAbove() );
+
+			QListView* sender = dynamic_cast<QListView*>(evt->source());
+			if( sender )
+				sender->takeItem( sender->selectedItem() );
+		}
+	}
+}
+
+
 //
 // songDragObject Class Below
 //
@@ -372,4 +443,3 @@ QStoredDrag( "application/x-radiomixer-playlistitem", dragSource, name )
 songDragObject::~songDragObject()
 {
 }
-

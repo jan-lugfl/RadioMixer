@@ -23,6 +23,7 @@
 #define PLAYLISTVIEWITEM_H
 
 #include <playlistitem.h>
+#include <playlistitemsongdb.h>
 #include <qlistview.h>
 #include <qdatetime.h>
 #include <qpixmap.h>
@@ -33,12 +34,14 @@
 /**
 	@author Jan Boysen <trekkie@media-mission.de>
 */
-class playListViewItem : public QListViewItem
+class playListViewItem : public QObject, public QListViewItem
 {
+Q_OBJECT
 public:
 	playListViewItem( QListView* parent );
 	playListViewItem( QListView* parent, playListItem* item );
 	playListViewItem( QListViewItem* parent, QString newSong );
+	playListViewItem( QListViewItem* parent, QDomDocument domdoc );
 	playListViewItem( playListViewItem* parent );
 	~playListViewItem();
 
@@ -48,11 +51,17 @@ public:
 	virtual void paintCell( QPainter *p, const QColorGroup &cg, int column, int width, int alignment );
 	virtual QString key ( int column, bool ascending ) const;
 
+	virtual bool acceptDrop ( const QMimeSource * mime ) const;
+
 private:
 	void setVote( int vote );
 
 protected:
+	virtual void dropped ( QDropEvent * evt );
 	QPixmap voteImage;
+
+protected slots:
+	virtual void refresh();
 
 };
 

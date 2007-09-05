@@ -34,6 +34,7 @@ playListItemSongDB::playListItemSongDB( const unsigned int id,  unsigned int las
 
 	songDB = new QHttpRequestHeader( "POST", config->readEntry( "/radiomixer/network/songDBScriptname", "/xmlctrl.pl" ) );
 	songDB->setValue( "Host", config->readEntry( "/radiomixer/network/songDBHostname", "localhost" ) );
+
 	delete config;
 }
 
@@ -71,9 +72,7 @@ const QString playListItemSongDB::getId( )
 
 void playListItemSongDB::readMeta( )
 {
-	qWarning("playListItemSongDB::readMeta( )");
 	songDBHndl->request( *songDB, QString("getSonginfo=1&songID="+QString::number(songDBId)).utf8() );
-	emit refreshed();
 }
 
 void playListItemSongDB::receiveData( bool )
@@ -92,9 +91,14 @@ void playListItemSongDB::receiveData( bool )
 			QDomElement song = dataroot.childNodes().item(0).toElement();
 
 			Filename = config->readEntry( "/radiomixer/network/songDBBasePath", "/songs/" )+song.attribute("relPath")+song.attribute("filename");
-			Artist = song.attribute("interpret");
-			Title = song.attribute("title");
-			vote = song.attribute("rated").toInt();
+			setArtist( song.attribute("interpret") );
+			setTitle( song.attribute("title") );
+			setVote( song.attribute("rated").toInt() );
+			setGenre( song.attribute("genre") );
+			setLength( song.attribute("length") );
+			setPreLength( song.attribute("preTime") );
+
+			emit( refreshed() );
 		}
 	delete config;
 }
@@ -118,3 +122,7 @@ QDomElement playListItemSongDB::toDomElement( QDomDocument* doc )
 	return entry;
 }
 
+void playListItemSongDB::refreshMeta()
+{
+	readMeta();
+}
