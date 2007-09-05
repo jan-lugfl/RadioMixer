@@ -15,57 +15,54 @@
     <property name="caption">
         <string>Cuelist</string>
     </property>
-    <widget class="QListView">
-        <column>
-            <property name="text">
-                <string>Channel</string>
-            </property>
-            <property name="clickable">
-                <bool>false</bool>
-            </property>
-            <property name="resizable">
-                <bool>true</bool>
-            </property>
-        </column>
-        <column>
-            <property name="text">
-                <string>Title</string>
-            </property>
-            <property name="clickable">
-                <bool>false</bool>
-            </property>
-            <property name="resizable">
-                <bool>true</bool>
-            </property>
-        </column>
-        <column>
-            <property name="text">
-                <string>State</string>
-            </property>
-            <property name="clickable">
-                <bool>true</bool>
-            </property>
-            <property name="resizable">
-                <bool>true</bool>
-            </property>
-        </column>
+    <grid>
         <property name="name">
-            <cstring>cueList</cstring>
+            <cstring>unnamed</cstring>
         </property>
-        <property name="geometry">
-            <rect>
-                <x>10</x>
-                <y>10</y>
-                <width>620</width>
-                <height>180</height>
-            </rect>
-        </property>
-        <property name="font">
-            <font>
-                <pointsize>9</pointsize>
-            </font>
-        </property>
-    </widget>
+        <widget class="QListView" row="0" column="0">
+            <column>
+                <property name="text">
+                    <string>Channel</string>
+                </property>
+                <property name="clickable">
+                    <bool>false</bool>
+                </property>
+                <property name="resizable">
+                    <bool>true</bool>
+                </property>
+            </column>
+            <column>
+                <property name="text">
+                    <string>Title</string>
+                </property>
+                <property name="clickable">
+                    <bool>false</bool>
+                </property>
+                <property name="resizable">
+                    <bool>true</bool>
+                </property>
+            </column>
+            <column>
+                <property name="text">
+                    <string>State</string>
+                </property>
+                <property name="clickable">
+                    <bool>true</bool>
+                </property>
+                <property name="resizable">
+                    <bool>true</bool>
+                </property>
+            </column>
+            <property name="name">
+                <cstring>cueList</cstring>
+            </property>
+            <property name="font">
+                <font>
+                    <pointsize>9</pointsize>
+                </font>
+            </property>
+        </widget>
+    </grid>
 </widget>
 <layoutdefaults spacing="6" margin="11"/>
 </UI>

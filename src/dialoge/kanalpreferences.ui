@@ -41,580 +41,529 @@
     <property name="sizeGripEnabled">
         <bool>true</bool>
     </property>
-    <widget class="QLayoutWidget">
+    <grid>
         <property name="name">
-            <cstring>Layout1</cstring>
+            <cstring>unnamed</cstring>
         </property>
-        <property name="geometry">
-            <rect>
-                <x>20</x>
-                <y>580</y>
-                <width>640</width>
-                <height>33</height>
-            </rect>
-        </property>
-        <hbox>
+        <widget class="QLayoutWidget" row="5" column="0" rowspan="1" colspan="2">
             <property name="name">
-                <cstring>unnamed</cstring>
+                <cstring>Layout1</cstring>
             </property>
-            <property name="margin">
-                <number>0</number>
-            </property>
-            <property name="spacing">
-                <number>6</number>
-            </property>
-            <spacer>
-                <property name="name">
-                    <cstring>Horizontal Spacing2</cstring>
-                </property>
-                <property name="orientation">
-                    <enum>Horizontal</enum>
-                </property>
-                <property name="sizeType">
-                    <enum>Expanding</enum>
-                </property>
-                <property name="sizeHint">
-                    <size>
-                        <width>20</width>
-                        <height>20</height>
-                    </size>
-                </property>
-            </spacer>
-            <widget class="QPushButton">
-                <property name="name">
-                    <cstring>buttonOk</cstring>
-                </property>
-                <property name="text">
-                    <string>&amp;OK</string>
-                </property>
-                <property name="accel">
-                    <string></string>
-                </property>
-                <property name="autoDefault">
-                    <bool>true</bool>
-                </property>
-                <property name="default">
-                    <bool>true</bool>
-                </property>
-            </widget>
-            <widget class="QPushButton">
-                <property name="name">
-                    <cstring>buttonCancel</cstring>
-                </property>
-                <property name="text">
-                    <string>&amp;Cancel</string>
-                </property>
-                <property name="accel">
-                    <string></string>
-                </property>
-                <property name="autoDefault">
-                    <bool>true</bool>
-                </property>
-            </widget>
-        </hbox>
-    </widget>
-    <widget class="QFrame">
-        <property name="name">
-            <cstring>DynamicBox</cstring>
-        </property>
-        <property name="geometry">
-            <rect>
-                <x>20</x>
-                <y>371</y>
-                <width>271</width>
-                <height>200</height>
-            </rect>
-        </property>
-        <property name="frameShape">
-            <enum>StyledPanel</enum>
-        </property>
-        <property name="frameShadow">
-            <enum>Raised</enum>
-        </property>
-    </widget>
-    <widget class="QGroupBox">
-        <property name="name">
-            <cstring>KanalFrame</cstring>
-        </property>
-        <property name="geometry">
-            <rect>
-                <x>20</x>
-                <y>90</y>
-                <width>270</width>
-                <height>150</height>
-            </rect>
-        </property>
-        <property name="sizePolicy">
-            <sizepolicy>
-                <hsizetype>0</hsizetype>
-                <vsizetype>0</vsizetype>
-                <horstretch>255</horstretch>
-                <verstretch>140</verstretch>
-            </sizepolicy>
-        </property>
-        <property name="minimumSize">
-            <size>
-                <width>260</width>
-                <height>140</height>
-            </size>
-        </property>
-        <property name="title">
-            <string>Channel Name</string>
-        </property>
-        <widget class="QLayoutWidget">
-            <property name="name">
-                <cstring>layout28</cstring>
-            </property>
-            <property name="geometry">
-                <rect>
-                    <x>40</x>
-                    <y>40</y>
-                    <width>174</width>
-                    <height>70</height>
-                </rect>
-            </property>
-            <vbox>
+            <hbox>
                 <property name="name">
                     <cstring>unnamed</cstring>
                 </property>
-                <widget class="QLineEdit">
-                    <property name="name">
-                        <cstring>EditName</cstring>
-                    </property>
-                </widget>
-                <widget class="QLayoutWidget">
-                    <property name="name">
-                        <cstring>layout27</cstring>
-                    </property>
-                    <hbox>
-                        <property name="name">
-                            <cstring>unnamed</cstring>
-                        </property>
-                        <widget class="QPushButton">
-                            <property name="name">
-                                <cstring>Set_Button</cstring>
-                            </property>
-                            <property name="text">
-                                <string>Se&amp;t</string>
-                            </property>
-                            <property name="accel">
-                                <string>Alt+T</string>
-                            </property>
-                        </widget>
-                        <widget class="QPushButton">
-                            <property name="name">
-                                <cstring>Reset_Button</cstring>
-                            </property>
-                            <property name="text">
-                                <string>&amp;Reset</string>
-                            </property>
-                        </widget>
-                    </hbox>
-                </widget>
-            </vbox>
-        </widget>
-    </widget>
-    <widget class="QGroupBox">
-        <property name="name">
-            <cstring>hwChannelBox</cstring>
-        </property>
-        <property name="geometry">
-            <rect>
-                <x>20</x>
-                <y>250</y>
-                <width>271</width>
-                <height>110</height>
-            </rect>
-        </property>
-        <property name="title">
-            <string>Hardware Channel</string>
-        </property>
-        <widget class="QComboBox">
-            <property name="name">
-                <cstring>hardwareKanal</cstring>
-            </property>
-            <property name="geometry">
-                <rect>
-                    <x>40</x>
-                    <y>40</y>
-                    <width>180</width>
-                    <height>31</height>
-                </rect>
-            </property>
-        </widget>
-    </widget>
-    <widget class="QGroupBox">
-        <property name="name">
-            <cstring>groupBox1</cstring>
-        </property>
-        <property name="geometry">
-            <rect>
-                <x>310</x>
-                <y>90</y>
-                <width>350</width>
-                <height>290</height>
-            </rect>
-        </property>
-        <property name="title">
-            <string>Color chooser</string>
-        </property>
-        <widget class="QLayoutWidget">
-            <property name="name">
-                <cstring>layout25</cstring>
-            </property>
-            <property name="geometry">
-                <rect>
-                    <x>20</x>
-                    <y>40</y>
-                    <width>310</width>
-                    <height>164</height>
-                </rect>
-            </property>
-            <vbox>
-                <property name="name">
-                    <cstring>unnamed</cstring>
+                <property name="margin">
+                    <number>0</number>
                 </property>
-                <widget class="QLayoutWidget">
+                <property name="spacing">
+                    <number>6</number>
+                </property>
+                <spacer>
                     <property name="name">
-                        <cstring>layout22</cstring>
+                        <cstring>Horizontal Spacing2</cstring>
                     </property>
-                    <grid>
-                        <property name="name">
-                            <cstring>unnamed</cstring>
-                        </property>
-                        <widget class="QSlider" row="1" column="1">
-                            <property name="name">
-                                <cstring>Rot_Slider</cstring>
-                            </property>
-                            <property name="maxValue">
-                                <number>255</number>
-                            </property>
-                            <property name="orientation">
-                                <enum>Horizontal</enum>
-                            </property>
-                        </widget>
-                        <widget class="QLabel" row="1" column="2">
-                            <property name="name">
-                                <cstring>textLabel2_2</cstring>
-                            </property>
-                            <property name="text">
-                                <string>255</string>
-                            </property>
-                        </widget>
-                        <widget class="QLabel" row="0" column="1">
-                            <property name="name">
-                                <cstring>textLabel1</cstring>
-                            </property>
-                            <property name="text">
-                                <string>red</string>
-                            </property>
-                        </widget>
-                        <widget class="QLCDNumber" row="1" column="3">
-                            <property name="name">
-                                <cstring>Rot_LCD</cstring>
-                            </property>
-                            <property name="paletteForegroundColor">
-                                <color>
-                                    <red>255</red>
-                                    <green>0</green>
-                                    <blue>0</blue>
-                                </color>
-                            </property>
-                            <property name="numDigits">
-                                <number>3</number>
-                            </property>
-                            <property name="segmentStyle">
-                                <enum>Flat</enum>
-                            </property>
-                        </widget>
-                        <widget class="QLabel" row="1" column="0">
-                            <property name="name">
-                                <cstring>textLabel2</cstring>
-                            </property>
-                            <property name="text">
-                                <string>0</string>
-                            </property>
-                        </widget>
-                    </grid>
-                </widget>
-                <widget class="QLayoutWidget">
+                    <property name="orientation">
+                        <enum>Horizontal</enum>
+                    </property>
+                    <property name="sizeType">
+                        <enum>Expanding</enum>
+                    </property>
+                    <property name="sizeHint">
+                        <size>
+                            <width>20</width>
+                            <height>20</height>
+                        </size>
+                    </property>
+                </spacer>
+                <widget class="QPushButton">
                     <property name="name">
-                        <cstring>layout22_2</cstring>
+                        <cstring>buttonOk</cstring>
                     </property>
-                    <grid>
-                        <property name="name">
-                            <cstring>unnamed</cstring>
-                        </property>
-                        <widget class="QSlider" row="1" column="1">
-                            <property name="name">
-                                <cstring>Gruen_Slider</cstring>
-                            </property>
-                            <property name="maxValue">
-                                <number>255</number>
-                            </property>
-                            <property name="orientation">
-                                <enum>Horizontal</enum>
-                            </property>
-                        </widget>
-                        <widget class="QLabel" row="1" column="2">
-                            <property name="name">
-                                <cstring>textLabel2_2_2</cstring>
-                            </property>
-                            <property name="text">
-                                <string>255</string>
-                            </property>
-                        </widget>
-                        <widget class="QLabel" row="0" column="1">
-                            <property name="name">
-                                <cstring>textLabel1_2</cstring>
-                            </property>
-                            <property name="text">
-                                <string>green</string>
-                            </property>
-                        </widget>
-                        <widget class="QLCDNumber" row="1" column="3">
-                            <property name="name">
-                                <cstring>Gruen_LCD</cstring>
-                            </property>
-                            <property name="paletteForegroundColor">
-                                <color>
-                                    <red>0</red>
-                                    <green>170</green>
-                                    <blue>0</blue>
-                                </color>
-                            </property>
-                            <property name="numDigits">
-                                <number>3</number>
-                            </property>
-                            <property name="segmentStyle">
-                                <enum>Flat</enum>
-                            </property>
-                        </widget>
-                        <widget class="QLabel" row="1" column="0">
-                            <property name="name">
-                                <cstring>textLabel2_3</cstring>
-                            </property>
-                            <property name="text">
-                                <string>0</string>
-                            </property>
-                        </widget>
-                    </grid>
+                    <property name="text">
+                        <string>&amp;OK</string>
+                    </property>
+                    <property name="accel">
+                        <string></string>
+                    </property>
+                    <property name="autoDefault">
+                        <bool>true</bool>
+                    </property>
+                    <property name="default">
+                        <bool>true</bool>
+                    </property>
                 </widget>
-                <widget class="QLayoutWidget">
+                <widget class="QPushButton">
                     <property name="name">
-                        <cstring>layout22_3</cstring>
+                        <cstring>buttonCancel</cstring>
                     </property>
-                    <grid>
-                        <property name="name">
-                            <cstring>unnamed</cstring>
-                        </property>
-                        <widget class="QSlider" row="1" column="1">
-                            <property name="name">
-                                <cstring>Blau_Slider</cstring>
-                            </property>
-                            <property name="maxValue">
-                                <number>255</number>
-                            </property>
-                            <property name="orientation">
-                                <enum>Horizontal</enum>
-                            </property>
-                        </widget>
-                        <widget class="QLabel" row="1" column="2">
-                            <property name="name">
-                                <cstring>textLabel2_2_3</cstring>
-                            </property>
-                            <property name="text">
-                                <string>255</string>
-                            </property>
-                        </widget>
-                        <widget class="QLabel" row="0" column="1">
-                            <property name="name">
-                                <cstring>textLabel1_3</cstring>
-                            </property>
-                            <property name="text">
-                                <string>blue</string>
-                            </property>
-                        </widget>
-                        <widget class="QLCDNumber" row="1" column="3">
-                            <property name="name">
-                                <cstring>Blau_LCD</cstring>
-                            </property>
-                            <property name="paletteForegroundColor">
-                                <color>
-                                    <red>0</red>
-                                    <green>170</green>
-                                    <blue>255</blue>
-                                </color>
-                            </property>
-                            <property name="numDigits">
-                                <number>3</number>
-                            </property>
-                            <property name="segmentStyle">
-                                <enum>Flat</enum>
-                            </property>
-                        </widget>
-                        <widget class="QLabel" row="1" column="0">
-                            <property name="name">
-                                <cstring>textLabel2_4</cstring>
-                            </property>
-                            <property name="text">
-                                <string>0</string>
-                            </property>
-                        </widget>
-                    </grid>
+                    <property name="text">
+                        <string>&amp;Cancel</string>
+                    </property>
+                    <property name="accel">
+                        <string></string>
+                    </property>
+                    <property name="autoDefault">
+                        <bool>true</bool>
+                    </property>
                 </widget>
-            </vbox>
+            </hbox>
         </widget>
-        <widget class="QGroupBox">
+        <widget class="QFrame" row="3" column="0" rowspan="2" colspan="1">
             <property name="name">
-                <cstring>groupBox2</cstring>
+                <cstring>DynamicBox</cstring>
             </property>
-            <property name="geometry">
-                <rect>
-                    <x>220</x>
-                    <y>220</y>
-                    <width>110</width>
-                    <height>61</height>
-                </rect>
+            <property name="frameShape">
+                <enum>StyledPanel</enum>
+            </property>
+            <property name="frameShadow">
+                <enum>Raised</enum>
+            </property>
+        </widget>
+        <widget class="QGroupBox" row="1" column="0">
+            <property name="name">
+                <cstring>KanalFrame</cstring>
+            </property>
+            <property name="sizePolicy">
+                <sizepolicy>
+                    <hsizetype>0</hsizetype>
+                    <vsizetype>0</vsizetype>
+                    <horstretch>255</horstretch>
+                    <verstretch>140</verstretch>
+                </sizepolicy>
+            </property>
+            <property name="minimumSize">
+                <size>
+                    <width>260</width>
+                    <height>140</height>
+                </size>
             </property>
             <property name="title">
-                <string>Preview</string>
+                <string>Channel Name</string>
             </property>
-            <widget class="QFrame">
+            <widget class="QLayoutWidget">
                 <property name="name">
-                    <cstring>colorPrev</cstring>
+                    <cstring>layout28</cstring>
+                </property>
+                <property name="geometry">
+                    <rect>
+                        <x>40</x>
+                        <y>40</y>
+                        <width>174</width>
+                        <height>70</height>
+                    </rect>
+                </property>
+                <vbox>
+                    <property name="name">
+                        <cstring>unnamed</cstring>
+                    </property>
+                    <widget class="QLineEdit">
+                        <property name="name">
+                            <cstring>EditName</cstring>
+                        </property>
+                    </widget>
+                    <widget class="QLayoutWidget">
+                        <property name="name">
+                            <cstring>layout27</cstring>
+                        </property>
+                        <hbox>
+                            <property name="name">
+                                <cstring>unnamed</cstring>
+                            </property>
+                            <widget class="QPushButton">
+                                <property name="name">
+                                    <cstring>Set_Button</cstring>
+                                </property>
+                                <property name="text">
+                                    <string>Se&amp;t</string>
+                                </property>
+                                <property name="accel">
+                                    <string>Alt+T</string>
+                                </property>
+                            </widget>
+                            <widget class="QPushButton">
+                                <property name="name">
+                                    <cstring>Reset_Button</cstring>
+                                </property>
+                                <property name="text">
+                                    <string>&amp;Reset</string>
+                                </property>
+                            </widget>
+                        </hbox>
+                    </widget>
+                </vbox>
+            </widget>
+        </widget>
+        <widget class="QGroupBox" row="2" column="0">
+            <property name="name">
+                <cstring>hwChannelBox</cstring>
+            </property>
+            <property name="title">
+                <string>Hardware Channel</string>
+            </property>
+            <widget class="QComboBox">
+                <property name="name">
+                    <cstring>hardwareKanal</cstring>
+                </property>
+                <property name="geometry">
+                    <rect>
+                        <x>40</x>
+                        <y>40</y>
+                        <width>180</width>
+                        <height>31</height>
+                    </rect>
+                </property>
+            </widget>
+        </widget>
+        <widget class="QGroupBox" row="1" column="1" rowspan="3" colspan="1">
+            <property name="name">
+                <cstring>groupBox1</cstring>
+            </property>
+            <property name="title">
+                <string>Color chooser</string>
+            </property>
+            <widget class="QLayoutWidget">
+                <property name="name">
+                    <cstring>layout25</cstring>
                 </property>
                 <property name="geometry">
                     <rect>
                         <x>20</x>
-                        <y>20</y>
-                        <width>70</width>
-                        <height>31</height>
+                        <y>40</y>
+                        <width>310</width>
+                        <height>164</height>
                     </rect>
                 </property>
-                <property name="frameShape">
-                    <enum>StyledPanel</enum>
+                <vbox>
+                    <property name="name">
+                        <cstring>unnamed</cstring>
+                    </property>
+                    <widget class="QLayoutWidget">
+                        <property name="name">
+                            <cstring>layout22</cstring>
+                        </property>
+                        <grid>
+                            <property name="name">
+                                <cstring>unnamed</cstring>
+                            </property>
+                            <widget class="QSlider" row="1" column="1">
+                                <property name="name">
+                                    <cstring>Rot_Slider</cstring>
+                                </property>
+                                <property name="maxValue">
+                                    <number>255</number>
+                                </property>
+                                <property name="orientation">
+                                    <enum>Horizontal</enum>
+                                </property>
+                            </widget>
+                            <widget class="QLabel" row="1" column="2">
+                                <property name="name">
+                                    <cstring>textLabel2_2</cstring>
+                                </property>
+                                <property name="text">
+                                    <string>255</string>
+                                </property>
+                            </widget>
+                            <widget class="QLabel" row="0" column="1">
+                                <property name="name">
+                                    <cstring>textLabel1</cstring>
+                                </property>
+                                <property name="text">
+                                    <string>red</string>
+                                </property>
+                            </widget>
+                            <widget class="QLCDNumber" row="1" column="3">
+                                <property name="name">
+                                    <cstring>Rot_LCD</cstring>
+                                </property>
+                                <property name="paletteForegroundColor">
+                                    <color>
+                                        <red>255</red>
+                                        <green>0</green>
+                                        <blue>0</blue>
+                                    </color>
+                                </property>
+                                <property name="numDigits">
+                                    <number>3</number>
+                                </property>
+                                <property name="segmentStyle">
+                                    <enum>Flat</enum>
+                                </property>
+                            </widget>
+                            <widget class="QLabel" row="1" column="0">
+                                <property name="name">
+                                    <cstring>textLabel2</cstring>
+                                </property>
+                                <property name="text">
+                                    <string>0</string>
+                                </property>
+                            </widget>
+                        </grid>
+                    </widget>
+                    <widget class="QLayoutWidget">
+                        <property name="name">
+                            <cstring>layout22_2</cstring>
+                        </property>
+                        <grid>
+                            <property name="name">
+                                <cstring>unnamed</cstring>
+                            </property>
+                            <widget class="QSlider" row="1" column="1">
+                                <property name="name">
+                                    <cstring>Gruen_Slider</cstring>
+                                </property>
+                                <property name="maxValue">
+                                    <number>255</number>
+                                </property>
+                                <property name="orientation">
+                                    <enum>Horizontal</enum>
+                                </property>
+                            </widget>
+                            <widget class="QLabel" row="1" column="2">
+                                <property name="name">
+                                    <cstring>textLabel2_2_2</cstring>
+                                </property>
+                                <property name="text">
+                                    <string>255</string>
+                                </property>
+                            </widget>
+                            <widget class="QLabel" row="0" column="1">
+                                <property name="name">
+                                    <cstring>textLabel1_2</cstring>
+                                </property>
+                                <property name="text">
+                                    <string>green</string>
+                                </property>
+                            </widget>
+                            <widget class="QLCDNumber" row="1" column="3">
+                                <property name="name">
+                                    <cstring>Gruen_LCD</cstring>
+                                </property>
+                                <property name="paletteForegroundColor">
+                                    <color>
+                                        <red>0</red>
+                                        <green>170</green>
+                                        <blue>0</blue>
+                                    </color>
+                                </property>
+                                <property name="numDigits">
+                                    <number>3</number>
+                                </property>
+                                <property name="segmentStyle">
+                                    <enum>Flat</enum>
+                                </property>
+                            </widget>
+                            <widget class="QLabel" row="1" column="0">
+                                <property name="name">
+                                    <cstring>textLabel2_3</cstring>
+                                </property>
+                                <property name="text">
+                                    <string>0</string>
+                                </property>
+                            </widget>
+                        </grid>
+                    </widget>
+                    <widget class="QLayoutWidget">
+                        <property name="name">
+                            <cstring>layout22_3</cstring>
+                        </property>
+                        <grid>
+                            <property name="name">
+                                <cstring>unnamed</cstring>
+                            </property>
+                            <widget class="QSlider" row="1" column="1">
+                                <property name="name">
+                                    <cstring>Blau_Slider</cstring>
+                                </property>
+                                <property name="maxValue">
+                                    <number>255</number>
+                                </property>
+                                <property name="orientation">
+                                    <enum>Horizontal</enum>
+                                </property>
+                            </widget>
+                            <widget class="QLabel" row="1" column="2">
+                                <property name="name">
+                                    <cstring>textLabel2_2_3</cstring>
+                                </property>
+                                <property name="text">
+                                    <string>255</string>
+                                </property>
+                            </widget>
+                            <widget class="QLabel" row="0" column="1">
+                                <property name="name">
+                                    <cstring>textLabel1_3</cstring>
+                                </property>
+                                <property name="text">
+                                    <string>blue</string>
+                                </property>
+                            </widget>
+                            <widget class="QLCDNumber" row="1" column="3">
+                                <property name="name">
+                                    <cstring>Blau_LCD</cstring>
+                                </property>
+                                <property name="paletteForegroundColor">
+                                    <color>
+                                        <red>0</red>
+                                        <green>170</green>
+                                        <blue>255</blue>
+                                    </color>
+                                </property>
+                                <property name="numDigits">
+                                    <number>3</number>
+                                </property>
+                                <property name="segmentStyle">
+                                    <enum>Flat</enum>
+                                </property>
+                            </widget>
+                            <widget class="QLabel" row="1" column="0">
+                                <property name="name">
+                                    <cstring>textLabel2_4</cstring>
+                                </property>
+                                <property name="text">
+                                    <string>0</string>
+                                </property>
+                            </widget>
+                        </grid>
+                    </widget>
+                </vbox>
+            </widget>
+            <widget class="QGroupBox">
+                <property name="name">
+                    <cstring>groupBox2</cstring>
                 </property>
-                <property name="frameShadow">
-                    <enum>Raised</enum>
+                <property name="geometry">
+                    <rect>
+                        <x>220</x>
+                        <y>220</y>
+                        <width>110</width>
+                        <height>61</height>
+                    </rect>
+                </property>
+                <property name="title">
+                    <string>Preview</string>
+                </property>
+                <widget class="QFrame">
+                    <property name="name">
+                        <cstring>colorPrev</cstring>
+                    </property>
+                    <property name="geometry">
+                        <rect>
+                            <x>20</x>
+                            <y>20</y>
+                            <width>70</width>
+                            <height>31</height>
+                        </rect>
+                    </property>
+                    <property name="frameShape">
+                        <enum>StyledPanel</enum>
+                    </property>
+                    <property name="frameShadow">
+                        <enum>Raised</enum>
+                    </property>
+                </widget>
+            </widget>
+        </widget>
+        <widget class="QGroupBox" row="4" column="1">
+            <property name="name">
+                <cstring>MetaInfoBox</cstring>
+            </property>
+            <property name="title">
+                <string>Meta - informations</string>
+            </property>
+            <widget class="QLineEdit">
+                <property name="name">
+                    <cstring>metaManualText</cstring>
+                </property>
+                <property name="enabled">
+                    <bool>false</bool>
+                </property>
+                <property name="geometry">
+                    <rect>
+                        <x>60</x>
+                        <y>140</y>
+                        <width>270</width>
+                        <height>23</height>
+                    </rect>
+                </property>
+            </widget>
+            <widget class="QRadioButton">
+                <property name="name">
+                    <cstring>metaManualCheck</cstring>
+                </property>
+                <property name="enabled">
+                    <bool>false</bool>
+                </property>
+                <property name="geometry">
+                    <rect>
+                        <x>40</x>
+                        <y>100</y>
+                        <width>300</width>
+                        <height>23</height>
+                    </rect>
+                </property>
+                <property name="text">
+                    <string>Ge&amp;nerate the information (manual)</string>
+                </property>
+                <property name="accel">
+                    <string>Alt+N</string>
+                </property>
+            </widget>
+            <widget class="QCheckBox">
+                <property name="name">
+                    <cstring>metaEnable</cstring>
+                </property>
+                <property name="geometry">
+                    <rect>
+                        <x>20</x>
+                        <y>30</y>
+                        <width>310</width>
+                        <height>23</height>
+                    </rect>
+                </property>
+                <property name="text">
+                    <string>&amp;Channel refreshes the meta informations</string>
+                </property>
+                <property name="accel">
+                    <string>Alt+C</string>
+                </property>
+            </widget>
+            <widget class="QRadioButton">
+                <property name="name">
+                    <cstring>metaAutoCheck</cstring>
+                </property>
+                <property name="enabled">
+                    <bool>false</bool>
+                </property>
+                <property name="geometry">
+                    <rect>
+                        <x>40</x>
+                        <y>70</y>
+                        <width>300</width>
+                        <height>23</height>
+                    </rect>
+                </property>
+                <property name="text">
+                    <string>a&amp;utogenerate the informations</string>
+                </property>
+                <property name="accel">
+                    <string>Alt+U</string>
+                </property>
+                <property name="checked">
+                    <bool>true</bool>
                 </property>
             </widget>
         </widget>
-    </widget>
-    <widget class="QGroupBox">
-        <property name="name">
-            <cstring>MetaInfoBox</cstring>
-        </property>
-        <property name="geometry">
-            <rect>
-                <x>310</x>
-                <y>390</y>
-                <width>350</width>
-                <height>180</height>
-            </rect>
-        </property>
-        <property name="title">
-            <string>Meta - informations</string>
-        </property>
-        <widget class="QLineEdit">
+        <widget class="QLabel" row="0" column="0">
             <property name="name">
-                <cstring>metaManualText</cstring>
-            </property>
-            <property name="enabled">
-                <bool>false</bool>
-            </property>
-            <property name="geometry">
-                <rect>
-                    <x>60</x>
-                    <y>140</y>
-                    <width>270</width>
-                    <height>23</height>
-                </rect>
-            </property>
-        </widget>
-        <widget class="QRadioButton">
-            <property name="name">
-                <cstring>metaManualCheck</cstring>
-            </property>
-            <property name="enabled">
-                <bool>false</bool>
-            </property>
-            <property name="geometry">
-                <rect>
-                    <x>40</x>
-                    <y>100</y>
-                    <width>300</width>
-                    <height>23</height>
-                </rect>
+                <cstring>textLabel3</cstring>
             </property>
             <property name="text">
-                <string>Ge&amp;nerate the information (manual)</string>
-            </property>
-            <property name="accel">
-                <string>Alt+N</string>
+                <string>&lt;h2&gt;Channel Preference&lt;/h2&gt;</string>
             </property>
         </widget>
-        <widget class="QCheckBox">
-            <property name="name">
-                <cstring>metaEnable</cstring>
-            </property>
-            <property name="geometry">
-                <rect>
-                    <x>20</x>
-                    <y>30</y>
-                    <width>310</width>
-                    <height>23</height>
-                </rect>
-            </property>
-            <property name="text">
-                <string>&amp;Channel refreshes the meta informations</string>
-            </property>
-            <property name="accel">
-                <string>Alt+C</string>
-            </property>
-        </widget>
-        <widget class="QRadioButton">
-            <property name="name">
-                <cstring>metaAutoCheck</cstring>
-            </property>
-            <property name="enabled">
-                <bool>false</bool>
-            </property>
-            <property name="geometry">
-                <rect>
-                    <x>40</x>
-                    <y>70</y>
-                    <width>300</width>
-                    <height>23</height>
-                </rect>
-            </property>
-            <property name="text">
-                <string>a&amp;utogenerate the informations</string>
-            </property>
-            <property name="accel">
-                <string>Alt+U</string>
-            </property>
-            <property name="checked">
-                <bool>true</bool>
-            </property>
-        </widget>
-    </widget>
-    <widget class="QLabel">
-        <property name="name">
-            <cstring>textLabel3</cstring>
-        </property>
-        <property name="geometry">
-            <rect>
-                <x>20</x>
-                <y>20</y>
-                <width>290</width>
-                <height>70</height>
-            </rect>
-        </property>
-        <property name="text">
-            <string>&lt;h2&gt;Channel Preference&lt;/h2&gt;</string>
-        </property>
-    </widget>
+    </grid>
 </widget>
 <connections>
     <connection>
