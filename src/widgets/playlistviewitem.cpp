@@ -248,8 +248,8 @@ playListViewItem::playListViewItem( QListView * parent )
 	setDropEnabled(TRUE);
 }
 
-playListViewItem::playListViewItem( QListView * parent, playListItem * item )
- : QListViewItem( parent ), playListEntry( item )
+playListViewItem::playListViewItem( QListView * parent, playListItem * item, QListViewItem * after )
+ : QListViewItem( parent, after ), playListEntry( item )
 {
 	setDragEnabled(TRUE);
 	setDropEnabled(TRUE);
@@ -260,8 +260,8 @@ playListViewItem::playListViewItem( QListView * parent, playListItem * item )
 	setVote( item->getVote() );
 }
 
-playListViewItem::playListViewItem( QListViewItem * parent, QString newSong )
- : QListViewItem( parent )
+playListViewItem::playListViewItem( QListViewItem * parent, QString newSong, QListViewItem * after )
+ : QListViewItem( parent, after )
 {
 	playListEntry = new playListItem( newSong );
 	setDragEnabled(TRUE);
@@ -384,7 +384,7 @@ void playListViewItem::refresh()
 
 bool playListViewItem::acceptDrop(const QMimeSource * mime) const
 {
-	return mime->provides("application/x-radiomixer-playlistitem");
+	return mime->provides("application/x-radiomixer-playlistitem") || mime->provides("text/uri-list");
 }
 
 void playListViewItem::dropped(QDropEvent * evt)
@@ -418,6 +418,15 @@ void playListViewItem::dropped(QDropEvent * evt)
 			QListView* sender = dynamic_cast<QListView*>(evt->source());
 			if( sender )
 				sender->takeItem( sender->selectedItem() );
+		}
+	}else if( evt->provides("text/uri-list") )
+	{
+		if( QUriDrag::canDecode( evt ) )
+		{
+			QStringList uriList;
+			QUriDrag::decodeLocalFiles( evt, uriList );
+			if(uriList.first() && ( uriList.first().contains(".ogg" ) || uriList.first().contains(".mp3" ) ) )
+				new playListViewItem( QListViewItem::parent(), uriList.first(), this );
 		}
 	}
 }

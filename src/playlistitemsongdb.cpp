@@ -101,7 +101,6 @@ void playListItemSongDB::receiveData( bool )
  			emit refreshed();
 			state = Normal;
 			emit( ready( this ) );
-	qWarning("loaded-.......");
 		}
 	delete config;
 }
@@ -132,7 +131,6 @@ void playListItemSongDB::refreshMeta()
 
 void playListItemSongDB::load(const unsigned int id )
 {
-	qWarning("load called...");
 	songDBId = id;
 	readMeta();
 }

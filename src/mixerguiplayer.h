@@ -29,6 +29,8 @@
 #include "timedisplay.h"
 #include "playlistitemsongdb.h"
 
+#include <qdragobject.h>
+
 /**
 @author Jan Boysen
 */

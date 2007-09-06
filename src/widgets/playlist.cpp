@@ -230,7 +230,7 @@ QString playList::toString()
 
 bool playList::acceptDrop(const QMimeSource * mime) const
 {
-	return mime->provides("application/x-radiomixer-playlistitem");
+	return mime->provides("application/x-radiomixer-playlistitem") || mime->provides("text/uri-list");
 }
 
 void playList::dropped(QDropEvent * evt)
@@ -256,6 +256,18 @@ void playList::dropped(QDropEvent * evt)
 			QListView* sender = dynamic_cast<QListView*>(evt->source());
 			if( sender )
 				sender->takeItem( sender->selectedItem() );
+		}
+	}else if( evt->provides("text/uri-list") )
+	{
+		if( QUriDrag::canDecode( evt ) )
+		{
+			QStringList uriList;
+			QUriDrag::decodeLocalFiles( evt, uriList );
+			if(uriList.first() && ( uriList.first().contains(".ogg" ) || uriList.first().contains(".mp3" ) ) )
+			{
+				playListViewItem* pli = new playListViewItem( this, uriList.first() );
+				pli->moveItem( lastItem() );
+			}
 		}
 	}
 }

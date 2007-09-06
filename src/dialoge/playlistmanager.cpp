@@ -288,7 +288,6 @@ void playListManager::resizeEvent( QResizeEvent *e )
 
 void playListManager::updateLastPlayed( playListItem * item )
 {
-	qWarning("updating last played.....");
 #ifdef ENABLE_SONGDB
 	requestData( "updateLastPlayed=1&filename="+item->getFilename() );
 #else
@@ -528,9 +527,4 @@ void playListManager::removeItem( )
 	if( currentlySelectedItem )
 		delete currentlySelectedItem;
 	currentlySelectedItem = NULL;
-}
-
-void playListManager::playListDopped(QDropEvent * e)
-{
-	qWarning( QString( e->format(0) ) );
 }

@@ -253,32 +253,47 @@ void mixerGuiPlayer::cueTrack( unsigned int playerID, playListItem * song )
 
 void mixerGuiPlayer::dragEnterEvent(QDragEnterEvent * evt)
 {
-	if( evt->provides("application/x-radiomixer-playlistitem") )
+	if( evt->provides("application/x-radiomixer-playlistitem") || evt->provides("text/uri-list"))
 		evt->accept();
 }
 
 void mixerGuiPlayer::dropEvent(QDropEvent * evt)
 {
 	playListItem* playListEntry = 0;
-	QDomDocument doc;
-	doc.setContent( evt->encodedData("application/x-radiomixer-playlistitem") );
-	if( !doc.isDocument() )
+	if( evt->provides("application/x-radiomixer-playlistitem") )
 	{
-		qWarning( QObject::tr("Received an invalid Document") );
-		return;
-	}
+		QDomDocument doc;
+		doc.setContent( evt->encodedData("application/x-radiomixer-playlistitem") );
+		if( !doc.isDocument() )
+		{
+			qWarning( QObject::tr("Received an invalid Document") );
+			return;
+		}
 
-	QDomElement item = doc.documentElement();
-	if( item.tagName() == "playListEntry" )
+		QDomElement item = doc.documentElement();
+		if( item.tagName() == "playListEntry" )
+		{
+			playListEntry = new playListItem( item.attribute( "file" ));
+			player->open( playListEntry );
+		}
+		else if( item.tagName() == "songdbEntry" )
+		{
+			playListItemSongDB* entry = new playListItemSongDB( );
+			connect( entry, SIGNAL( ready( playListItem*)), player, SLOT(open( playListItem*)) );
+			entry->load( item.attribute("id").toInt() );
+			playListEntry = entry;
+		}
+	}else if( evt->provides("text/uri-list") )
 	{
-		playListEntry = new playListItem( item.attribute( "file" ));
-		player->open( playListEntry );
-	}
-	else if( item.tagName() == "songdbEntry" )
-	{
-		playListItemSongDB* entry = new playListItemSongDB( );
-		connect( entry, SIGNAL( ready( playListItem*)), player, SLOT(open( playListItem*)) );
-		entry->load( item.attribute("id").toInt() );
-		playListEntry = entry;
+		if( QUriDrag::canDecode( evt ) )
+		{
+			QStringList uriList;
+			QUriDrag::decodeLocalFiles( evt, uriList );
+			if(uriList.first() && ( uriList.first().contains(".ogg" ) || uriList.first().contains(".mp3" ) ) )
+			{
+				playListEntry = new playListItem(  uriList.first() );
+				player->open( playListEntry );
+			}
+		}
 	}
 }

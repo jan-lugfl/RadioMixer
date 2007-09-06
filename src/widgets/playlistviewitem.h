@@ -39,8 +39,8 @@ class playListViewItem : public QObject, public QListViewItem
 Q_OBJECT
 public:
 	playListViewItem( QListView* parent );
-	playListViewItem( QListView* parent, playListItem* item );
-	playListViewItem( QListViewItem* parent, QString newSong );
+	playListViewItem( QListView* parent, playListItem* item, QListViewItem* after = 0 );
+	playListViewItem( QListViewItem* parent, QString newSong, QListViewItem* after = 0 );
 	playListViewItem( QListViewItem* parent, QDomDocument domdoc );
 	playListViewItem( playListViewItem* parent );
 	~playListViewItem();
