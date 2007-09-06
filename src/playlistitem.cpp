@@ -22,7 +22,7 @@
 #include "playlistitem.h"
 
 playListItem::playListItem( QString fileName, QObject * parent, const char * name )
- : QObject( parent, name ), state( Normal ), Samplerate( 0 ), channels( 0 )
+ : QObject( parent, name ), state( Loading ), Samplerate( 0 ), channels( 0 )
 {
 	if( !fileName.isEmpty())
 	{
@@ -81,7 +81,7 @@ void playListItem::setSamplerate( unsigned int rate )
 void playListItem::startPlaying()
 {
 	state = Playing;
-	emit( refreshed() );
+	emit refreshed();
 	emit startToPlay( this );
 }
 
@@ -109,6 +109,8 @@ void playListItem::readMeta( )
 		}
 	}
 	emit refreshed();
+	state = Normal;
+	emit( ready( this ) );
 }
 
 void playListItem::parseAbsFile( QString file )

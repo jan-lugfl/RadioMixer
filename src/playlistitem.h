@@ -39,7 +39,7 @@ public:
 	playListItem( QString fileName, QObject *parent = 0, const char *name = 0 );
 	~playListItem();
 
-	enum songState { Normal, Cued, Playing, Played };
+	enum songState { Loading, Normal, Cued, Playing, Played };
 
 	virtual const QString getId();
 	virtual const QString getFilepath();
@@ -84,6 +84,7 @@ public slots:
 
 signals:
 	void startToPlay( playListItem* );
+	void ready( playListItem* );
 	void refreshed();
 };
 

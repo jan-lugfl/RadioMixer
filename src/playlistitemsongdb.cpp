@@ -98,7 +98,10 @@ void playListItemSongDB::receiveData( bool )
 			setLength( song.attribute("length") );
 			setPreLength( song.attribute("preTime") );
 
-			emit( refreshed() );
+ 			emit refreshed();
+			state = Normal;
+			emit( ready( this ) );
+	qWarning("loaded-.......");
 		}
 	delete config;
 }
@@ -124,5 +127,12 @@ QDomElement playListItemSongDB::toDomElement( QDomDocument* doc )
 
 void playListItemSongDB::refreshMeta()
 {
+	readMeta();
+}
+
+void playListItemSongDB::load(const unsigned int id )
+{
+	qWarning("load called...");
+	songDBId = id;
 	readMeta();
 }

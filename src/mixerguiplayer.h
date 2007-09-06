@@ -27,6 +27,7 @@
 #include "glowbutton.h"
 #include "blinkbutton.h"
 #include "timedisplay.h"
+#include "playlistitemsongdb.h"
 
 /**
 @author Jan Boysen
@@ -56,13 +57,16 @@ protected:
 	vuMeter* levelMeterLeft;
 	vuMeter* levelMeterRight;
 
+	// DnD
+	virtual void dragEnterEvent( QDragEnterEvent* evt );
+	virtual void dropEvent( QDropEvent* evt );
+
 protected slots:
 	virtual void fileOpen();
 	virtual void buttonBlinker();
 	virtual void showPrefs();
 	virtual void setMeta( metaTag );
 	virtual void cued( metaTag );
-
 
 public slots:
 	virtual void buttonPressed( int hwChannel, int button );

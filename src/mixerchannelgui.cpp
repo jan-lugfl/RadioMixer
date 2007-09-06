@@ -33,6 +33,8 @@ mixerChannelGUI::mixerChannelGUI( int chID, QWidget* parent , const char* name ,
 	setFrameShape( QFrame::StyledPanel );
 	setFrameShadow( QFrame::Raised );
 
+	setAcceptDrops( TRUE );
+
 	vuSlider = new QSlider( this, "volumeSlider" );
 	vuSlider->setGeometry( QRect( 30, 60, 21, 321 ) );
 	vuSlider->setOrientation( QSlider::Vertical );

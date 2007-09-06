@@ -36,9 +36,10 @@ class playListItemSongDB : public playListItem
 {
 Q_OBJECT
 public:
-	playListItemSongDB( const unsigned int id,  unsigned  int lastPlayedTS=0, QObject *parent = 0, const char *name = 0);
+	playListItemSongDB( const unsigned int id=0,  unsigned  int lastPlayedTS=0, QObject *parent = 0, const char *name = 0);
 	~playListItemSongDB();
 
+	virtual void load( const unsigned int id );
 	virtual const QString getId();
 	virtual void setFile(QString file);
 	virtual QDomElement toDomElement( QDomDocument* doc );
