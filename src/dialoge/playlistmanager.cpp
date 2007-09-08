@@ -254,17 +254,6 @@ void playListManager::search( )
 	requestData( freigabe+searchGenre+"query="+searchFor->text() );
 }
 
-void playListManager::songDBViewdoubleClicked( QListViewItem * item, const QPoint &, int )
-{
-	if( item )
-		playListAdd();
-}
-
-void playListManager::showSongDBContextmenu( QListViewItem * item, const QPoint & pos, int col )
-{
-	songDBPopup->popup( pos );
-}
-
 void playListManager::refreshPlaylists()
 {
 	playlistChannel->clear();
@@ -279,6 +268,21 @@ void playListManager::refreshPlaylists()
 	}
 }
 #endif
+
+void playListManager::songDBViewdoubleClicked( QListViewItem * item, const QPoint &, int )
+{
+#ifdef ENABLE_SONGDB
+	if( item )
+		playListAdd();
+#endif
+}
+
+void playListManager::showSongDBContextmenu( QListViewItem * item, const QPoint & pos, int col )
+{
+#ifdef ENABLE_SONGDB
+	songDBPopup->popup( pos );
+#endif
+}
 
 void playListManager::resizeEvent( QResizeEvent *e )
 {

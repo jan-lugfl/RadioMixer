@@ -276,6 +276,7 @@ void mixerGuiPlayer::dropEvent(QDropEvent * evt)
 			playListEntry = new playListItem( item.attribute( "file" ));
 			player->open( playListEntry );
 		}
+#ifdef ENABLE_SONGDB
 		else if( item.tagName() == "songdbEntry" )
 		{
 			playListItemSongDB* entry = new playListItemSongDB( );
@@ -283,6 +284,7 @@ void mixerGuiPlayer::dropEvent(QDropEvent * evt)
 			entry->load( item.attribute("id").toInt() );
 			playListEntry = entry;
 		}
+#endif
 	}else if( evt->provides("text/uri-list") )
 	{
 		if( QUriDrag::canDecode( evt ) )

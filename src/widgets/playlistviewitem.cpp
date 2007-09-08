@@ -289,9 +289,10 @@ playListViewItem::playListViewItem(QListViewItem * parent, QDomDocument domdoc )
 	QDomElement item = domdoc.documentElement();
 	if( item.tagName() == "playListEntry" )
 		qWarning("playListEntry");
+#ifdef ENABLE_SONGDB
 	else if( item.tagName() == "songdbEntry" )
 		playListEntry = new playListItemSongDB( item.attribute("id").toInt() );
-
+#endif
 	connect( playListEntry, SIGNAL( refreshed()), this, SLOT(refresh()));
 
 	playListEntry->refreshMeta();

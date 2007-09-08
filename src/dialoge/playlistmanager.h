@@ -104,9 +104,9 @@ protected slots:
 	virtual void playListAdd();
 	virtual void cue();
 	virtual void search();
+#endif
 	virtual void showSongDBContextmenu( QListViewItem * item, const QPoint & pos, int col );
 	virtual void songDBViewdoubleClicked( QListViewItem *, const QPoint &, int );
-#endif
 
 private:
 	// this is used to know in Contextmenu handling which Item to handle.
