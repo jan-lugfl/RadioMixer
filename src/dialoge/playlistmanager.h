@@ -28,6 +28,7 @@
 #include "widgets/playlist.h"
 #include "playlistviewitem.h"
 #include "songlistview.h"
+#include "timer.h"
 
 #ifdef ENABLE_SONGDB
 #include "playlistitemsongdb.h"

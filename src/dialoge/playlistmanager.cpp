@@ -115,6 +115,11 @@ playListManager::playListManager(QWidget *parent, const char *name)
 	connect( &refreshTimer, SIGNAL(timeout()), playListView, SLOT(triggerUpdate()) );
 	refreshTimer.start(1000);
 
+	miscFrame->setFixedWidth( 120 );
+
+	timer* tim1 = new timer( miscFrame, "Timer1");
+	timerLayout->insertWidget( 0, tim1, Qt::AlignTop );
+
 	delete config;
 }
 
