@@ -1,4 +1,4 @@
-/* $Id: playlistmanager.cpp 138 2007-09-08 20:59:23Z trekkie_lugfl $ */
+/* $Id$ */
 /***************************************************************************
  *   OpenRadio - RadioMixer                                                *
  *   Copyright (C) 2007 by Jan Boysen                                *
