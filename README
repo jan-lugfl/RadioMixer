@@ -21,6 +21,6 @@ with all its features.
 
 Vorbis an libMAD support are also recommended, but not as important as the JackD support.
 
-The hardwaremixer and songDB supports are optional cause the code and specs für these systems
+The hardwaremixer and songDB supports are optional cause the code and specs for these systems
 has to be released in the future.
 
