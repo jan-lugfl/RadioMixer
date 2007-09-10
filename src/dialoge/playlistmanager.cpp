@@ -36,7 +36,6 @@ playListManager::playListManager(QWidget *parent, const char *name)
 	playListFrameLayout->addWidget( playListView, 0, 0 );
 
 	connect( playListView, SIGNAL( rightButtonPressed ( QListViewItem *, const QPoint &, int ) ), this, SLOT( showPlaylistContextmenu( QListViewItem*, const QPoint&, int ) ));
-	connect( playListView, SIGNAL( dropped ( QDropEvent* ) ), this, SLOT( playListDopped( QDropEvent* ) ) );
 
 #ifdef ENABLE_SONGDB
 	songDBListView = new songListView( songDBFrame, "songDBListView" );
@@ -64,7 +63,7 @@ playListManager::playListManager(QWidget *parent, const char *name)
 
 	connect( playListView, SIGNAL( itemRenamed( QListViewItem*, int) ), this, SLOT( refreshPlaylists() ) );
 	connect( songDBListView, SIGNAL( doubleClicked( QListViewItem*, const QPoint& , int) ), this, SLOT( songDBViewdoubleClicked( QListViewItem *, const QPoint &, int ) ) );
-	connect( songDBListView, SIGNAL( contextMenuRequested(  QListViewItem* , const QPoint&, int )) , this, SLOT( showShowDBContextMenu(  QListViewItem* , const QPoint&, int )  ) );
+	connect( songDBListView, SIGNAL( contextMenuRequested(  QListViewItem* , const QPoint&, int )) , this, SLOT( showSongDBContextmenu(  QListViewItem* , const QPoint&, int )  ) );
 #else
 	delete songDBFrame;
 #endif
