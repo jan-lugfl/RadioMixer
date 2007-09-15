@@ -403,7 +403,26 @@ void playListViewItem::dropped(QDropEvent * evt)
 				QListViewItem::parent()->insertItem( item );
 			}
 			else
-				item->moveItem( this->itemAbove() );
+			{
+				bool foundMyself = FALSE;
+				QListViewItemIterator it( listView() );
+				while ( it.current() ) {
+					if( it.current() == this )
+						foundMyself = TRUE;
+					else if( it.current() == item and foundMyself )
+					{
+						if( this->itemAbove() == QListViewItem::parent())
+						{
+							item->moveItem( this );
+							moveItem( item );
+						}else
+							item->moveItem( this->itemAbove() );
+					}
+					else if( it.current() == item and !foundMyself )
+						item->moveItem( this );
+					++it;
+				}
+			}
 		}else
 		{
 			QDomDocument doc;
