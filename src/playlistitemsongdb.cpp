@@ -46,7 +46,7 @@ playListItemSongDB::~playListItemSongDB()
 
 bool playListItemSongDB::hasCostumBackgroundColor( )
 {
-	if( state == Normal )
+	if( state <= Normal )
 		return ((QDateTime::currentDateTime().toTime_t() - lastPlayed) < 7200);
 	else
 		return playListItem::hasCostumBackgroundColor( );
@@ -54,7 +54,7 @@ bool playListItemSongDB::hasCostumBackgroundColor( )
 
 QColor playListItemSongDB::getBackgroundColor( )
 {
-	if( state == Normal )
+	if( state <= Normal )
 	{
 		unsigned int playedAgo = QDateTime::currentDateTime().toTime_t() - lastPlayed;
 
