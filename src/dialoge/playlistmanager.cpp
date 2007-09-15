@@ -114,8 +114,7 @@ playListManager::playListManager(QWidget *parent, const char *name)
 	connect( &refreshTimer, SIGNAL(timeout()), playListView, SLOT(triggerUpdate()) );
 	refreshTimer.start(1000);
 
-	timer* tim1 = new timer( miscFrame, "Timer1");
-	timerLayout->insertWidget( 0, tim1, Qt::AlignTop );
+	connect( addTimerButton, SIGNAL( clicked() ) , SLOT( addTimer() ) );
 
 	delete config;
 }
@@ -533,4 +532,11 @@ void playListManager::removeItem( )
 	if( currentlySelectedItem )
 		delete currentlySelectedItem;
 	currentlySelectedItem = NULL;
+}
+
+void playListManager::addTimer()
+{
+	timer* tim = new timer( miscFrame, "Timer");
+	tim->show();
+	timerLayout->insertWidget( 0, tim, Qt::AlignTop );
 }

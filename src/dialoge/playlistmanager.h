@@ -43,6 +43,7 @@
 #include <qcombobox.h>
 #include <qsettings.h>
 #include <qvaluevector.h>
+#include <qpushbutton.h>
 #include <qmessagebox.h>
 #include <qsplitter.h>
 #include <qpopupmenu.h>
@@ -133,6 +134,7 @@ protected slots:
 	virtual void cueAsNextTreck();
 	virtual void removePlayed();
 	virtual void removeItem();
+	virtual void addTimer();
 
 signals:
 	void cueTrack( unsigned int, playListItem* );

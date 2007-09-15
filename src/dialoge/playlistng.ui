@@ -325,12 +325,6 @@
                             <property name="name">
                                 <cstring>unnamed</cstring>
                             </property>
-                            <property name="margin">
-                                <number>5</number>
-                            </property>
-                            <property name="spacing">
-                                <number>2</number>
-                            </property>
                             <spacer>
                                 <property name="name">
                                     <cstring>spacer2</cstring>
@@ -344,10 +338,21 @@
                                 <property name="sizeHint">
                                     <size>
                                         <width>61</width>
-                                        <height>600</height>
+                                        <height>630</height>
                                     </size>
                                 </property>
                             </spacer>
+                            <widget class="QPushButton">
+                                <property name="name">
+                                    <cstring>addTimerButton</cstring>
+                                </property>
+                                <property name="text">
+                                    <string>add Timer</string>
+                                </property>
+                                <property name="accel">
+                                    <string></string>
+                                </property>
+                            </widget>
                         </vbox>
                     </widget>
                 </grid>
@@ -383,5 +388,5 @@
     <slot>requestData( QString query )</slot>
     <slot>refreshPlaylists()</slot>
 </slots>
-<layoutdefaults spacing="6" margin="11"/>
+<layoutdefaults spacing="6" margin="8"/>
 </UI>

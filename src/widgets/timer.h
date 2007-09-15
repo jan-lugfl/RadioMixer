@@ -23,7 +23,7 @@
 #define TIMER_H
 
 #include <qframe.h>
-#include <qpushbutton.h>
+#include <qtoolbutton.h>
 #include <qlayout.h>
 #include <qtimer.h>
 #include <qlabel.h>
@@ -45,11 +45,12 @@ protected:
 
 	QVBoxLayout* masterLayout;
 	QHBoxLayout* buttonLayout;
-	QPushButton* start;
-	QPushButton* stop;
-	QPushButton* pause;
-	QPushButton* setup;
+	QToolButton* start;
+	QToolButton* stop;
+	QToolButton* pause;
+	QToolButton* setup;
 	QLabel* label;
+//	QLabel* timerName;
 	QFont timeDisplay_font;
 
 protected slots:

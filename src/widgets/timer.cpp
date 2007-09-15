@@ -24,24 +24,28 @@
 timer::timer(QWidget *parent, const char *name)
  : QFrame(parent, name)
 {
-	setFixedHeight( 100 );
+	setFixedHeight( 90 );
 	setFrameShape( StyledPanel );
 	setFrameShadow( Raised );
 
-	start = new QPushButton( this );
+//	timerName = new QLabel( this );
+//	timerName->setText( tr( "time onAir" ) );
+
+	start = new QToolButton( this );
 	start->setText( tr("Start") );
 	connect( start, SIGNAL( clicked() ), this, SLOT( startTimer() ) );
-	pause = new QPushButton( this );
+	pause = new QToolButton( this );
 	pause->setText( tr("Pause") );
 	connect( pause, SIGNAL( clicked() ), this, SLOT( pauseTimer() ) );
-	stop = new QPushButton( this );
+	stop = new QToolButton( this );
 	stop->setText( tr("Stop") );
 	connect( stop, SIGNAL( clicked() ), this, SLOT( stopTimer() ) );
-	setup = new QPushButton( this );
+	setup = new QToolButton( this );
 	setup->setText( tr("Setup") );
+	setup->setDisabled( TRUE );
 	connect( setup, SIGNAL( clicked() ), this, SLOT( showSettings() ) );
 
-	masterLayout = new QVBoxLayout( this, 8, 5, "Timer Layout" );
+	masterLayout = new QVBoxLayout( this, 4, 3, "Timer Layout" );
 
 	buttonLayout = new QHBoxLayout( this, 2, 4, "Button Layout" );
 	buttonLayout->addWidget( start );
@@ -50,6 +54,7 @@ timer::timer(QWidget *parent, const char *name)
 	buttonLayout->addWidget( setup );
 
 	label = new QLabel( this );
+//	masterLayout->addWidget( timerName );
 	masterLayout->addLayout( buttonLayout );
 	masterLayout->addWidget( label );
 
@@ -58,11 +63,11 @@ timer::timer(QWidget *parent, const char *name)
 	label->setAlignment( QLabel::AlignCenter );
 
 	timeDisplay_font = font();
-	timeDisplay_font.setPointSize( 24 );
+	timeDisplay_font.setPointSize( 22 );
 	timeDisplay_font.setBold( TRUE );
 	label->setFont( timeDisplay_font );
 
-	label->setText( timerState.toString("hh:mm:ss.zzz") );
+	label->setText( timerState.toString("hh:mm:ss.zzz").left(10) );
 	mainTimer = new QTimer();
 	connect( mainTimer, SIGNAL( timeout() ), this, SLOT( refreshTimer() ) );
 }
@@ -86,7 +91,7 @@ void timer::stopTimer( )
 {
 	mainTimer->stop();
 	timerState = QTime( 0, 0 );
-	label->setText( timerState.toString("hh:mm:ss.zzz") );
+	label->setText( timerState.toString("hh:mm:ss.zzz").left(10) );
 }
 
 void timer::showSettings( )
@@ -97,7 +102,7 @@ void timer::showSettings( )
 void timer::refreshTimer( )
 {
 	timerState = timerState.addMSecs( 100 );
-	label->setText( timerState.toString("hh:mm:ss.zzz") );
+	label->setText( timerState.toString("hh:mm:ss.zzz").left(10) );
 }
 
 
