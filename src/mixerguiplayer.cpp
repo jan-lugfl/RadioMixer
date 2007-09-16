@@ -81,9 +81,9 @@ mixerGuiPlayer::mixerGuiPlayer( int chID, soundPlayer* soundplayer, QWidget* par
 	loopButton->setActivatedColor( QColor(255, 240, 0) );
 	connect( loopButton, SIGNAL(clicked()), player, SLOT(toggleLoop()) );
 
-	player->setName( config->readEntry( "/radiomixer/channel_"+QString::number( playerID )+"/name", tr("Kanal")+" "+QString::number(playerID) ) );
+	player->setName( config->readEntry( "/radiomixer/channel_"+QString::number( channelID )+"/name", tr("Kanal")+" "+QString::number(channelID) ) );
 
-	if( config->readNumEntry( "/radiomixer/channel_"+QString::number( playerID )+"/autoRecue", 0 ) )
+	if( config->readNumEntry( "/radiomixer/channel_"+QString::number( channelID )+"/autoRecue", 0 ) )
 		connect( player, SIGNAL(trackEnded()), this, SLOT(cueNewTrack()) );
 
 	delete config;
@@ -123,7 +123,7 @@ void mixerGuiPlayer::buttonBlinker( )
 void mixerGuiPlayer::cueNewTrack( )
 {
 	if( player->isStopped() )
-		emit getNextTrack( playerID );
+		emit getNextTrack( channelID );
 }
 
 void mixerGuiPlayer::buttonPressed( int hwChannel, int button )
@@ -197,7 +197,7 @@ void mixerGuiPlayer::showPrefs( )
 	autoRecue->setText( tr("Auto Recue ?") );
 	autoRecue->setGeometry( QRect( 10, 90, 250, 25) );
 
-	if( config->readNumEntry( "/radiomixer/channel_"+QString::number( playerID )+"/autoRecue", 0 ) )
+	if( config->readNumEntry( "/radiomixer/channel_"+QString::number( channelID )+"/autoRecue", 0 ) )
 		autoRecue->setChecked(1);
 
 	if( mixerChannelGUI::execPrefDlg() == QDialog::Accepted)
@@ -205,12 +205,12 @@ void mixerGuiPlayer::showPrefs( )
 		player->setName( prefDlg->EditName->text());
 		if( autoRecue->isChecked() )
 		{
-			config->writeEntry( "/radiomixer/channel_"+QString::number( playerID )+"/autoRecue", 1 );
+			config->writeEntry( "/radiomixer/channel_"+QString::number( channelID )+"/autoRecue", 1 );
 			connect( player, SIGNAL(trackEnded()), this, SLOT(cueNewTrack()) );
 		}
 		else
 		{
-			config->writeEntry( "/radiomixer/channel_"+QString::number( playerID )+"/autoRecue", 0 );
+			config->writeEntry( "/radiomixer/channel_"+QString::number( channelID )+"/autoRecue", 0 );
 			disconnect( player, SIGNAL(trackEnded()), this, SLOT(cueNewTrack()) );
 		}
 		levelMeterLeft->setPaletteBackgroundColor( paletteBackgroundColor () );
@@ -245,7 +245,7 @@ void mixerGuiPlayer::cued( metaTag meta )
 
 void mixerGuiPlayer::cueTrack( unsigned int playerID, playListItem * song )
 {
-	if( this->playerID == playerID )
+	if( this->channelID == playerID )
 	{
 		player->open( song );
 	}
@@ -253,7 +253,7 @@ void mixerGuiPlayer::cueTrack( unsigned int playerID, playListItem * song )
 
 void mixerGuiPlayer::dragEnterEvent(QDragEnterEvent * evt)
 {
-	if( evt->provides("application/x-radiomixer-playlistitem") || evt->provides("text/uri-list"))
+	if( evt->provides("application/x-radiomixer-playlist") || evt->provides("application/x-radiomixer-playlistitem") || evt->provides("text/uri-list"))
 		evt->accept();
 }
 
@@ -285,6 +285,13 @@ void mixerGuiPlayer::dropEvent(QDropEvent * evt)
 			playListEntry = entry;
 		}
 #endif
+	}else if( evt->provides("application/x-radiomixer-playlist") && evt->source() ) // TODO add support for playlist that are not yet loaded into the playlist manager
+	{
+		QListView* sender = dynamic_cast<QListView*>(evt->source());
+		playList* plst = dynamic_cast<playList*>(sender->selectedItem());
+		if( plst )
+			plst->cueInChannel( channelID );
+		cueNewTrack( );
 	}else if( evt->provides("text/uri-list") )
 	{
 		if( QUriDrag::canDecode( evt ) )

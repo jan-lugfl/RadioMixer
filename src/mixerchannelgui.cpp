@@ -26,9 +26,9 @@ mixerChannelGUI::mixerChannelGUI( int chID, QWidget* parent , const char* name ,
 {
 	config = new QSettings();
 
-	playerID = chID;
+	channelID = chID;
 
-	playerPos = config->readNumEntry( "/radiomixer/channel_"+QString::number( playerID )+"/position", playerID );
+	playerPos = config->readNumEntry( "/radiomixer/channel_"+QString::number( channelID )+"/position", channelID );
 	setGeometry( QRect( ((playerPos-1)*120)+10, 30, 110, 421 ) );
 	setFrameShape( QFrame::StyledPanel );
 	setFrameShadow( QFrame::Raised );
@@ -60,7 +60,7 @@ mixerChannelGUI::mixerChannelGUI( int chID, QWidget* parent , const char* name ,
     	chName->setFrameShape( QLabel::Panel );
     	chName->setFrameShadow( QLabel::Sunken );
     	chName->setAlignment( int( QLabel::AlignCenter ) );
-	changeName( config->readEntry( "/radiomixer/channel_"+QString::number( playerID )+"/name", tr("channel")+" "+QString::number(playerID) ) );
+	changeName( config->readEntry( "/radiomixer/channel_"+QString::number( channelID )+"/name", tr("channel")+" "+QString::number(channelID) ) );
 	
 	prefButton = new QToolButton( this, "prefButton" );
 	prefButton->setGeometry( QRect( 60, 290, 39, 26 ) );
@@ -76,16 +76,16 @@ mixerChannelGUI::mixerChannelGUI( int chID, QWidget* parent , const char* name ,
 	int red, green, blue;
 	paletteBackgroundColor().getRgb( &red, &green, &blue );
 
-	refreshMeta = config->readBoolEntry( "/radiomixer/channel_"+QString::number( playerID )+"/setMeta", FALSE );
-	metaMode = config->readNumEntry( "/radiomixer/channel_"+QString::number( playerID )+"/metaMode", 0 );
+	refreshMeta = config->readBoolEntry( "/radiomixer/channel_"+QString::number( channelID )+"/setMeta", FALSE );
+	metaMode = config->readNumEntry( "/radiomixer/channel_"+QString::number( channelID )+"/metaMode", 0 );
 
 	setPaletteBackgroundColor( QColor(
-		config->readNumEntry( "/radiomixer/channel_"+QString::number( playerID )+"/color_red", red ),
-		config->readNumEntry( "/radiomixer/channel_"+QString::number( playerID )+"/color_green", green ),
-		config->readNumEntry( "/radiomixer/channel_"+QString::number( playerID )+"/color_blue", blue )
+		config->readNumEntry( "/radiomixer/channel_"+QString::number( channelID )+"/color_red", red ),
+		config->readNumEntry( "/radiomixer/channel_"+QString::number( channelID )+"/color_green", green ),
+		config->readNumEntry( "/radiomixer/channel_"+QString::number( channelID )+"/color_blue", blue )
 	 		) );
 
-	hwChannel = config->readNumEntry( "/radiomixer/channel_"+QString::number( playerID )+"/hwControl", 1 );
+	hwChannel = config->readNumEntry( "/radiomixer/channel_"+QString::number( channelID )+"/hwControl", 1 );
 	delete config;
 }
 
@@ -137,7 +137,7 @@ void mixerChannelGUI::createPrefDlg( )
 	prefDlg->hardwareKanal->insertItem( tr("Channel 6") );
 	prefDlg->hardwareKanal->insertItem( tr("Channel 7") );
 	prefDlg->hardwareKanal->insertItem( tr("Channel 8") );
-	prefDlg->hardwareKanal->setCurrentItem( config->readNumEntry( "/radiomixer/channel_"+QString::number( playerID )+"/hwControl", playerID ) );
+	prefDlg->hardwareKanal->setCurrentItem( config->readNumEntry( "/radiomixer/channel_"+QString::number( channelID )+"/hwControl", channelID ) );
 #else
 	delete prefDlg->hwChannelBox;
 #endif
@@ -165,9 +165,9 @@ int mixerChannelGUI::execPrefDlg( )
 		hwChannel = prefDlg->hardwareKanal->currentItem();
 #endif
 
-		config->writeEntry( "/radiomixer/channel_"+QString::number( playerID )+"/color_red", prefDlg->Rot_Slider->value() );
-		config->writeEntry( "/radiomixer/channel_"+QString::number( playerID )+"/color_green", prefDlg->Gruen_Slider->value() );
-		config->writeEntry( "/radiomixer/channel_"+QString::number( playerID )+"/color_blue", prefDlg->Blau_Slider->value() );
+		config->writeEntry( "/radiomixer/channel_"+QString::number( channelID )+"/color_red", prefDlg->Rot_Slider->value() );
+		config->writeEntry( "/radiomixer/channel_"+QString::number( channelID )+"/color_green", prefDlg->Gruen_Slider->value() );
+		config->writeEntry( "/radiomixer/channel_"+QString::number( channelID )+"/color_blue", prefDlg->Blau_Slider->value() );
 
 		refreshMeta = prefDlg->metaEnable->isChecked();
 
@@ -228,19 +228,19 @@ QString mixerChannelGUI::getName( )
 
 void mixerChannelGUI::changePos( int newPos )
 {
-	playerPos = newPos>=0?newPos:playerID;
+	playerPos = newPos>=0?newPos:channelID;
 	refresh();
 }
 
 void mixerChannelGUI::save( )
 {
-	config->writeEntry( "/radiomixer/channel_"+QString::number( playerID )+"/setMeta", refreshMeta );
-	config->writeEntry( "/radiomixer/channel_"+QString::number( playerID )+"/metaMode", metaMode );
-	config->writeEntry( "/radiomixer/channel_"+QString::number( playerID )+"/metaText", staticMetaText );
-	config->writeEntry( "/radiomixer/channel_"+QString::number( playerID )+"/position", playerPos );
-	config->writeEntry( "/radiomixer/channel_"+QString::number( playerID )+"/name", getName() );
-	config->writeEntry( "/radiomixer/channel_"+QString::number( playerID )+"/hwControl", hwChannel );
-	config->writeEntry( "/radiomixer/channel_"+QString::number( playerID )+"/type", getType() );
+	config->writeEntry( "/radiomixer/channel_"+QString::number( channelID )+"/setMeta", refreshMeta );
+	config->writeEntry( "/radiomixer/channel_"+QString::number( channelID )+"/metaMode", metaMode );
+	config->writeEntry( "/radiomixer/channel_"+QString::number( channelID )+"/metaText", staticMetaText );
+	config->writeEntry( "/radiomixer/channel_"+QString::number( channelID )+"/position", playerPos );
+	config->writeEntry( "/radiomixer/channel_"+QString::number( channelID )+"/name", getName() );
+	config->writeEntry( "/radiomixer/channel_"+QString::number( channelID )+"/hwControl", hwChannel );
+	config->writeEntry( "/radiomixer/channel_"+QString::number( channelID )+"/type", getType() );
 }
 
 int mixerChannelGUI::currentPosition( )
@@ -267,7 +267,7 @@ void mixerChannelGUI::setBalance( int balance )
 
 int mixerChannelGUI::getPlayerID( )
 {
-	return playerID;
+	return channelID;
 }
 
 void mixerChannelGUI::saveSettings( )

@@ -23,6 +23,7 @@
 #define MIXERGUIPLAYER_H
 
 #include <mixerchannelgui.h>
+#include "widgets/playlist.h"
 #include "soundplayer.h"
 #include "glowbutton.h"
 #include "blinkbutton.h"
@@ -30,6 +31,7 @@
 #include "playlistitemsongdb.h"
 
 #include <qdragobject.h>
+#include <qlistview.h>
 
 /**
 @author Jan Boysen

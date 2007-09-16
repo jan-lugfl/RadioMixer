@@ -69,7 +69,7 @@ protected:
 	// Config Storage
 	QSettings* config;
 
-	unsigned short playerID;
+	unsigned short channelID;
 	unsigned short playerPos;
 	bool refreshMeta;
 	int metaMode;

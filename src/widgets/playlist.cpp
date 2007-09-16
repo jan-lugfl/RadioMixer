@@ -77,12 +77,13 @@ playListItem * playList::getNextSong( )
 			if( child->rtti() == PLAYLISTVIEWITEM_RTTI )
 			{
 				playListItem* item = dynamic_cast<playListViewItem*>(child)->playListEntry;
-				if( item->getState() == playListItem::Normal || ( item->getState() == playListItem::Played && recuePlayed ) )
+				if( item->getState() <= playListItem::Normal || ( item->getState() == playListItem::Played && recuePlayed ) )
 					return item;
 			}
 			child = child->nextSibling();
 		}
 	}
+qWarning("null.");
 	return NULL;
 }
 
