@@ -10,7 +10,7 @@ HEADERS += glowbutton.h \
            playlist.h \
            playlistviewitem.h \
            songlistview.h \
-           timer.h 
+           timer.h
 SOURCES += glowbutton.cpp \
            blinkbutton.cpp \
            timedisplay.cpp \
@@ -18,7 +18,7 @@ SOURCES += glowbutton.cpp \
            playlist.cpp \
            playlistviewitem.cpp \
            songlistview.cpp \
-           timer.cpp 
+           timer.cpp
 INCLUDEPATH += ../../src
 CONFIG += release \
 warn_on \
@@ -26,3 +26,5 @@ qt \
 staticlib
 TEMPLATE = lib
 include(../../conf.pri)
+FORMS += timerSettings.ui
+

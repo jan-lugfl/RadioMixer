@@ -22,8 +22,13 @@
 #ifndef TIMER_H
 #define TIMER_H
 
+#include "timerSettings.h"
+#include <qlineedit.h>
+#include <qspinbox.h>
+
 #include <qframe.h>
 #include <qtoolbutton.h>
+#include <qradiobutton.h>
 #include <qlayout.h>
 #include <qtimer.h>
 #include <qlabel.h>
@@ -41,16 +46,19 @@ public:
 
 protected:
 	QTimer* mainTimer;
-	QTime timerState;
+	bool reverse;
+	int timerState;
 
 	QVBoxLayout* masterLayout;
 	QHBoxLayout* buttonLayout;
+	QHBoxLayout* headerLayout;
 	QToolButton* start;
 	QToolButton* stop;
 	QToolButton* pause;
 	QToolButton* setup;
+	QToolButton* closeButton;
 	QLabel* label;
-//	QLabel* timerName;
+	QLabel* timerName;
 	QFont timeDisplay_font;
 
 protected slots:
@@ -58,6 +66,7 @@ protected slots:
 	virtual void pauseTimer();
 	virtual void stopTimer();
 	virtual void refreshTimer();
+	virtual void timerEvent();
 	virtual void showSettings();
 };
 

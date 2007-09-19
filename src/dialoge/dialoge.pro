@@ -11,15 +11,15 @@ FORMS += preferencesdlg.ui \
          ch_move_dlg.ui \
          cuelist.ui \
          aboutDialog.ui \
-         playlistng.ui 
+         playlistng.ui
 HEADERS += prefdlg.h \
            chanprefdlg.h \
            cuelistdlg.h \
-           playlistmanager.h 
+           playlistmanager.h
 SOURCES += prefdlg.cpp \
            chanprefdlg.cpp \
            cuelistdlg.cpp \
-           playlistmanager.cpp 
+           playlistmanager.cpp
 INCLUDEPATH += ../../src \
 ../../src/widgets \
 ..
@@ -28,4 +28,4 @@ warn_on \
 qt \
 staticlib
 TEMPLATE = lib
-include (../../conf.pri)
+include(../../conf.pri)

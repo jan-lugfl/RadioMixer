@@ -1,0 +1,243 @@
+<!DOCTYPE UI><UI version="3.3" stdsetdef="1">
+<class>timerSettings</class>
+<widget class="QDialog">
+    <property name="name">
+        <cstring>timerSettings</cstring>
+    </property>
+    <property name="geometry">
+        <rect>
+            <x>0</x>
+            <y>0</y>
+            <width>411</width>
+            <height>273</height>
+        </rect>
+    </property>
+    <property name="caption">
+        <string>timer settings</string>
+    </property>
+    <vbox>
+        <property name="name">
+            <cstring>unnamed</cstring>
+        </property>
+        <widget class="QFrame">
+            <property name="name">
+                <cstring>frame3</cstring>
+            </property>
+            <property name="frameShape">
+                <enum>StyledPanel</enum>
+            </property>
+            <property name="frameShadow">
+                <enum>Raised</enum>
+            </property>
+            <widget class="QLabel">
+                <property name="name">
+                    <cstring>textLabel1</cstring>
+                </property>
+                <property name="geometry">
+                    <rect>
+                        <x>20</x>
+                        <y>20</y>
+                        <width>73</width>
+                        <height>20</height>
+                    </rect>
+                </property>
+                <property name="text">
+                    <string>Name:</string>
+                </property>
+            </widget>
+            <widget class="QSpinBox">
+                <property name="name">
+                    <cstring>hoursBox</cstring>
+                </property>
+                <property name="enabled">
+                    <bool>false</bool>
+                </property>
+                <property name="geometry">
+                    <rect>
+                        <x>60</x>
+                        <y>170</y>
+                        <width>60</width>
+                        <height>24</height>
+                    </rect>
+                </property>
+            </widget>
+            <widget class="QLabel">
+                <property name="name">
+                    <cstring>starttimelabel</cstring>
+                </property>
+                <property name="enabled">
+                    <bool>false</bool>
+                </property>
+                <property name="geometry">
+                    <rect>
+                        <x>50</x>
+                        <y>150</y>
+                        <width>170</width>
+                        <height>20</height>
+                    </rect>
+                </property>
+                <property name="text">
+                    <string>start time:</string>
+                </property>
+            </widget>
+            <widget class="QRadioButton">
+                <property name="name">
+                    <cstring>forward</cstring>
+                </property>
+                <property name="geometry">
+                    <rect>
+                        <x>20</x>
+                        <y>80</y>
+                        <width>350</width>
+                        <height>22</height>
+                    </rect>
+                </property>
+                <property name="text">
+                    <string>&amp;count forward</string>
+                </property>
+                <property name="accel">
+                    <string>Alt+C</string>
+                </property>
+                <property name="checked">
+                    <bool>true</bool>
+                </property>
+            </widget>
+            <widget class="QLineEdit">
+                <property name="name">
+                    <cstring>timerName</cstring>
+                </property>
+                <property name="geometry">
+                    <rect>
+                        <x>20</x>
+                        <y>40</y>
+                        <width>350</width>
+                        <height>23</height>
+                    </rect>
+                </property>
+            </widget>
+            <widget class="QRadioButton">
+                <property name="name">
+                    <cstring>reverse</cstring>
+                </property>
+                <property name="enabled">
+                    <bool>true</bool>
+                </property>
+                <property name="geometry">
+                    <rect>
+                        <x>20</x>
+                        <y>120</y>
+                        <width>350</width>
+                        <height>22</height>
+                    </rect>
+                </property>
+                <property name="text">
+                    <string>count bac&amp;kward</string>
+                </property>
+                <property name="accel">
+                    <string>Alt+K</string>
+                </property>
+            </widget>
+            <widget class="QSpinBox">
+                <property name="name">
+                    <cstring>minutesBox</cstring>
+                </property>
+                <property name="enabled">
+                    <bool>false</bool>
+                </property>
+                <property name="geometry">
+                    <rect>
+                        <x>140</x>
+                        <y>170</y>
+                        <width>50</width>
+                        <height>24</height>
+                    </rect>
+                </property>
+                <property name="maxValue">
+                    <number>59</number>
+                </property>
+            </widget>
+            <widget class="QSpinBox">
+                <property name="name">
+                    <cstring>secondsBox</cstring>
+                </property>
+                <property name="enabled">
+                    <bool>false</bool>
+                </property>
+                <property name="geometry">
+                    <rect>
+                        <x>210</x>
+                        <y>170</y>
+                        <width>50</width>
+                        <height>24</height>
+                    </rect>
+                </property>
+                <property name="maxValue">
+                    <number>59</number>
+                </property>
+            </widget>
+        </widget>
+        <widget class="QPushButton">
+            <property name="name">
+                <cstring>okButton</cstring>
+            </property>
+            <property name="text">
+                <string>&amp;Ok</string>
+            </property>
+            <property name="accel">
+                <string>Alt+O</string>
+            </property>
+            <property name="default">
+                <bool>true</bool>
+            </property>
+            <property name="flat">
+                <bool>false</bool>
+            </property>
+        </widget>
+    </vbox>
+</widget>
+<connections>
+    <connection>
+        <sender>forward</sender>
+        <signal>clicked()</signal>
+        <receiver>reverse</receiver>
+        <slot>toggle()</slot>
+    </connection>
+    <connection>
+        <sender>reverse</sender>
+        <signal>clicked()</signal>
+        <receiver>forward</receiver>
+        <slot>toggle()</slot>
+    </connection>
+    <connection>
+        <sender>reverse</sender>
+        <signal>toggled(bool)</signal>
+        <receiver>starttimelabel</receiver>
+        <slot>setEnabled(bool)</slot>
+    </connection>
+    <connection>
+        <sender>reverse</sender>
+        <signal>toggled(bool)</signal>
+        <receiver>hoursBox</receiver>
+        <slot>setEnabled(bool)</slot>
+    </connection>
+    <connection>
+        <sender>reverse</sender>
+        <signal>toggled(bool)</signal>
+        <receiver>minutesBox</receiver>
+        <slot>setEnabled(bool)</slot>
+    </connection>
+    <connection>
+        <sender>reverse</sender>
+        <signal>toggled(bool)</signal>
+        <receiver>secondsBox</receiver>
+        <slot>setEnabled(bool)</slot>
+    </connection>
+    <connection>
+        <sender>okButton</sender>
+        <signal>clicked()</signal>
+        <receiver>timerSettings</receiver>
+        <slot>accept()</slot>
+    </connection>
+</connections>
+<layoutdefaults spacing="6" margin="11"/>
+</UI>

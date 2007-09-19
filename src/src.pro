@@ -16,7 +16,7 @@ HEADERS += mainformdlg.h \
            ringbuffer.h \
            filedecoder.h \
            version.h \
-           playlistitem.h 
+           playlistitem.h
 SOURCES += radiomixer.cpp \
            mainformdlg.cpp \
            soundplayer.cpp \
@@ -28,7 +28,7 @@ SOURCES += radiomixer.cpp \
            metainfo.cpp \
            metatag.cpp \
            filedecoder.cpp \
-           playlistitem.cpp 
+           playlistitem.cpp
 TARGETDEPS += ../src/widgets/libwidgets.a \
 ../src/dialoge/libdialoge.a
 LIBS += ../src/dialoge/libdialoge.a \
@@ -42,36 +42,36 @@ warn_off \
 qt \
 thread
 TEMPLATE = app
-include (../conf.pri)
-vorbisSupport{
-  HEADERS += oggdecoder.h
-  SOURCES += oggdecoder.cpp
+include(../conf.pri)
+vorbisSupport {
+    HEADERS += oggdecoder.h
+    SOURCES += oggdecoder.cpp
 }
-madSupport{
-  HEADERS += mpgdecoder.h
-  SOURCES += mpgdecoder.cpp
+madSupport {
+    HEADERS += mpgdecoder.h
+    SOURCES += mpgdecoder.cpp
 }
-alsaSupport{
-  HEADERS += playerchannelalsamix.h \
+alsaSupport {
+    HEADERS += playerchannelalsamix.h \
   mixerguialsamix.h \
   soundplayeralsa.h
-  SOURCES += playerchannelalsamix.cpp \
+    SOURCES += playerchannelalsamix.cpp \
   mixerguialsamix.cpp \
   soundplayeralsa.cpp
 }
-jackSupport{
-  HEADERS += soundplayerjack.h \
+jackSupport {
+    HEADERS += soundplayerjack.h \
   playerchanneljackport.h \
   mixerguijackport.h
-  SOURCES += soundplayerjack.cpp \
+    SOURCES += soundplayerjack.cpp \
   playerchanneljackport.cpp \
   mixerguijackport.cpp
 }
-hwmixer{
-  HEADERS += mipucom.h
-  SOURCES += mipucom.cpp
+hwmixer {
+    HEADERS += mipucom.h
+    SOURCES += mipucom.cpp
 }
-songdb{
-  HEADERS += playlistitemsongdb.h
-  SOURCES += playlistitemsongdb.cpp
+songdb {
+    HEADERS += playlistitemsongdb.h
+    SOURCES += playlistitemsongdb.cpp
 }

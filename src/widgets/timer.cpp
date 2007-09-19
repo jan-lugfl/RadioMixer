@@ -22,14 +22,26 @@
 #include "timer.h"
 
 timer::timer(QWidget *parent, const char *name)
- : QFrame(parent, name)
+ : QFrame(parent, name), reverse( FALSE )
 {
-	setFixedHeight( 90 );
+	setFixedHeight( 100 );
 	setFrameShape( StyledPanel );
 	setFrameShadow( Raised );
 
-//	timerName = new QLabel( this );
-//	timerName->setText( tr( "time onAir" ) );
+	QFont labelFont;
+	labelFont.setPointSize(8);
+	labelFont.setBold( TRUE );
+
+	timerName = new QLabel( this );
+	timerName->setFrameShape( QLabel::Panel );
+	timerName->setFrameShadow( QLabel::Sunken );
+	timerName->setFont( labelFont );
+	timerName->setText( tr( "timer" ) );
+
+	closeButton = new QToolButton( this );
+	closeButton->setPaletteBackgroundColor( red );
+	closeButton->setFixedSize( QSize(15,15) );
+	connect( closeButton, SIGNAL( clicked() ), this, SLOT( close() ) );
 
 	start = new QToolButton( this );
 	start->setText( tr("Start") );
@@ -42,20 +54,23 @@ timer::timer(QWidget *parent, const char *name)
 	connect( stop, SIGNAL( clicked() ), this, SLOT( stopTimer() ) );
 	setup = new QToolButton( this );
 	setup->setText( tr("Setup") );
-	setup->setDisabled( TRUE );
 	connect( setup, SIGNAL( clicked() ), this, SLOT( showSettings() ) );
 
 	masterLayout = new QVBoxLayout( this, 4, 3, "Timer Layout" );
-
 	buttonLayout = new QHBoxLayout( this, 2, 4, "Button Layout" );
+	headerLayout = new QHBoxLayout( this, 0, 2 );
+	masterLayout->addLayout( headerLayout );
+	masterLayout->addLayout( buttonLayout );
+
 	buttonLayout->addWidget( start );
 	buttonLayout->addWidget( pause );
 	buttonLayout->addWidget( stop );
 	buttonLayout->addWidget( setup );
 
+	headerLayout->addWidget( timerName );
+	headerLayout->addWidget( closeButton );
+
 	label = new QLabel( this );
-//	masterLayout->addWidget( timerName );
-	masterLayout->addLayout( buttonLayout );
 	masterLayout->addWidget( label );
 
 	label->setFrameShape( QLabel::Panel );
@@ -67,9 +82,9 @@ timer::timer(QWidget *parent, const char *name)
 	timeDisplay_font.setBold( TRUE );
 	label->setFont( timeDisplay_font );
 
-	label->setText( timerState.toString("hh:mm:ss.zzz").left(10) );
+	label->setText( "00:00:00.0" );
 	mainTimer = new QTimer();
-	connect( mainTimer, SIGNAL( timeout() ), this, SLOT( refreshTimer() ) );
+	connect( mainTimer, SIGNAL( timeout() ), this, SLOT( timerEvent() ) );
 }
 
 
@@ -90,19 +105,63 @@ void timer::pauseTimer( )
 void timer::stopTimer( )
 {
 	mainTimer->stop();
-	timerState = QTime( 0, 0 );
-	label->setText( timerState.toString("hh:mm:ss.zzz").left(10) );
+	timerState = 0;
+	label->setText( "00:00:00.0" );
 }
 
 void timer::showSettings( )
 {
-	qWarning( "not implemented yet..." );
+	timerSettings* settings = new timerSettings( this, "timer settings");
+	settings->timerName->setText( timerName->text() );
+	if( reverse )
+	{
+		settings->forward->setChecked(FALSE);
+		settings->reverse->setChecked(TRUE);
+	}
+
+	if( settings->exec() == QDialog::Accepted )
+	{
+		timerName->setText( settings->timerName->text() );
+		if( settings->reverse->isChecked() )
+		{
+			reverse = TRUE;
+			timerState = settings->hoursBox->value()*3600000 + settings->minutesBox->value()*600000+settings->secondsBox->value()*1000;
+		}else
+			reverse = FALSE;
+	}
+	refreshTimer( );
+
+	delete settings;
 }
 
 void timer::refreshTimer( )
 {
-	timerState = timerState.addMSecs( 100 );
-	label->setText( timerState.toString("hh:mm:ss.zzz").left(10) );
+	int hours = timerState/3600000;
+	int minutes = (timerState%3600000)/60000;
+	int seconds = (timerState%60000)/1000;
+	int usec = (timerState%1000)/100;
+	label->setText( QString(
+			((hours<10)?QString("0")+QString::number(hours):QString::number(hours))+
+			":"+
+			((minutes<10)?QString("0")+QString::number(minutes):QString::number(minutes))+
+			":"+
+			((seconds<10)?QString("0")+QString::number(seconds):QString::number(seconds))+
+			"."+
+			QString::number(usec)
+		) );
+}
+
+void timer::timerEvent()
+{
+	if( reverse )
+		timerState -= 100;
+	else
+		timerState += 100;
+
+	if(timerState <= 0)
+		stopTimer();
+
+	refreshTimer();
 }
 
 
