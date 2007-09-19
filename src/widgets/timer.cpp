@@ -57,10 +57,8 @@ timer::timer(QWidget *parent, const char *name)
 	connect( setup, SIGNAL( clicked() ), this, SLOT( showSettings() ) );
 
 	masterLayout = new QVBoxLayout( this, 4, 3, "Timer Layout" );
-	buttonLayout = new QHBoxLayout( this, 2, 4, "Button Layout" );
-	headerLayout = new QHBoxLayout( this, 0, 2 );
-	masterLayout->addLayout( headerLayout );
-	masterLayout->addLayout( buttonLayout );
+	headerLayout = new QHBoxLayout( masterLayout, 2 );
+	buttonLayout = new QHBoxLayout( masterLayout, 4 );
 
 	buttonLayout->addWidget( start );
 	buttonLayout->addWidget( pause );
