@@ -29,7 +29,8 @@ mixerChannelGUI::mixerChannelGUI( int chID, QWidget* parent , const char* name ,
 	channelID = chID;
 
 	playerPos = config->readNumEntry( "/radiomixer/channel_"+QString::number( channelID )+"/position", channelID );
-	setGeometry( QRect( ((playerPos-1)*120)+10, 30, 110, 421 ) );
+	setGeometry( QRect( ((playerPos-1)*120)+10, 30, 110, 395 ) );
+	setMinimumSize( QSize( 110, 395 ) );
 	setFrameShape( QFrame::StyledPanel );
 	setFrameShadow( QFrame::Raised );
 

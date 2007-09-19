@@ -91,6 +91,8 @@ protected:
 	// Meta Info for Live Streaming with Ices
 	metaInfo meta;
 
+	QHBoxLayout* channelLayout;
+
 public slots:
   /*$PUBLIC_SLOTS$*/
     virtual void show ();
@@ -111,7 +113,6 @@ public slots:
 
 protected slots:
   /*$PROTECTED_SLOTS$*/
-	virtual void windowResize();
 	virtual void showPlaylistManager( bool state );
 
 private slots:

@@ -8,9 +8,15 @@
         <rect>
             <x>0</x>
             <y>0</y>
-            <width>614</width>
-            <height>550</height>
+            <width>529</width>
+            <height>400</height>
         </rect>
+    </property>
+    <property name="minimumSize">
+        <size>
+            <width>23</width>
+            <height>400</height>
+        </size>
     </property>
     <property name="caption">
         <string>RadioMixer</string>
@@ -21,25 +27,22 @@
     <property name="iconText">
         <string>RadioMixer</string>
     </property>
-    <widget class="QFrame">
+    <grid>
         <property name="name">
-            <cstring>frame10</cstring>
+            <cstring>unnamed</cstring>
         </property>
-        <property name="geometry">
-            <rect>
-                <x>10</x>
-                <y>10</y>
-                <width>590</width>
-                <height>461</height>
-            </rect>
-        </property>
-        <property name="frameShape">
-            <enum>StyledPanel</enum>
-        </property>
-        <property name="frameShadow">
-            <enum>Raised</enum>
-        </property>
-    </widget>
+        <widget class="QFrame" row="0" column="0">
+            <property name="name">
+                <cstring>frame10</cstring>
+            </property>
+            <property name="frameShape">
+                <enum>StyledPanel</enum>
+            </property>
+            <property name="frameShadow">
+                <enum>Raised</enum>
+            </property>
+        </widget>
+    </grid>
 </widget>
 <menubar>
     <property name="name">

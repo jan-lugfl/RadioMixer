@@ -1,7 +1,7 @@
 /* $Id$ */
 /***************************************************************************
  *   OpenRadio - RadioMixer                                                *
- *   Copyright (C) 2005, 2006 by Jan Boysen                                *
+ *   Copyright (C) 2005-2007 by Jan Boysen                                *
  *   trekkie@media-mission.de                                              *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
@@ -35,6 +35,9 @@ mainFormDlg::mainFormDlg(QWidget* parent, const char* name, WFlags fl)
 	soundStatus->setText( tr("Sounddevice status: %1").arg(tr("disconnected")) );
 	soundStatus->setPaletteBackgroundColor(red.dark(120));
 	statusBar()->addWidget( soundStatus, 0, true );
+
+	// init layout
+	channelLayout = new QHBoxLayout( frame10, 5, 5, "Channel Layout" );
 
 #ifdef ENABLE_HWMIXER
 	mixerStatus = new QLabel( statusBar(), "MixerStatus");
@@ -244,6 +247,7 @@ void mainFormDlg::addNewFilePlayer( )
 {
 	mixerGuiPlayer* channel = new mixerGuiPlayer( playerGuis.count()+1, player, frame10, "channelXY");
 	playerGuis.append( channel );
+	channelLayout->addWidget( channel );
 	connect( channel, SIGNAL(getNextTrack( unsigned int )), playListMgr, SLOT(cueNewTrack( unsigned int ) ));
 	connect( playListMgr, SIGNAL(cueTrack( unsigned int, playListItem* )), channel, SLOT(cueTrack( unsigned int, playListItem* ) ));
 #ifdef ENABLE_HWMIXER
@@ -251,7 +255,6 @@ void mainFormDlg::addNewFilePlayer( )
 	connect( miPu, SIGNAL( sliderMove( int, int )), channel, SLOT( setSlider( int, int ) ) );
 #endif
 	connect( channel, SIGNAL(newMeta( metaTag )), &meta, SLOT( setMeta( metaTag ) ) );
-	windowResize();
 
 	playListManager::filePlayer playerInfo = { channel->getPlayerID(), channel->getName(), channel->getColor() };
 	playListMgr->addPlayer( playerInfo );
@@ -262,11 +265,11 @@ void mainFormDlg::addNewMixerChannel( )
 #ifdef HAVE_ALSA
 	mixerGuiAlsaMix* channel = new mixerGuiAlsaMix( playerGuis.count()+1, frame10, "channelXY");
 	playerGuis.append( channel );
+	channelLayout->addWidget( channel );
 #ifdef ENABLE_HWMIXER
 	connect( miPu, SIGNAL( butPres( int, int )), channel, SLOT( buttonPressed( int, int ) ) );
 	connect( miPu, SIGNAL( sliderMove( int, int )), channel, SLOT( setSlider( int, int ) ) );
 #endif //ENABLE_HWMIXER
-	windowResize();
 #endif//HAVE_ALSA
 }
 
@@ -275,11 +278,11 @@ void mainFormDlg::addNewJackChannel( QString chName )
 #ifdef HAVE_JACK
 	mixerGuiJackport* channel = new mixerGuiJackport( dynamic_cast<soundPlayerJack*>(player), playerGuis.count()+1, frame10, chName);
 	playerGuis.append( channel );
+	channelLayout->addWidget( channel );
 #ifdef ENABLE_HWMIXER
 	connect( miPu, SIGNAL( butPres( int, int )), channel, SLOT( buttonPressed( int, int ) ) );
 	connect( miPu, SIGNAL( sliderMove( int, int )), channel, SLOT( setSlider( int, int ) ) );
 #endif //ENABLE_HWMIXER
-	windowResize();
 #endif //HAVE_JACK
 }
 
@@ -425,13 +428,6 @@ void mainFormDlg::connectNetDevice()
 #endif
 }
 
-void mainFormDlg::windowResize( )
-{
-	int minWidth = (playerGuis.count()*120)+10;
-	frame10->setFixedWidth( minWidth );
-	setFixedWidth( minWidth+20 );
-}
-
 void mainFormDlg::showMoveChannel()
 {
 	ch_move_dlg moveDialog;
@@ -514,7 +510,6 @@ void mainFormDlg::showDelChannel()
 		}
 
 		saveSettings( );
-		windowResize();
 	}
 }
 
