@@ -482,6 +482,7 @@ void mainFormDlg::showMoveChannel()
 		}
 	}
 	saveSettings( );
+	reorderChannels();
 }
 
 
@@ -566,6 +567,7 @@ void mainFormDlg::showAddChannel()
 
 		frame10->show();
 		saveSettings();
+		reorderChannels();
 	}
 }
 
