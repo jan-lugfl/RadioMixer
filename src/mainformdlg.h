@@ -73,6 +73,8 @@ protected:
 	virtual void keyPressEvent( QKeyEvent *k );
 	QLabel*   soundStatus;
 	QLabel*   mixerStatus;
+	virtual void reorderChannels();
+
   /*$PROTECTED_FUNCTIONS$*/
 
  private:

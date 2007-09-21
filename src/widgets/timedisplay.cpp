@@ -81,7 +81,7 @@ void timeDisplay::refresh( )
 				QColor disColor = QColor("black");
 				if( curPos < preroll )
 				{
-					disFrames = preroll-curPos;
+					disFrames = int(preroll-curPos);
 					disColor = QColor("orange");
 				}else
 				{

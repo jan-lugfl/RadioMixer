@@ -247,7 +247,7 @@ void mainFormDlg::addNewFilePlayer( )
 {
 	mixerGuiPlayer* channel = new mixerGuiPlayer( playerGuis.count()+1, player, frame10, "channelXY");
 	playerGuis.append( channel );
-	channelLayout->addWidget( channel );
+	reorderChannels();
 	connect( channel, SIGNAL(getNextTrack( unsigned int )), playListMgr, SLOT(cueNewTrack( unsigned int ) ));
 	connect( playListMgr, SIGNAL(cueTrack( unsigned int, playListItem* )), channel, SLOT(cueTrack( unsigned int, playListItem* ) ));
 #ifdef ENABLE_HWMIXER
@@ -265,7 +265,7 @@ void mainFormDlg::addNewMixerChannel( )
 #ifdef HAVE_ALSA
 	mixerGuiAlsaMix* channel = new mixerGuiAlsaMix( playerGuis.count()+1, frame10, "channelXY");
 	playerGuis.append( channel );
-	channelLayout->addWidget( channel );
+	reorderChannels();
 #ifdef ENABLE_HWMIXER
 	connect( miPu, SIGNAL( butPres( int, int )), channel, SLOT( buttonPressed( int, int ) ) );
 	connect( miPu, SIGNAL( sliderMove( int, int )), channel, SLOT( setSlider( int, int ) ) );
@@ -278,7 +278,7 @@ void mainFormDlg::addNewJackChannel( QString chName )
 #ifdef HAVE_JACK
 	mixerGuiJackport* channel = new mixerGuiJackport( dynamic_cast<soundPlayerJack*>(player), playerGuis.count()+1, frame10, chName);
 	playerGuis.append( channel );
-	channelLayout->addWidget( channel );
+	reorderChannels();
 #ifdef ENABLE_HWMIXER
 	connect( miPu, SIGNAL( butPres( int, int )), channel, SLOT( buttonPressed( int, int ) ) );
 	connect( miPu, SIGNAL( sliderMove( int, int )), channel, SLOT( setSlider( int, int ) ) );
@@ -660,6 +660,22 @@ void mainFormDlg::showPlaylistManager( bool state )
 		playListMgr->show();
 	else
 		playListMgr->hide();
+}
+
+void mainFormDlg::reorderChannels()
+{
+	QValueVector<mixerChannelGUI*>::iterator playerIt;
+	for( playerIt = playerGuis.begin(); playerIt != playerGuis.end(); ++playerIt )
+		channelLayout->remove( *playerIt );
+	int channels = 1;
+	while( channels <= playerGuis.count() )
+	{
+		QValueVector<mixerChannelGUI*>::iterator playerIt;
+		for( playerIt = playerGuis.begin(); playerIt != playerGuis.end(); ++playerIt )
+			if( (*playerIt)->currentPosition() == channels )
+				channelLayout->addWidget( *playerIt );
+		channels++;
+	}
 }
 
 
