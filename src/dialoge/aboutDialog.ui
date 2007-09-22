@@ -15,123 +15,148 @@
     <property name="caption">
         <string>About Radiomixer</string>
     </property>
-    <widget class="QPushButton">
+    <grid>
         <property name="name">
-            <cstring>closeButton</cstring>
+            <cstring>unnamed</cstring>
         </property>
-        <property name="geometry">
-            <rect>
-                <x>240</x>
-                <y>520</y>
-                <width>124</width>
-                <height>27</height>
-            </rect>
-        </property>
-        <property name="text">
-            <string>&amp;Close</string>
-        </property>
-        <property name="accel">
-            <string>Alt+C</string>
-        </property>
-        <property name="on">
-            <bool>false</bool>
-        </property>
-        <property name="default">
-            <bool>true</bool>
-        </property>
-    </widget>
-    <widget class="QTabWidget">
-        <property name="name">
-            <cstring>tabWidget3</cstring>
-        </property>
-        <property name="geometry">
-            <rect>
-                <x>10</x>
-                <y>10</y>
-                <width>580</width>
-                <height>500</height>
-            </rect>
-        </property>
-        <widget class="QWidget">
+        <widget class="QPushButton" row="1" column="0">
             <property name="name">
-                <cstring>tab</cstring>
+                <cstring>closeButton</cstring>
             </property>
-            <attribute name="title">
-                <string>Abou&amp;t</string>
-            </attribute>
-            <widget class="QLayoutWidget">
+            <property name="text">
+                <string>&amp;Close</string>
+            </property>
+            <property name="accel">
+                <string>Alt+C</string>
+            </property>
+            <property name="on">
+                <bool>false</bool>
+            </property>
+            <property name="default">
+                <bool>true</bool>
+            </property>
+        </widget>
+        <widget class="QTabWidget" row="0" column="0">
+            <property name="name">
+                <cstring>tabWidget3</cstring>
+            </property>
+            <widget class="QWidget">
                 <property name="name">
-                    <cstring>layout11</cstring>
+                    <cstring>tab</cstring>
                 </property>
-                <property name="geometry">
-                    <rect>
-                        <x>70</x>
-                        <y>-40</y>
-                        <width>440</width>
-                        <height>490</height>
-                    </rect>
-                </property>
-                <vbox>
+                <attribute name="title">
+                    <string>Abou&amp;t</string>
+                </attribute>
+                <grid>
                     <property name="name">
                         <cstring>unnamed</cstring>
                     </property>
-                    <widget class="QLabel">
+                    <widget class="QLayoutWidget" row="0" column="0">
                         <property name="name">
-                            <cstring>pixmapLabel1</cstring>
+                            <cstring>layout4</cstring>
                         </property>
-                        <property name="pixmap">
-                            <pixmap>image0</pixmap>
-                        </property>
-                        <property name="scaledContents">
-                            <bool>true</bool>
-                        </property>
-                    </widget>
-                    <widget class="QLabel">
-                        <property name="name">
-                            <cstring>versionInfo</cstring>
-                        </property>
-                        <property name="text">
-                            <string>&lt;h1&gt;&lt;p align="center"&gt;Radiomixer&lt;/p&gt;&lt;/h1&gt;</string>
-                        </property>
-                    </widget>
-                    <widget class="QLabel">
-                        <property name="name">
-                            <cstring>copyrightText</cstring>
-                        </property>
-                        <property name="text">
-                            <string>&lt;p align="center"&gt;&amp;copy; Copyright 2005,2006 by Jan Boysen&lt;br&gt;
-Coded by Jan Boysen &lt;jan@lugfl.de&gt;&lt;br&gt;
+                        <vbox>
+                            <property name="name">
+                                <cstring>unnamed</cstring>
+                            </property>
+                            <widget class="QLayoutWidget">
+                                <property name="name">
+                                    <cstring>layout3</cstring>
+                                </property>
+                                <hbox>
+                                    <property name="name">
+                                        <cstring>unnamed</cstring>
+                                    </property>
+                                    <spacer>
+                                        <property name="name">
+                                            <cstring>spacer2</cstring>
+                                        </property>
+                                        <property name="orientation">
+                                            <enum>Horizontal</enum>
+                                        </property>
+                                        <property name="sizeType">
+                                            <enum>Expanding</enum>
+                                        </property>
+                                        <property name="sizeHint">
+                                            <size>
+                                                <width>91</width>
+                                                <height>20</height>
+                                            </size>
+                                        </property>
+                                    </spacer>
+                                    <widget class="QLabel">
+                                        <property name="name">
+                                            <cstring>pixmapLabel1</cstring>
+                                        </property>
+                                        <property name="pixmap">
+                                            <pixmap>image0</pixmap>
+                                        </property>
+                                        <property name="scaledContents">
+                                            <bool>true</bool>
+                                        </property>
+                                    </widget>
+                                    <spacer>
+                                        <property name="name">
+                                            <cstring>spacer1</cstring>
+                                        </property>
+                                        <property name="orientation">
+                                            <enum>Horizontal</enum>
+                                        </property>
+                                        <property name="sizeType">
+                                            <enum>Expanding</enum>
+                                        </property>
+                                        <property name="sizeHint">
+                                            <size>
+                                                <width>80</width>
+                                                <height>20</height>
+                                            </size>
+                                        </property>
+                                    </spacer>
+                                </hbox>
+                            </widget>
+                            <widget class="QLabel">
+                                <property name="name">
+                                    <cstring>versionInfo</cstring>
+                                </property>
+                                <property name="text">
+                                    <string>&lt;h1&gt;&lt;p align="center"&gt;Radiomixer&lt;/p&gt;&lt;/h1&gt;</string>
+                                </property>
+                            </widget>
+                            <widget class="QLabel">
+                                <property name="name">
+                                    <cstring>copyrightText</cstring>
+                                </property>
+                                <property name="text">
+                                    <string>&lt;p align="center"&gt;&amp;copy; Copyright 2005-2007 by Jan Boysen&lt;br&gt;
+Coded by Jan Boysen &lt;trekkie@media-mission.de.de&gt;&lt;br&gt;
 Thanks to Matthias Nagel for the Dialog Design&lt;br&gt;
 and Markus Ullmann for Beta Testing&lt;br&gt;
 &lt;br&gt;
 Webpage: http://sourceforge.net/projects/radiomixer
 &lt;/p&gt;</string>
-                        </property>
+                                </property>
+                            </widget>
+                        </vbox>
                     </widget>
-                </vbox>
+                </grid>
             </widget>
-        </widget>
-        <widget class="QWidget">
-            <property name="name">
-                <cstring>tab</cstring>
-            </property>
-            <attribute name="title">
-                <string>&amp;License</string>
-            </attribute>
-            <widget class="QTextEdit">
+            <widget class="QWidget">
                 <property name="name">
-                    <cstring>textEdit1</cstring>
+                    <cstring>tab</cstring>
                 </property>
-                <property name="geometry">
-                    <rect>
-                        <x>10</x>
-                        <y>10</y>
-                        <width>560</width>
-                        <height>440</height>
-                    </rect>
-                </property>
-                <property name="text">
-                    <string>&lt;H2&gt;GNU GENERAL PUBLIC LICENSE&lt;/H2&gt;
+                <attribute name="title">
+                    <string>&amp;License</string>
+                </attribute>
+                <grid>
+                    <property name="name">
+                        <cstring>unnamed</cstring>
+                    </property>
+                    <widget class="QTextEdit" row="0" column="0">
+                        <property name="name">
+                            <cstring>textEdit1</cstring>
+                        </property>
+                        <property name="text">
+                            <string>&lt;H2&gt;GNU GENERAL PUBLIC LICENSE&lt;/H2&gt;
 &lt;P&gt;
 Version 2, June 1991
 
@@ -537,16 +562,18 @@ library.  If this is what you want to do, use the
 GNU Lesser General Public License
 instead of this License.
 </string>
-                </property>
-                <property name="wordWrap">
-                    <enum>WidgetWidth</enum>
-                </property>
-                <property name="readOnly">
-                    <bool>true</bool>
-                </property>
+                        </property>
+                        <property name="wordWrap">
+                            <enum>WidgetWidth</enum>
+                        </property>
+                        <property name="readOnly">
+                            <bool>true</bool>
+                        </property>
+                    </widget>
+                </grid>
             </widget>
         </widget>
-    </widget>
+    </grid>
 </widget>
 <images>
     <image name="image0">

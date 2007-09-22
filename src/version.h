@@ -1,7 +1,7 @@
 /* $Id$ */
 /***************************************************************************
  *   OpenRadio - RadioMixer                                                *
- *   Copyright (C) 2005, 2006 by Jan Boysen                                *
+ *   Copyright (C) 2005-2007 by Jan Boysen                                *
  *   trekkie@media-mission.de                                              *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
@@ -23,7 +23,7 @@
 #define VERSION_H
 
 #define VERSION_MAJOR	"1"
-#define VERSION_MINOR	"0"
-#define	VERSION_SUFFIX	"_Trunk"
+#define VERSION_MINOR	"1"
+#define	VERSION_SUFFIX	"_RC1"
 
 #endif
