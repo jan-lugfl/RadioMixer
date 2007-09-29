@@ -83,7 +83,6 @@ playListItem * playList::getNextSong( )
 			child = child->nextSibling();
 		}
 	}
-qWarning("null.");
 	return NULL;
 }
 

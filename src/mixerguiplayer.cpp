@@ -288,10 +288,18 @@ void mixerGuiPlayer::dropEvent(QDropEvent * evt)
 	}else if( evt->provides("application/x-radiomixer-playlist") && evt->source() ) // TODO add support for playlist that are not yet loaded into the playlist manager
 	{
 		QListView* sender = dynamic_cast<QListView*>(evt->source());
+		QListViewItemIterator it( sender );
+		while( it.current() )
+		{
+			if( (*it)->rtti() == PLAYLIST_RTTI )
+				dynamic_cast<playList*>((*it))->notCueInChannel( channelID );
+			++it;
+		}
 		playList* plst = dynamic_cast<playList*>(sender->selectedItem());
 		if( plst )
 			plst->cueInChannel( channelID );
 		cueNewTrack( );
+
 	}else if( evt->provides("text/uri-list") )
 	{
 		if( QUriDrag::canDecode( evt ) )
