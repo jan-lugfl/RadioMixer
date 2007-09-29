@@ -183,7 +183,7 @@ void mainFormDlg::showPreferences()
 	}
 	preferencesDialog->metaStationText->setText( config->readEntry( "/radiomixer/meta/stationID", "" ) );
 	preferencesDialog->metaPath->setText( config->readEntry( "/radiomixer/meta/file", "/tmp/radiomixer.current" ) );
-	preferencesDialog->metaCommand->setText( config->readEntry( "/radiomixer/meta/command", "/bin/killall -sUSR1 ices" ) );
+	preferencesDialog->metaCommand->setText( config->readEntry( "/radiomixer/meta/command", "/usr/local/bin/refreshMeta.sh" ) );
 
 	// save Settings if OK is clicked....
 	if( preferencesDialog->exec() == QDialog::Accepted )

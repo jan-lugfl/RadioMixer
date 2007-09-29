@@ -36,12 +36,15 @@ metaInfo::~metaInfo()
 
 void metaInfo::runCmd( )
 {
+	QSettings config;
+	QString exec = config.readEntry( "/radiomixer/meta/command", "/usr/local/bin/refreshMeta.sh" );
 	if( enabled && metaMode==1) // Ices2 Mode !!
 	{
 		if (!fork())
-	  		if (execl( "/bin/killall", "killall", "-sUSR1", "ices",NULL)==-1) {
-   			exit(-1);
-  		}
+		{
+			execl( exec, exec, NULL);
+			exit(0);
+		}
 	}
 }
 
@@ -65,7 +68,9 @@ void metaInfo::setMeta( metaTag newMeta )
 			this->title = newMeta.getTitle();
 		}
 
-		QFile file( "/tmp/radiomixer.current" );
+		QSettings config;
+		QFile file( config.readEntry( "/radiomixer/meta/file", "/tmp/radiomixer.current" ) );
+		
 		if ( file.open( IO_WriteOnly | IO_Truncate ) ) {
 			QTextStream stream( &file );
 

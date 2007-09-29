@@ -24,6 +24,7 @@
 
 #include <qobject.h>
 #include <qstring.h>
+#include <qsettings.h>
 #include <qfile.h>
 #include <unistd.h>
 
