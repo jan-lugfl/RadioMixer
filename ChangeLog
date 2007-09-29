@@ -1,6 +1,27 @@
 ChangeLog:
 ==========
 
+RadioMixer 1.0 to 1.1_RC1
+-----------------------------------------------------------------------------------------------------------------------
+* refreshed copyright
+* reformated about dialog
+* New playlist interface: integrated songdb, playlist and timer in one dialog
+* added drang and Drop support for various Items
+* displaying of channels in the right order works now with Qts layout widgets
+* cleaned some old layout michanisms
+* fixed some minor QT widget warnings
+* changed layout michanism of main window to automatic layout via QTs Layout containers
+* added drag n drop support for playlists to channels
+* finaly removed old songDB dialogs, classes and buttons that shows it
+* fixed Channelcount detection of MPEG Files with higher datarates wich caused very strange errors like SIGABRT, SIGBUS oder SIGSEGV.
+* added feature request #1559858 (prerolltime for songs)
+* multible channels can now be connected to a playlist but only one playlist to a cannel
+* reimplemented the saving playlist function (now as XML files)
+* splitted playListItem class in GUI an non GUI class
+* playListItem now inherits QObject for use of QTs Signal/Slot conzept
+* added Installdocs and notices
+
+
 RadioMixer 1.0_RC2 to 1.0
 -----------------------------------------------------------------------------------------------------------------------
 
