@@ -65,7 +65,7 @@ playListManager::playListManager(QWidget *parent, const char *name)
 	connect( songDBListView, SIGNAL( doubleClicked( QListViewItem*, const QPoint& , int) ), this, SLOT( songDBViewdoubleClicked( QListViewItem *, const QPoint &, int ) ) );
 	connect( songDBListView, SIGNAL( contextMenuRequested(  QListViewItem* , const QPoint&, int )) , this, SLOT( showSongDBContextmenu(  QListViewItem* , const QPoint&, int )  ) );
 #else
-	delete songDBFrame;
+	songDBFrame->hide();
 #endif
 
 	// setup the Popup menu of the playListView
