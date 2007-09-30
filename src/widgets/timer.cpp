@@ -20,6 +20,8 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 #include "timer.h"
+#include "ui_timerSettings.h"
+#include <QDialog>
 //Added by qt3to4:
 #include <Q3HBoxLayout>
 #include <Q3VBoxLayout>
@@ -114,7 +116,10 @@ void timer::stopTimer( )
 
 void timer::showSettings( )
 {
-	timerSettings* settings = new timerSettings( this, "timer settings");
+	QDialog* settingsDialog = new QDialog( this, tr("timer settings") );
+	Ui::timerSettings* settings = new Ui::timerSettings();
+	settings->setupUi( settingsDialog );
+
 	settings->timerName->setText( timerName->text() );
 	if( reverse )
 	{
@@ -122,7 +127,7 @@ void timer::showSettings( )
 		settings->reverse->setChecked(TRUE);
 	}
 
-	if( settings->exec() == QDialog::Accepted )
+	if( settingsDialog->exec() == QDialog::Accepted )
 	{
 		timerName->setText( settings->timerName->text() );
 		if( settings->reverse->isChecked() )

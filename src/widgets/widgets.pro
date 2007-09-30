@@ -26,11 +26,8 @@ qt \
 staticlib
 TEMPLATE = lib
 include(../../conf.pri)
-#The following line was changed from FORMS to FORMS3 by qt3to4
-FORMS3 += timerSettings.ui
+FORMS += timerSettings.ui
 
 #The following line was inserted by qt3to4
 QT += xml  qt3support 
-#The following line was inserted by qt3to4
-CONFIG += uic3
 
