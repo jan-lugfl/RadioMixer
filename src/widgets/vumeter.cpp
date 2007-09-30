@@ -20,6 +20,10 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 #include "vumeter.h"
+//Added by qt3to4:
+#include <QPaintEvent>
+#include <QResizeEvent>
+#include <QPixmap>
 
 vuMeter::vuMeter(QWidget *parent, const char *name)
  : QWidget(parent, name), level(0.f), canRepaint(FALSE)
@@ -61,16 +65,16 @@ void vuMeter::drawLevelMeter( )
     numLED = height()/10;
     for( int i = 0; i < numLED; i++) {
 	if( i < numLED*0.75)
-		color[i] = green;
+		color[i] = Qt::green;
 	else if( i < numLED*0.9)
-		color[i] = yellow;
+		color[i] = Qt::yellow;
 	else if( i <= numLED)
-		color[i] = red;
+		color[i] = Qt::red;
 	else
-		color[i] = blue;
+		color[i] = Qt::blue;
     }
 
-    setBackgroundMode(NoBackground);
+    setBackgroundMode(Qt::NoBackground);
     buffer->fill( bgColor );
     paint();
 }

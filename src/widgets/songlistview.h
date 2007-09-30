@@ -25,13 +25,13 @@
 #include "playlistviewitem.h"
 #include "playlist.h"
 
-#include <qlistview.h>
-#include <qheader.h>
+#include <q3listview.h>
+#include <q3header.h>
 
 /**
 	@author Jan Boysen <trekkie@media-mission.de>
 */
-class songListView : public QListView
+class songListView : public Q3ListView
 {
 Q_OBJECT
 public:
@@ -41,7 +41,7 @@ public:
 	virtual void setAcceptDrops( bool state );
 
 protected:
-	virtual QDragObject* dragObject ();
+	virtual Q3DragObject* dragObject ();
 
 };
 

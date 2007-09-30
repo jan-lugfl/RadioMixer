@@ -28,9 +28,9 @@ cueListDlg::cueListDlg(QWidget *parent, const char *name)
 
 void cueListDlg::update( metaTag meta, QString channelName )
 {
-	QListViewItem *item = cueList->findItem( channelName, 0 );
+	Q3ListViewItem *item = cueList->findItem( channelName, 0 );
 	if( item == 0 )
-		cueList->insertItem( new QListViewItem( cueList, channelName, meta.getSong() ) );
+		cueList->insertItem( new Q3ListViewItem( cueList, channelName, meta.getSong() ) );
 	else
 		item->setText(1, meta.getSong() );
 }

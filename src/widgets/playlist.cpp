@@ -20,9 +20,11 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 #include "playlist.h"
+//Added by qt3to4:
+#include <QDropEvent>
 
-playList::playList( QListView* parent, QString name, QString file )
- : QListViewItem( parent, name ), manualNextSongPtr( NULL ), recuePlayed( FALSE )
+playList::playList( Q3ListView* parent, QString name, QString file )
+ : Q3ListViewItem( parent, name ), manualNextSongPtr( NULL ), recuePlayed( FALSE )
 {
 	setDragEnabled( TRUE);
 	setDropEnabled( TRUE);
@@ -55,7 +57,7 @@ void playList::paintCell( QPainter * p, const QColorGroup & cg, int column, int 
 	QColorGroup _cg( cg );
 	_cg.setColor( QColorGroup::Base, itemBGColor );
 	_cg.setColor( QColorGroup::Text, itemFGColor );
-	QListViewItem::paintCell( p, _cg, column, width, alignment );
+	Q3ListViewItem::paintCell( p, _cg, column, width, alignment );
 }
 
 bool playList::serveChannel( unsigned int channelID )
@@ -71,7 +73,7 @@ playListItem * playList::getNextSong( )
 		manualNextSongPtr = NULL;
 		return tmp;
 	}else{
-		QListViewItem* child = firstChild();
+		Q3ListViewItem* child = firstChild();
 		while( child )
 		{
 			if( child->rtti() == PLAYLISTVIEWITEM_RTTI )
@@ -91,7 +93,7 @@ void playList::loadFromFile( QString fileName )
 {
 	QDomDocument playListDocument;
 	QFile playListFile( fileName );
-	if( !playListFile.open( IO_ReadOnly ) )
+	if( !playListFile.open( QIODevice::ReadOnly ) )
 	{
 		QMessageBox::information( NULL, QObject::tr("RadioMixer - Playlist Manager"), QObject::tr("Error on opening playlist...") );
 		return;
@@ -126,7 +128,7 @@ void playList::save( )
 {
 	QFile playListFile( fileName );
 
-	if( !playListFile.open( IO_WriteOnly ) )
+	if( !playListFile.open( QIODevice::WriteOnly ) )
 	{
 		QMessageBox::information( NULL, QObject::tr("RadioMixer - Playlist Manager"), QObject::tr("error on saving Playlist..") );
 		return;
@@ -159,7 +161,7 @@ bool playList::cuePlayed( )
 
 void playList::nextCueSelected( )
 {
-	QListViewItemIterator it( this );
+	Q3ListViewItemIterator it( this );
 	while( it.current() )
 	{
 		if( (*it)->rtti() == PLAYLISTVIEWITEM_RTTI )
@@ -179,7 +181,7 @@ void playList::notCueInChannel( int playerId )
 
 void playList::removePlayed( )
 {
-	QListViewItemIterator it( this );
+	Q3ListViewItemIterator it( this );
 	while( it.current() )
 	{
 		if( (*it)->rtti() == PLAYLISTVIEWITEM_RTTI )
@@ -193,13 +195,13 @@ void playList::removePlayed( )
 
 void playList::insertItem( playListViewItem * newItem )
 {
-	QListViewItem::insertItem( newItem );
+	Q3ListViewItem::insertItem( newItem );
 	newItem->moveItem( lastItem() );
 }
 
 playListViewItem * playList::lastItem( )
 {
-	QListViewItem* item = firstChild();
+	Q3ListViewItem* item = firstChild();
 	while(item)
 		if( item->nextSibling() )
 			item = item->nextSibling();
@@ -215,7 +217,7 @@ QString playList::toString()
 	playList.setAttribute("name", getName() );
 	playListDocument.appendChild(playList);
 
-	QListViewItem* child = firstChild();
+	Q3ListViewItem* child = firstChild();
 	while( child )
 	{
 		if( child->rtti() == PLAYLISTVIEWITEM_RTTI )
@@ -240,7 +242,7 @@ void playList::dropped(QDropEvent * evt)
 	{
 		if( evt->source() == listView() ) // do we move the Item in our own list ?
 		{
-			QListView* sender = dynamic_cast<QListView*>(evt->source());
+			Q3ListView* sender = dynamic_cast<Q3ListView*>(evt->source());
 			sender->selectedItem()->moveItem( this->itemAbove() );
 		}else
 		{
@@ -254,17 +256,17 @@ void playList::dropped(QDropEvent * evt)
 			playListViewItem* pli = new playListViewItem( this, doc );
 			pli->moveItem( lastItem() );
 
-			QListView* sender = dynamic_cast<QListView*>(evt->source());
+			Q3ListView* sender = dynamic_cast<Q3ListView*>(evt->source());
 			if( sender )
 				sender->takeItem( sender->selectedItem() );
 		}
 	}else if( evt->provides("text/uri-list") )
 	{
-		if( QUriDrag::canDecode( evt ) )
+		if( Q3UriDrag::canDecode( evt ) )
 		{
 			QStringList uriList;
-			QUriDrag::decodeLocalFiles( evt, uriList );
-			if(uriList.first() && ( uriList.first().contains(".ogg" ) || uriList.first().contains(".mp3" ) ) )
+			Q3UriDrag::decodeLocalFiles( evt, uriList );
+			if( !uriList.first().isEmpty() && ( uriList.first().contains(".ogg" ) || uriList.first().contains(".mp3" ) ) )
 			{
 				playListViewItem* pli = new playListViewItem( this, uriList.first() );
 				pli->moveItem( lastItem() );
@@ -278,7 +280,7 @@ void playList::dropped(QDropEvent * evt)
 //
 
 playlistDragObject::playlistDragObject( playList* pl, QWidget* dragSource = 0, const char * name = 0) :
-QStoredDrag( "application/x-radiomixer-playlist", dragSource, name )
+Q3StoredDrag( "application/x-radiomixer-playlist", dragSource, name )
 {
 	QString str = pl->toString();
 	QByteArray* data = new QByteArray( str.length() );

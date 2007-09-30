@@ -20,9 +20,12 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 #include "mixerchannelgui.h"
+//Added by qt3to4:
+#include <Q3Frame>
+#include <QLabel>
 
-mixerChannelGUI::mixerChannelGUI( int chID, QWidget* parent , const char* name , WFlags fl )
- : QFrame( parent, name, fl)
+mixerChannelGUI::mixerChannelGUI( int chID, QWidget* parent , const char* name , Qt::WFlags fl )
+ : Q3Frame( parent, name, fl)
 {
 	config = new QSettings();
 
@@ -30,14 +33,14 @@ mixerChannelGUI::mixerChannelGUI( int chID, QWidget* parent , const char* name ,
 
 	playerPos = config->readNumEntry( "/radiomixer/channel_"+QString::number( channelID )+"/position", channelID );
 	setMinimumSize( QSize( 110, 395 ) );
-	setFrameShape( QFrame::StyledPanel );
-	setFrameShadow( QFrame::Raised );
+	setFrameShape( Q3Frame::StyledPanel );
+	setFrameShadow( Q3Frame::Raised );
 
 	setAcceptDrops( TRUE );
 
 	vuSlider = new QSlider( this, "volumeSlider" );
 	vuSlider->setGeometry( QRect( 30, 60, 21, 321 ) );
-	vuSlider->setOrientation( QSlider::Vertical );
+	vuSlider->setOrientation( Qt::Vertical );
 	vuSlider->setTickmarks( QSlider::Both );
 	vuSlider->setMinValue( 0 );
 	vuSlider->setMaxValue( 100 );
@@ -59,7 +62,7 @@ mixerChannelGUI::mixerChannelGUI( int chID, QWidget* parent , const char* name ,
 	chName->setGeometry( QRect( 3, 3, 104, 20 ) );
     	chName->setFrameShape( QLabel::Panel );
     	chName->setFrameShadow( QLabel::Sunken );
-    	chName->setAlignment( int( QLabel::AlignCenter ) );
+    	chName->setAlignment( int( Qt::AlignCenter ) );
 	changeName( config->readEntry( "/radiomixer/channel_"+QString::number( channelID )+"/name", tr("channel")+" "+QString::number(channelID) ) );
 	
 	prefButton = new QToolButton( this, "prefButton" );

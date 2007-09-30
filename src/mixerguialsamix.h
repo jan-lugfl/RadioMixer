@@ -37,7 +37,7 @@ class mixerGuiAlsaMix : public mixerChannelGUI
   Q_OBJECT
 
 public:
-    mixerGuiAlsaMix( int chID, QWidget* parent = 0, const char* name = 0, WFlags fl = 0 );
+    mixerGuiAlsaMix( int chID, QWidget* parent = 0, const char* name = 0, Qt::WFlags fl = 0 );
     ~mixerGuiAlsaMix();
 
     virtual void languageChange();

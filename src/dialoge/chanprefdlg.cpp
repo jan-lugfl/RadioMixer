@@ -23,7 +23,7 @@
 
 #include "chanprefdlg.h"
 
-chanPrefDlg::chanPrefDlg(QWidget* parent, const char* name, bool modal, WFlags fl)
+chanPrefDlg::chanPrefDlg(QWidget* parent, const char* name, bool modal, Qt::WFlags fl)
     : KanalPref_dlg(parent,name, modal,fl)
 {}
 

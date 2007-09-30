@@ -32,25 +32,27 @@
 
 #ifdef ENABLE_SONGDB
 #include "playlistitemsongdb.h"
-#include <qhttp.h>
-#include <qurloperator.h>
+#include <q3http.h>
+#include <q3urloperator.h>
 #endif
 
 #include <qdom.h>
-#include <qlistview.h>
+#include <q3listview.h>
 #include <qlineedit.h>
 #include <qcheckbox.h>
 #include <qcombobox.h>
 #include <qsettings.h>
-#include <qvaluevector.h>
+#include <q3valuevector.h>
 #include <qpushbutton.h>
 #include <qmessagebox.h>
 #include <qsplitter.h>
-#include <qpopupmenu.h>
-#include <qfiledialog.h>
+#include <q3popupmenu.h>
+#include <q3filedialog.h>
 #include <qtimer.h>
 #include <qpainter.h>
 #include <qlayout.h>
+//Added by qt3to4:
+#include <QResizeEvent>
 
 class playListManager: public playListNG {
 Q_OBJECT
@@ -71,11 +73,11 @@ public:
 	virtual void updatePlayer( filePlayer player );
 
 protected:
-	QPopupMenu*	playListPopup;
-	QPopupMenu*	playListPopupChannelList;
-	QPopupMenu*	playListPopupOptions;
-	QPopupMenu*	playListPopupPlayList;
-	QValueVector<filePlayer>	filePlayers;
+	Q3PopupMenu*	playListPopup;
+	Q3PopupMenu*	playListPopupChannelList;
+	Q3PopupMenu*	playListPopupOptions;
+	Q3PopupMenu*	playListPopupPlayList;
+	Q3ValueVector<filePlayer>	filePlayers;
 
 	virtual void resizeEvent ( QResizeEvent *e );
 
@@ -90,14 +92,14 @@ private slots:
 	void refreshPlaylists();
 
 protected:
-	QHttp*	songDBHndl;
-	QHttpRequestHeader* songDB;
+	Q3Http*	songDBHndl;
+	Q3HttpRequestHeader* songDB;
 	struct Genre {
 		QString id;
 		QString name;
 	};
-	QValueVector<Genre>	genreList;
-	QPopupMenu*	songDBPopup;
+	Q3ValueVector<Genre>	genreList;
+	Q3PopupMenu*	songDBPopup;
 	QString getGenreId( QString genre );
 
 protected slots:
@@ -107,14 +109,12 @@ protected slots:
 	virtual void cue();
 	virtual void search();
 #endif
-	virtual void showSongDBContextmenu( QListViewItem * item, const QPoint & pos, int col );
-	virtual void songDBViewdoubleClicked( QListViewItem *, const QPoint &, int );
+	virtual void showSongDBContextmenu( Q3ListViewItem * item, const QPoint & pos, int col );
+	virtual void songDBViewdoubleClicked( Q3ListViewItem *, const QPoint &, int );
 
 private:
 	// this is used to know in Contextmenu handling which Item to handle.
-	QListViewItem*	currentlySelectedItem;
-
-private slots:
+	Q3ListViewItem*	currentlySelectedItem;
 	QTimer refreshTimer;
 
 public slots:
@@ -123,7 +123,7 @@ public slots:
 
 protected slots:
 	virtual void updateLastPlayed( playListItem* item ); 
-	virtual void showPlaylistContextmenu( QListViewItem * item, const QPoint & pos, int col );
+	virtual void showPlaylistContextmenu( Q3ListViewItem * item, const QPoint & pos, int col );
 	virtual void loadPlaylist();
 	virtual void savePlaylist();
 	virtual void renamePlaylist();

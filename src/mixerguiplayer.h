@@ -30,8 +30,11 @@
 #include "timedisplay.h"
 #include "playlistitemsongdb.h"
 
-#include <qdragobject.h>
-#include <qlistview.h>
+#include <q3dragobject.h>
+#include <q3listview.h>
+//Added by qt3to4:
+#include <QDropEvent>
+#include <QDragEnterEvent>
 
 /**
 @author Jan Boysen
@@ -41,7 +44,7 @@ class mixerGuiPlayer : public mixerChannelGUI
   Q_OBJECT
 
 public:
-    mixerGuiPlayer( int chID, soundPlayer* soundplayer, QWidget* parent = 0, const char* name = 0, WFlags fl = 0 );
+    mixerGuiPlayer( int chID, soundPlayer* soundplayer, QWidget* parent = 0, const char* name = 0, Qt::WFlags fl = 0 );
     ~mixerGuiPlayer();
 
 	// Main Player

@@ -20,6 +20,7 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 #include "metainfo.h"
+#include <QTextStream>
 
 metaInfo::metaInfo(QObject *parent, const char *name)
  : QObject(parent, name)
@@ -66,7 +67,7 @@ void metaInfo::setMeta( metaTag newMeta )
 		}
 
 		QFile file( "/tmp/radiomixer.current" );
-		if ( file.open( IO_WriteOnly | IO_Truncate ) ) {
+		if ( file.open( QIODevice::WriteOnly | QIODevice::Truncate ) ) {
 			QTextStream stream( &file );
 
 			switch ( metaMode )  // which Streaming client is used ??

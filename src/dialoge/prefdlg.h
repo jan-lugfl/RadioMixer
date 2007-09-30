@@ -34,7 +34,7 @@ class prefDlg : public PreferencesDlg
   Q_OBJECT
 
 public:
-  prefDlg(QWidget* parent = 0, const char* name = 0, bool modal = FALSE, WFlags fl = 0 );
+  prefDlg(QWidget* parent = 0, const char* name = 0, bool modal = FALSE, Qt::WFlags fl = 0 );
   ~prefDlg();
   /*$PUBLIC_FUNCTIONS$*/
 

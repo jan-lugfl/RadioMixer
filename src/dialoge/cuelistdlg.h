@@ -25,7 +25,7 @@
 #include "cuelist.h"
 #include "metatag.h"
 
-#include <qlistview.h>
+#include <q3listview.h>
 
 class cueListDlg: public cuelist {
 Q_OBJECT

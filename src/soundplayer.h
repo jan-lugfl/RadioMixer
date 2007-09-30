@@ -23,7 +23,7 @@
 #define SOUNDPLAYER_H
 
 #include <qthread.h>
-#include <qvaluevector.h>
+#include <q3valuevector.h>
 #include <qmessagebox.h>
 #include <samplerate.h>
 
@@ -50,7 +50,7 @@ public:
 protected:
 	bool devOpened;
 
-	QValueVector<playerChannelStd*> channels;
+	Q3ValueVector<playerChannelStd*> channels;
 
 	soundRingBuffer*	outputBuffers;
 	float* mixBufL;

@@ -20,8 +20,10 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 #include "mixerguialsamix.h"
+//Added by qt3to4:
+#include <QLabel>
 
-mixerGuiAlsaMix::mixerGuiAlsaMix(  int chID, QWidget* parent , const char* name , WFlags fl )
+mixerGuiAlsaMix::mixerGuiAlsaMix(  int chID, QWidget* parent , const char* name , Qt::WFlags fl )
  : mixerChannelGUI( chID, parent, name, fl)
 {
 	alsaMixer = new playerChannelAlsaMix();

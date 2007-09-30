@@ -66,7 +66,7 @@ void soundPlayer::mixChannels( )
 			mixBufL[bufPos] = 0;
 			mixBufR[bufPos] = 0;
 		}
-		QValueVector<playerChannelStd*>::iterator it;
+		Q3ValueVector<playerChannelStd*>::iterator it;
 		for( it = channels.begin(); it != channels.end(); it++ )
 		{
 			if( (*it)->isPlaying() && (*it)->canGetData( interMixSamples ) )

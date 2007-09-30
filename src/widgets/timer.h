@@ -26,18 +26,21 @@
 #include <qlineedit.h>
 #include <qspinbox.h>
 
-#include <qframe.h>
+#include <q3frame.h>
 #include <qtoolbutton.h>
 #include <qradiobutton.h>
 #include <qlayout.h>
 #include <qtimer.h>
 #include <qlabel.h>
 #include <qdatetime.h>
+//Added by qt3to4:
+#include <Q3VBoxLayout>
+#include <Q3HBoxLayout>
 
 /**
 	@author Jan Boysen <trekkie@media-mission.de>
 */
-class timer : public QFrame
+class timer : public Q3Frame
 {
 Q_OBJECT
 public:
@@ -49,9 +52,9 @@ protected:
 	bool reverse;
 	int timerState;
 
-	QVBoxLayout* masterLayout;
-	QHBoxLayout* buttonLayout;
-	QHBoxLayout* headerLayout;
+	Q3VBoxLayout* masterLayout;
+	Q3HBoxLayout* buttonLayout;
+	Q3HBoxLayout* headerLayout;
 	QToolButton* start;
 	QToolButton* stop;
 	QToolButton* pause;

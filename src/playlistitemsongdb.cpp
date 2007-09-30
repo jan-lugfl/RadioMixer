@@ -28,11 +28,11 @@ playListItemSongDB::playListItemSongDB( const unsigned int id,  unsigned int las
 	songDBId = id;
 
 	QSettings* config = new QSettings();
-	songDBHndl = new QHttp( this, "httpSocket" );
+	songDBHndl = new Q3Http( this, "httpSocket" );
 	songDBHndl->setHost( config->readEntry( "/radiomixer/network/songDBHostname", "localhost" ) );
 	connect( songDBHndl, SIGNAL(done(bool)), this, SLOT(receiveData(bool)));
 
-	songDB = new QHttpRequestHeader( "POST", config->readEntry( "/radiomixer/network/songDBScriptname", "/xmlctrl.pl" ) );
+	songDB = new Q3HttpRequestHeader( "POST", config->readEntry( "/radiomixer/network/songDBScriptname", "/xmlctrl.pl" ) );
 	songDB->setValue( "Host", config->readEntry( "/radiomixer/network/songDBHostname", "localhost" ) );
 
 	delete config;
@@ -60,7 +60,7 @@ QColor playListItemSongDB::getBackgroundColor( )
 
 		// calculate the color of the Item
 		if( playedAgo < 7200 )
-			return Qt::red.dark( 150-(int(playedAgo/720)*10) );
+			return QColor(Qt::red).dark( 150-(int(playedAgo/720)*10) );
 	}
 	return playListItem::getBackgroundColor();
 }

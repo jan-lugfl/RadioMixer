@@ -24,22 +24,25 @@
 
 #include "playlistviewitem.h"
 
-#include <qlistview.h>
+#include <q3listview.h>
 #include <qobject.h>
 #include <qfile.h>
+#include <QTextStream>
 #include <qdom.h>
 #include <qmessagebox.h>
-#include <qvaluelist.h>
+#include <q3valuelist.h>
+//Added by qt3to4:
+#include <QDropEvent>
 
 #define PLAYLIST_RTTI 1001
 
 /**
 	@author Jan Boysen <trekkie@media-mission.de>
 */
-class playList : public QListViewItem
+class playList : public Q3ListViewItem
 {
 public:
-	playList( QListView* parent, QString name = QObject::tr("unnamed Playlist"), QString file = "" );
+	playList( Q3ListView* parent, QString name = QObject::tr("unnamed Playlist"), QString file = "" );
 	~playList();
 
 	virtual int rtti() const {return PLAYLIST_RTTI;}
@@ -72,13 +75,13 @@ private:
 
 protected:
 	virtual void dropped ( QDropEvent * e );
-	QValueList<unsigned int>	cuedInChannel;
+	Q3ValueList<unsigned int>	cuedInChannel;
 	QString	fileName;
 	playListItem* manualNextSongPtr;
 	bool recuePlayed;
 };
 
-class playlistDragObject : public QStoredDrag
+class playlistDragObject : public Q3StoredDrag
 {
 public:
 	playlistDragObject(  playList* pl, QWidget* dragSource, const char * name );

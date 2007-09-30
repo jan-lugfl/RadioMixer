@@ -23,7 +23,7 @@
 #define MIPUCOM_H
 
 #include <qobject.h>
-#include <qsocket.h>
+#include <q3socket.h>
 #include <qstring.h>
 #include <qtimer.h>
 
@@ -48,7 +48,7 @@ public:
     const int getSlider(int slider);
 
 private:
-	QSocket* Socket;
+	Q3Socket* Socket;
 	QTimer* keepAliveTimer;
 	static const int protokollVersion = 1;
 	static const int minProtVersion = 1;

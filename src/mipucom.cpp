@@ -20,11 +20,13 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 #include "mipucom.h"
+//Added by qt3to4:
+#include <Q3CString>
 
 mipuCom::mipuCom(QObject *parent, const char *name)
  : QObject(parent, name), conn(FALSE)
 {
-	Socket = new QSocket(this);
+	Socket = new Q3Socket(this);
 	connect( Socket, SIGNAL(connected()), this, SLOT(onConnected()) );
 	connect( Socket, SIGNAL(readyRead()), this, SLOT(dataRead()) );
 	keepAliveTimer = new QTimer;
@@ -58,7 +60,7 @@ void mipuCom::onConnectionClosed( )
 void mipuCom::dataRead( )
 {
     // read the new data from the socket
-    QCString data;
+    Q3CString data;
     data.resize( Socket->bytesAvailable() + 1 );
     Socket->readBlock( data.data(), Socket->bytesAvailable() );
 

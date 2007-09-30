@@ -26,8 +26,8 @@
 
 #include <qsettings.h>
 #include <qdom.h>
-#include <qhttp.h>
-#include <qurloperator.h>
+#include <q3http.h>
+#include <q3urloperator.h>
 
 /**
 	@author Jan Boysen <trekkie@media-mission.de>
@@ -50,8 +50,8 @@ public:
 protected:
 	unsigned int songDBId;
 	unsigned int lastPlayed;
-	QHttp*	songDBHndl;
-	QHttpRequestHeader* songDB;
+	Q3Http*	songDBHndl;
+	Q3HttpRequestHeader* songDB;
 
 	virtual void readMeta();
 

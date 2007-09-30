@@ -20,8 +20,11 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 #include "mixerguiplayer.h"
+//Added by qt3to4:
+#include <QDropEvent>
+#include <QDragEnterEvent>
 
-mixerGuiPlayer::mixerGuiPlayer( int chID, soundPlayer* soundplayer, QWidget* parent , const char* name , WFlags fl )
+mixerGuiPlayer::mixerGuiPlayer( int chID, soundPlayer* soundplayer, QWidget* parent , const char* name , Qt::WFlags fl )
  : mixerChannelGUI( chID, parent, name, fl)
 {
 	QSettings* config = new QSettings;
@@ -179,7 +182,7 @@ void mixerGuiPlayer::fileOpen( )
    +QString(";;MPEG-1 Layer III (*.mp2 *.mp3)")
 #endif
    ;
-   QString s = QFileDialog::getOpenFileName(
+   QString s = Q3FileDialog::getOpenFileName(
                     "",
                     fileTypes,
                     this,
@@ -287,18 +290,18 @@ void mixerGuiPlayer::dropEvent(QDropEvent * evt)
 #endif
 	}else if( evt->provides("application/x-radiomixer-playlist") && evt->source() ) // TODO add support for playlist that are not yet loaded into the playlist manager
 	{
-		QListView* sender = dynamic_cast<QListView*>(evt->source());
+		Q3ListView* sender = dynamic_cast<Q3ListView*>(evt->source());
 		playList* plst = dynamic_cast<playList*>(sender->selectedItem());
 		if( plst )
 			plst->cueInChannel( channelID );
 		cueNewTrack( );
 	}else if( evt->provides("text/uri-list") )
 	{
-		if( QUriDrag::canDecode( evt ) )
+		if( Q3UriDrag::canDecode( evt ) )
 		{
 			QStringList uriList;
-			QUriDrag::decodeLocalFiles( evt, uriList );
-			if(uriList.first() && ( uriList.first().contains(".ogg" ) || uriList.first().contains(".mp3" ) ) )
+			Q3UriDrag::decodeLocalFiles( evt, uriList );
+			if( !uriList.first().isEmpty() && ( uriList.first().contains(".ogg" ) || uriList.first().contains(".mp3" ) ) )
 			{
 				playListEntry = new playListItem(  uriList.first() );
 				player->open( playListEntry );

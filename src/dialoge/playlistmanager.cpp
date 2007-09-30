@@ -21,6 +21,9 @@
  ***************************************************************************/
 
 #include "playlistmanager.h"
+//Added by qt3to4:
+#include <QResizeEvent>
+#include <Q3PopupMenu>
 
 playListManager::playListManager(QWidget *parent, const char *name)
  : playListNG(parent, name)
@@ -32,10 +35,11 @@ playListManager::playListManager(QWidget *parent, const char *name)
 	playListView->addColumn( tr( "Genre" ) );
 	playListView->addColumn( tr( "Length" ) );
 	playListView->setAcceptDrops( TRUE );
-	playListView->setDefaultRenameAction( QListView::Accept );
-	playListFrameLayout->addWidget( playListView, 0, 0 );
+	playListView->setDefaultRenameAction( Q3ListView::Accept );
+#warning Port to QT4
+// 	playListFrameLayout->addWidget( playListView, 0, 0 );
 
-	connect( playListView, SIGNAL( rightButtonPressed ( QListViewItem *, const QPoint &, int ) ), this, SLOT( showPlaylistContextmenu( QListViewItem*, const QPoint&, int ) ));
+	connect( playListView, SIGNAL( rightButtonPressed ( Q3ListViewItem *, const QPoint &, int ) ), this, SLOT( showPlaylistContextmenu( Q3ListViewItem*, const QPoint&, int ) ));
 
 #ifdef ENABLE_SONGDB
 	songDBListView = new songListView( songDBFrame, "songDBListView" );
@@ -43,13 +47,14 @@ playListManager::playListManager(QWidget *parent, const char *name)
 	songDBListView->addColumn( tr( "Genre" ) );
 	songDBListView->addColumn( tr( "Length" ) );
 	songDBListView->addColumn( tr( "Vote" ) );
-	layout15->insertWidget( 0, songDBListView, Qt::AlignTop );
+#warning Port to QT4
+// 	layout15->insertWidget( 0, songDBListView, Qt::AlignTop );
 
-	songDBHndl = new QHttp( this, "httpSocket" );
+	songDBHndl = new Q3Http( this, "httpSocket" );
 	songDBHndl->setHost( config->readEntry( "/radiomixer/network/songDBHostname", "localhost" ) );
 	connect( songDBHndl, SIGNAL(done(bool)), this, SLOT(displayData(bool)));
 
-	songDB = new QHttpRequestHeader( "POST", config->readEntry( "/radiomixer/network/songDBScriptname", "/xmlctrl.pl" ) );
+	songDB = new Q3HttpRequestHeader( "POST", config->readEntry( "/radiomixer/network/songDBScriptname", "/xmlctrl.pl" ) );
 	songDB->setValue( "Host", config->readEntry( "/radiomixer/network/songDBHostname", "localhost" ) );
 
 	genre->insertItem( tr("all Genres") );
@@ -57,19 +62,19 @@ playListManager::playListManager(QWidget *parent, const char *name)
 	//get Genres from sondDB
 	requestData( "getGenres=1" );
 
-	songDBPopup = new QPopupMenu( songDBListView );
+	songDBPopup = new Q3PopupMenu( songDBListView );
 
 	playlistChannel->insertItem(tr("-- selected --"));
 
-	connect( playListView, SIGNAL( itemRenamed( QListViewItem*, int) ), this, SLOT( refreshPlaylists() ) );
-	connect( songDBListView, SIGNAL( doubleClicked( QListViewItem*, const QPoint& , int) ), this, SLOT( songDBViewdoubleClicked( QListViewItem *, const QPoint &, int ) ) );
-	connect( songDBListView, SIGNAL( contextMenuRequested(  QListViewItem* , const QPoint&, int )) , this, SLOT( showSongDBContextmenu(  QListViewItem* , const QPoint&, int )  ) );
+	connect( playListView, SIGNAL( itemRenamed( Q3ListViewItem*, int) ), this, SLOT( refreshPlaylists() ) );
+	connect( songDBListView, SIGNAL( doubleClicked( Q3ListViewItem*, const QPoint& , int) ), this, SLOT( songDBViewdoubleClicked( Q3ListViewItem *, const QPoint &, int ) ) );
+	connect( songDBListView, SIGNAL( contextMenuRequested(  Q3ListViewItem* , const QPoint&, int )) , this, SLOT( showSongDBContextmenu(  Q3ListViewItem* , const QPoint&, int )  ) );
 #else
 	delete songDBFrame;
 #endif
 
 	// setup the Popup menu of the playListView
-	playListPopup = new QPopupMenu( playListView );
+	playListPopup = new Q3PopupMenu( playListView );
 	playListPopup->insertItem( tr("new &Playlist"), 0);
 	playListPopup->connectItem(0, this, SLOT(createNewPlaylist()) );
 	playListPopup->insertItem( tr("&rename Playlist"), 1);
@@ -82,7 +87,7 @@ playListManager::playListManager(QWidget *parent, const char *name)
 	playListPopup->insertItem( tr("re&move"), 8 );
 	playListPopup->connectItem(8, this, SLOT( removeItem() ) );
 
-	playListPopupChannelList = new QPopupMenu( playListPopup );
+	playListPopupChannelList = new Q3PopupMenu( playListPopup );
 	connect( playListPopupChannelList, SIGNAL(activated(int)), this, SLOT(cuePlaylist(int)) );
 	playListPopup->insertItem( tr("&cue playlist in"), playListPopupChannelList, 4 );
 
@@ -93,10 +98,10 @@ playListManager::playListManager(QWidget *parent, const char *name)
 
 	playListPopup->insertSeparator();
 
-	playListPopupPlayList = new QPopupMenu( playListPopup );
+	playListPopupPlayList = new Q3PopupMenu( playListPopup );
 	playListPopup->insertItem( tr("&Playlist"), playListPopupPlayList, 6 );
 
-	playListPopupOptions = new QPopupMenu( playListPopup );
+	playListPopupOptions = new Q3PopupMenu( playListPopup );
 	playListPopupOptions->setCheckable( TRUE );
 	playListPopup->insertItem( tr("&Options"), playListPopupOptions, 7 );
 
@@ -126,7 +131,7 @@ playListManager::~ playListManager( )
 #ifdef ENABLE_SONGDB
 QString playListManager::getGenreId( QString genre )
 {
-	QValueVector<Genre>::iterator It;
+	Q3ValueVector<Genre>::iterator It;
 	for( It = genreList.begin(); It != genreList.end(); ++It )
 	{
 		if( It->name == genre )
@@ -153,7 +158,7 @@ void playListManager::displayData( bool )
 
 			if(songs.count() < 1)
 			{
-				QListViewItem noSongs = new QListViewItem( songDBListView, "", tr("no songs found") );
+				Q3ListViewItem noSongs = new Q3ListViewItem( songDBListView, "", tr("no songs found") );
 			}
 			else
 				for(unsigned int i=0;i<songs.count();i++)
@@ -220,7 +225,7 @@ void playListManager::playListAdd( )
 			else
 				QMessageBox::critical( this, tr("RadioMixer - Playlist Manager"), tr("no playlist selected....") );
 		}else{
-			QListViewItemIterator it( playListView );
+			Q3ListViewItemIterator it( playListView );
 			while( it.current() )
 			{
 				if( (*it)->text(0) == playlistChannel->currentText())
@@ -240,7 +245,7 @@ void playListManager::playListAdd( )
 
 void playListManager::cue( )
 {
-	if( songDBListView->selectedItem()->text( 0 ) )
+	if( !songDBListView->selectedItem()->text( 0 ).isEmpty() )
 	{
 		state = 1;
 		requestData( "getSonginfo=1&songID="+songDBListView->selectedItem()->text( 0 ) );
@@ -260,7 +265,7 @@ void playListManager::refreshPlaylists()
 	playlistChannel->clear();
 	playlistChannel->insertItem(tr("-- selected --"));
 
-	QListViewItemIterator it( playListView );
+	Q3ListViewItemIterator it( playListView );
 	while( it.current() )
 	{
 		if( (*it)->rtti() == PLAYLIST_RTTI )
@@ -270,7 +275,7 @@ void playListManager::refreshPlaylists()
 }
 #endif
 
-void playListManager::songDBViewdoubleClicked( QListViewItem * item, const QPoint &, int )
+void playListManager::songDBViewdoubleClicked( Q3ListViewItem * item, const QPoint &, int )
 {
 #ifdef ENABLE_SONGDB
 	if( item )
@@ -278,7 +283,7 @@ void playListManager::songDBViewdoubleClicked( QListViewItem * item, const QPoin
 #endif
 }
 
-void playListManager::showSongDBContextmenu( QListViewItem * item, const QPoint & pos, int col )
+void playListManager::showSongDBContextmenu( Q3ListViewItem * item, const QPoint & pos, int col )
 {
 #ifdef ENABLE_SONGDB
 	songDBPopup->popup( pos );
@@ -300,7 +305,7 @@ void playListManager::updateLastPlayed( playListItem * item )
 #endif
 }
 
-void playListManager::showPlaylistContextmenu( QListViewItem * item, const QPoint & pos, int col )
+void playListManager::showPlaylistContextmenu( Q3ListViewItem * item, const QPoint & pos, int col )
 {
 	// enable all Items
 	for(int i=0;i<6;i++)
@@ -322,7 +327,7 @@ void playListManager::showPlaylistContextmenu( QListViewItem * item, const QPoin
 			break;
 		case PLAYLIST_RTTI:  // is the currently selected Item a Playlist ?
 			playListPopupChannelList->clear();
-			QValueVector<filePlayer>::iterator playerIt;
+			Q3ValueVector<filePlayer>::iterator playerIt;
 			for( playerIt = filePlayers.begin(); playerIt != filePlayers.end(); ++playerIt )
 				playListPopupChannelList->insertItem( (*playerIt).name, (*playerIt).id );
 
@@ -362,7 +367,7 @@ void playListManager::createNewPlaylist( QString name )
 
 void playListManager::loadPlaylist( )
 {
-	QString s = QFileDialog::getOpenFileName(
+	QString s = Q3FileDialog::getOpenFileName(
                     "",
                     "RadioMixer Playlist (*.plst)",
                     this,
@@ -383,7 +388,7 @@ void playListManager::savePlaylist( )
 	if( !currentlySelectedItem->rtti() == PLAYLIST_RTTI )
 		return;
 
-	QString s = QFileDialog::getSaveFileName(
+	QString s = Q3FileDialog::getSaveFileName(
                     "",
                     "RadioMixer Playlist (*.plst)",
                     this,
@@ -411,7 +416,7 @@ void playListManager::addPlayer( filePlayer player )
 
 void playListManager::removePlayer( unsigned int playerId )
 {
-	QValueVector<filePlayer>::iterator playerIt;
+	Q3ValueVector<filePlayer>::iterator playerIt;
 	for( playerIt = filePlayers.begin(); playerIt != filePlayers.end(); ++playerIt )
 		if( playerId == (*playerIt).id )
 			filePlayers.erase( playerIt );
@@ -419,7 +424,7 @@ void playListManager::removePlayer( unsigned int playerId )
 
 void playListManager::updatePlayer( filePlayer player )
 {
-	QValueVector<filePlayer>::iterator playerIt;
+	Q3ValueVector<filePlayer>::iterator playerIt;
 	for( playerIt = filePlayers.begin(); playerIt != filePlayers.end(); ++playerIt )
 		if( player.id == (*playerIt).id )
 			( *playerIt ) = player;
@@ -427,7 +432,7 @@ void playListManager::updatePlayer( filePlayer player )
 
 void playListManager::cuePlaylist( int item )
 {
-	QListViewItemIterator it( playListView );
+	Q3ListViewItemIterator it( playListView );
 	while( it.current() )
 	{
 		if( (*it)->rtti() == PLAYLIST_RTTI )
@@ -439,7 +444,7 @@ void playListManager::cuePlaylist( int item )
 
 void playListManager::cueNewTrack( unsigned int playerId )
 {
-	QListViewItemIterator it( playListView );
+	Q3ListViewItemIterator it( playListView );
 	while( it.current() )
 	{
 		if( (*it)->rtti() == PLAYLIST_RTTI )
@@ -475,7 +480,7 @@ void playListManager::addNewTrackToPlaylist( )
    +QString(";;MPEG-1 Layer III (*.mp2 *.mp3)")
 #endif
    ;
-	QString s = QFileDialog::getOpenFileName(
+	QString s = Q3FileDialog::getOpenFileName(
 		"",
 		fileTypes,
 		this,
@@ -505,7 +510,7 @@ void playListManager::resetPlaylistStates( )
 {
 	if( currentlySelectedItem->rtti() ==PLAYLIST_RTTI )
 	{
-		QListViewItem* child = currentlySelectedItem->firstChild();
+		Q3ListViewItem* child = currentlySelectedItem->firstChild();
 		while( child )
 		{
 			if( child->rtti() == PLAYLISTVIEWITEM_RTTI )
@@ -538,5 +543,6 @@ void playListManager::addTimer()
 {
 	timer* tim = new timer( miscFrame, "Timer");
 	tim->show();
-	timerLayout->insertWidget( 0, tim, Qt::AlignTop );
+#warning Port to QT4
+// 	timerLayout->insertWidget( 0, tim, Qt::AlignTop );
 }

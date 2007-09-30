@@ -26,6 +26,9 @@
 #include <qpainter.h>
 #include <qpixmap.h>
 #include <qtimer.h>
+//Added by qt3to4:
+#include <QPaintEvent>
+#include <QResizeEvent>
 
 /**
 	@author Jan Boysen <trekkie@media-mission.de>

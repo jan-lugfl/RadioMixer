@@ -20,6 +20,8 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 #include "playlistviewitem.h"
+//Added by qt3to4:
+#include <QDropEvent>
 
 static const unsigned char novote_image[] = {
 	0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a, 0x00, 0x00, 0x00, 0x0d,
@@ -241,15 +243,15 @@ static const unsigned char voted1_image[] = {
     0x44, 0xae, 0x42, 0x60, 0x82
 };
 
-playListViewItem::playListViewItem( QListView * parent )
- : QListViewItem( parent )
+playListViewItem::playListViewItem( Q3ListView * parent )
+ : Q3ListViewItem( parent )
 {
 	setDragEnabled(TRUE);
 	setDropEnabled(TRUE);
 }
 
-playListViewItem::playListViewItem( QListView * parent, playListItem * item, QListViewItem * after )
- : QListViewItem( parent, after ), playListEntry( item )
+playListViewItem::playListViewItem( Q3ListView * parent, playListItem * item, Q3ListViewItem * after )
+ : Q3ListViewItem( parent, after ), playListEntry( item )
 {
 	setDragEnabled(TRUE);
 	setDropEnabled(TRUE);
@@ -260,8 +262,8 @@ playListViewItem::playListViewItem( QListView * parent, playListItem * item, QLi
 	setVote( item->getVote() );
 }
 
-playListViewItem::playListViewItem( QListViewItem * parent, QString newSong, QListViewItem * after )
- : QListViewItem( parent, after )
+playListViewItem::playListViewItem( Q3ListViewItem * parent, QString newSong, Q3ListViewItem * after )
+ : Q3ListViewItem( parent, after )
 {
 	playListEntry = new playListItem( newSong );
 	setDragEnabled(TRUE);
@@ -274,14 +276,14 @@ playListViewItem::playListViewItem( QListViewItem * parent, QString newSong, QLi
 }
 
 playListViewItem::playListViewItem( playListViewItem * parent )
- : QListViewItem( parent )
+ : Q3ListViewItem( parent )
 {
 	setDragEnabled(TRUE);
 	setDropEnabled(TRUE);
 }
 
-playListViewItem::playListViewItem(QListViewItem * parent, QDomDocument domdoc )
-: QListViewItem( parent )
+playListViewItem::playListViewItem(Q3ListViewItem * parent, QDomDocument domdoc )
+: Q3ListViewItem( parent )
 {
 	setDragEnabled(TRUE);
 	setDropEnabled(TRUE);
@@ -323,7 +325,7 @@ void playListViewItem::paintCell( QPainter * p, const QColorGroup & cg, int colu
 	QColorGroup _cg( cg );
 	_cg.setColor( QColorGroup::Base, itemBGColor );
 	_cg.setColor( QColorGroup::Text, itemFGColor );
-	QListViewItem::paintCell( p, _cg, column, width, alignment );
+	Q3ListViewItem::paintCell( p, _cg, column, width, alignment );
 }
 
 void playListViewItem::setVote(int vote)
@@ -394,24 +396,24 @@ void playListViewItem::dropped(QDropEvent * evt)
 	{
 		if( evt->source() == listView() ) // do we move the Item in our own list ?
 		{
-			QListView* sender = dynamic_cast<QListView*>(evt->source());
-			QListViewItem* item = sender->selectedItem();
-			if( item == QListViewItem::parent() )
+			Q3ListView* sender = dynamic_cast<Q3ListView*>(evt->source());
+			Q3ListViewItem* item = sender->selectedItem();
+			if( item == Q3ListViewItem::parent() )
 			{
 				
-				QListViewItem::parent()->takeItem( item );
-				QListViewItem::parent()->insertItem( item );
+				Q3ListViewItem::parent()->takeItem( item );
+				Q3ListViewItem::parent()->insertItem( item );
 			}
 			else
 			{
 				bool foundMyself = FALSE;
-				QListViewItemIterator it( listView() );
+				Q3ListViewItemIterator it( listView() );
 				while ( it.current() ) {
 					if( it.current() == this )
 						foundMyself = TRUE;
 					else if( it.current() == item and foundMyself )
 					{
-						if( this->itemAbove() == QListViewItem::parent())
+						if( this->itemAbove() == Q3ListViewItem::parent())
 						{
 							item->moveItem( this );
 							moveItem( item );
@@ -435,18 +437,18 @@ void playListViewItem::dropped(QDropEvent * evt)
 			playListViewItem* pli = new playListViewItem( this, doc );
 			pli->moveItem( itemAbove() );
 
-			QListView* sender = dynamic_cast<QListView*>(evt->source());
+			Q3ListView* sender = dynamic_cast<Q3ListView*>(evt->source());
 			if( sender )
 				sender->takeItem( sender->selectedItem() );
 		}
 	}else if( evt->provides("text/uri-list") )
 	{
-		if( QUriDrag::canDecode( evt ) )
+		if( Q3UriDrag::canDecode( evt ) )
 		{
 			QStringList uriList;
-			QUriDrag::decodeLocalFiles( evt, uriList );
-			if(uriList.first() && ( uriList.first().contains(".ogg" ) || uriList.first().contains(".mp3" ) ) )
-				new playListViewItem( QListViewItem::parent(), uriList.first(), this );
+			Q3UriDrag::decodeLocalFiles( evt, uriList );
+			if( !uriList.first().isEmpty() && ( uriList.first().contains(".ogg" ) || uriList.first().contains(".mp3" ) ) )
+				new playListViewItem( Q3ListViewItem::parent(), uriList.first(), this );
 		}
 	}
 }
@@ -457,7 +459,7 @@ void playListViewItem::dropped(QDropEvent * evt)
 //
 
 songDragObject::songDragObject( playListViewItem* item, QWidget* dragSource = 0, const char * name = 0) :
-QStoredDrag( "application/x-radiomixer-playlistitem", dragSource, name )
+Q3StoredDrag( "application/x-radiomixer-playlistitem", dragSource, name )
 {
 	QDomDocument songDocument("RadioMixerPlayListItem");
 	songDocument.appendChild( item->playListEntry->toDomElement( &songDocument ) );

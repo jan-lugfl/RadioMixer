@@ -20,9 +20,14 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 #include "timer.h"
+//Added by qt3to4:
+#include <Q3HBoxLayout>
+#include <Q3VBoxLayout>
+#include <QLabel>
+#include <Q3Frame>
 
 timer::timer(QWidget *parent, const char *name)
- : QFrame(parent, name), reverse( FALSE )
+ : Q3Frame(parent, name), reverse( FALSE )
 {
 	setFixedHeight( 100 );
 	setFrameShape( StyledPanel );
@@ -39,7 +44,7 @@ timer::timer(QWidget *parent, const char *name)
 	timerName->setText( tr( "timer" ) );
 
 	closeButton = new QToolButton( this );
-	closeButton->setPaletteBackgroundColor( red );
+	closeButton->setPaletteBackgroundColor( Qt::red );
 	closeButton->setFixedSize( QSize(15,15) );
 	connect( closeButton, SIGNAL( clicked() ), this, SLOT( close() ) );
 
@@ -56,9 +61,9 @@ timer::timer(QWidget *parent, const char *name)
 	setup->setText( tr("Setup") );
 	connect( setup, SIGNAL( clicked() ), this, SLOT( showSettings() ) );
 
-	masterLayout = new QVBoxLayout( this, 4, 3, "Timer Layout" );
-	headerLayout = new QHBoxLayout( masterLayout, 2 );
-	buttonLayout = new QHBoxLayout( masterLayout, 4 );
+	masterLayout = new Q3VBoxLayout( this, 4, 3, "Timer Layout" );
+	headerLayout = new Q3HBoxLayout( masterLayout, 2 );
+	buttonLayout = new Q3HBoxLayout( masterLayout, 4 );
 
 	buttonLayout->addWidget( start );
 	buttonLayout->addWidget( pause );
@@ -73,7 +78,7 @@ timer::timer(QWidget *parent, const char *name)
 
 	label->setFrameShape( QLabel::Panel );
 	label->setFrameShadow( QLabel::Sunken );
-	label->setAlignment( QLabel::AlignCenter );
+	label->setAlignment( Qt::AlignCenter );
 
 	timeDisplay_font = font();
 	timeDisplay_font.setPointSize( 22 );

@@ -20,6 +20,8 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 #include "timedisplay.h"
+//Added by qt3to4:
+#include <QLabel>
 
 timeDisplay::timeDisplay(QWidget *parent, const char *name)
  : QLabel(parent, name), dMode( FrameDisplay )
@@ -33,7 +35,7 @@ timeDisplay::timeDisplay(QWidget *parent, const char *name)
 
     	setFrameShape( QLabel::Panel );
     	setFrameShadow( QLabel::Sunken );
-    	setAlignment( int( QLabel::AlignCenter ) );
+    	setAlignment( int( Qt::AlignCenter ) );
 	setText( "-0:00.00" );
 
 }

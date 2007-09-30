@@ -22,7 +22,7 @@
 #include "songlistview.h"
 
 songListView::songListView(QWidget *parent, const char *name)
- : QListView(parent, name)
+ : Q3ListView(parent, name)
 {
 }
 
@@ -30,10 +30,10 @@ songListView::~songListView()
 {
 }
 
-QDragObject* songListView::dragObject()
+Q3DragObject* songListView::dragObject()
 {
-	QListViewItem* item = selectedItem();
-	QDragObject* dragged = 0;
+	Q3ListViewItem* item = selectedItem();
+	Q3DragObject* dragged = 0;
 
 	switch(item->rtti())
 	{

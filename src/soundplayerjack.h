@@ -24,7 +24,7 @@
 
 #include "soundplayer.h"
 #include <jack/jack.h>
-#include <qvaluevector.h>
+#include <q3valuevector.h>
 
 /**
 @author Jan Boysen
@@ -52,7 +52,7 @@ protected:
 
 	// Jack Stuff below
 	jack_client_t*				jack;
-	QValueVector<jackPort*>	jackPorts;
+	Q3ValueVector<jackPort*>	jackPorts;
 	jack_port_t*				outputPorts[2];
 	bool						buffResetted;
 

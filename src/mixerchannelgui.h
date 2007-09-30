@@ -22,16 +22,16 @@
 #ifndef MIXERCHANNELGUI_H
 #define MIXERCHANNELGUI_H
 
-#include <qframe.h>
+#include <q3frame.h>
 #include <qlabel.h>
 #include <qtoolbutton.h>
 #include <qtimer.h>
-#include <qfiledialog.h>
+#include <q3filedialog.h>
 #include <qmessagebox.h>
-#include <qvaluevector.h>
+#include <q3valuevector.h>
 #include <qsettings.h>
 #include <qdial.h>
-#include <qgroupbox.h>
+#include <q3groupbox.h>
 
 #include "vumeter.h"
 #include "playerchannelfile.h"
@@ -41,12 +41,12 @@
 /**
 @author Jan Boysen
 */
-class mixerChannelGUI : public QFrame
+class mixerChannelGUI : public Q3Frame
 {
   Q_OBJECT
 
 public:
-    mixerChannelGUI( int chID, QWidget* parent = 0, const char* name = 0, WFlags fl = 0 );
+    mixerChannelGUI( int chID, QWidget* parent = 0, const char* name = 0, Qt::WFlags fl = 0 );
     ~mixerChannelGUI();
 
 	virtual void languageChange();

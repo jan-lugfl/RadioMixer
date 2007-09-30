@@ -26,7 +26,7 @@
 #include "kanalpreferences.h"
 #include <qlineedit.h>
 #include <qslider.h>
-#include <qframe.h>
+#include <q3frame.h>
 #include <qradiobutton.h>
 #include <qcombobox.h>
 #include <qcheckbox.h>
@@ -36,7 +36,7 @@ class chanPrefDlg : public KanalPref_dlg
   Q_OBJECT
 
 public:
-  chanPrefDlg(QWidget* parent = 0, const char* name = 0, bool modal = FALSE, WFlags fl = 0 );
+  chanPrefDlg(QWidget* parent = 0, const char* name = 0, bool modal = FALSE, Qt::WFlags fl = 0 );
   ~chanPrefDlg();
   /*$PUBLIC_FUNCTIONS$*/
 

@@ -74,11 +74,11 @@ int soundPlayerJack::process( jack_nframes_t frames, void * arg )
 	soundPlayerJack* self = (soundPlayerJack*)arg;
 	bool playing = FALSE;
 
-	QValueVector<jackPort*>::iterator portIt;
+	Q3ValueVector<jackPort*>::iterator portIt;
 	for( portIt = self->jackPorts.begin(); portIt != self->jackPorts.end(); ++portIt )
 		(*portIt)->process( frames );
 
-	QValueVector<playerChannelStd*>::iterator it;
+	Q3ValueVector<playerChannelStd*>::iterator it;
 	for( it = self->channels.begin(); it != self->channels.end(); it++ )
 	{
 		if( (*it)->isPlaying() )
@@ -150,7 +150,7 @@ void soundPlayerJack::jackShutdown( void * arg )
 
 void soundPlayerJack::unregisterJackPort( jackPort * port)
 {
-	QValueVector<jackPort*>::iterator portIt;
+	Q3ValueVector<jackPort*>::iterator portIt;
 	for( portIt = jackPorts.begin(); portIt != jackPorts.end(); ++portIt )
 		if( (*portIt) == port )
 		{

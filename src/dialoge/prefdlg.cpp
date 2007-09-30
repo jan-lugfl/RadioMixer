@@ -28,7 +28,7 @@
 #include "soundplayeralsa.h"
 #endif
 
-prefDlg::prefDlg(QWidget* parent, const char* name, bool modal, WFlags fl)
+prefDlg::prefDlg(QWidget* parent, const char* name, bool modal, Qt::WFlags fl)
     : PreferencesDlg(parent,name, modal,fl)
 {
 #ifdef HAVE_ALSA

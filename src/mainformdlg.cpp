@@ -22,8 +22,12 @@
 
 
 #include "mainformdlg.h"
+//Added by qt3to4:
+#include <Q3HBoxLayout>
+#include <QLabel>
+#include <QKeyEvent>
 
-mainFormDlg::mainFormDlg(QWidget* parent, const char* name, WFlags fl)
+mainFormDlg::mainFormDlg(QWidget* parent, const char* name, Qt::WFlags fl)
     : RadioMixer(parent,name,fl)
 {
 	// Init playlist Manager
@@ -33,16 +37,16 @@ mainFormDlg::mainFormDlg(QWidget* parent, const char* name, WFlags fl)
 	statusBar()->setSizeGripEnabled( false );
 	soundStatus = new QLabel( statusBar(), "SoundStatus");
 	soundStatus->setText( tr("Sounddevice status: %1").arg(tr("disconnected")) );
-	soundStatus->setPaletteBackgroundColor(red.dark(120));
+	soundStatus->setPaletteBackgroundColor( QColor(Qt::red).dark(120));
 	statusBar()->addWidget( soundStatus, 0, true );
 
 	// init layout
-	channelLayout = new QHBoxLayout( frame10, 5, 5, "Channel Layout" );
+	channelLayout = new Q3HBoxLayout( frame10, 5, 5, "Channel Layout" );
 
 #ifdef ENABLE_HWMIXER
 	mixerStatus = new QLabel( statusBar(), "MixerStatus");
 	mixerStatus->setText(tr("Mixer device status: %1").arg(tr("disconnected")));
-	mixerStatus->setPaletteBackgroundColor(red.dark(120) );
+	mixerStatus->setPaletteBackgroundColor( QColor(Qt::red).dark(120) );
 	statusBar()->addWidget( mixerStatus, 0, true );
 
 	miPu = new mipuCom(this);
@@ -110,7 +114,7 @@ mainFormDlg::mainFormDlg(QWidget* parent, const char* name, WFlags fl)
 mainFormDlg::~mainFormDlg()
 {
 	player->close();
-	QValueVector<mixerChannelGUI*>::iterator playerIt;
+	Q3ValueVector<mixerChannelGUI*>::iterator playerIt;
        	for( playerIt = playerGuis.begin(); playerIt != playerGuis.end(); ++playerIt )
 		delete (*playerIt);
 
@@ -431,7 +435,7 @@ void mainFormDlg::connectNetDevice()
 void mainFormDlg::showMoveChannel()
 {
 	ch_move_dlg moveDialog;
-	QValueVector<mixerChannelGUI*>::iterator playerIt;
+	Q3ValueVector<mixerChannelGUI*>::iterator playerIt;
        	for( playerIt = playerGuis.begin(); playerIt != playerGuis.end(); ++playerIt )
 	{
 		moveDialog.ch_source->insertItem( (*playerIt)->getName() );
@@ -489,7 +493,7 @@ void mainFormDlg::showMoveChannel()
 void mainFormDlg::showDelChannel()
 {
 	ch_del_dlg delDialog;
-	QValueVector<mixerChannelGUI*>::iterator playerIt;
+	Q3ValueVector<mixerChannelGUI*>::iterator playerIt;
 	for( playerIt = playerGuis.begin(); playerIt != playerGuis.end(); ++playerIt )
 		delDialog.ch_source->insertItem( (*playerIt)->getName() );
 
@@ -526,7 +530,7 @@ void mainFormDlg::showAddChannel()
 	addDialog.ch_add_type->insertItem( tr("Jack channel") );
 #endif
 
-	QValueVector<mixerChannelGUI*>::iterator playerIt;
+	Q3ValueVector<mixerChannelGUI*>::iterator playerIt;
        	for( playerIt = playerGuis.begin(); playerIt != playerGuis.end(); ++playerIt )
 		addDialog.ch_source->insertItem( (*playerIt)->getName() );
 
@@ -560,7 +564,7 @@ void mainFormDlg::showAddChannel()
 			newPos = addDialog.ch_source->currentItem()+2;
 		newChannel->changePos( newPos );
 
-		QValueVector<mixerChannelGUI*>::iterator playerIt;
+		Q3ValueVector<mixerChannelGUI*>::iterator playerIt;
 	       	for( playerIt = playerGuis.begin(); playerIt != playerGuis.end(); ++playerIt )
 			if((*playerIt)->currentPosition() >= newPos && (*playerIt) != newChannel )
 				(*playerIt)->changePos( (*playerIt)->currentPosition()+1 );
@@ -577,7 +581,7 @@ void mainFormDlg::saveSettings( )
 	config->writeEntry( "/radiomixer/General/numChannels", (int)playerGuis.count() );
 	delete config;
 
-	QValueVector<mixerChannelGUI*>::iterator playerIt;
+	Q3ValueVector<mixerChannelGUI*>::iterator playerIt;
 	for( playerIt = playerGuis.begin(); playerIt != playerGuis.end(); ++playerIt )
 		(*playerIt)->saveSettings();
 }
@@ -586,7 +590,7 @@ void mainFormDlg::showCuesWindow()
 {
 	cueListDlg* cueListDialog = new cueListDlg(this);
 
-	QValueVector<mixerChannelGUI*>::iterator playerIt;
+	Q3ValueVector<mixerChannelGUI*>::iterator playerIt;
 	for( playerIt = playerGuis.begin(); playerIt != playerGuis.end(); ++playerIt )
 	{
 		if( (*playerIt)->getType() == "PLAYER" )
@@ -618,7 +622,7 @@ void mainFormDlg::startALSA()
 	config = new QSettings();
 	player->open( config->readEntry( "/radiomixer/sound/alsaDevice", "default" ) );
 	soundStatus->setText(tr("Sound device status: %1 %2").arg("ALSA").arg( player->isConnected()?tr("connected"):tr("disconnected") ));
-	soundStatus->setPaletteBackgroundColor( (player->isConnected()?green:red).dark(120) );
+	soundStatus->setPaletteBackgroundColor( QColor(player->isConnected()?Qt::green:Qt::red).dark(120) );
 	delete config;
 #endif
 }
@@ -628,7 +632,7 @@ void mainFormDlg::disconnectJackd()
 #ifdef HAVE_JACK
 	player->close();
 	soundStatus->setText(tr("Sound device status: %1 %2").arg("JACK").arg(tr("disconnected")));
-	soundStatus->setPaletteBackgroundColor( red.dark(120) );
+	soundStatus->setPaletteBackgroundColor( QColor(Qt::red).dark(120) );
 #endif
 }
 
@@ -638,7 +642,7 @@ void mainFormDlg::connectJackd()
 #ifdef HAVE_JACK
 	player->open("");
 	soundStatus->setText(tr("Sound device status: %1 %2").arg("JACK").arg( player->isConnected()?tr("connected"):tr("disconnected") ));
-	soundStatus->setPaletteBackgroundColor( (player->isConnected()?green:red).dark(120) );
+	soundStatus->setPaletteBackgroundColor( QColor(player->isConnected()?Qt::green:Qt::red).dark(120) );
 #endif
 }
 
@@ -646,7 +650,7 @@ void mainFormDlg::networkDeviceStatusRefresh( )
 {
 #ifdef ENABLE_HWMIXER
 	mixerStatus->setText(tr("Mixer device status: %1").arg( miPu->isConnected()?tr("connected"):tr("disconnected") ));
-	mixerStatus->setPaletteBackgroundColor( (miPu->isConnected()?green:red).dark(120) );
+	mixerStatus->setPaletteBackgroundColor( QColor(miPu->isConnected()?Qt::green:Qt::red).dark(120) );
 #endif
 }
 
@@ -666,13 +670,13 @@ void mainFormDlg::showPlaylistManager( bool state )
 
 void mainFormDlg::reorderChannels()
 {
-	QValueVector<mixerChannelGUI*>::iterator playerIt;
+	Q3ValueVector<mixerChannelGUI*>::iterator playerIt;
 	for( playerIt = playerGuis.begin(); playerIt != playerGuis.end(); ++playerIt )
 		channelLayout->remove( *playerIt );
 	int channels = 1;
 	while( channels <= playerGuis.count() )
 	{
-		QValueVector<mixerChannelGUI*>::iterator playerIt;
+		Q3ValueVector<mixerChannelGUI*>::iterator playerIt;
 		for( playerIt = playerGuis.begin(); playerIt != playerGuis.end(); ++playerIt )
 			if( (*playerIt)->currentPosition() == channels )
 				channelLayout->addWidget( *playerIt );

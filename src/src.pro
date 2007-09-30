@@ -3,7 +3,8 @@
 # Unterordner relativ zum Projektordner: ./src
 # Das Target ist eine Anwendung:  ../bin/radiomixer
 
-FORMS += mainform.ui 
+#The following line was changed from FORMS to FORMS3 by qt3to4
+FORMS3 += mainform.ui 
 HEADERS += mainformdlg.h \
            soundplayer.h \
            playerchannelstd.h \
@@ -75,3 +76,8 @@ songdb {
     HEADERS += playlistitemsongdb.h
     SOURCES += playlistitemsongdb.cpp
 }
+#The following line was inserted by qt3to4
+QT += xml  qt3support 
+#The following line was inserted by qt3to4
+CONFIG += uic3
+

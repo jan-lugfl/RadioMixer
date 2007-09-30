@@ -42,13 +42,17 @@
 #endif
 
 #include <qlineedit.h>
-#include <qvaluevector.h>
+#include <q3valuevector.h>
 #include <qmessagebox.h>
 #include <qsettings.h>
 #include <qstatusbar.h>
-#include <qpopupmenu.h>
+#include <q3popupmenu.h>
 #include <qaction.h>
 #include <qtabwidget.h>
+//Added by qt3to4:
+#include <Q3HBoxLayout>
+#include <QLabel>
+#include <QKeyEvent>
 
 // Andere Dialoge einbinden
 #include "playlistmanager.h"
@@ -65,7 +69,7 @@ class mainFormDlg : public RadioMixer
   Q_OBJECT
 
 public:
-  mainFormDlg(QWidget* parent = 0, const char* name = 0, WFlags fl = 0 );
+  mainFormDlg(QWidget* parent = 0, const char* name = 0, Qt::WFlags fl = 0 );
   ~mainFormDlg();
     /*$PUBLIC_FUNCTIONS$*/
 
@@ -83,7 +87,7 @@ protected:
 	mipuCom* miPu;
 	QTimer refTimer;
 #endif
-	QValueVector<mixerChannelGUI*> playerGuis;
+	Q3ValueVector<mixerChannelGUI*> playerGuis;
 
 	playListManager*	playListMgr;
 
@@ -93,7 +97,7 @@ protected:
 	// Meta Info for Live Streaming with Ices
 	metaInfo meta;
 
-	QHBoxLayout* channelLayout;
+	Q3HBoxLayout* channelLayout;
 
 public slots:
   /*$PUBLIC_SLOTS$*/

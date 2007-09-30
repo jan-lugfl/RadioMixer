@@ -26,7 +26,7 @@ mpgDecoder::mpgDecoder(FILE* File, QObject *parent, const char *name)
 {
 	// use QFile as input Buffer, which is needed by libMad, cause it cannot detect EOF....
 	madFile = new QFile();
-	madFile->open(IO_ReadOnly, fHandle);
+	madFile->open(QIODevice::ReadOnly, fHandle);
 
 	scanFile();
 
@@ -271,7 +271,7 @@ void mpgDecoder::readMetaFromFile( playListItem * pli )
 {
 	// use QFile as input Buffer, which is needed by libMad, cause it cannot detect EOF....
 	QFile madFile(pli->getFile());
-	madFile.open( IO_ReadOnly );
+	madFile.open( QIODevice::ReadOnly );
 
 	unsigned char buffer[65536];
 

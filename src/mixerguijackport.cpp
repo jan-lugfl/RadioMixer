@@ -21,7 +21,7 @@
  ***************************************************************************/
 #include "mixerguijackport.h"
 
-mixerGuiJackport::mixerGuiJackport( soundPlayerJack* jackPlayer, int chID, QWidget* parent, const char* name, WFlags fl )
+mixerGuiJackport::mixerGuiJackport( soundPlayerJack* jackPlayer, int chID, QWidget* parent, const char* name, Qt::WFlags fl )
  : mixerChannelGUI(chID, parent, name, fl), mute(0)
 {
 	jackMixer = new playerChannelJackport( jackPlayer, name, this );

@@ -34,7 +34,7 @@ class mixerGuiJackport : public mixerChannelGUI
 {
 Q_OBJECT
 public:
-    mixerGuiJackport( soundPlayerJack* jackPlayer, int chID, QWidget* parent = 0, const char* name = 0, WFlags fl = 0);
+    mixerGuiJackport( soundPlayerJack* jackPlayer, int chID, QWidget* parent = 0, const char* name = 0, Qt::WFlags fl = 0);
     ~mixerGuiJackport();
 
     virtual void languageChange();

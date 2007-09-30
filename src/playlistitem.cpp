@@ -159,13 +159,13 @@ QColor playListItem::getBackgroundColor( )
 	switch( state )
 	{
 		case Played:
-			return lightGray;
+			return Qt::lightGray;
 		case Cued:
-			return  yellow.light( 175 );
+			return  QColor(Qt::yellow).light( 175 );
 		case playListItem::Playing:
-			return green.light( 175 );
+			return QColor(Qt::green).light( 175 );
 	}
-	return white;
+	return Qt::white;
 }
 
 bool playListItem::hasCostumBackgroundColor( )

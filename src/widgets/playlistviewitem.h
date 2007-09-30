@@ -24,24 +24,26 @@
 
 #include <playlistitem.h>
 #include <playlistitemsongdb.h>
-#include <qlistview.h>
+#include <q3listview.h>
 #include <qdatetime.h>
 #include <qpixmap.h>
-#include <qdragobject.h>
+#include <q3dragobject.h>
+//Added by qt3to4:
+#include <QDropEvent>
 
 #define PLAYLISTVIEWITEM_RTTI 1101
 
 /**
 	@author Jan Boysen <trekkie@media-mission.de>
 */
-class playListViewItem : public QObject, public QListViewItem
+class playListViewItem : public QObject, public Q3ListViewItem
 {
 Q_OBJECT
 public:
-	playListViewItem( QListView* parent );
-	playListViewItem( QListView* parent, playListItem* item, QListViewItem* after = 0 );
-	playListViewItem( QListViewItem* parent, QString newSong, QListViewItem* after = 0 );
-	playListViewItem( QListViewItem* parent, QDomDocument domdoc );
+	playListViewItem( Q3ListView* parent );
+	playListViewItem( Q3ListView* parent, playListItem* item, Q3ListViewItem* after = 0 );
+	playListViewItem( Q3ListViewItem* parent, QString newSong, Q3ListViewItem* after = 0 );
+	playListViewItem( Q3ListViewItem* parent, QDomDocument domdoc );
 	playListViewItem( playListViewItem* parent );
 	~playListViewItem();
 
@@ -65,7 +67,7 @@ protected slots:
 
 };
 
-class songDragObject : public QStoredDrag
+class songDragObject : public Q3StoredDrag
 {
 public:
 	songDragObject( playListViewItem* item, QWidget* dragSource, const char * name );
