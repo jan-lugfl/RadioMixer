@@ -9,7 +9,8 @@ FORMS += aboutDialog.ui \
          ch_move_dlg.ui \
          cuelist.ui \
 	 preferencesdlg.ui \
-         kanalpreferences.ui
+         kanalpreferences.ui \
+	 playlistng.ui
 HEADERS += prefdlg.h \
            chanprefdlg.h \
            cuelistdlg.h \
@@ -26,10 +27,6 @@ include(../../conf.pri)
 
 #The following line was inserted by qt3to4
 QT += xml  qt3support 
-#The following line was inserted by qt3to4
-CONFIG += uic3
-#The following line was changed from FORMS to FORMS3 by qt3to4
-FORMS3 +=  playlistng.ui
 
 DESTDIR = .
 

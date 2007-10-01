@@ -23,12 +23,13 @@
 #ifndef PLAYLISTMANAGER_H
 #define PLAYLISTMANAGER_H
 
-#include "playlistng.h"
+#include "ui_playlistng.h"
 
 #include "widgets/playlist.h"
 #include "playlistviewitem.h"
 #include "songlistview.h"
 #include "timer.h"
+#include <QDialog>
 
 #ifdef ENABLE_SONGDB
 #include "playlistitemsongdb.h"
@@ -54,7 +55,7 @@
 //Added by qt3to4:
 #include <QResizeEvent>
 
-class playListManager: public playListNG {
+class playListManager: public QDialog, public Ui::playListNG {
 Q_OBJECT
 
 public:

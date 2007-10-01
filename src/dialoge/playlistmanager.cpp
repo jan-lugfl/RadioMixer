@@ -22,12 +22,15 @@
 
 #include "playlistmanager.h"
 //Added by qt3to4:
+#include <QtGui>
 #include <QResizeEvent>
 #include <Q3PopupMenu>
 
 playListManager::playListManager(QWidget *parent, const char *name)
- : playListNG(parent, name)
+ : QDialog( parent, name ), playListNG()
 {
+	setupUi( this );
+
 	QSettings* config = new QSettings();
 
 	playListView = new songListView( playListFrame, "playListView" );
@@ -37,7 +40,7 @@ playListManager::playListManager(QWidget *parent, const char *name)
 	playListView->setAcceptDrops( TRUE );
 	playListView->setDefaultRenameAction( Q3ListView::Accept );
 #warning Port to QT4
-// 	playListFrameLayout->addWidget( playListView, 0, 0 );
+//	playListFrame->addWidget( playListView, 0, 0 );
 
 	connect( playListView, SIGNAL( rightButtonPressed ( Q3ListViewItem *, const QPoint &, int ) ), this, SLOT( showPlaylistContextmenu( Q3ListViewItem*, const QPoint&, int ) ));
 
@@ -293,7 +296,7 @@ void playListManager::showSongDBContextmenu( Q3ListViewItem * item, const QPoint
 void playListManager::resizeEvent( QResizeEvent *e )
 {
 	miscSplitter->resize( e->size().width()-20, e->size().height()-20);
-	playListNG::resizeEvent( e );
+//	resizeEvent( e );
 }
 
 void playListManager::updateLastPlayed( playListItem * item )
