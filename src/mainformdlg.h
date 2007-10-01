@@ -62,7 +62,6 @@
 #include "ch_del_dlg.h"
 #include "ch_move_dlg.h"
 #include "cuelistdlg.h"
-#include "aboutDialog.h"
 
 class mainFormDlg : public RadioMixer
 {

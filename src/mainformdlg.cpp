@@ -20,8 +20,9 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 
-
 #include "mainformdlg.h"
+#include "ui_aboutDialog.h"
+
 //Added by qt3to4:
 #include <Q3HBoxLayout>
 #include <QLabel>
@@ -604,7 +605,9 @@ void mainFormDlg::showCuesWindow()
 
 void mainFormDlg::showAbout()
 {
-	aboutDialog	aboutDlg;
+	QDialog dialog(this, tr("RadioMixer"));
+	Ui::aboutDialog aboutDlg;
+	aboutDlg.setupUi( &dialog );
 	aboutDlg.versionInfo->setText(
 			QString("<h1><p align=\"center\">Radiomixer ")+
 			QString(VERSION_MAJOR)+
@@ -613,7 +616,7 @@ void mainFormDlg::showAbout()
 			QString(VERSION_SUFFIX)+
 			QString("</p></h1>")
 		);
-	aboutDlg.exec();
+	dialog.exec();
 }
 
 void mainFormDlg::startALSA()

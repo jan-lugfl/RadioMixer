@@ -43,6 +43,7 @@ warn_off \
 qt \
 thread
 TEMPLATE = app
+RESOURCES += ../radiomixer.qrc
 include(../conf.pri)
 vorbisSupport {
     HEADERS += oggdecoder.h

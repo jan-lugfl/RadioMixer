@@ -1,0 +1,5 @@
+<RCC>
+    <qresource prefix="/logo" >
+        <file>images/radiomixer-trans.png</file>
+    </qresource>
+</RCC>

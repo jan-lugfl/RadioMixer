@@ -3,16 +3,7 @@
 # Unterordner relativ zum Projektordner: ./src/dialoge
 # Das Target ist eine Bibliothek:  
 
-#The following line was changed from FORMS to FORMS3 by qt3to4
-FORMS3 += preferencesdlg.ui \
-         help_playlist_dlg.ui \
-         kanalpreferences.ui \
-         ch_add_dlg.ui \
-         ch_del_dlg.ui \
-         ch_move_dlg.ui \
-         cuelist.ui \
-         aboutDialog.ui \
-         playlistng.ui
+FORMS += aboutDialog.ui
 HEADERS += prefdlg.h \
            chanprefdlg.h \
            cuelistdlg.h \
@@ -30,8 +21,17 @@ qt \
 staticlib
 TEMPLATE = lib
 include(../../conf.pri)
+
 #The following line was inserted by qt3to4
 QT += xml  qt3support 
 #The following line was inserted by qt3to4
 CONFIG += uic3
-
+#The following line was changed from FORMS to FORMS3 by qt3to4
+FORMS3 += preferencesdlg.ui \
+         help_playlist_dlg.ui \
+         kanalpreferences.ui \
+         ch_add_dlg.ui \
+         ch_del_dlg.ui \
+         ch_move_dlg.ui \
+         cuelist.ui \
+         playlistng.ui
