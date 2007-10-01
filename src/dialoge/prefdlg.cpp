@@ -29,8 +29,9 @@
 #endif
 
 prefDlg::prefDlg(QWidget* parent, const char* name, bool modal, Qt::WFlags fl)
-    : PreferencesDlg(parent,name, modal,fl)
+ : QDialog( parent,name, modal,fl ), PreferencesDlg()
 {
+	setupUi( this );
 #ifdef HAVE_ALSA
 	sndDevice->insertStringList( soundPlayerALSA::getDevices() );
 #else

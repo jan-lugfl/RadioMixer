@@ -23,13 +23,10 @@
 #ifndef PREFDLG_H
 #define PREFDLG_H
 
-#include "preferencesdlg.h"
-#include <qcheckbox.h>
-#include <qradiobutton.h>
-#include <qlineedit.h>
-#include <qcombobox.h>
+#include "ui_preferencesdlg.h"
+#include <QDialog>
 
-class prefDlg : public PreferencesDlg
+class prefDlg : public QDialog, public Ui::PreferencesDlg
 {
   Q_OBJECT
 

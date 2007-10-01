@@ -20,10 +20,12 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 #include "cuelistdlg.h"
+#include <QtGui>
 
 cueListDlg::cueListDlg(QWidget *parent, const char *name)
-    :cuelist(parent, name)
+ :QDialog(parent, name), cuelist()
 {
+	setupUi( this );
 }
 
 void cueListDlg::update( metaTag meta, QString channelName )

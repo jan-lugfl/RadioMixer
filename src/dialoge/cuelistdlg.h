@@ -22,12 +22,11 @@
 #ifndef CUELISTDLG_H
 #define CUELISTDLG_H
 
-#include "cuelist.h"
+#include "ui_cuelist.h"
 #include "metatag.h"
+#include <QDialog>
 
-#include <q3listview.h>
-
-class cueListDlg: public cuelist {
+class cueListDlg: public QDialog, public Ui::cuelist {
 Q_OBJECT
 public:
     cueListDlg(QWidget *parent = 0, const char *name = 0);

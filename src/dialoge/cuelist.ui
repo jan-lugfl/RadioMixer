@@ -1,68 +1,53 @@
-<!DOCTYPE UI><UI version="3.3" stdsetdef="1">
-<class>cuelist</class>
-<widget class="QDialog">
-    <property name="name">
-        <cstring>cuelist</cstring>
-    </property>
-    <property name="geometry">
-        <rect>
-            <x>0</x>
-            <y>0</y>
-            <width>672</width>
-            <height>215</height>
-        </rect>
-    </property>
-    <property name="caption">
-        <string>Cuelist</string>
-    </property>
-    <grid>
-        <property name="name">
-            <cstring>unnamed</cstring>
-        </property>
-        <widget class="QListView" row="0" column="0">
-            <column>
-                <property name="text">
-                    <string>Channel</string>
-                </property>
-                <property name="clickable">
-                    <bool>false</bool>
-                </property>
-                <property name="resizable">
-                    <bool>true</bool>
-                </property>
-            </column>
-            <column>
-                <property name="text">
-                    <string>Title</string>
-                </property>
-                <property name="clickable">
-                    <bool>false</bool>
-                </property>
-                <property name="resizable">
-                    <bool>true</bool>
-                </property>
-            </column>
-            <column>
-                <property name="text">
-                    <string>State</string>
-                </property>
-                <property name="clickable">
-                    <bool>true</bool>
-                </property>
-                <property name="resizable">
-                    <bool>true</bool>
-                </property>
-            </column>
-            <property name="name">
-                <cstring>cueList</cstring>
-            </property>
-            <property name="font">
-                <font>
-                    <pointsize>9</pointsize>
-                </font>
-            </property>
-        </widget>
-    </grid>
-</widget>
-<layoutdefaults spacing="6" margin="11"/>
-</UI>
+<ui version="4.0" >
+ <class>cuelist</class>
+ <widget class="QDialog" name="cuelist" >
+  <property name="geometry" >
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>672</width>
+    <height>215</height>
+   </rect>
+  </property>
+  <property name="windowTitle" >
+   <string>Cuelist</string>
+  </property>
+  <layout class="QGridLayout" >
+   <item row="0" column="0" >
+    <widget class="Q3ListView" name="cueList" >
+     <property name="font" >
+      <font>
+       <pointsize>9</pointsize>
+      </font>
+     </property>
+     <column>
+      <property name="text" >
+       <string>Channel</string>
+      </property>
+     </column>
+     <column>
+      <property name="text" >
+       <string>Title</string>
+      </property>
+     </column>
+     <column>
+      <property name="text" >
+       <string>State</string>
+      </property>
+     </column>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <layoutdefault spacing="6" margin="11" />
+ <pixmapfunction>qPixmapFromMimeSource</pixmapfunction>
+ <customwidgets>
+  <customwidget>
+   <class>Q3ListView</class>
+   <extends>Q3Frame</extends>
+   <header>q3listview.h</header>
+  </customwidget>
+ </customwidgets>
+ <resources/>
+ <connections/>
+</ui>
