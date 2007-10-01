@@ -3,7 +3,10 @@
 # Unterordner relativ zum Projektordner: ./src/dialoge
 # Das Target ist eine Bibliothek:  
 
-FORMS += aboutDialog.ui
+FORMS += aboutDialog.ui \
+         ch_add_dlg.ui \
+         ch_del_dlg.ui \
+         ch_move_dlg.ui
 HEADERS += prefdlg.h \
            chanprefdlg.h \
            cuelistdlg.h \
@@ -30,8 +33,5 @@ CONFIG += uic3
 FORMS3 += preferencesdlg.ui \
          help_playlist_dlg.ui \
          kanalpreferences.ui \
-         ch_add_dlg.ui \
-         ch_del_dlg.ui \
-         ch_move_dlg.ui \
          cuelist.ui \
          playlistng.ui

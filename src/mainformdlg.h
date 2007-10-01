@@ -58,9 +58,6 @@
 #include "playlistmanager.h"
 #include "prefdlg.h"
 #include "metainfo.h"
-#include "ch_add_dlg.h"
-#include "ch_del_dlg.h"
-#include "ch_move_dlg.h"
 #include "cuelistdlg.h"
 
 class mainFormDlg : public RadioMixer

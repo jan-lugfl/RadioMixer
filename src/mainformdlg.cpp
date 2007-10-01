@@ -22,6 +22,9 @@
 
 #include "mainformdlg.h"
 #include "ui_aboutDialog.h"
+#include "ui_ch_add_dlg.h"
+#include "ui_ch_del_dlg.h"
+#include "ui_ch_move_dlg.h"
 
 //Added by qt3to4:
 #include <Q3HBoxLayout>
@@ -435,7 +438,9 @@ void mainFormDlg::connectNetDevice()
 
 void mainFormDlg::showMoveChannel()
 {
-	ch_move_dlg moveDialog;
+	QDialog dialog(this, tr("move a channel"));
+	Ui::ch_move_dlg moveDialog;
+	moveDialog.setupUi( &dialog );
 	Q3ValueVector<mixerChannelGUI*>::iterator playerIt;
        	for( playerIt = playerGuis.begin(); playerIt != playerGuis.end(); ++playerIt )
 	{
@@ -443,7 +448,7 @@ void mainFormDlg::showMoveChannel()
 		moveDialog.ch_destination->insertItem( (*playerIt)->getName() );
 	}
 	
-	if( moveDialog.exec() )
+	if( dialog.exec() )
 	{
 		mixerChannelGUI* tmpPlayer1 = NULL;
 		mixerChannelGUI* tmpPlayer2 = NULL;
@@ -493,12 +498,14 @@ void mainFormDlg::showMoveChannel()
 
 void mainFormDlg::showDelChannel()
 {
-	ch_del_dlg delDialog;
+	QDialog dialog(this, tr("remove a channel"));;
+	Ui::ch_del_dlg delDialog;
+	delDialog.setupUi( &dialog );
 	Q3ValueVector<mixerChannelGUI*>::iterator playerIt;
 	for( playerIt = playerGuis.begin(); playerIt != playerGuis.end(); ++playerIt )
 		delDialog.ch_source->insertItem( (*playerIt)->getName() );
 
-	if( delDialog.exec() )
+	if( dialog.exec() )
 	{
 		int oldPos;
 		for( playerIt = playerGuis.begin(); playerIt != playerGuis.end(); ++playerIt )
@@ -522,7 +529,9 @@ void mainFormDlg::showDelChannel()
 
 void mainFormDlg::showAddChannel()
 {
-	ch_add_dlg addDialog;
+	QDialog dialog( this, tr("add a new channel"));
+	Ui::ch_add_dlg addDialog;
+	addDialog.setupUi( &dialog );
 	addDialog.ch_add_type->insertItem( tr("MediaPlayer channel") );
 #ifdef HAVE_ALSA
 	addDialog.ch_add_type->insertItem( tr("ALSA Mixer channel") );
@@ -535,7 +544,7 @@ void mainFormDlg::showAddChannel()
        	for( playerIt = playerGuis.begin(); playerIt != playerGuis.end(); ++playerIt )
 		addDialog.ch_source->insertItem( (*playerIt)->getName() );
 
-	if( addDialog.exec() )
+	if( dialog.exec() )
 	{
 		frame10->hide();
 		switch( addDialog.ch_add_type->currentItem() )
