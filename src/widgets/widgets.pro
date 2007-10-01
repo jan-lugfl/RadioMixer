@@ -19,9 +19,7 @@ SOURCES += glowbutton.cpp \
            playlistviewitem.cpp \
            songlistview.cpp \
            timer.cpp
-INCLUDEPATH += ../../src
-CONFIG += release \
-warn_on \
+CONFIG += warn_on \
 qt \
 staticlib
 TEMPLATE = lib
@@ -30,4 +28,8 @@ FORMS += timerSettings.ui
 
 #The following line was inserted by qt3to4
 QT += xml  qt3support 
+
+DESTDIR = .
+
+INCLUDEPATH += ../../src
 

@@ -4,7 +4,7 @@
 # Das Target ist eine Anwendung:  ../bin/radiomixer
 
 #The following line was changed from FORMS to FORMS3 by qt3to4
-FORMS3 += mainform.ui 
+FORMS3 += mainform.ui
 HEADERS += mainformdlg.h \
            soundplayer.h \
            playerchannelstd.h \
@@ -30,16 +30,8 @@ SOURCES += radiomixer.cpp \
            metatag.cpp \
            filedecoder.cpp \
            playlistitem.cpp
-TARGETDEPS += ../src/widgets/libwidgets.a \
-../src/dialoge/libdialoge.a
-LIBS += ../src/dialoge/libdialoge.a \
-../src/widgets/libwidgets.a
-INCLUDEPATH += ../src \
-../src/dialoge \
-../src/widgets
 TARGET = ../bin/radiomixer
-CONFIG += release \
-warn_off \
+CONFIG += warn_off \
 qt \
 thread
 TEMPLATE = app
@@ -82,3 +74,13 @@ QT += xml  qt3support
 #The following line was inserted by qt3to4
 CONFIG += uic3
 
+CONFIG -= warn_off
+DESTDIR = .
+
+INCLUDEPATH += ../src \
+../src/dialoge \
+../src/widgets
+LIBS += ../src/dialoge/libdialoge.a \
+../src/widgets/libwidgets.a
+TARGETDEPS += ../src/widgets/libwidgets.a \
+../src/dialoge/libdialoge.a

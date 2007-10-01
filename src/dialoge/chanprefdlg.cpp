@@ -20,12 +20,13 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 
-
 #include "chanprefdlg.h"
 
 chanPrefDlg::chanPrefDlg(QWidget* parent, const char* name, bool modal, Qt::WFlags fl)
-    : KanalPref_dlg(parent,name, modal,fl)
-{}
+    : QDialog(parent,name, modal,fl), Ui::KanalPref_dlg()
+{
+	setupUi( this );
+}
 
 chanPrefDlg::~chanPrefDlg()
 {}

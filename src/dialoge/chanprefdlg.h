@@ -23,15 +23,10 @@
 #ifndef CHANPREFDLG_H
 #define CHANPREFDLG_H
 
-#include "kanalpreferences.h"
-#include <qlineedit.h>
-#include <qslider.h>
-#include <q3frame.h>
-#include <qradiobutton.h>
-#include <qcombobox.h>
-#include <qcheckbox.h>
+#include <QDialog>
+#include "ui_kanalpreferences.h"
 
-class chanPrefDlg : public KanalPref_dlg
+class chanPrefDlg : public QDialog, public Ui::KanalPref_dlg
 {
   Q_OBJECT
 

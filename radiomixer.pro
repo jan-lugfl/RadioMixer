@@ -3,9 +3,7 @@
 # Unterordner relativ zum Projektordner: .
 # Das Target ist Projekt im Unterordner 
 
-TARGETDEPS += src/widgets/widgets \
-              src/dialoge/dialoge \
-              src/../bin/radiomixer 
+TARGETDEPS += src/../bin/radiomixer
 CONFIG += release \
           warn_off \
           qt \
