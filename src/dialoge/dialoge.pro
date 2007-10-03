@@ -4,7 +4,6 @@
 # Das Target ist eine Bibliothek:  
 
 FORMS += preferencesdlg.ui \
-         help_playlist_dlg.ui \
          kanalpreferences.ui \
          ch_add_dlg.ui \
          ch_del_dlg.ui \
