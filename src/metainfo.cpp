@@ -20,6 +20,7 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 #include "metainfo.h"
+#include <cstdlib>
 
 metaInfo::metaInfo(QObject *parent, const char *name)
  : QObject(parent, name)
