@@ -22,7 +22,7 @@
 #ifndef TIMER_H
 #define TIMER_H
 
-#include "timerSettings.h"
+//#include "timerSettings.h"
 #include <qlineedit.h>
 #include <qspinbox.h>
 

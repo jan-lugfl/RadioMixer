@@ -24,7 +24,7 @@
 #define MAINFORMDLG_H
 
 #include "version.h"
-#include "mainform.h"
+#include "ui_mainform.h"
 #include "mixerguiplayer.h"
 
 #ifdef HAVE_ALSA
@@ -60,7 +60,7 @@
 #include "metainfo.h"
 #include "cuelistdlg.h"
 
-class mainFormDlg : public RadioMixer
+class mainFormDlg : public Ui::RadioMixer
 {
   Q_OBJECT
 

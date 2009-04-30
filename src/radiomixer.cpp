@@ -23,6 +23,7 @@
 #ifdef HAVE_CONFIG_H
 #include <config.h>
 #endif
+#define HAVE_JACK
 
 #ifndef HAVE_ALSA
 #ifndef HAVE_JACK
@@ -32,14 +33,15 @@
 #endif //HAVE_ALSA
 
 #include <qapplication.h>
+#include <q3mainwindow.h>
 #include "mainformdlg.h"
 
 int main( int argc, char ** argv ) {
     QApplication a( argc, argv );
+    Q3MainWindow main;
     mainFormDlg mw;
-    a.setMainWidget( &mw );
-    mw.setCaption( "RadioMixer" );
-    mw.show();
+
+    mw.setupUi( &main );
     a.connect( &a, SIGNAL(lastWindowClosed()), &a, SLOT(quit()) );
     return a.exec();
 }

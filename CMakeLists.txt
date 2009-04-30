@@ -16,6 +16,7 @@ INCLUDE( ${QT_USE_FILE} )
 
 #add definitions, compiler switches, etc.
 ADD_DEFINITIONS(-Wall -O2)
+INCLUDE_DIRECTORIES( ${CMAKE_BINARY_DIR} )
 ADD_SUBDIRECTORY( src )
 
 SET( RADIOMIXER_RCS

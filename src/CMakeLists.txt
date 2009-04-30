@@ -1,4 +1,5 @@
-ADD_SUBDIRECTORY( widgets dialoge )
+ADD_SUBDIRECTORY( widgets )
+ADD_SUBDIRECTORY( dialoge )
 
 SET( SRC_CPPS
 	channelbufmngr.cpp
@@ -15,7 +16,6 @@ SET( SRC_CPPS
 	mpgdecoder.cpp
 	playerchannelfile.cpp
 	playlistitem.cpp
-	ringbuffer.cpp
 	soundplayerjack.cpp
 	mainformdlg.cpp
 	mipucom.cpp
@@ -30,5 +30,7 @@ SET( SRC_UIS
 	mainform.ui
 )
 
+INCLUDE_DIRECTORIES( "." "widgets" "dialoge" ${CMAKE_BINARY_DIR}/src/widgets ${CMAKE_BINARY_DIR}/src/dialoge ${CMAKE_BINARY_DIR}/src )
 QT4_WRAP_UI( SRC_UI_HDRS ${SRC_UIS} )
-ADD_EXECUTABLE(radiomixer ${SRC_CPPS} ${RADIOMIXER_RC_SRCS} )
+ADD_EXECUTABLE(radiomixer ${SRC_CPPS} ${SRC_UI_HDRS} ${RADIOMIXER_RC_SRCS} )
+ADD_DEPENDENCIES( radiomixer dialoge widgets )
