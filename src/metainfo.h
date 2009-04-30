@@ -36,7 +36,7 @@ class metaInfo : public QObject
 {
 Q_OBJECT
 public:
-    metaInfo(QObject *parent = 0, const char *name = 0);
+    metaInfo(QObject *parent = 0);
     ~metaInfo();
 
 protected:

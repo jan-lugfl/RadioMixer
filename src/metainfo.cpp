@@ -20,10 +20,11 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 #include "metainfo.h"
+#include <cstdlib>
 #include <QTextStream>
 
-metaInfo::metaInfo(QObject *parent, const char *name)
- : QObject(parent, name)
+metaInfo::metaInfo(QObject *parent)
+ : QObject(parent)
 {
 	enabled = FALSE;
 	stationMode = FALSE;

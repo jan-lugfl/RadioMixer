@@ -33,9 +33,9 @@
 #include <qdial.h>
 #include <q3groupbox.h>
 
-#include "vumeter.h"
+#include "widgets/vumeter.h"
 #include "playerchannelfile.h"
-#include "chanprefdlg.h"
+#include "dialoge/chanprefdlg.h"
 #include "metatag.h"
 
 /**
