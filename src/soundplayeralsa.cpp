@@ -72,6 +72,7 @@ void alsaPlayerThread::open( QString device )
 		QMessageBox::warning( NULL, QObject::tr("RadioMixer - ALSA"), QObject::tr("ALSA Device \"%1\" allready opened..").arg(device), QMessageBox::Ok, QMessageBox::NoButton, QMessageBox::NoButton);
 	}else
 	{
+#ifdef HAVE_ALSA
  		snd_device = device;
 		/* Allocate the snd_pcm_hw_params_t structure on the stack. */
 		snd_pcm_hw_params_alloca(&hwparams);
@@ -134,6 +135,7 @@ void alsaPlayerThread::open( QString device )
 			qWarning( QObject::tr("Error setting HW parms.") );
 		alsaPlayer->devOpened = TRUE;
 		qDebug( QObject::tr("ALSA Device \"%1\"opened: ").arg(device));
+#endif
 	}
 }
 
@@ -150,6 +152,7 @@ void alsaPlayerThread::run()
 		}
 		if( playing )
 		{
+#ifdef HAVE_ALSA
 			//reset Alsa RingBuffer if ALSA has detected an Bufferunrerun.......
 			if( snd_pcm_state(alsa_handle) == SND_PCM_STATE_XRUN )
 				snd_pcm_prepare(alsa_handle);
@@ -157,6 +160,7 @@ void alsaPlayerThread::run()
 			alsaPlayer->interleave();
 			snd_pcm_writei(alsa_handle, alsaPlayer->outputBuffer, 1024);
 			msleep(5);
+#endif
 		}else
 		{
 			msleep(100);
@@ -172,6 +176,7 @@ void alsaPlayerThread::run()
  */
 QStringList soundPlayerALSA::getDevices( )
 {
+#ifdef HAVE_ALSA
 	// This Code has been inspired by the ALSA Outplugplugin of XMMS.....
 	int err=0;
 	int card=-1;
@@ -224,5 +229,6 @@ QStringList soundPlayerALSA::getDevices( )
 		snd_card_next(&card);
 	}
 	return ret;
+#endif
 }
 

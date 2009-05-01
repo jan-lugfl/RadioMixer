@@ -24,7 +24,8 @@
 playerChannelAlsaMix::playerChannelAlsaMix()
  : playerChannelStd()
 {
-	snd_mixer_selem_id_alloca(&chId);
+#ifdef HAVE_ALSA
+    snd_mixer_selem_id_alloca(&chId);
 
 	if( snd_mixer_open( &alsaMixer, 0) )
 		qWarning( tr("Could not open AlsaMixer !!!") );
@@ -40,26 +41,35 @@ playerChannelAlsaMix::playerChannelAlsaMix()
 
 	//mute Channel by default
 	snd_mixer_selem_set_playback_switch_all( alsaChannel, 0); 
+#endif
 }
 
 playerChannelAlsaMix::~playerChannelAlsaMix()
 {
+#ifdef HAVE_ALSA
 	snd_mixer_close(alsaMixer);
+#endif
 }
 
 void playerChannelAlsaMix::setVolume( int volume )
 {
+#ifdef HAVE_ALSA
 	snd_mixer_selem_set_playback_volume_all(alsaChannel, int((100-volume)/3) );
+#endif
 }
 
 void playerChannelAlsaMix::mute( )
 {
+#ifdef HAVE_ALSA
 	snd_mixer_selem_set_playback_switch_all( alsaChannel, 1);
+#endif
 }
 
 void playerChannelAlsaMix::unMute( )
 {
+#ifdef HAVE_ALSA
 	snd_mixer_selem_set_playback_switch_all( alsaChannel, 0);
+#endif
 }
 
 

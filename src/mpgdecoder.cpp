@@ -29,7 +29,7 @@ mpgDecoder::mpgDecoder(FILE* File, QObject *parent, const char *name)
 	madFile->open(QIODevice::ReadOnly, fHandle);
 
 	scanFile();
-
+#ifdef HAVE_MAD
 	// Allocate Memory for the MAD decoder Library
 	madStream = new mad_stream;
 	madFrame = new mad_frame;
@@ -42,12 +42,12 @@ mpgDecoder::mpgDecoder(FILE* File, QObject *parent, const char *name)
 	mad_frame_init( madFrame );
 	mad_synth_init( madSynth );
 	mad_timer_reset( madTimer );
+#endif
 
 	//allocate decoder output ringbuffers
 	mad_outputBuffer = new soundRingBuffer[2];
 	mad_outputBuffer[0].setName("mad_output1");
 	mad_outputBuffer[1].setName("mad_output2");
-
 	returnBuffer = new float*[2];
 	returnBuffer[0] = new float[8192];
 	returnBuffer[1] = new float[8192];
@@ -64,7 +64,8 @@ mpgDecoder::~mpgDecoder()
 
 unsigned int mpgDecoder::decode( float *** data, int count )
 {
-	 if(data)
+#ifdef HAVE_MAD
+         if(data)
 		*data=returnBuffer;
 
 	while( mad_outputBuffer[0].canWrite(1152) )  // well letts refill the Input buffer..........
@@ -139,13 +140,15 @@ unsigned int mpgDecoder::decode( float *** data, int count )
 
 	for( int j=0; j<channels; j++ )
 		mad_outputBuffer[j].read( returnBuffer[j], dataAvailable );
-
 	return dataAvailable;
+#endif
 }
 
 const int mpgDecoder::getRTime( )
 {
+#ifdef HAVE_MAD
 	return getTime()-mad_timer_count( *madTimer, MAD_UNITS_SECONDS);
+#endif
 }
 
 const int mpgDecoder::getTime( )
@@ -155,7 +158,9 @@ const int mpgDecoder::getTime( )
 
 const float mpgDecoder::getPosition_Samples( )
 {
+#ifdef HAVE_MAD
 	return getTime()-mad_timer_count( *madTimer, MAD_UNITS_SECONDS);
+#endif
 }
 
 const float mpgDecoder::getTotal_Samples( )
@@ -167,7 +172,9 @@ const float mpgDecoder::getTotal_Samples( )
  * code is taken verbatim from minimad.c. */
 inline float mpgDecoder::scale(mad_fixed_t sample)
 {
+#ifdef HAVE_MAD
    return (float) (sample / (float) (1L << MAD_F_FRACBITS));
+#endif
 }
 
 const float mpgDecoder::getTotalFrames( )
@@ -177,7 +184,9 @@ const float mpgDecoder::getTotalFrames( )
 
 const float mpgDecoder::getPlayedFrames( )
 {
+#ifdef HAVE_MAD
 	return mad_timer_count( *madTimer, MAD_UNITS_25_FPS);
+#endif
 }
 
 const float mpgDecoder::getRemainFrames( )
@@ -189,6 +198,7 @@ const float mpgDecoder::getRemainFrames( )
 // Copyright (C) 2001-2002 Sam Clegg
 void mpgDecoder::scanFile( )
 {
+#ifdef HAVE_MAD
   mad_stream scanStream;
   mad_header scanHeader;
   mad_timer_t scanTimer;
@@ -255,20 +265,24 @@ void mpgDecoder::scanFile( )
 
   // reset the file again, so we can read from the beginning when playing
   madFile->reset();
+#endif
 }
 
 void mpgDecoder::reset( )
 {
+#ifdef HAVE_MAD
 	madFile->reset();
 	mad_timer_reset( madTimer );
 	mad_stream_init( madStream );
 	mad_frame_init( madFrame );
 	frameCounter = 0;
+#endif
 }
 
 // This is a shorter and faster version of scanFile(), that only scans the samplerate and number of Channels of the stream.
 void mpgDecoder::readMetaFromFile( playListItem * pli )
 {
+#ifdef HAVE_MAD
 	// use QFile as input Buffer, which is needed by libMad, cause it cannot detect EOF....
 	QFile madFile(pli->getFile());
 	madFile.open( QIODevice::ReadOnly );
@@ -311,4 +325,5 @@ void mpgDecoder::readMetaFromFile( playListItem * pli )
 
 	mad_header_finish (&scanHeader);
 	mad_stream_finish (&scanStream);
+#endif
 }

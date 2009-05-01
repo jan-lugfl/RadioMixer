@@ -5,6 +5,13 @@ SET( DIALOGE_CPPS
 	prefdlg.cpp
 )
 
+SET( DIALOGE_MOC_HDRS
+	chanprefdlg.h
+	cuelistdlg.h
+	playlistmanager.h
+	prefdlg.h
+)
+
 SET( DIALOGE_UIS
 	kanalpreferences.ui
 	aboutDialog.ui
@@ -19,4 +26,5 @@ SET( DIALOGE_UIS
 
 INCLUDE_DIRECTORIES( "." ".." ${CMAKE_BINARY_DIR}/src/dialoge/ "../widgets" )
 QT4_WRAP_UI( DIALOGE_UI_HDRS ${DIALOGE_UIS} )
-ADD_LIBRARY( dialoge STATIC ${DIALOGE_UI_HDRS} ${DIALOGE_CPPS} )
+QT4_WRAP_CPP( DIALOGE_MOC_SRCS ${DIALOGE_MOC_HDRS} )
+ADD_LIBRARY( dialoge STATIC ${DIALOGE_UI_HDRS} ${DIALOGE_MOC_SRCS} ${DIALOGE_CPPS} )

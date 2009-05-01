@@ -31,21 +31,21 @@
 #include <QLabel>
 #include <QKeyEvent>
 
-mainFormDlg::mainFormDlg(QWidget* parent, const char* name, Qt::WFlags fl)
-    : RadioMixer(parent,name,fl)
+mainFormDlg::mainFormDlg( )
+    : Ui::RadioMixer( )
 {
 	// Init playlist Manager
-	playListMgr = new playListManager(this);
+        playListMgr = new playListManager();
 
 	//Setup statusBar
-	statusBar()->setSizeGripEnabled( false );
-	soundStatus = new QLabel( statusBar(), "SoundStatus");
-	soundStatus->setText( tr("Sounddevice status: %1").arg(tr("disconnected")) );
-	soundStatus->setPaletteBackgroundColor( QColor(Qt::red).dark(120));
-	statusBar()->addWidget( soundStatus, 0, true );
+//	statusBar()->setSizeGripEnabled( false );
+//        QLabel* soundStatus = new QLabel( statusBar(), "SoundStatus");
+//        soundStatus->setText( tr("Sounddevice status: %1").arg(tr("disconnected")) );
+//        soundStatus->setPaletteBackgroundColor( QColor(Qt::red).dark(120));
+//        statusBar()->addWidget( soundStatus, 0, true );
 
 	// init layout
-	channelLayout = new Q3HBoxLayout( frame10, 5, 5, "Channel Layout" );
+        Q3HBoxLayout* channelLayout = new Q3HBoxLayout( frame10, 5, 5, "Channel Layout" );
 
 #ifdef ENABLE_HWMIXER
 	mixerStatus = new QLabel( statusBar(), "MixerStatus");
@@ -133,7 +133,7 @@ void mainFormDlg::showPreferences()
 {
 	config = new QSettings();
 
-	prefDlg* preferencesDialog  = new prefDlg(this);
+        prefDlg* preferencesDialog  = new prefDlg();
 
 	if( config->readEntry( "/radiomixer/sound/mode", "jack" ) == "jack")
 		preferencesDialog->jackMode->setChecked(true);
@@ -256,13 +256,13 @@ void mainFormDlg::addNewFilePlayer( )
 	mixerGuiPlayer* channel = new mixerGuiPlayer( playerGuis.count()+1, player, frame10, "channelXY");
 	playerGuis.append( channel );
 	reorderChannels();
-	connect( channel, SIGNAL(getNextTrack( unsigned int )), playListMgr, SLOT(cueNewTrack( unsigned int ) ));
-	connect( playListMgr, SIGNAL(cueTrack( unsigned int, playListItem* )), channel, SLOT(cueTrack( unsigned int, playListItem* ) ));
+//	connect( channel, SIGNAL(getNextTrack( unsigned int )), playListMgr, SLOT(cueNewTrack( unsigned int ) ));
+//	connect( playListMgr, SIGNAL(cueTrack( unsigned int, playListItem* )), channel, SLOT(cueTrack( unsigned int, playListItem* ) ));
 #ifdef ENABLE_HWMIXER
-	connect( miPu, SIGNAL( butPres( int, int )), channel, SLOT( buttonPressed( int, int ) ) );
-	connect( miPu, SIGNAL( sliderMove( int, int )), channel, SLOT( setSlider( int, int ) ) );
+//	connect( miPu, SIGNAL( butPres( int, int )), channel, SLOT( buttonPressed( int, int ) ) );
+//	connect( miPu, SIGNAL( sliderMove( int, int )), channel, SLOT( setSlider( int, int ) ) );
 #endif
-	connect( channel, SIGNAL(newMeta( metaTag )), &meta, SLOT( setMeta( metaTag ) ) );
+//	connect( channel, SIGNAL(newMeta( metaTag )), &meta, SLOT( setMeta( metaTag ) ) );
 
 	playListManager::filePlayer playerInfo = { channel->getPlayerID(), channel->getName(), channel->getColor() };
 	playListMgr->addPlayer( playerInfo );
@@ -438,7 +438,7 @@ void mainFormDlg::connectNetDevice()
 
 void mainFormDlg::showMoveChannel()
 {
-	QDialog dialog(this, tr("move a channel"));
+/*	QDialog dialog(this, tr("move a channel"));
 	Ui::ch_move_dlg moveDialog;
 	moveDialog.setupUi( &dialog );
 	Q3ValueVector<mixerChannelGUI*>::iterator playerIt;
@@ -493,11 +493,13 @@ void mainFormDlg::showMoveChannel()
 	}
 	saveSettings( );
 	reorderChannels();
+       */
 }
 
 
 void mainFormDlg::showDelChannel()
 {
+    /*
 	QDialog dialog(this, tr("remove a channel"));;
 	Ui::ch_del_dlg delDialog;
 	delDialog.setupUi( &dialog );
@@ -524,11 +526,13 @@ void mainFormDlg::showDelChannel()
 
 		saveSettings( );
 	}
+        */
 }
 
 
 void mainFormDlg::showAddChannel()
 {
+    /*
 	QDialog dialog( this, tr("add a new channel"));
 	Ui::ch_add_dlg addDialog;
 	addDialog.setupUi( &dialog );
@@ -583,6 +587,7 @@ void mainFormDlg::showAddChannel()
 		saveSettings();
 		reorderChannels();
 	}
+        */
 }
 
 void mainFormDlg::saveSettings( )
@@ -598,14 +603,14 @@ void mainFormDlg::saveSettings( )
 
 void mainFormDlg::showCuesWindow()
 {
-	cueListDlg* cueListDialog = new cueListDlg(this);
+        cueListDlg* cueListDialog = new cueListDlg();
 
 	Q3ValueVector<mixerChannelGUI*>::iterator playerIt;
 	for( playerIt = playerGuis.begin(); playerIt != playerGuis.end(); ++playerIt )
 	{
 		if( (*playerIt)->getType() == "PLAYER" )
 		{
-			connect( dynamic_cast<mixerGuiPlayer*>(*playerIt), SIGNAL( onCue( metaTag, QString ) ), cueListDialog, SLOT( update( metaTag, QString ) ) );
+//			connect( dynamic_cast<mixerGuiPlayer*>(*playerIt), SIGNAL( onCue( metaTag, QString ) ), cueListDialog, SLOT( update( metaTag, QString ) ) );
 		}
 	}
 
@@ -614,7 +619,7 @@ void mainFormDlg::showCuesWindow()
 
 void mainFormDlg::showAbout()
 {
-	QDialog dialog(this, tr("RadioMixer"));
+/*	QDialog dialog(this, tr("RadioMixer"));
 	Ui::aboutDialog aboutDlg;
 	aboutDlg.setupUi( &dialog );
 	aboutDlg.versionInfo->setText(
@@ -626,6 +631,7 @@ void mainFormDlg::showAbout()
 			QString("</p></h1>")
 		);
 	dialog.exec();
+        */
 }
 
 void mainFormDlg::startALSA()
@@ -633,7 +639,7 @@ void mainFormDlg::startALSA()
 #ifdef HAVE_ALSA
 	config = new QSettings();
 	player->open( config->readEntry( "/radiomixer/sound/alsaDevice", "default" ) );
-	soundStatus->setText(tr("Sound device status: %1 %2").arg("ALSA").arg( player->isConnected()?tr("connected"):tr("disconnected") ));
+//        soundStatus->setText(QString::tr("Sound device status: %1 %2").arg("ALSA").arg( player->isConnected()?tr("connected"):QString::tr("disconnected") ));
 	soundStatus->setPaletteBackgroundColor( QColor(player->isConnected()?Qt::green:Qt::red).dark(120) );
 	delete config;
 #endif
@@ -643,7 +649,7 @@ void mainFormDlg::disconnectJackd()
 {
 #ifdef HAVE_JACK
 	player->close();
-	soundStatus->setText(tr("Sound device status: %1 %2").arg("JACK").arg(tr("disconnected")));
+//	soundStatus->setText(tr("Sound device status: %1 %2").arg("JACK").arg(tr("disconnected")));
 	soundStatus->setPaletteBackgroundColor( QColor(Qt::red).dark(120) );
 #endif
 }
@@ -653,7 +659,7 @@ void mainFormDlg::connectJackd()
 {
 #ifdef HAVE_JACK
 	player->open("");
-	soundStatus->setText(tr("Sound device status: %1 %2").arg("JACK").arg( player->isConnected()?tr("connected"):tr("disconnected") ));
+//	soundStatus->setText(tr("Sound device status: %1 %2").arg("JACK").arg( player->isConnected()?tr("connected"):tr("disconnected") ));
 	soundStatus->setPaletteBackgroundColor( QColor(player->isConnected()?Qt::green:Qt::red).dark(120) );
 #endif
 }
@@ -661,7 +667,7 @@ void mainFormDlg::connectJackd()
 void mainFormDlg::networkDeviceStatusRefresh( )
 {
 #ifdef ENABLE_HWMIXER
-	mixerStatus->setText(tr("Mixer device status: %1").arg( miPu->isConnected()?tr("connected"):tr("disconnected") ));
+//	mixerStatus->setText(tr("Mixer device status: %1").arg( miPu->isConnected()?tr("connected"):tr("disconnected") ));
 	mixerStatus->setPaletteBackgroundColor( QColor(miPu->isConnected()?Qt::green:Qt::red).dark(120) );
 #endif
 }
@@ -669,7 +675,7 @@ void mainFormDlg::networkDeviceStatusRefresh( )
 void mainFormDlg::show( )
 {
 	playListMgr->show();
-	RadioMixer::show();
+//	RadioMixer::show();
 }
 
 void mainFormDlg::showPlaylistManager( bool state )

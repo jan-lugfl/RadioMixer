@@ -62,10 +62,8 @@
 
 class mainFormDlg : public Ui::RadioMixer
 {
-  Q_OBJECT
-
 public:
-  mainFormDlg(QWidget* parent = 0, const char* name = 0, Qt::WFlags fl = 0 );
+  mainFormDlg( );
   ~mainFormDlg();
     /*$PUBLIC_FUNCTIONS$*/
 

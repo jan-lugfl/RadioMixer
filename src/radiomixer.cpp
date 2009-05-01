@@ -23,14 +23,13 @@
 #ifdef HAVE_CONFIG_H
 #include <config.h>
 #endif
-#define HAVE_JACK
 
-#ifndef HAVE_ALSA
-#ifndef HAVE_JACK
-#error wheter JackD nor ALSA support is being compiled, so this application seems completely useless...
-#error please install JackIt or alsa-lib to use this application....
-#endif //HAVE_JACK
-#endif //HAVE_ALSA
+//#ifndef HAVE_ALSA
+//#ifndef HAVE_JACK
+//#error wheter JackD nor ALSA support is being compiled, so this application seems completely useless...
+//#error please install JackIt or alsa-lib to use this application....
+//#endif //HAVE_JACK
+//#endif //HAVE_ALSA
 
 #include <qapplication.h>
 #include <q3mainwindow.h>

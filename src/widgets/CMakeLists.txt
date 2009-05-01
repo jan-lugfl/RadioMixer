@@ -9,10 +9,21 @@ SET( WIDGETS_CPPS
 	vumeter.cpp
 )
 
+SET( WIDGETS_MOC_HDRS
+	blinkbutton.h
+	glowbutton.h
+	playlistviewitem.h
+	songlistview.h
+	timedisplay.h
+	timer.h
+	vumeter.h
+)
+
 SET( WIDGETS_UIS
 	timerSettings.ui
 )
 
-INCLUDE_DIRECTORIES( "." ".." ${CMAKE_BINARY_DIR}/src/dialoge/ )
+INCLUDE_DIRECTORIES( "." ".." ${CMAKE_BINARY_DIR}/src/widgets/ )
 QT4_WRAP_UI( WIDGETS_UI_HDRS ${WIDGETS_UIS} )
-ADD_LIBRARY( widgets STATIC ${WIDGETS_UI_HDRS} ${WIDGETS_CPPS} )
+QT4_WRAP_CPP( WIDGETS_MOC_SRCS ${WIDGETS_MOC_HDRS} )
+ADD_LIBRARY( widgets STATIC ${WIDGETS_UI_HDRS} ${WIDGETS_MOC_SRCS} ${WIDGETS_CPPS} )
