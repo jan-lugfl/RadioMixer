@@ -4,7 +4,7 @@ ADD_SUBDIRECTORY( dialoge )
 SET( SRC_CPPS
 	channelbufmngr.cpp
 	metainfo.cpp
-	mixerchannelgui.cpp
+	mixergui.cpp
 	mixerguiplayer.cpp
 	playerchannelalsamix.cpp
 	playerchannelstd.cpp
@@ -16,7 +16,6 @@ SET( SRC_CPPS
 	mpgdecoder.cpp
 	playerchannelfile.cpp
 	playlistitem.cpp
-	mainformdlg.cpp
 	soundplayerjack.cpp
 	mipucom.cpp
 	mixerguijackport.cpp
@@ -24,11 +23,12 @@ SET( SRC_CPPS
 	playerchanneljackport.cpp
 	playlistitemsongdb.cpp
 	soundplayer.cpp
+	mainWindow.cpp
 )
 
 SET( SRC_MOC_HDRS
 	metainfo.h
-	mixerchannelgui.h
+	mixergui.h
 	mixerguiplayer.h
 	playerchannelalsamix.h
 	playerchannelstd.h
@@ -43,10 +43,11 @@ SET( SRC_MOC_HDRS
 	oggdecoder.h
 	playerchanneljackport.h
 	playlistitemsongdb.h
+	mainWindow.h
 )
 
 SET( SRC_UIS
-	mainform.ui
+	uis/radiomixer.ui
 )
 
 INCLUDE_DIRECTORIES( "." "widgets" "dialoge" ${CMAKE_BINARY_DIR}/src/widgets ${CMAKE_BINARY_DIR}/src/dialoge ${CMAKE_BINARY_DIR}/src )

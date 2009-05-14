@@ -25,14 +25,14 @@
 #include <qcombobox.h>
 #include <qlabel.h>
 
-#include <mixerchannelgui.h>
+#include <mixergui.h>
 #include "glowbutton.h"
 #include "playerchannelalsamix.h"
 
 /**
 @author Jan Boysen
 */
-class mixerGuiAlsaMix : public mixerChannelGUI
+class mixerGuiAlsaMix : public mixerGUI
 {
   Q_OBJECT
 

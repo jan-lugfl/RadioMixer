@@ -22,7 +22,7 @@
 #ifndef MIXERGUIPLAYER_H
 #define MIXERGUIPLAYER_H
 
-#include <mixerchannelgui.h>
+#include <mixergui.h>
 #include "widgets/playlist.h"
 #include "soundplayer.h"
 #include "glowbutton.h"
@@ -39,7 +39,7 @@
 /**
 @author Jan Boysen
 */
-class mixerGuiPlayer : public mixerChannelGUI
+class mixerGuiPlayer : public mixerGUI
 {
   Q_OBJECT
 

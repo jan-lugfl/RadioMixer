@@ -22,7 +22,7 @@
 #include "mixerguijackport.h"
 
 mixerGuiJackport::mixerGuiJackport( soundPlayerJack* jackPlayer, int chID, QWidget* parent, const char* name, Qt::WFlags fl )
- : mixerChannelGUI(chID, parent, name, fl), mute(0)
+ : mixerGUI(chID, parent, name, fl), mute(0)
 {
 	jackMixer = new playerChannelJackport( jackPlayer, name, this );
 	mixer = jackMixer;
@@ -57,7 +57,7 @@ mixerGuiJackport::~mixerGuiJackport()
 
 void mixerGuiJackport::languageChange( )
 {
-	mixerChannelGUI::languageChange();
+        mixerGUI::languageChange();
 	muteBut->setText( tr( "Mute" ) );
 }
 
@@ -81,7 +81,7 @@ void mixerGuiJackport::toggleMute( )
 
 void mixerGuiJackport::changeName( QString newName )
 {
-	mixerChannelGUI::changeName( newName );
+        mixerGUI::changeName( newName );
 	mixer->setName( newName );
 }
 
@@ -100,25 +100,25 @@ void mixerGuiJackport::buttonBlinker( )
 		levelMeterLeft->reset();
 		levelMeterRight->reset();
 	}
-	mixerChannelGUI::buttonBlinker();
+        mixerGUI::buttonBlinker();
 }
 
 void mixerGuiJackport::showPrefs( )
 {
-	mixerChannelGUI::createPrefDlg( );
-	if( mixerChannelGUI::execPrefDlg() == QDialog::Accepted)
+        mixerGUI::createPrefDlg( );
+        if( mixerGUI::execPrefDlg() == QDialog::Accepted)
 	{
 		levelMeterLeft->setPaletteBackgroundColor( paletteBackgroundColor () );
 		levelMeterRight->setPaletteBackgroundColor( paletteBackgroundColor () );
 	}
-	mixerChannelGUI::finishPrefDlg( );
+        mixerGUI::finishPrefDlg( );
 }
 
 void mixerGuiJackport::buttonPressed( int hwChannel, int button )
 {
 	if( hwChannel == this->hwChannel )
 	{
-		mixerChannelGUI::buttonPressed( hwChannel, button );
+                mixerGUI::buttonPressed( hwChannel, button );
 		switch( button )
 		{
 			case 0x10 :

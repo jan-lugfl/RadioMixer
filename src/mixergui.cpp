@@ -19,12 +19,12 @@
  *   Free Software Foundation, Inc.,                                       *
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
-#include "mixerchannelgui.h"
+#include "mixergui.h"
 //Added by qt3to4:
 #include <Q3Frame>
 #include <QLabel>
 
-mixerChannelGUI::mixerChannelGUI( int chID, QWidget* parent , const char* name , Qt::WFlags fl )
+mixerGUI::mixerGUI( int chID, QWidget* parent , const char* name , Qt::WFlags fl )
  : Q3Frame( parent, name, fl)
 {
 	config = new QSettings();
@@ -93,7 +93,7 @@ mixerChannelGUI::mixerChannelGUI( int chID, QWidget* parent , const char* name ,
 }
 
 
-mixerChannelGUI::~mixerChannelGUI()
+mixerGUI::~mixerGUI()
 {
 	delete trebleSlider;
 	delete vuSlider;
@@ -102,16 +102,16 @@ mixerChannelGUI::~mixerChannelGUI()
 	delete buttonBlinkTimer;
 }
 
-void mixerChannelGUI::languageChange()
+void mixerGUI::languageChange()
 {
     prefButton->setText( tr( "Pref" ) );
 }
 
-void mixerChannelGUI::buttonBlinker()
+void mixerGUI::buttonBlinker()
 {
 }
 
-void mixerChannelGUI::createPrefDlg( )
+void mixerGUI::createPrefDlg( )
 {
 	config = new QSettings;
 	int red, green, blue;
@@ -157,7 +157,7 @@ void mixerChannelGUI::createPrefDlg( )
 	prefDlg->metaManualText->setText( staticMetaText );
 }
 
-int mixerChannelGUI::execPrefDlg( )
+int mixerGUI::execPrefDlg( )
 {
 	int result = prefDlg->exec();
 	if( result == QDialog::Accepted )
@@ -187,14 +187,14 @@ int mixerChannelGUI::execPrefDlg( )
 	return result;
 }
 
-void mixerChannelGUI::showPrefs( )
+void mixerGUI::showPrefs( )
 {
 	createPrefDlg();
 	execPrefDlg();
 	finishPrefDlg();	
 }
 
-void mixerChannelGUI::setSlider( int hwChannel, int value )
+void mixerGUI::setSlider( int hwChannel, int value )
 {
 	if( hwChannel == this->hwChannel-1 )
 	{
@@ -202,39 +202,39 @@ void mixerChannelGUI::setSlider( int hwChannel, int value )
 	}
 }
 
-void mixerChannelGUI::changeName( QString newName )
+void mixerGUI::changeName( QString newName )
 {
 	chName->setText( newName );
 }
 
-void mixerChannelGUI::buttonPressed( int hwChannel, int button )
+void mixerGUI::buttonPressed( int hwChannel, int button )
 {
 	qDebug("Channel: "+QString::number(hwChannel)+"Button: "+QString::number(button));
 }
 
-void mixerChannelGUI::finishPrefDlg( )
+void mixerGUI::finishPrefDlg( )
 {
 	delete config;
 	delete prefDlg;
 }
 
-void mixerChannelGUI::refresh( )
+void mixerGUI::refresh( )
 {
 	emit( refreshed() );
 }
 
-QString mixerChannelGUI::getName( )
+QString mixerGUI::getName( )
 {
 	return chName->text();
 }
 
-void mixerChannelGUI::changePos( int newPos )
+void mixerGUI::changePos( int newPos )
 {
 	playerPos = newPos>=0?newPos:channelID;
 	refresh();
 }
 
-void mixerChannelGUI::save( )
+void mixerGUI::save( )
 {
 	config->writeEntry( "/radiomixer/channel_"+QString::number( channelID )+"/setMeta", refreshMeta );
 	config->writeEntry( "/radiomixer/channel_"+QString::number( channelID )+"/metaMode", metaMode );
@@ -245,12 +245,12 @@ void mixerChannelGUI::save( )
 	config->writeEntry( "/radiomixer/channel_"+QString::number( channelID )+"/type", getType() );
 }
 
-int mixerChannelGUI::currentPosition( )
+int mixerGUI::currentPosition( )
 {
 	return playerPos;
 }
 
-void mixerChannelGUI::setBalance( int balance )
+void mixerGUI::setBalance( int balance )
 {
 	if( balance > 0)
 	{
@@ -267,19 +267,19 @@ void mixerChannelGUI::setBalance( int balance )
 	}
 }
 
-int mixerChannelGUI::getPlayerID( )
+int mixerGUI::getPlayerID( )
 {
 	return channelID;
 }
 
-void mixerChannelGUI::saveSettings( )
+void mixerGUI::saveSettings( )
 {
 	config = new QSettings();
 	save();
 	delete config;
 }
 
-QColor mixerChannelGUI::getColor( )
+QColor mixerGUI::getColor( )
 {
 	return paletteBackgroundColor();
 }

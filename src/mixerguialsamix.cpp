@@ -24,7 +24,7 @@
 #include <QLabel>
 
 mixerGuiAlsaMix::mixerGuiAlsaMix(  int chID, QWidget* parent , const char* name , Qt::WFlags fl )
- : mixerChannelGUI( chID, parent, name, fl)
+ : mixerGUI( chID, parent, name, fl)
 {
 	alsaMixer = new playerChannelAlsaMix();
 	mixer = alsaMixer;
@@ -62,13 +62,13 @@ void mixerGuiAlsaMix::toggleMute( )
 
 void mixerGuiAlsaMix::languageChange( )
 {
-	mixerChannelGUI::languageChange();
+        mixerGUI::languageChange();
 	muteBut->setText( tr( "Mute" ) );
 }
 
 void mixerGuiAlsaMix::showPrefs( )
 {
-	mixerChannelGUI::createPrefDlg( );
+        mixerGUI::createPrefDlg( );
 	prefDlg->EditName->setText( mixer->getName() );
 
 	QLabel* soundCardLabel = new QLabel( prefDlg->DynamicBox ,  "soundCardLabel" );
@@ -83,11 +83,11 @@ void mixerGuiAlsaMix::showPrefs( )
 	channelSelect->setGeometry( QRect( 10, 100, 200, 25 ) );
 
 
-	if( mixerChannelGUI::execPrefDlg() == QDialog::Accepted)
+        if( mixerGUI::execPrefDlg() == QDialog::Accepted)
 	{	
 		mixer->setName( prefDlg->EditName->text());
 	}
-	mixerChannelGUI::finishPrefDlg( );
+        mixerGUI::finishPrefDlg( );
 }
 
 QString mixerGuiAlsaMix::getType( )
@@ -99,7 +99,7 @@ void mixerGuiAlsaMix::buttonPressed( int hwChannel, int button )
 {
 	if( hwChannel == this->hwChannel )
 	{
-		mixerChannelGUI::buttonPressed( hwChannel, button );
+                mixerGUI::buttonPressed( hwChannel, button );
 		switch( button )
 		{
 			case 0x10 :

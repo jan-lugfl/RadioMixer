@@ -22,7 +22,7 @@
 #ifndef MIXERGUIJACKPORT_H
 #define MIXERGUIJACKPORT_H
 
-#include <mixerchannelgui.h>
+#include <mixergui.h>
 #include "glowbutton.h"
 #include "soundplayerjack.h"
 #include "playerchanneljackport.h"
@@ -30,7 +30,7 @@
 /**
 @author Jan Boysen
 */
-class mixerGuiJackport : public mixerChannelGUI
+class mixerGuiJackport : public mixerGUI
 {
 Q_OBJECT
 public:

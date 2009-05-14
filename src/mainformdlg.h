@@ -76,7 +76,6 @@ protected:
   /*$PROTECTED_FUNCTIONS$*/
 
  private:
- 	soundPlayer* player;
 #ifdef ENABLE_HWMIXER
 	mipuCom* miPu;
 	QTimer refTimer;
@@ -84,12 +83,6 @@ protected:
 	Q3ValueVector<mixerChannelGUI*> playerGuis;
 
 	playListManager*	playListMgr;
-
-	// Settings storage
-	QSettings* config;
-
-	// Meta Info for Live Streaming with Ices
-	metaInfo meta;
 
 	Q3HBoxLayout* channelLayout;
 

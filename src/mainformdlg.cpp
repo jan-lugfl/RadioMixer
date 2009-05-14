@@ -62,57 +62,6 @@ mainFormDlg::mainFormDlg( )
 	delete Mixer;
 #endif
 	
-	config = new QSettings();
-	if( config->readBoolEntry( "/radiomixer/meta/enable", FALSE ) )
-		meta.enable();
-	else
-		meta.disable();
-	switch( config->readNumEntry( "/radiomixer/meta/mode", 0 ) )
-	{
-		case 0:
-			meta.setNormalMode();
-			break;
-		case 1:
-			meta.setStationMode( config->readEntry( "/radiomixer/meta/stationID", "" ) );
-			break;
-	}
-	meta.setMetaMode( config->readNumEntry( "/radiomixer/meta/metaMode", 1 ));
-
-	if( config->readEntry( "/radiomixer/sound/mode", "jack" ) == "jack" )
-	{
-#ifdef HAVE_JACK
-		player = new soundPlayerJack();
-		delete Alsa; // delete Alsa MainMenuItem
-#else
-		qWarning( tr("JackD is not supported by this system..") );
-		config->writeEntry( "/radiomixer/sound/mode", "alsa" );
-#endif
-	}
-	if( config->readEntry( "/radiomixer/sound/mode", "jack" ) == "alsa" )
-	{
-#ifdef HAVE_ALSA
-		player = new soundPlayerALSA();
-		delete Jack; // delete Jack MainMenuItem
-#else
-		qWarning( tr("ALSA is not supported by this system..") );
-#endif
-	}
-
-	for(int i=1;i<=config->readNumEntry( "/radiomixer/General/numChannels", 8 ) ;i++)
-	{
-		QString type = config->readEntry( "/radiomixer/channel_"+QString::number(i)+"/type", "PLAYER" );
-		if( type == "PLAYER" )
-			addNewFilePlayer( );
-#ifdef HAVE_ALSA
-		else if( type == "ALSAMIX" )
-			addNewMixerChannel( );
-#endif
-#ifdef HAVE_JACK
-		else if( type == "JACK" && (config->readEntry( "/radiomixer/sound/mode", "jack" ) == "jack" ) )
-			addNewJackChannel( config->readEntry( "/radiomixer/channel_"+QString::number(i)+"/name", "JACKPORT_"+QString::number(i+1) ) );
-#endif
-	}
-	delete config;
 }
 
 mainFormDlg::~mainFormDlg()
@@ -253,19 +202,6 @@ void mainFormDlg::showPreferences()
 
 void mainFormDlg::addNewFilePlayer( )
 {
-	mixerGuiPlayer* channel = new mixerGuiPlayer( playerGuis.count()+1, player, frame10, "channelXY");
-	playerGuis.append( channel );
-	reorderChannels();
-//	connect( channel, SIGNAL(getNextTrack( unsigned int )), playListMgr, SLOT(cueNewTrack( unsigned int ) ));
-//	connect( playListMgr, SIGNAL(cueTrack( unsigned int, playListItem* )), channel, SLOT(cueTrack( unsigned int, playListItem* ) ));
-#ifdef ENABLE_HWMIXER
-//	connect( miPu, SIGNAL( butPres( int, int )), channel, SLOT( buttonPressed( int, int ) ) );
-//	connect( miPu, SIGNAL( sliderMove( int, int )), channel, SLOT( setSlider( int, int ) ) );
-#endif
-//	connect( channel, SIGNAL(newMeta( metaTag )), &meta, SLOT( setMeta( metaTag ) ) );
-
-	playListManager::filePlayer playerInfo = { channel->getPlayerID(), channel->getName(), channel->getColor() };
-	playListMgr->addPlayer( playerInfo );
 }
 
 void mainFormDlg::addNewMixerChannel( )

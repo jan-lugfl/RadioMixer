@@ -19,8 +19,8 @@
  *   Free Software Foundation, Inc.,                                       *
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
-#ifndef MIXERCHANNELGUI_H
-#define MIXERCHANNELGUI_H
+#ifndef MIXERGUI_H
+#define MIXERGUI_H
 
 #include <q3frame.h>
 #include <qlabel.h>
@@ -41,13 +41,13 @@
 /**
 @author Jan Boysen
 */
-class mixerChannelGUI : public Q3Frame
+class mixerGUI : public Q3Frame
 {
   Q_OBJECT
 
 public:
-    mixerChannelGUI( int chID, QWidget* parent = 0, const char* name = 0, Qt::WFlags fl = 0 );
-    ~mixerChannelGUI();
+    mixerGUI( int chID, QWidget* parent = 0, const char* name = 0, Qt::WFlags fl = 0 );
+    ~mixerGUI();
 
 	virtual void languageChange();
 	int currentPosition();

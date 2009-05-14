@@ -25,7 +25,7 @@
 #include <QDragEnterEvent>
 
 mixerGuiPlayer::mixerGuiPlayer( int chID, soundPlayer* soundplayer, QWidget* parent , const char* name , Qt::WFlags fl )
- : mixerChannelGUI( chID, parent, name, fl)
+ : mixerGUI( chID, parent, name, fl)
 {
 	QSettings* config = new QSettings;
 
@@ -120,7 +120,7 @@ void mixerGuiPlayer::buttonBlinker( )
 		levelMeterRight->setLevel( mixer->getLevelMeterRight() );
 	}
 
-	mixerChannelGUI::buttonBlinker();
+        mixerGUI::buttonBlinker();
 }
 
 void mixerGuiPlayer::cueNewTrack( )
@@ -133,7 +133,7 @@ void mixerGuiPlayer::buttonPressed( int hwChannel, int button )
 {
 	if( hwChannel == this->hwChannel )
 	{
-		mixerChannelGUI::buttonPressed( hwChannel, button );
+                mixerGUI::buttonPressed( hwChannel, button );
 		switch( button )
 		{
 			case 0x10 :
@@ -154,7 +154,7 @@ void mixerGuiPlayer::buttonPressed( int hwChannel, int button )
 
 void mixerGuiPlayer::languageChange()
 {
-    mixerChannelGUI::languageChange();
+    mixerGUI::languageChange();
     chName->setText( player->getName() );
     playButton->setText( tr( "Play" ) );
     stopButton->setText( tr( "Stop" ) );
@@ -194,7 +194,7 @@ void mixerGuiPlayer::fileOpen( )
 
 void mixerGuiPlayer::showPrefs( )
 {
-	mixerChannelGUI::createPrefDlg( );
+        mixerGUI::createPrefDlg( );
 
 	QCheckBox* autoRecue = new QCheckBox( prefDlg->DynamicBox, "autoRecue" );
 	autoRecue->setText( tr("Auto Recue ?") );
@@ -203,7 +203,7 @@ void mixerGuiPlayer::showPrefs( )
 	if( config->readNumEntry( "/radiomixer/channel_"+QString::number( channelID )+"/autoRecue", 0 ) )
 		autoRecue->setChecked(1);
 
-	if( mixerChannelGUI::execPrefDlg() == QDialog::Accepted)
+        if( mixerGUI::execPrefDlg() == QDialog::Accepted)
 	{	
 		player->setName( prefDlg->EditName->text());
 		if( autoRecue->isChecked() )
@@ -219,7 +219,7 @@ void mixerGuiPlayer::showPrefs( )
 		levelMeterLeft->setPaletteBackgroundColor( paletteBackgroundColor () );
 		levelMeterRight->setPaletteBackgroundColor( paletteBackgroundColor () );
 	}
-	mixerChannelGUI::finishPrefDlg( );
+        mixerGUI::finishPrefDlg( );
 }
 
 void mixerGuiPlayer::setMeta( metaTag meta )

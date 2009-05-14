@@ -1,7 +1,7 @@
-/* $Id$ */
+/* $Id:$ */
 /***************************************************************************
  *   OpenRadio - RadioMixer                                                *
- *   Copyright (C) 2005-2007 by Jan Boysen                                *
+ *   Copyright (C) 2005-2009 by Jan Boysen                                *
  *   trekkie@media-mission.de                                              *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
@@ -20,24 +20,49 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 
-#ifndef HAVE_ALSA
-#ifndef HAVE_JACK
-#error wheter JackD nor ALSA support is being compiled, so this application seems completely useless...
-#error please install JackIt or alsa-lib to use this application....
-#endif //HAVE_JACK
-#endif //HAVE_ALSA
+#ifndef MAINWINDOW_H
+#define MAINWINDOW_H
 
-#include <qapplication.h>
-#include <qmainwindow.h>
-#include "mainWindow.h"
+#include "metainfo.h"
+#include "soundplayer.h"
+#include "mixerguialsamix.h"
 
-int main( int argc, char ** argv ) {
-       QApplication a( argc, argv );
-       mainWindow main;
+#include <QtGui/QMainWindow>
 
-       a.connect( &a, SIGNAL(lastWindowClosed()), &a, SLOT(quit()) );
-       a.connect( &main, SIGNAL(showAboutQt()), &a, SLOT(aboutQt()) );
-
-       main.show();
-       return a.exec();
+namespace Ui {
+    class RadioMixer;
 }
+
+class mainWindow : public QMainWindow {
+    Q_OBJECT
+    Q_DISABLE_COPY(mainWindow)
+public:
+    explicit mainWindow(QWidget *parent = 0);
+    virtual ~mainWindow();
+
+public slots:
+    virtual void aboutQt();
+    virtual void addNewFilePlayer();
+    virtual void addNewMixerChannel();
+    virtual void addNewJackChannel( QString chName );
+
+protected:
+    virtual void changeEvent(QEvent *e);
+
+private:
+    Ui::RadioMixer *rm_ui;
+    soundPlayer* player;
+    // used for testing only
+    mixerGUI* dummy;
+    mixerGUI* dummy2;
+    mixerGUI* dummy3;
+    mixerGUI* dummy4;
+
+    // Meta Info for Live Streaming with Ices
+    metaInfo meta;
+
+signals:
+    void showAboutQt();
+};
+
+#endif // MAINWINDOW_H
