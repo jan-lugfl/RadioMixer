@@ -2,4 +2,10 @@
     <qresource prefix="/logo" >
         <file>images/radiomixer-trans.png</file>
     </qresource>
+    <qresource prefix="/buttons" >
+        <file alias="stop_icon" >images/button_stop.png</file>
+        <file alias="cue_icon" >images/button_cue.png</file>
+        <file alias="pause_icon" >images/button_pause.png</file>
+        <file alias="play_icon" >images/button_play.png</file>
+    </qresource>
 </RCC>

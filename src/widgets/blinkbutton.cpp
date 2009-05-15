@@ -38,12 +38,12 @@ void blinkButton::blinker( )
 	if(state)
 		if( colState )
 		{
-			glowButton::setOff();
+                        QToolButton::setPaletteBackgroundColor( actColor );
 			colState = FALSE;
 		}
 		else
 		{
-			glowButton::setOn();
+                        QToolButton::setPaletteBackgroundColor( deactColor );
 			colState = TRUE;
 		}
 	else if( colState )
@@ -57,14 +57,7 @@ void blinkButton::setState( bool state )
 
 void blinkButton::toggle( )
 {
-	if( state )
-	{
-		state = FALSE;
-	}
-	else
-	{
-		state = TRUE;
-	}
+        state = !state;
 }
 
 void blinkButton::setOff( )

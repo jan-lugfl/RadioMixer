@@ -22,12 +22,12 @@
 #ifndef GLOWBUTTON_H
 #define GLOWBUTTON_H
 
-#include <qpushbutton.h>
+#include <qtoolbutton.h>
 
 /**
 @author Jan Boysen
 */
-class glowButton : public QPushButton
+class glowButton : public QToolButton
 {
 Q_OBJECT
 public:

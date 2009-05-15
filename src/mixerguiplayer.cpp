@@ -58,21 +58,25 @@ mixerGuiPlayer::mixerGuiPlayer( QWidget* parent , const char* name , Qt::WFlags 
 */
         playButton = new blinkButton( this, "playButton" );
 	playButton->setActivatedColor( QColor(150, 255, 150) );
+        playButton->setIcon(QIcon(":/buttons/play_icon"));
         actionButtons->addWidget( playButton );
 //	connect( playButton, SIGNAL(clicked()), player, SLOT(play()) );
 
 	stopButton = new glowButton( this, "stopButton" );
 	stopButton->setActivatedColor( QColor(255, 150, 150) );
+        stopButton->setIcon(QIcon(":/buttons/stop_icon"));
         actionButtons->addWidget( stopButton );
 //	connect( stopButton, SIGNAL(clicked()), player, SLOT(stop()) );
 
 	pauseButton = new blinkButton( this, "pauseButton" );
 	pauseButton->setActivatedColor( QColor(150, 150, 255) );
+        pauseButton->setIcon(QIcon(":/buttons/pause_icon"));
         actionButtons->addWidget( pauseButton );
 //	connect( pauseButton, SIGNAL(clicked()), player, SLOT(pause()) );
 
 	cueButton = new blinkButton( this, "cueButton" );
 	cueButton->setActivatedColor( QColor(255, 180, 100) );
+        cueButton->setIcon(QIcon(":/buttons/cue_icon"));
         actionButtons->addWidget( cueButton );
 //	connect( cueButton, SIGNAL(clicked()), this, SLOT(cueNewTrack()) );
 	
