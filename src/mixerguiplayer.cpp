@@ -1,7 +1,7 @@
 /* $Id$ */
 /***************************************************************************
  *   OpenRadio - RadioMixer                                                *
- *   Copyright (C) 2005-2007 by Jan Boysen                                *
+ *   Copyright (C) 2005-2009 by Jan Boysen                                *
  *   trekkie@media-mission.de                                              *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
@@ -20,16 +20,15 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 #include "mixerguiplayer.h"
-//Added by qt3to4:
 #include <QDropEvent>
 #include <QDragEnterEvent>
 
-mixerGuiPlayer::mixerGuiPlayer( int chID, soundPlayer* soundplayer, QWidget* parent , const char* name , Qt::WFlags fl )
- : mixerGUI( chID, parent, name, fl)
+mixerGuiPlayer::mixerGuiPlayer( QWidget* parent , const char* name , Qt::WFlags fl )
+ : mixerGUI( parent, name, fl)
 {
-	QSettings* config = new QSettings;
+//	QSettings* config = new QSettings;
 
-	levelMeterLeft = new vuMeter( this, "levelMeterLeft");
+        levelMeterLeft = new vuMeter( this, "levelMeterLeft");
 	levelMeterLeft->setGeometry( QRect( 5, 60, 11, 321 ) );
 	levelMeterLeft->setPaletteBackgroundColor( paletteBackgroundColor () );
 	
@@ -37,12 +36,17 @@ mixerGuiPlayer::mixerGuiPlayer( int chID, soundPlayer* soundplayer, QWidget* par
 	levelMeterRight->setGeometry( QRect( 19, 60, 11, 321 ) );
 	levelMeterRight->setPaletteBackgroundColor( paletteBackgroundColor () );
 
-	player = new playerChannelFile(this, "soundPlayer");
-	mixer = player;
-	soundplayer->addChannel(player);
+        meterLayout = new QGridLayout();
+        meterLayout->addWidget( levelMeterLeft, 1, 1 );
+        meterLayout->addWidget( levelMeterRight, 1, 2 );
+        layout->addLayout( meterLayout, 3, 1, 2, 1 );
+
+//	player = new playerChannelFile(this, "soundPlayer");
+//	mixer = player;
+//	soundplayer->addChannel(player);
 
 	//connect some Signal of the Player....
-	connect( vuSlider, SIGNAL(valueChanged( int )), player, SLOT(setVolume( int )) );
+/*	connect( vuSlider, SIGNAL(valueChanged( int )), player, SLOT(setVolume( int )) );
 	connect( player, SIGNAL( nameChanged( QString ) ), this, SLOT( changeName( QString) ) );
 	connect( player, SIGNAL( refreshed() ) , this, SLOT( refresh() ) );
 	connect( player, SIGNAL(newMeta( metaTag )), this, SLOT(setMeta( metaTag )));
@@ -51,46 +55,50 @@ mixerGuiPlayer::mixerGuiPlayer( int chID, soundPlayer* soundplayer, QWidget* par
 	connect( player, SIGNAL( paused()), levelMeterLeft, SLOT( reset()));
 	connect( player, SIGNAL( stopped()), levelMeterRight, SLOT( reset()));
 	connect( player, SIGNAL( paused()), levelMeterRight, SLOT( reset()));
-
-	playButton = new blinkButton( this, "playButton" );
-	playButton->setGeometry( QRect( 60, 150, 39, 26 ) );
+*/
+        playButton = new blinkButton( this, "playButton" );
 	playButton->setActivatedColor( QColor(150, 255, 150) );
-	connect( playButton, SIGNAL(clicked()), player, SLOT(play()) );
+        actionButtons->addWidget( playButton );
+//	connect( playButton, SIGNAL(clicked()), player, SLOT(play()) );
 
 	stopButton = new glowButton( this, "stopButton" );
-	stopButton->setGeometry( QRect( 60, 120, 39, 26 ) );
 	stopButton->setActivatedColor( QColor(255, 150, 150) );
-	connect( stopButton, SIGNAL(clicked()), player, SLOT(stop()) );
+        actionButtons->addWidget( stopButton );
+//	connect( stopButton, SIGNAL(clicked()), player, SLOT(stop()) );
 
 	pauseButton = new blinkButton( this, "pauseButton" );
-	pauseButton->setGeometry( QRect( 60, 90, 39, 26 ) );
 	pauseButton->setActivatedColor( QColor(150, 150, 255) );
-	connect( pauseButton, SIGNAL(clicked()), player, SLOT(pause()) );
+        actionButtons->addWidget( pauseButton );
+//	connect( pauseButton, SIGNAL(clicked()), player, SLOT(pause()) );
 
 	cueButton = new blinkButton( this, "cueButton" );
-	cueButton->setGeometry( QRect( 60, 60, 39, 26 ) );
 	cueButton->setActivatedColor( QColor(255, 180, 100) );
-	connect( cueButton, SIGNAL(clicked()), this, SLOT(cueNewTrack()) );
+        actionButtons->addWidget( cueButton );
+//	connect( cueButton, SIGNAL(clicked()), this, SLOT(cueNewTrack()) );
 	
 	openButton = new blinkButton( this, "openButton" );
 	openButton->setGeometry( QRect( 60, 250, 39, 26 ) );
-	connect( openButton, SIGNAL(clicked()), this, SLOT(fileOpen()) );
+        toolButtons->addWidget( openButton, 1, 1 );
+//	connect( openButton, SIGNAL(clicked()), this, SLOT(fileOpen()) );
 
 	tDisplay = new timeDisplay( this, "timeDisplay");
-	tDisplay->setGeometry( QRect( 3, 23, 104, 30 ) );
+        tDisplay->setMaximumHeight( 23 );
+        layout->addWidget( tDisplay, 2, 1, 1, -1 );
 
 	loopButton = new glowButton( this, "loopButton" );
-	loopButton->setGeometry( QRect( 60, 180, 17, 15 ) );
 	loopButton->setActivatedColor( QColor(255, 240, 0) );
-	connect( loopButton, SIGNAL(clicked()), player, SLOT(toggleLoop()) );
+        actionButtons->addWidget( loopButton );
+//	connect( loopButton, SIGNAL(clicked()), player, SLOT(toggleLoop()) );
 
-	player->setName( config->readEntry( "/radiomixer/channel_"+QString::number( channelID )+"/name", tr("Kanal")+" "+QString::number(channelID) ) );
+/*	player->setName( config->readEntry( "/radiomixer/channel_"+QString::number( channelID )+"/name", tr("Kanal")+" "+QString::number(channelID) ) );
 
 	if( config->readNumEntry( "/radiomixer/channel_"+QString::number( channelID )+"/autoRecue", 0 ) )
 		connect( player, SIGNAL(trackEnded()), this, SLOT(cueNewTrack()) );
 
 	delete config;
-	languageChange();
+*/
+        languageChange();
+
 }
 
 
@@ -100,6 +108,7 @@ mixerGuiPlayer::~mixerGuiPlayer()
 
 void mixerGuiPlayer::buttonBlinker( )
 {
+    /*
 	playButton->setState( player->isPlaying() );
 	stopButton->setState( player->isStopped() );
 	pauseButton->setState( player->isPaused() );
@@ -121,12 +130,13 @@ void mixerGuiPlayer::buttonBlinker( )
 	}
 
         mixerGUI::buttonBlinker();
+        */
 }
 
 void mixerGuiPlayer::cueNewTrack( )
 {
-	if( player->isStopped() )
-		emit getNextTrack( channelID );
+//	if( player->isStopped() )
+//		emit getNextTrack( channelID );
 }
 
 void mixerGuiPlayer::buttonPressed( int hwChannel, int button )
@@ -140,13 +150,13 @@ void mixerGuiPlayer::buttonPressed( int hwChannel, int button )
 				cueNewTrack();
 				break;
 			case 0x20 :
-				player->play();
+//				player->play();
 				break;
 			case 0x40 :
-				player->pause();
+//				player->pause();
 				break;
 			case 0x80 :
-				player->stop();
+//				player->stop();
 				break;
 		}
 	}
@@ -155,7 +165,7 @@ void mixerGuiPlayer::buttonPressed( int hwChannel, int button )
 void mixerGuiPlayer::languageChange()
 {
     mixerGUI::languageChange();
-    chName->setText( player->getName() );
+//    chName->setText( player->getName() );
     playButton->setText( tr( "Play" ) );
     stopButton->setText( tr( "Stop" ) );
     pauseButton->setText( tr( "Paus" ) );
@@ -166,7 +176,7 @@ void mixerGuiPlayer::languageChange()
 
 void mixerGuiPlayer::fileOpen( )
 {
-   QString extensions = ""
+/*   QString extensions = ""
 #ifdef HAVE_VORBIS
    +QString(" *.ogg")
 #endif
@@ -190,10 +200,12 @@ void mixerGuiPlayer::fileOpen( )
                     player->getName()+": "+tr("load File")+"..." );
 	if( s.length() >0)
 		player->open( new playListItem(s) );
+                */
 }
 
 void mixerGuiPlayer::showPrefs( )
 {
+    /*
         mixerGUI::createPrefDlg( );
 
 	QCheckBox* autoRecue = new QCheckBox( prefDlg->DynamicBox, "autoRecue" );
@@ -220,6 +232,7 @@ void mixerGuiPlayer::showPrefs( )
 		levelMeterRight->setPaletteBackgroundColor( paletteBackgroundColor () );
 	}
         mixerGUI::finishPrefDlg( );
+        */
 }
 
 void mixerGuiPlayer::setMeta( metaTag meta )
@@ -250,7 +263,7 @@ void mixerGuiPlayer::cueTrack( unsigned int playerID, playListItem * song )
 {
 	if( this->channelID == playerID )
 	{
-		player->open( song );
+//		player->open( song );
 	}
 }
 
@@ -262,6 +275,7 @@ void mixerGuiPlayer::dragEnterEvent(QDragEnterEvent * evt)
 
 void mixerGuiPlayer::dropEvent(QDropEvent * evt)
 {
+    /*
 	playListItem* playListEntry = 0;
 	if( evt->provides("application/x-radiomixer-playlistitem") )
 	{
@@ -308,4 +322,5 @@ void mixerGuiPlayer::dropEvent(QDropEvent * evt)
 			}
 		}
 	}
+        */
 }

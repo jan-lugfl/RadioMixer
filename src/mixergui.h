@@ -1,7 +1,7 @@
 /* $Id$ */
 /***************************************************************************
  *   OpenRadio - RadioMixer                                                *
- *   Copyright (C) 2005-2007 by Jan Boysen                                *
+ *   Copyright (C) 2005-2009 by Jan Boysen                                *
  *   trekkie@media-mission.de                                              *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
@@ -22,7 +22,8 @@
 #ifndef MIXERGUI_H
 #define MIXERGUI_H
 
-#include <q3frame.h>
+#include <qframe.h>
+#include <qgridlayout.h>
 #include <qlabel.h>
 #include <qtoolbutton.h>
 #include <qtimer.h>
@@ -41,24 +42,28 @@
 /**
 @author Jan Boysen
 */
-class mixerGUI : public Q3Frame
+class mixerGUI : public QFrame
 {
   Q_OBJECT
 
 public:
-    mixerGUI( int chID, QWidget* parent = 0, const char* name = 0, Qt::WFlags fl = 0 );
+    mixerGUI( QWidget* parent = 0, const char* name = 0, Qt::WFlags fl = 0 );
     ~mixerGUI();
 
 	virtual void languageChange();
 	int currentPosition();
-	virtual QString getName();
+        virtual QString getName();
 	virtual int getPlayerID();
 	virtual QColor getColor();
 	virtual QString getType() = 0;
 
 protected:
 	// Gui Elements
-	QDial* trebleSlider;
+        QGridLayout* layout;
+        QGridLayout* actionButtons;
+        QGridLayout* toolButtons;
+
+        QDial* trebleSlider;
 	QSlider* vuSlider;
 	QToolButton* prefButton;
 

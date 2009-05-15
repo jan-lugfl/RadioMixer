@@ -57,6 +57,10 @@ private:
     mixerGUI* dummy2;
     mixerGUI* dummy3;
     mixerGUI* dummy4;
+    mixerGUI* dummy5;
+    mixerGUI* dummy6;
+    mixerGUI* dummy7;
+    mixerGUI* dummy8;
 
     // Meta Info for Live Streaming with Ices
     metaInfo meta;

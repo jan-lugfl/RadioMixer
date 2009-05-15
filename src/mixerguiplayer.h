@@ -44,7 +44,7 @@ class mixerGuiPlayer : public mixerGUI
   Q_OBJECT
 
 public:
-    mixerGuiPlayer( int chID, soundPlayer* soundplayer, QWidget* parent = 0, const char* name = 0, Qt::WFlags fl = 0 );
+    mixerGuiPlayer( QWidget* parent = 0, const char* name = 0, Qt::WFlags fl = 0 );
     ~mixerGuiPlayer();
 
 	// Main Player
@@ -54,6 +54,7 @@ public:
 	virtual QString getType();
 
 protected:
+        QGridLayout* meterLayout;
 	timeDisplay* tDisplay;
 	blinkButton* playButton;
 	glowButton* stopButton;

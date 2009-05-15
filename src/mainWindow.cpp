@@ -24,6 +24,7 @@
 #include "ui_radiomixer.h"
 
 #include "mixerguialsamix.h"
+#include "mixerguiplayer.h"
 
 #include <QSettings>
 
@@ -31,17 +32,28 @@ mainWindow::mainWindow(QWidget *parent) :
     QMainWindow(parent),
     rm_ui(new Ui::RadioMixer)
 {
+    // sets up the QTDesigner GUI components...
     rm_ui->setupUi(this);
+
+    // connect aboutQT menu....
     connect( rm_ui->actionAbout_Qt, SIGNAL(triggered()), this, SLOT(aboutQt()) );
 
-    dummy = new mixerGuiAlsaMix(1);
-    rm_ui->channelLayout->addWidget( dummy );
-    dummy2 = new mixerGuiAlsaMix(2);
-    rm_ui->channelLayout->addWidget( dummy2 );
-    dummy3 = new mixerGuiAlsaMix(3);
-    rm_ui->channelLayout->addWidget( dummy3 );
-    dummy4 = new mixerGuiAlsaMix(4);
-    rm_ui->channelLayout->addWidget( dummy4 );
+    dummy = new mixerGuiAlsaMix();
+    rm_ui->horizontalLayout->addWidget( dummy );
+    dummy2 = new mixerGuiPlayer();
+    rm_ui->horizontalLayout->addWidget( dummy2 );
+    dummy3 = new mixerGuiPlayer();
+    rm_ui->horizontalLayout->addWidget( dummy3 );
+    dummy4 = new mixerGuiPlayer();
+    rm_ui->horizontalLayout->addWidget( dummy4 );
+    dummy5 = new mixerGuiPlayer();
+    rm_ui->horizontalLayout->addWidget( dummy5 );
+    dummy6 = new mixerGuiPlayer();
+    rm_ui->horizontalLayout->addWidget( dummy6 );
+    dummy7 = new mixerGuiPlayer();
+    rm_ui->horizontalLayout->addWidget( dummy7 );
+    dummy8 = new mixerGuiPlayer();
+    rm_ui->horizontalLayout->addWidget( dummy8 );
 
 /*    // read config and set up last saved state
     QSettings* config = new QSettings();

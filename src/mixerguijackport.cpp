@@ -22,7 +22,7 @@
 #include "mixerguijackport.h"
 
 mixerGuiJackport::mixerGuiJackport( soundPlayerJack* jackPlayer, int chID, QWidget* parent, const char* name, Qt::WFlags fl )
- : mixerGUI(chID, parent, name, fl), mute(0)
+ : mixerGUI( parent, name, fl), mute(0)
 {
 	jackMixer = new playerChannelJackport( jackPlayer, name, this );
 	mixer = jackMixer;

@@ -1,7 +1,7 @@
 /* $Id$ */
 /***************************************************************************
  *   OpenRadio - RadioMixer                                                *
- *   Copyright (C) 2005-2007 by Jan Boysen                                *
+ *   Copyright (C) 2005-2009 by Jan Boysen                                *
  *   trekkie@media-mission.de                                              *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
@@ -31,6 +31,10 @@ vuMeter::vuMeter(QWidget *parent, const char *name)
 	bgColor = parent->paletteBackgroundColor();
 	buffer = new QPixmap();
 	vuTimer = new QTimer(this, "vu Timer");
+
+        // sets some usefull minimum sizes for this widget...
+        setMinimumWidth( 10 );
+        setMinimumHeight( 100 );
 //       connect(vuTimer, SIGNAL(timeout()), this , SLOT(timeSlot()));
 }
 

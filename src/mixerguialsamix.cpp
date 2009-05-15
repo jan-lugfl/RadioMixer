@@ -20,11 +20,10 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 #include "mixerguialsamix.h"
-//Added by qt3to4:
 #include <QLabel>
 
-mixerGuiAlsaMix::mixerGuiAlsaMix(  int chID, QWidget* parent , const char* name , Qt::WFlags fl )
- : mixerGUI( chID, parent, name, fl)
+mixerGuiAlsaMix::mixerGuiAlsaMix( QWidget* parent , const char* name , Qt::WFlags fl )
+ : mixerGUI( parent, name, fl)
 {
 	alsaMixer = new playerChannelAlsaMix();
 	mixer = alsaMixer;
@@ -35,6 +34,7 @@ mixerGuiAlsaMix::mixerGuiAlsaMix(  int chID, QWidget* parent , const char* name 
 	muteBut = new glowButton( this, "muteBut" );
 	muteBut->setGeometry( QRect( 60, 60, 39, 26 ) );
 	connect( muteBut, SIGNAL(clicked()), this, SLOT( toggleMute() ) );
+        actionButtons->addWidget( muteBut );
 
 	languageChange();
 }

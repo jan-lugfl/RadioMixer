@@ -1,7 +1,7 @@
 /* $Id$ */
 /***************************************************************************
  *   OpenRadio - RadioMixer                                                *
- *   Copyright (C) 2005-2007 by Jan Boysen                                *
+ *   Copyright (C) 2005-2009 by Jan Boysen                                *
  *   trekkie@media-mission.de                                              *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
@@ -20,27 +20,30 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 #include "mixergui.h"
-//Added by qt3to4:
-#include <Q3Frame>
+#include <QFrame>
 #include <QLabel>
 
-mixerGUI::mixerGUI( int chID, QWidget* parent , const char* name , Qt::WFlags fl )
- : Q3Frame( parent, name, fl)
+mixerGUI::mixerGUI( QWidget* parent , const char* name , Qt::WFlags fl )
+ : QFrame( parent, name, fl)
 {
-	config = new QSettings();
+    layout = new QGridLayout( this );
+    actionButtons = new QGridLayout();
+    toolButtons = new QGridLayout();
 
-	channelID = chID;
+    setFrameShape( QFrame::StyledPanel );
+    setFrameShadow( QFrame::Raised );
+    setAcceptDrops( TRUE );
 
-	playerPos = config->readNumEntry( "/radiomixer/channel_"+QString::number( channelID )+"/position", channelID );
-	setMinimumSize( QSize( 110, 395 ) );
-	setFrameShape( Q3Frame::StyledPanel );
-	setFrameShadow( Q3Frame::Raised );
+//	config = new QSettings( );
 
-	setAcceptDrops( TRUE );
+        // TODO: hash of name ???
+//        channelID = 0;
+
+//	playerPos = config->readNumEntry( "/radiomixer/channel_"+QString::number( channelID )+"/position", channelID );
 
 	vuSlider = new QSlider( this, "volumeSlider" );
-	vuSlider->setGeometry( QRect( 30, 60, 21, 321 ) );
-	vuSlider->setOrientation( Qt::Vertical );
+        vuSlider->setMinimumHeight( 150 );
+        vuSlider->setOrientation( Qt::Vertical );
 	vuSlider->setTickmarks( QSlider::Both );
 	vuSlider->setMinValue( 0 );
 	vuSlider->setMaxValue( 100 );
@@ -50,8 +53,7 @@ mixerGUI::mixerGUI( int chID, QWidget* parent , const char* name , Qt::WFlags fl
 	vuSlider->setTickInterval( 10 );
 
 	trebleSlider = new QDial( this, "trebleSlider" );
-	trebleSlider->setGeometry( QRect( 55, 200, 45, 45 ) );
-	trebleSlider->setMaxValue( 100 );
+        trebleSlider->setMaxValue( 100 );
 	trebleSlider->setMinValue( -100 );
 	trebleSlider->setValue( 0 );
 	trebleSlider->setLineStep(1);
@@ -59,37 +61,44 @@ mixerGUI::mixerGUI( int chID, QWidget* parent , const char* name , Qt::WFlags fl
 	connect( trebleSlider, SIGNAL(valueChanged( int )), this, SLOT( setBalance( int ) ) );
 
 	chName = new QLabel( this, "chName" );
-	chName->setGeometry( QRect( 3, 3, 104, 20 ) );
-    	chName->setFrameShape( QLabel::Panel );
+        chName->setMaximumHeight( 23 );
+        chName->setFrameShape( QLabel::Panel );
     	chName->setFrameShadow( QLabel::Sunken );
     	chName->setAlignment( int( Qt::AlignCenter ) );
-	changeName( config->readEntry( "/radiomixer/channel_"+QString::number( channelID )+"/name", tr("channel")+" "+QString::number(channelID) ) );
+//	changeName( config->readEntry( "/radiomixer/channel_"+QString::number( channelID )+"/name", tr("channel")+" "+QString::number(channelID) ) );
 	
 	prefButton = new QToolButton( this, "prefButton" );
-	prefButton->setGeometry( QRect( 60, 290, 39, 26 ) );
 	connect( prefButton, SIGNAL(clicked()), this, SLOT(showPrefs()) );
 	
 	buttonBlinkTimer = new QTimer( this );
 	connect( buttonBlinkTimer, SIGNAL(timeout()), this, SLOT(buttonBlinker()));
 	buttonBlinkTimer->start( 30, FALSE );
 
-	languageChange();
+        layout->addWidget( chName, 1, 1, 1, -1 );
+        layout->addLayout( actionButtons, 3, 3, Qt::AlignTop );
+        layout->addWidget( vuSlider, 3, 2, 2, 1 );
+        layout->addLayout( toolButtons, 4, 3, Qt::AlignBottom );
+
+        toolButtons->addWidget( prefButton, 9, 1, Qt::AlignBottom );
+        toolButtons->addWidget( trebleSlider, 10, 1, Qt::AlignBottom );
+
+//	languageChange();
 	
 	// get default colors......
-	int red, green, blue;
-	paletteBackgroundColor().getRgb( &red, &green, &blue );
+//	int red, green, blue;
+//	paletteBackgroundColor().getRgb( &red, &green, &blue );
 
-	refreshMeta = config->readBoolEntry( "/radiomixer/channel_"+QString::number( channelID )+"/setMeta", FALSE );
-	metaMode = config->readNumEntry( "/radiomixer/channel_"+QString::number( channelID )+"/metaMode", 0 );
+//	refreshMeta = config->readBoolEntry( "/radiomixer/channel_"+QString::number( channelID )+"/setMeta", FALSE );
+//	metaMode = config->readNumEntry( "/radiomixer/channel_"+QString::number( channelID )+"/metaMode", 0 );
 
-	setPaletteBackgroundColor( QColor(
-		config->readNumEntry( "/radiomixer/channel_"+QString::number( channelID )+"/color_red", red ),
-		config->readNumEntry( "/radiomixer/channel_"+QString::number( channelID )+"/color_green", green ),
-		config->readNumEntry( "/radiomixer/channel_"+QString::number( channelID )+"/color_blue", blue )
-	 		) );
+//	setPaletteBackgroundColor( QColor(
+//		config->readNumEntry( "/radiomixer/channel_"+QString::number( channelID )+"/color_red", red ),
+//		config->readNumEntry( "/radiomixer/channel_"+QString::number( channelID )+"/color_green", green ),
+//		config->readNumEntry( "/radiomixer/channel_"+QString::number( channelID )+"/color_blue", blue )
+//	 		) );
 
-	hwChannel = config->readNumEntry( "/radiomixer/channel_"+QString::number( channelID )+"/hwControl", 1 );
-	delete config;
+//	hwChannel = config->readNumEntry( "/radiomixer/channel_"+QString::number( channelID )+"/hwControl", 1 );
+//	delete config;
 }
 
 

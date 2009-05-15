@@ -22,7 +22,7 @@
 #include "glowbutton.h"
 
 glowButton::glowButton(QWidget *parent, const char *name)
- : QToolButton(parent, name), state(FALSE)
+ : QPushButton(parent, name), state(FALSE)
 {
 	actColor = QColor( 255, 0, 0 );
 	deactColor = paletteBackgroundColor();	
@@ -50,19 +50,19 @@ void glowButton::toggle( )
 void glowButton::setOn( )
 {
 	state = TRUE;
-	QToolButton::setPaletteBackgroundColor( actColor );
+        QPushButton::setPaletteBackgroundColor( actColor );
 }
 
 void glowButton::setOff( )
 {
 	state = FALSE;
-	QToolButton::setPaletteBackgroundColor( deactColor );
+        QPushButton::setPaletteBackgroundColor( deactColor );
 }
 
 void glowButton::setPaletteBackgroundColor( const QColor & newCol )
 {
 	actColor = newCol;
-	QToolButton::setPaletteForegroundColor( newCol );
+        QPushButton::setPaletteForegroundColor( newCol );
 }
 
 void glowButton::setActivatedColor( const QColor & newCol )
