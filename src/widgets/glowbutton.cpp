@@ -28,6 +28,7 @@ glowButton::glowButton(QWidget *parent, const char *name)
         deactColor = paletteBackgroundColor();
         setMinimumHeight( 32 );
         setMinimumWidth( 32 );
+        setSizePolicy( QSizePolicy::Expanding, QSizePolicy::Expanding );
 }
 
 
