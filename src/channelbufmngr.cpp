@@ -21,7 +21,7 @@
  ***************************************************************************/
 #include "channelbufmngr.h"
 
-channelBufMngr::channelBufMngr(playerChannelStd* parent)
+channelBufMngr::channelBufMngr(mixerChannel* parent)
  : QThread()
 {
 	this->parent = parent;

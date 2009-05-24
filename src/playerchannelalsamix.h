@@ -22,14 +22,14 @@
 #ifndef PLAYERCHANNELALSAMIX_H
 #define PLAYERCHANNELALSAMIX_H
 
-#include <playerchannelstd.h>
+#include <mixerchannel.h>
 #include <alsa/asoundlib.h>
 //#include <alsa/mixer.h>
 
 /**
 @author Jan Boysen
 */
-class playerChannelAlsaMix : public playerChannelStd
+class playerChannelAlsaMix : public mixerChannel
 {
 	Q_OBJECT
 

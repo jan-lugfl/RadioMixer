@@ -22,7 +22,7 @@
 #include "playerchanneljackport.h"
 
 playerChannelJackport::playerChannelJackport( soundPlayerJack* jackPlayer, QString chName, QObject *parent, const char *name )
- : playerChannelStd(parent, name), levelMeterLeft(0), levelMeterRight(0)
+ : mixerChannel(parent, name), levelMeterLeft(0), levelMeterRight(0)
 {
 	this->name = chName;
 	this->player = jackPlayer;

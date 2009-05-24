@@ -22,7 +22,7 @@
 #include "playerchannelfile.h"
 
 playerChannelFile::playerChannelFile(QObject *parent, const char *name)
- : playerChannelStd(parent,name)
+ : mixerChannel(parent,name)
 {
 	bufferThread = new channelBufMngr(this);
 	fileOpen = FALSE;
@@ -164,7 +164,7 @@ void playerChannelFile::stop( )
 {
 	if( isStopped() )
 		return;
-	playerChannelStd::stop();
+        mixerChannel::stop();
 	if( fileOpen )
 		dynamic_cast<playListItem*>(meta)->stopped();
 	close();
@@ -198,7 +198,7 @@ const int playerChannelFile::getTime( )
 
 void playerChannelFile::setName( QString newName )
 {
-	playerChannelStd::setName( newName );
+        mixerChannel::setName( newName );
 	emit( nameChanged( newName ) );
 	emit( refreshed() );
 }
@@ -207,7 +207,7 @@ void playerChannelFile::play( )
 {
 	if( !fileOpen || isPlaying() )
 		return;
-	playerChannelStd::play();
+        mixerChannel::play();
 	if( fileOpen )
 		dynamic_cast<playListItem*>(meta)->startPlaying();
 	emit( newMeta( *meta ) );
@@ -244,7 +244,7 @@ void playerChannelFile::pause( )
 	// pausing if we are not in Play mode makes no sence............
 	if( !isPlaying() )
 		return;
-	playerChannelStd::pause();
+        mixerChannel::pause();
 	emit( paused() );
 }
 

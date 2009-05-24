@@ -49,7 +49,7 @@ soundPlayer::~soundPlayer()
 	delete[] chanBufR;
 }
 
-const int soundPlayer::addChannel( playerChannelStd* newChannel )
+const int soundPlayer::addChannel( mixerChannel* newChannel )
 {
 	channels.append( newChannel );
 	
@@ -66,7 +66,7 @@ void soundPlayer::mixChannels( )
 			mixBufL[bufPos] = 0;
 			mixBufR[bufPos] = 0;
 		}
-		Q3ValueVector<playerChannelStd*>::iterator it;
+                Q3ValueVector<mixerChannel*>::iterator it;
 		for( it = channels.begin(); it != channels.end(); it++ )
 		{
 			if( (*it)->isPlaying() && (*it)->canGetData( interMixSamples ) )
@@ -108,7 +108,7 @@ void soundPlayer::mixChannels( )
 		qWarning( tr("mix: Buffer overfllow in output buffer") );
 }
 
-void soundPlayer::fetchSampleData( playerChannelStd * channel, float * bufferLeft, float * bufferRight )
+void soundPlayer::fetchSampleData( mixerChannel* channel, float * bufferLeft, float * bufferRight )
 {
 	unsigned int dataToRead = int( (((double)channel->getSmplRate()/(double)outRate)*interMixSamples)+1);
 	float* fetchBufL = new float[dataToRead];

@@ -1,7 +1,7 @@
 /* $Id$ */
 /***************************************************************************
  *   OpenRadio - RadioMixer                                                *
- *   Copyright (C) 2005-2007 by Jan Boysen                                *
+ *   Copyright (C) 2009 by Jan Boysen                                      *
  *   trekkie@media-mission.de                                              *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
@@ -19,27 +19,11 @@
  *   Free Software Foundation, Inc.,                                       *
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
-#ifndef CHANNELBUFMNGR_H
-#define CHANNELBUFMNGR_H
 
-#include <qthread.h>
-#include "mixerchannel.h"
+#include "mixerchannelmanager.h"
 
-/**
-@author Jan Boysen
-*/
-class channelBufMngr : public QThread
+mixerChannel* mixerChannelManager::createNewChannel()
 {
-public:
-    channelBufMngr( mixerChannel* parent );
-    ~channelBufMngr();
-    
-    virtual void run();
 
-private:
-        mixerChannel* parent ;
-	
-	
-};
+}
 
-#endif

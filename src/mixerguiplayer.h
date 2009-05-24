@@ -32,7 +32,6 @@
 
 #include <q3dragobject.h>
 #include <q3listview.h>
-//Added by qt3to4:
 #include <QDropEvent>
 #include <QDragEnterEvent>
 
@@ -84,6 +83,7 @@ public slots:
 signals:
 	void getNextTrack( unsigned int );
 	void sixSecondsLeft();
+        void openFile( playListItem* );
 	void onCue( metaTag, QString );
 
 };

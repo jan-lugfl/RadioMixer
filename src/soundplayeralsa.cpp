@@ -144,7 +144,7 @@ void alsaPlayerThread::run()
 	while(1)
 	{
 		bool playing = FALSE;
-		Q3ValueVector<playerChannelStd*>::iterator it;
+                Q3ValueVector<mixerChannel*>::iterator it;
 		for( it = alsaPlayer->channels.begin(); it != alsaPlayer->channels.end(); it++ )
 		{
 			if( (*it)->isPlaying() )

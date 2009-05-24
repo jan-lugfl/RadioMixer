@@ -20,6 +20,7 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 #include "mixerguiplayer.h"
+#include <QFileDialog>
 #include <QDropEvent>
 #include <QDragEnterEvent>
 
@@ -41,8 +42,8 @@ mixerGuiPlayer::mixerGuiPlayer( QWidget* parent , const char* name , Qt::WFlags 
         meterLayout->addWidget( levelMeterRight, 1, 2 );
         layout->addLayout( meterLayout, 3, 1, 2, 1 );
 
-//	player = new playerChannelFile(this, "soundPlayer");
-//	mixer = player;
+        player = new playerChannelFile(this, "soundPlayer");
+        mixer = player;
 //	soundplayer->addChannel(player);
 
 	//connect some Signal of the Player....
@@ -83,7 +84,7 @@ mixerGuiPlayer::mixerGuiPlayer( QWidget* parent , const char* name , Qt::WFlags 
 	openButton = new blinkButton( this, "openButton" );
 	openButton->setGeometry( QRect( 60, 250, 39, 26 ) );
         toolButtons->addWidget( openButton, 1, 1 );
-//	connect( openButton, SIGNAL(clicked()), this, SLOT(fileOpen()) );
+        connect( openButton, SIGNAL(clicked()), this, SLOT(fileOpen()) );
 
 	tDisplay = new timeDisplay( this, "timeDisplay");
         tDisplay->setMaximumHeight( 23 );
@@ -180,7 +181,7 @@ void mixerGuiPlayer::languageChange()
 
 void mixerGuiPlayer::fileOpen( )
 {
-/*   QString extensions = ""
+   QString extensions = ""
 #ifdef HAVE_VORBIS
    +QString(" *.ogg")
 #endif
@@ -196,15 +197,13 @@ void mixerGuiPlayer::fileOpen( )
    +QString(";;MPEG-1 Layer III (*.mp2 *.mp3)")
 #endif
    ;
-   QString s = Q3FileDialog::getOpenFileName(
-                    "",
-                    fileTypes,
+   QString s = QFileDialog::getOpenFileName(
                     this,
                     tr("load file dialog"),
-                    player->getName()+": "+tr("load File")+"..." );
-	if( s.length() >0)
-		player->open( new playListItem(s) );
-                */
+                    "",
+                    fileTypes);
+    if( s.length() >0)
+        emit openFile( new playListItem(s) );
 }
 
 void mixerGuiPlayer::showPrefs( )

@@ -27,7 +27,6 @@
 #include <qlabel.h>
 #include <qtoolbutton.h>
 #include <qtimer.h>
-#include <q3filedialog.h>
 #include <qmessagebox.h>
 #include <q3valuevector.h>
 #include <qsettings.h>
@@ -79,7 +78,7 @@ protected:
 	bool refreshMeta;
 	int metaMode;
 	QString staticMetaText;
-	playerChannelStd*	mixer;
+        mixerChannel*	mixer;
 	int hwChannel;
 
 	//Dialogs

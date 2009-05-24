@@ -78,7 +78,7 @@ int soundPlayerJack::process( jack_nframes_t frames, void * arg )
 	for( portIt = self->jackPorts.begin(); portIt != self->jackPorts.end(); ++portIt )
 		(*portIt)->process( frames );
 
-	Q3ValueVector<playerChannelStd*>::iterator it;
+        Q3ValueVector<mixerChannel*>::iterator it;
 	for( it = self->channels.begin(); it != self->channels.end(); it++ )
 	{
 		if( (*it)->isPlaying() )

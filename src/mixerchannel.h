@@ -1,7 +1,7 @@
 /* $Id$ */
 /***************************************************************************
  *   OpenRadio - RadioMixer                                                *
- *   Copyright (C) 2005-2007 by Jan Boysen                                *
+ *   Copyright (C) 2005-2009 by Jan Boysen                                *
  *   trekkie@media-mission.de                                              *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
@@ -19,8 +19,8 @@
  *   Free Software Foundation, Inc.,                                       *
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
-#ifndef PLAYERCHANNELSTD_H
-#define PLAYERCHANNELSTD_H
+#ifndef MIXERCHANNEL_H
+#define MIXERCHANNEL_H
 
 #include <qobject.h>
 #include <qmessagebox.h>
@@ -31,12 +31,12 @@
 /**
 @author Jan Boysen
 */
-class playerChannelStd : public QObject
+class mixerChannel : public QObject
 {
 Q_OBJECT
 public:
-    playerChannelStd(QObject *parent = 0, const char *name = 0);
-    ~playerChannelStd();
+    mixerChannel(QObject *parent = 0, const char *name = 0);
+    ~mixerChannel();
 
     const bool isPlaying();
     const bool isStopped();
@@ -82,7 +82,7 @@ protected:
 	int state;
 
 	soundRingBuffer* soundBuffers;
-	
+
 private:
 
 protected slots:

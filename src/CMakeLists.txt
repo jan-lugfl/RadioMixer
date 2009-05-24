@@ -2,12 +2,13 @@ ADD_SUBDIRECTORY( widgets )
 ADD_SUBDIRECTORY( dialoge )
 
 SET( SRC_CPPS
+	mixerchannelmanager.cpp
 	channelbufmngr.cpp
 	metainfo.cpp
 	mixergui.cpp
 	mixerguiplayer.cpp
 	playerchannelalsamix.cpp
-	playerchannelstd.cpp
+	mixerchannel.cpp
 	radiomixer.cpp
 	soundplayeralsa.cpp
 	filedecoder.cpp
@@ -27,11 +28,12 @@ SET( SRC_CPPS
 )
 
 SET( SRC_MOC_HDRS
+	mixerchannelmanager.h
 	metainfo.h
 	mixergui.h
 	mixerguiplayer.h
 	playerchannelalsamix.h
-	playerchannelstd.h
+	mixerchannel.h
 	playerchannelfile.h
 	playlistitem.h
 	filedecoder.h

@@ -22,13 +22,13 @@
 #ifndef PLAYERCHANNELJACKPORT_H
 #define PLAYERCHANNELJACKPORT_H
 
-#include <playerchannelstd.h>
+#include <mixerchannel.h>
 #include "soundplayerjack.h"
 
 /**
 @author Jan Boysen
 */
-class playerChannelJackport : public playerChannelStd
+class playerChannelJackport : public mixerChannel
 {
 Q_OBJECT
 public:

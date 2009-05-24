@@ -42,7 +42,7 @@ public:
     virtual void open( QString device ) = 0;
     virtual void close() = 0;
 
-    virtual const int addChannel( playerChannelStd* newChannel );
+    virtual const int addChannel( mixerChannel* newChannel );
     virtual const unsigned int getOutputSampleRate( );
     virtual bool isConnected();
 
@@ -50,7 +50,7 @@ public:
 protected:
 	bool devOpened;
 
-	Q3ValueVector<playerChannelStd*> channels;
+        Q3ValueVector<mixerChannel*> channels;
 
 	soundRingBuffer*	outputBuffers;
 	float* mixBufL;
@@ -64,7 +64,7 @@ protected:
 
 	virtual void mixChannels();
 
-	virtual void fetchSampleData( playerChannelStd* channel, float* bufferLeft, float* bufferRight );
+        virtual void fetchSampleData( mixerChannel* channel, float* bufferLeft, float* bufferRight );
 
 	unsigned int 	interMixSamples;
 };

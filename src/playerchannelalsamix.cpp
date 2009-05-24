@@ -22,7 +22,7 @@
 #include "playerchannelalsamix.h"
 
 playerChannelAlsaMix::playerChannelAlsaMix()
- : playerChannelStd()
+ : mixerChannel()
 {
 #ifdef HAVE_ALSA
     snd_mixer_selem_id_alloca(&chId);

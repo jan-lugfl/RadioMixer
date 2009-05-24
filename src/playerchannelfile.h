@@ -22,7 +22,7 @@
 #ifndef PLAYERCHANNELFILE_H
 #define PLAYERCHANNELFILE_H
 
-#include "playerchannelstd.h"
+#include "mixerchannel.h"
 #include "channelbufmngr.h"
 #include "filedecoder.h"
 #include "playlistitem.h"
@@ -42,7 +42,7 @@
 /**
 @author Jan Boysen
 */
-class playerChannelFile : public playerChannelStd
+class playerChannelFile : public mixerChannel
 {
   Q_OBJECT
 

@@ -1,7 +1,7 @@
 /* $Id$ */
 /***************************************************************************
  *   OpenRadio - RadioMixer                                                *
- *   Copyright (C) 2005-2007 by Jan Boysen                                *
+ *   Copyright (C) 2005-2009 by Jan Boysen                                *
  *   trekkie@media-mission.de                                              *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
@@ -19,9 +19,10 @@
  *   Free Software Foundation, Inc.,                                       *
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
-#include "playerchannelstd.h"
 
-playerChannelStd::playerChannelStd(QObject *parent, const char *name)
+#include "mixerchannel.h"
+
+mixerChannel::mixerChannel(QObject *parent, const char *name)
  : QObject(parent, name), volume(1)
 {
 	// allocate Stereo Sound Ringbuffer.,...
@@ -37,36 +38,36 @@ playerChannelStd::playerChannelStd(QObject *parent, const char *name)
 }
 
 
-playerChannelStd::~playerChannelStd()
+mixerChannel::~mixerChannel()
 {
 }
 
-void playerChannelStd::setVolume( int newValue )
+void mixerChannel::setVolume( int newValue )
 {
 	volume = (100.f-newValue)/100.f;
 }
 
-void playerChannelStd::play( )
+void mixerChannel::play( )
 {
 	state = 1;
 }
 
-void playerChannelStd::stop( )
+void mixerChannel::stop( )
 {
 	state = 0;
 }
 
-void playerChannelStd::pause( )
+void mixerChannel::pause( )
 {
 	state = 2;
 }
 
-void playerChannelStd::cue( )
+void mixerChannel::cue( )
 {
 	state = 3;
 }
 
-const bool playerChannelStd::isPlaying( )
+const bool mixerChannel::isPlaying( )
 {
 	if( state == 1)
 		return TRUE;
@@ -74,7 +75,7 @@ const bool playerChannelStd::isPlaying( )
 		return FALSE;
 }
 
-const bool playerChannelStd::isStopped( )
+const bool mixerChannel::isStopped( )
 {
 	if( state == 0)
 		return TRUE;
@@ -82,7 +83,7 @@ const bool playerChannelStd::isStopped( )
 		return FALSE;
 }
 
-const bool playerChannelStd::isPaused( )
+const bool mixerChannel::isPaused( )
 {
 	if( state == 2)
 		return TRUE;
@@ -90,7 +91,7 @@ const bool playerChannelStd::isPaused( )
 		return FALSE;
 }
 
-const bool playerChannelStd::isCued( )
+const bool mixerChannel::isCued( )
 {
 	if( state == 3)
 		return TRUE;
@@ -98,23 +99,23 @@ const bool playerChannelStd::isCued( )
 		return FALSE;
 }
 
-QString playerChannelStd::getName( )
+QString mixerChannel::getName( )
 {
 	return name;
 }
 
-void playerChannelStd::setName( QString newName )
+void mixerChannel::setName( QString newName )
 {
 	name = newName;
 	emit( nameChanged( name ) );
 }
 
-int playerChannelStd::getLevelLeft( )
+int mixerChannel::getLevelLeft( )
 {
 	return int(volume_left*100);
 }
 
-int playerChannelStd::getLevelRight( )
+int mixerChannel::getLevelRight( )
 {
 	return int(volume_right*100);
 }
@@ -122,68 +123,68 @@ int playerChannelStd::getLevelRight( )
 /**
  * signal Wrapper only that emits the refresh signal to outside connected stuff.
  */
-void playerChannelStd::refresh( )
+void mixerChannel::refresh( )
 {
 	emit( refreshed() );
 }
 
-const unsigned int playerChannelStd::getSmplRate( )
+const unsigned int mixerChannel::getSmplRate( )
 {
 	return smplRate;
 }
 
-void playerChannelStd::connectPort( )
+void mixerChannel::connectPort( )
 {
 }
 
-void playerChannelStd::disconnectPort( )
+void mixerChannel::disconnectPort( )
 {
 }
 
-void playerChannelStd::setLevelLeft( int level )
+void mixerChannel::setLevelLeft( int level )
 {
 	volume_left = level/100.f;
 }
 
-void playerChannelStd::setLevelRight( int level )
+void mixerChannel::setLevelRight( int level )
 {
 	volume_right = level/100.f;
 }
 
-bool playerChannelStd::canGetData( unsigned int size )
+bool mixerChannel::canGetData( unsigned int size )
 {
 	return ( soundBuffers[0].canRead( size ) && soundBuffers[1].canRead( size ) );
 }
 
-void playerChannelStd::getDataLeft( float * dataOut, unsigned int size )
+void mixerChannel::getDataLeft( float * dataOut, unsigned int size )
 {
 	if(soundBuffers[0].canRead( size ))
 		soundBuffers[0].read( dataOut, size );
 	else qWarning("oupsi this should never happen........");
 }
 
-void playerChannelStd::getDataRight( float * dataOut, unsigned int size )
+void mixerChannel::getDataRight( float * dataOut, unsigned int size )
 {
 	if(soundBuffers[1].canRead( size ))
 		soundBuffers[1].read( dataOut, size );
 	else qWarning("oupsi this should never happen........");
 }
 
-void playerChannelStd::checkBuffer( )
+void mixerChannel::checkBuffer( )
 {
 }
 
-unsigned int playerChannelStd::getBuffFill( )
+unsigned int mixerChannel::getBuffFill( )
 {
 	return soundBuffers[0].getFill();
 }
 
-const float playerChannelStd::getLevelMeterLeft( )
+const float mixerChannel::getLevelMeterLeft( )
 {
 	return soundBuffers[0].getLastReadAverage();
 }
 
-const float playerChannelStd::getLevelMeterRight( )
+const float mixerChannel::getLevelMeterRight( )
 {
 	return soundBuffers[1].getLastReadAverage();
 }
