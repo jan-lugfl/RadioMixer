@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
+ <author>Jan Boysen</author>
  <class>aboutDialog</class>
  <widget class="QDialog" name="aboutDialog">
   <property name="geometry">
@@ -30,7 +31,7 @@
    <item row="0" column="0">
     <widget class="QTabWidget" name="tabWidget3">
      <property name="currentIndex">
-      <number>1</number>
+      <number>0</number>
      </property>
      <widget class="QWidget" name="tab">
       <attribute name="title">
@@ -59,11 +60,17 @@
            </item>
            <item>
             <widget class="QLabel" name="radiomixerlogo">
+             <property name="maximumSize">
+              <size>
+               <width>16777215</width>
+               <height>16777215</height>
+              </size>
+             </property>
              <property name="text">
               <string/>
              </property>
              <property name="pixmap">
-              <pixmap>../../images/radiomixer-trans.png</pixmap>
+              <pixmap resource="../../radiomixer.qrc">:/logo/images/radiomixer-trans.png</pixmap>
              </property>
              <property name="scaledContents">
               <bool>true</bool>
@@ -190,7 +197,9 @@ p, li { white-space: pre-wrap; }
   </layout>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
- <resources/>
+ <resources>
+  <include location="../../radiomixer.qrc"/>
+ </resources>
  <connections>
   <connection>
    <sender>closeButton</sender>
