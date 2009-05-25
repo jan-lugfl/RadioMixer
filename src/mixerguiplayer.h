@@ -47,7 +47,7 @@ public:
     ~mixerGuiPlayer();
 
 	// Main Player
-	playerChannelFile* player;
+        mixerChannel_filePlayer* player;
 
 	virtual void languageChange();
 	virtual QString getType();

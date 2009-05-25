@@ -19,8 +19,8 @@
  *   Free Software Foundation, Inc.,                                       *
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
-#ifndef PLAYERCHANNELFILE_H
-#define PLAYERCHANNELFILE_H
+#ifndef mixerChannel_filePlayer_H
+#define mixerChannel_filePlayer_H
 
 #include "mixerchannel.h"
 #include "channelbufmngr.h"
@@ -42,13 +42,13 @@
 /**
 @author Jan Boysen
 */
-class playerChannelFile : public mixerChannel
+class mixerChannel_filePlayer : public mixerChannel
 {
   Q_OBJECT
 
 public:
-    playerChannelFile(QObject *parent = 0, const char *name = 0);
-    ~playerChannelFile();
+    mixerChannel_filePlayer(QObject *parent = 0, const char *name = 0);
+    ~mixerChannel_filePlayer();
 	
 	// Public Member for the BufferMngr Thread
 	virtual void checkBuffer();

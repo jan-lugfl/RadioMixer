@@ -64,7 +64,10 @@ public:
    virtual void getDataRight( float* dataOut, unsigned int size );
    virtual unsigned int getBuffFill( );
 
+   bool providesAudioData();
+
 protected:
+        bool provides_audiodata;
 	float volume_left;
 	float volume_right;
 	float volume;

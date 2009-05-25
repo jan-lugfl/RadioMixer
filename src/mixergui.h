@@ -34,7 +34,7 @@
 #include <q3groupbox.h>
 
 #include "widgets/vumeter.h"
-#include "playerchannelfile.h"
+#include "mixerchannel_fileplayer.h"
 #include "dialoge/chanprefdlg.h"
 #include "metatag.h"
 

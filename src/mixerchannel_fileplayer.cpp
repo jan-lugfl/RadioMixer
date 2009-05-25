@@ -1,7 +1,7 @@
 /* $Id$ */
 /***************************************************************************
  *   OpenRadio - RadioMixer                                                *
- *   Copyright (C) 2005-2007 by Jan Boysen                                *
+ *   Copyright (C) 2005-2009 by Jan Boysen                                *
  *   trekkie@media-mission.de                                              *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
@@ -19,9 +19,9 @@
  *   Free Software Foundation, Inc.,                                       *
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
-#include "playerchannelfile.h"
+#include "mixerchannel_fileplayer.h"
 
-playerChannelFile::playerChannelFile(QObject *parent, const char *name)
+mixerChannel_filePlayer::mixerChannel_filePlayer(QObject *parent, const char *name)
  : mixerChannel(parent,name)
 {
 	bufferThread = new channelBufMngr(this);
@@ -30,14 +30,14 @@ playerChannelFile::playerChannelFile(QObject *parent, const char *name)
 	decoder = NULL;
 }
 
-playerChannelFile::~playerChannelFile()
+mixerChannel_filePlayer::~mixerChannel_filePlayer()
 {
 	if(!isStopped())
 		stop();
 	bufferThread->terminate();
 }
 
-void playerChannelFile::open( playListItem* track )
+void mixerChannel_filePlayer::open( playListItem* track )
 {
 	meta = track;
 
@@ -102,7 +102,7 @@ void playerChannelFile::open( playListItem* track )
 	}
 }
 
-void playerChannelFile::decode( )
+void mixerChannel_filePlayer::decode( )
 {
 	bool endOfTrack = 0;
 	float** decBuff = new float*[2];		//Buffer for Sound Decoder
@@ -152,7 +152,7 @@ void playerChannelFile::decode( )
 		emit( trackEnded() );
 }
 
-void playerChannelFile::checkBuffer( )
+void mixerChannel_filePlayer::checkBuffer( )
 {
 	if( soundBuffers[0].canWrite( 1024 ) && isPlaying() )
 	{
@@ -160,7 +160,7 @@ void playerChannelFile::checkBuffer( )
 	}
 }
 
-void playerChannelFile::stop( )
+void mixerChannel_filePlayer::stop( )
 {
 	if( isStopped() )
 		return;
@@ -171,7 +171,7 @@ void playerChannelFile::stop( )
 	emit( stopped() );
 }
 
-void playerChannelFile::close( )
+void mixerChannel_filePlayer::close( )
 {
 	if(fileOpen)
 	{
@@ -181,29 +181,29 @@ void playerChannelFile::close( )
 	}
 }
 
-const bool playerChannelFile::isFileOpen( )
+const bool mixerChannel_filePlayer::isFileOpen( )
 {
 	return fileOpen;
 }
 
-const int playerChannelFile::getRTime( )
+const int mixerChannel_filePlayer::getRTime( )
 {
 	return decoder->getRTime();
 }
 
-const int playerChannelFile::getTime( )
+const int mixerChannel_filePlayer::getTime( )
 {
 	return decoder->getTime();
 }
 
-void playerChannelFile::setName( QString newName )
+void mixerChannel_filePlayer::setName( QString newName )
 {
         mixerChannel::setName( newName );
 	emit( nameChanged( newName ) );
 	emit( refreshed() );
 }
 
-void playerChannelFile::play( )
+void mixerChannel_filePlayer::play( )
 {
 	if( !fileOpen || isPlaying() )
 		return;
@@ -214,32 +214,32 @@ void playerChannelFile::play( )
 	emit( playing() );
 }
 
-const float playerChannelFile::getPosition_Samples( )
+const float mixerChannel_filePlayer::getPosition_Samples( )
 {
 	return decoder->getPosition_Samples();
 }
 
-const float playerChannelFile::getTotal_Samples( )
+const float mixerChannel_filePlayer::getTotal_Samples( )
 {
 	return decoder->getTotal_Samples();
 }
 
-const float playerChannelFile::getTotalFrames( )
+const float mixerChannel_filePlayer::getTotalFrames( )
 {
 	return decoder->getTotalFrames();
 }
 
-const float playerChannelFile::getPlayedFrames( )
+const float mixerChannel_filePlayer::getPlayedFrames( )
 {
 	return decoder->getPlayedFrames();
 }
 
-const float playerChannelFile::getRemainFrames( )
+const float mixerChannel_filePlayer::getRemainFrames( )
 {
 	return decoder->getRemainFrames();
 }
 
-void playerChannelFile::pause( )
+void mixerChannel_filePlayer::pause( )
 {
 	// pausing if we are not in Play mode makes no sence............
 	if( !isPlaying() )
@@ -248,12 +248,12 @@ void playerChannelFile::pause( )
 	emit( paused() );
 }
 
-const bool playerChannelFile::isLooping( )
+const bool mixerChannel_filePlayer::isLooping( )
 {
 	return loopMode;
 }
 
-void playerChannelFile::toggleLoop( )
+void mixerChannel_filePlayer::toggleLoop( )
 {
 	if( loopMode )
 		loopMode = FALSE;
@@ -261,7 +261,7 @@ void playerChannelFile::toggleLoop( )
 		loopMode = TRUE;
 }
 
-const float playerChannelFile::getPrerollFrames( )
+const float mixerChannel_filePlayer::getPrerollFrames( )
 {
 	return meta->getPreLength().second()*25;
 }

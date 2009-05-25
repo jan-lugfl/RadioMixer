@@ -27,7 +27,7 @@
 #include <qmessagebox.h>
 #include <samplerate.h>
 
-#include "playerchannelfile.h"
+#include "mixerchannel_fileplayer.h"
 #include "ringbuffer.h"
 
 /**

@@ -42,7 +42,7 @@ mixerGuiPlayer::mixerGuiPlayer( QWidget* parent , const char* name , Qt::WFlags 
         meterLayout->addWidget( levelMeterRight, 1, 2 );
         layout->addLayout( meterLayout, 3, 1, 2, 1 );
 
-        player = new playerChannelFile(this, "soundPlayer");
+        player = new mixerChannel_filePlayer(this, "soundPlayer");
         mixer = player;
 //	soundplayer->addChannel(player);
 

@@ -23,7 +23,7 @@
 #include "mixerchannel.h"
 
 mixerChannel::mixerChannel(QObject *parent, const char *name)
- : QObject(parent, name), volume(1)
+ : QObject(parent, name), provides_audiodata( false ), volume(1)
 {
 	// allocate Stereo Sound Ringbuffer.,...
 	soundBuffers = new soundRingBuffer[2];
@@ -187,4 +187,9 @@ const float mixerChannel::getLevelMeterLeft( )
 const float mixerChannel::getLevelMeterRight( )
 {
 	return soundBuffers[1].getLastReadAverage();
+}
+
+bool mixerChannel::providesAudioData()
+{
+    return provides_audiodata;
 }
