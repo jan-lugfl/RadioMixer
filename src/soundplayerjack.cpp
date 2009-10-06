@@ -24,6 +24,7 @@
 soundPlayerJack::soundPlayerJack( )
 : soundPlayer( ), buffResetted( FALSE)
 {
+    jack_set_error_function( jackError );
 }
 
 soundPlayerJack::~soundPlayerJack()
@@ -47,8 +48,8 @@ void soundPlayerJack::open( QString device )
 			
 			outputPorts[0] = jack_port_register( jack, "Master_Left",  JACK_DEFAULT_AUDIO_TYPE,JackPortIsOutput ,0 );
 			outputPorts[1] = jack_port_register( jack, "Master_Right",  JACK_DEFAULT_AUDIO_TYPE,JackPortIsOutput ,0 );
-			jack_set_process_callback(jack, process, (void *)this);
-			jack_on_shutdown(jack, jackShutdown, (void*)this);
+                        jack_set_process_callback(jack, process, (void *)this);
+                        jack_on_shutdown(jack, jackShutdown, (void*)this);
 			jack_activate (jack);
 
 			bufSize = jack_get_buffer_size( jack );
@@ -71,15 +72,15 @@ void soundPlayerJack::close( )
 
 int soundPlayerJack::process( jack_nframes_t frames, void * arg )
 {
-	soundPlayerJack* self = (soundPlayerJack*)arg;
+        soundPlayerJack* self = (soundPlayerJack*)arg;
 	bool playing = FALSE;
 
-	Q3ValueVector<jackPort*>::iterator portIt;
+        Q3ValueVector<jackPort*>::iterator portIt;
 	for( portIt = self->jackPorts.begin(); portIt != self->jackPorts.end(); ++portIt )
 		(*portIt)->process( frames );
 
-        Q3ValueVector<mixerChannel*>::iterator it;
-	for( it = self->channels.begin(); it != self->channels.end(); it++ )
+        mixerChannelManager::storageType::iterator it;
+        for( it = mixerChannelManager::channels.begin(); it != mixerChannelManager::channels.end(); it++ )
 	{
 		if( (*it)->isPlaying() )
 			playing = TRUE;
@@ -113,7 +114,7 @@ int soundPlayerJack::process( jack_nframes_t frames, void * arg )
 		}
 		self->buffResetted = TRUE;
 	}
-	return 1;
+        return 0;
 }
 
 jackPort* soundPlayerJack::registerJackPort( QString name, unsigned long flags )
@@ -146,6 +147,11 @@ void soundPlayerJack::jackShutdown( void * arg )
 	qWarning("got shotdown signal from jackd in connected state");
 	self->devOpened = FALSE;
 //	emit self->onDisconnect();
+}
+
+void soundPlayerJack::jackError( const char* msg )
+{
+    qWarning(msg);
 }
 
 void soundPlayerJack::unregisterJackPort( jackPort * port)

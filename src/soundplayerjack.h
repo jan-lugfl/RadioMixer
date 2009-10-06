@@ -49,6 +49,7 @@ protected:
 	// Jack Callbacks !
 	static  int process(jack_nframes_t frames, void *arg);
 	static void jackShutdown( void* arg);
+        static void jackError( const char* msg );
 
 	// Jack Stuff below
 	jack_client_t*				jack;

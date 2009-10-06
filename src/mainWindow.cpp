@@ -25,6 +25,7 @@
 
 #include "mixerguialsamix.h"
 #include "mixerguiplayer.h"
+#include "soundplayerjack.h"
 
 #include <QSettings>
 
@@ -57,6 +58,9 @@ mainWindow::mainWindow(QWidget *parent) :
     rm_ui->horizontalLayout->addWidget( dummy7 );
     dummy8 = new mixerGuiPlayer();
     rm_ui->horizontalLayout->addWidget( dummy8 );
+
+    player = new soundPlayerJack();
+    player->open("RadioMixer");
 
 /*    // read config and set up last saved state
     QSettings* config = new QSettings();

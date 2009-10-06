@@ -23,11 +23,11 @@
 #define SOUNDPLAYER_H
 
 #include <qthread.h>
-#include <q3valuevector.h>
 #include <qmessagebox.h>
 #include <samplerate.h>
 
-#include "mixerchannel_fileplayer.h"
+#include "mixerchannelmanager.h"
+#include "mixerchannel.h"
 #include "ringbuffer.h"
 
 /**
@@ -42,15 +42,12 @@ public:
     virtual void open( QString device ) = 0;
     virtual void close() = 0;
 
-    virtual const int addChannel( mixerChannel* newChannel );
     virtual const unsigned int getOutputSampleRate( );
     virtual bool isConnected();
 
 
 protected:
 	bool devOpened;
-
-        Q3ValueVector<mixerChannel*> channels;
 
 	soundRingBuffer*	outputBuffers;
 	float* mixBufL;

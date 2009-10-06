@@ -81,7 +81,7 @@ void mixerChannel_filePlayer::open( playListItem* track )
 				fileOpen = FALSE;
 			}else{
 //				decoder->setMetaInfos( &meta );
-				smplRate = track->getSamplerate();
+                                smplRate = track->getSamplerate();
 				channels = track->getChannels();
 				fileOpen = TRUE;
 				if( meta )
@@ -157,11 +157,13 @@ void mixerChannel_filePlayer::checkBuffer( )
 	if( soundBuffers[0].canWrite( 1024 ) && isPlaying() )
 	{
 		decode();
+                provides_audiodata = true;
 	}
 }
 
 void mixerChannel_filePlayer::stop( )
 {
+        provides_audiodata = false;
 	if( isStopped() )
 		return;
         mixerChannel::stop();

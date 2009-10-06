@@ -53,11 +53,10 @@ mixerChannel::~mixerChannel()
 
 void mixerChannel::setVolume( int newValue )
 {
-        float newVolume = (100.f-newValue)/100.f;
+        float newVolume = (float)newValue/100.f;
         if( newVolume != volume )
         {
             volume = newVolume;
-            qWarning(QString("volume CHanged ")+QString::number(volume));
             emit( volumeChanged(newValue) );
         }
 }

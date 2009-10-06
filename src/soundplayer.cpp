@@ -49,13 +49,6 @@ soundPlayer::~soundPlayer()
 	delete[] chanBufR;
 }
 
-const int soundPlayer::addChannel( mixerChannel* newChannel )
-{
-	channels.append( newChannel );
-	
-	return channels.size();
-}
-
 void soundPlayer::mixChannels( )
 {
 	if( outputBuffers[0].canWrite( interMixSamples ) && outputBuffers[1].canWrite( interMixSamples ) )
@@ -66,10 +59,10 @@ void soundPlayer::mixChannels( )
 			mixBufL[bufPos] = 0;
 			mixBufR[bufPos] = 0;
 		}
-                Q3ValueVector<mixerChannel*>::iterator it;
-		for( it = channels.begin(); it != channels.end(); it++ )
+                mixerChannelManager::storageType::iterator it;
+                for( it = mixerChannelManager::channels.begin(); it != mixerChannelManager::channels.end(); it++ )
 		{
-			if( (*it)->isPlaying() && (*it)->canGetData( interMixSamples ) )
+                        if( (*it)->providesAudioData() && (*it)->canGetData( interMixSamples ) )
 			{
 				// WOW finaly I've got this mixengine working clipfree.....
 				// I had the Idea when I was trying to sleep some days ago :-)

@@ -32,8 +32,9 @@ class mixerChannelManager
 public:
     static void registerChannel( mixerChannel* );
 
-private:
-    static QVector<mixerChannel*> channel;
+    typedef QVector<mixerChannel*> storageType;
+
+    static  storageType channels;
 
 };
 

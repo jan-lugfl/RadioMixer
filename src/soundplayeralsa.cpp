@@ -21,7 +21,6 @@
  ***************************************************************************/
 #include "soundplayeralsa.h"
 
-
 soundPlayerALSA::soundPlayerALSA( )
  : soundPlayer()
 {
@@ -144,8 +143,8 @@ void alsaPlayerThread::run()
 	while(1)
 	{
 		bool playing = FALSE;
-                Q3ValueVector<mixerChannel*>::iterator it;
-		for( it = alsaPlayer->channels.begin(); it != alsaPlayer->channels.end(); it++ )
+                mixerChannelManager::storageType::iterator it;
+                for( it = mixerChannelManager::channels.begin(); it != mixerChannelManager::channels.end(); it++ )
 		{
 			if( (*it)->isPlaying() )
 				playing = TRUE;

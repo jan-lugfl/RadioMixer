@@ -49,7 +49,7 @@ mixerGUI::mixerGUI( QWidget* parent , const char* name , Qt::WFlags fl )
 	vuSlider->setMaxValue( 100 );
 	vuSlider->setLineStep( 1 );
 	vuSlider->setPageStep( 10 );
-	vuSlider->setValue( 0 );
+        vuSlider->setValue( 100 );
 	vuSlider->setTickInterval( 10 );
 
 	trebleSlider = new QDial( this, "trebleSlider" );
