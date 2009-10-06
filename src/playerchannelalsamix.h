@@ -37,6 +37,9 @@ public:
     playerChannelAlsaMix();
     ~playerChannelAlsaMix();
 
+    virtual QString getType() { return QString("ALSAMIX"); }
+
+
 private:
 	snd_mixer_t*	alsaMixer;
         snd_mixer_elem_t*	alsaChannel;

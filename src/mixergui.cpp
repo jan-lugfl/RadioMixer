@@ -68,8 +68,8 @@ mixerGUI::mixerGUI( QWidget* parent , const char* name , Qt::WFlags fl )
 //	changeName( config->readEntry( "/radiomixer/channel_"+QString::number( channelID )+"/name", tr("channel")+" "+QString::number(channelID) ) );
 	
 	prefButton = new QToolButton( this, "prefButton" );
-	connect( prefButton, SIGNAL(clicked()), this, SLOT(showPrefs()) );
-	
+        connect( prefButton, SIGNAL(clicked()), this, SLOT(showPrefs()) );
+
 	buttonBlinkTimer = new QTimer( this );
 	connect( buttonBlinkTimer, SIGNAL(timeout()), this, SLOT(buttonBlinker()));
 	buttonBlinkTimer->start( 30, FALSE );
@@ -205,10 +205,11 @@ void mixerGUI::showPrefs( )
 
 void mixerGUI::setSlider( int hwChannel, int value )
 {
-	if( hwChannel == this->hwChannel-1 )
+/*	if( hwChannel == this->hwChannel-1 )
 	{
 		vuSlider->setValue(100-value );
 	}
+        */
 }
 
 void mixerGUI::changeName( QString newName )
@@ -250,7 +251,7 @@ void mixerGUI::save( )
 	config->writeEntry( "/radiomixer/channel_"+QString::number( channelID )+"/metaText", staticMetaText );
 	config->writeEntry( "/radiomixer/channel_"+QString::number( channelID )+"/position", playerPos );
 	config->writeEntry( "/radiomixer/channel_"+QString::number( channelID )+"/name", getName() );
-	config->writeEntry( "/radiomixer/channel_"+QString::number( channelID )+"/hwControl", hwChannel );
+//	config->writeEntry( "/radiomixer/channel_"+QString::number( channelID )+"/hwControl", hwChannel );
 	config->writeEntry( "/radiomixer/channel_"+QString::number( channelID )+"/type", getType() );
 }
 
@@ -261,9 +262,9 @@ int mixerGUI::currentPosition( )
 
 void mixerGUI::setBalance( int balance )
 {
-	if( balance > 0)
+/*	if( balance > 0)
 	{
-		mixer->setLevelLeft( 100-balance );
+                mixer->setLevelLeft( 100-balance );
 		mixer->setLevelRight( 100 );
 	}else if( balance < 0)
 	{
@@ -274,6 +275,7 @@ void mixerGUI::setBalance( int balance )
 		mixer->setLevelLeft( 100 );
 		mixer->setLevelRight( 100 );
 	}
+        */
 }
 
 int mixerGUI::getPlayerID( )
@@ -293,3 +295,10 @@ QColor mixerGUI::getColor( )
 	return paletteBackgroundColor();
 }
 
+void mixerGUI::associateToChannel( mixerChannel* channel )
+{
+    if( channel->getType() == this->getType() )
+    {
+        connect( channel, SIGNAL(nameChanged(QString)), this, SLOT(changeName(QString)) );
+    }
+}

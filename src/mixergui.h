@@ -32,6 +32,7 @@
 #include <qsettings.h>
 #include <qdial.h>
 #include <q3groupbox.h>
+#include <qthread.h>
 
 #include "widgets/vumeter.h"
 #include "mixerchannel_fileplayer.h"
@@ -55,6 +56,7 @@ public:
 	virtual int getPlayerID();
 	virtual QColor getColor();
 	virtual QString getType() = 0;
+        virtual void associateToChannel( mixerChannel* channel );
 
 protected:
 	// Gui Elements
@@ -78,8 +80,6 @@ protected:
 	bool refreshMeta;
 	int metaMode;
 	QString staticMetaText;
-        mixerChannel*	mixer;
-	int hwChannel;
 
 	//Dialogs
 	chanPrefDlg* prefDlg;

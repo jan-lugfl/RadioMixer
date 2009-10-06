@@ -25,11 +25,9 @@
 mixerGuiAlsaMix::mixerGuiAlsaMix( QWidget* parent , const char* name , Qt::WFlags fl )
  : mixerGUI( parent, name, fl)
 {
-	alsaMixer = new playerChannelAlsaMix();
-	mixer = alsaMixer;
 	mute = 0;
 
-	connect( vuSlider, SIGNAL(valueChanged( int )), mixer, SLOT(setVolume( int )) );
+//	connect( vuSlider, SIGNAL(valueChanged( int )), mixer, SLOT(setVolume( int )) );
 
 	muteBut = new glowButton( this, "muteBut" );
 	muteBut->setGeometry( QRect( 60, 60, 39, 26 ) );
@@ -69,7 +67,7 @@ void mixerGuiAlsaMix::languageChange( )
 void mixerGuiAlsaMix::showPrefs( )
 {
         mixerGUI::createPrefDlg( );
-	prefDlg->EditName->setText( mixer->getName() );
+//	prefDlg->EditName->setText( mixer->getName() );
 
 	QLabel* soundCardLabel = new QLabel( prefDlg->DynamicBox ,  "soundCardLabel" );
 	soundCardLabel->setText( tr("Soundkarte:") );
@@ -85,7 +83,7 @@ void mixerGuiAlsaMix::showPrefs( )
 
         if( mixerGUI::execPrefDlg() == QDialog::Accepted)
 	{	
-		mixer->setName( prefDlg->EditName->text());
+//		mixer->setName( prefDlg->EditName->text());
 	}
         mixerGUI::finishPrefDlg( );
 }
@@ -97,7 +95,7 @@ QString mixerGuiAlsaMix::getType( )
 
 void mixerGuiAlsaMix::buttonPressed( int hwChannel, int button )
 {
-	if( hwChannel == this->hwChannel )
+/*	if( hwChannel == this->hwChannel )
 	{
                 mixerGUI::buttonPressed( hwChannel, button );
 		switch( button )
@@ -107,4 +105,5 @@ void mixerGuiAlsaMix::buttonPressed( int hwChannel, int button )
 				break;
 		}
 	}
+        */
 }

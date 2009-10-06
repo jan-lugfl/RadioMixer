@@ -30,7 +30,7 @@
 class mixerChannelManager
 {
 public:
-    static mixerChannel* createNewChannel();
+    static void registerChannel( mixerChannel* );
 
 private:
     static QVector<mixerChannel*> channel;

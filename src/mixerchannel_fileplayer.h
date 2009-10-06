@@ -47,7 +47,7 @@ class mixerChannel_filePlayer : public mixerChannel
   Q_OBJECT
 
 public:
-    mixerChannel_filePlayer(QObject *parent = 0, const char *name = 0);
+    mixerChannel_filePlayer( const char *name = 0 );
     ~mixerChannel_filePlayer();
 	
 	// Public Member for the BufferMngr Thread
@@ -56,6 +56,7 @@ public:
 	virtual const bool isLooping();
 	
 	// Specialisations
+        virtual QString getType() { return QString("PLAYER"); }
 	virtual void setName( QString newName );
 	
 	// Stream Infos

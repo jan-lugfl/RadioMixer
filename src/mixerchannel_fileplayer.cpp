@@ -21,8 +21,8 @@
  ***************************************************************************/
 #include "mixerchannel_fileplayer.h"
 
-mixerChannel_filePlayer::mixerChannel_filePlayer(QObject *parent, const char *name)
- : mixerChannel(parent,name)
+mixerChannel_filePlayer::mixerChannel_filePlayer( const char *name )
+ : mixerChannel(name)
 {
 	bufferThread = new channelBufMngr(this);
 	fileOpen = FALSE;

@@ -24,9 +24,8 @@
 mixerGuiJackport::mixerGuiJackport( soundPlayerJack* jackPlayer, int chID, QWidget* parent, const char* name, Qt::WFlags fl )
  : mixerGUI( parent, name, fl), mute(0)
 {
-	jackMixer = new playerChannelJackport( jackPlayer, name, this );
-	mixer = jackMixer;
-	connect( vuSlider, SIGNAL(valueChanged( int )), mixer, SLOT(setVolume( int )) );
+        jackMixer = new playerChannelJackport( jackPlayer, name );
+//	connect( vuSlider, SIGNAL(valueChanged( int )), mixer, SLOT(setVolume( int )) );
 
 	muteBut = new glowButton( this, "muteBut" );
 	muteBut->setGeometry( QRect( 60, 60, 39, 26 ) );
@@ -49,9 +48,9 @@ mixerGuiJackport::mixerGuiJackport( soundPlayerJack* jackPlayer, int chID, QWidg
 mixerGuiJackport::~mixerGuiJackport()
 {
 	disconnect( trebleSlider, SIGNAL( valueChanged( int )), this, SLOT(setBalance( int )) );
-	disconnect( vuSlider, SIGNAL(valueChanged( int )), mixer, SLOT(setVolume( int )) );
+//	disconnect( vuSlider, SIGNAL(valueChanged( int )), mixer, SLOT(setVolume( int )) );
 	disconnect( muteBut, SIGNAL(clicked()), this, SLOT( toggleMute() ) );
-	delete mixer;
+//	delete mixer;
 	delete muteBut;
 }
 
@@ -82,7 +81,7 @@ void mixerGuiJackport::toggleMute( )
 void mixerGuiJackport::changeName( QString newName )
 {
         mixerGUI::changeName( newName );
-	mixer->setName( newName );
+//	mixer->setName( newName );
 }
 
 QString mixerGuiJackport::getType( )
@@ -94,8 +93,8 @@ void mixerGuiJackport::buttonBlinker( )
 {
 	if( vuSlider->value() < 100 && !mute)
 	{
-		levelMeterLeft->setLevel( mixer->getLevelMeterLeft() );
-		levelMeterRight->setLevel( mixer->getLevelMeterRight() );
+//		levelMeterLeft->setLevel( mixer->getLevelMeterLeft() );
+//		levelMeterRight->setLevel( mixer->getLevelMeterRight() );
 	}else{
 		levelMeterLeft->reset();
 		levelMeterRight->reset();
@@ -116,7 +115,7 @@ void mixerGuiJackport::showPrefs( )
 
 void mixerGuiJackport::buttonPressed( int hwChannel, int button )
 {
-	if( hwChannel == this->hwChannel )
+/*	if( hwChannel == this->hwChannel )
 	{
                 mixerGUI::buttonPressed( hwChannel, button );
 		switch( button )
@@ -125,7 +124,7 @@ void mixerGuiJackport::buttonPressed( int hwChannel, int button )
 				toggleMute();
 				break;
 		}
-	}
+        }*/
 }
 
 

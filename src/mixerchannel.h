@@ -24,6 +24,7 @@
 
 #include <qobject.h>
 #include <qmessagebox.h>
+#include <qthread.h>
 
 #include "metatag.h"
 #include "ringbuffer.h"
@@ -35,7 +36,7 @@ class mixerChannel : public QObject
 {
 Q_OBJECT
 public:
-    mixerChannel(QObject *parent = 0, const char *name = 0);
+    mixerChannel( const char *name = 0 );
     ~mixerChannel();
 
     const bool isPlaying();
@@ -43,6 +44,7 @@ public:
     const bool isPaused();
     const bool isCued();
     
+    virtual QString getType() = 0;
     QString getName();
     void setName(QString newName);
     
@@ -87,6 +89,7 @@ protected:
 	soundRingBuffer* soundBuffers;
 
 private:
+        QThread* thread;
 
 protected slots:
 	virtual void refresh();

@@ -42,10 +42,6 @@ mixerGuiPlayer::mixerGuiPlayer( QWidget* parent , const char* name , Qt::WFlags 
         meterLayout->addWidget( levelMeterRight, 1, 2 );
         layout->addLayout( meterLayout, 3, 1, 2, 1 );
 
-        player = new mixerChannel_filePlayer(this, "soundPlayer");
-        mixer = player;
-//	soundplayer->addChannel(player);
-
 	//connect some Signal of the Player....
 /*	connect( vuSlider, SIGNAL(valueChanged( int )), player, SLOT(setVolume( int )) );
 	connect( player, SIGNAL( nameChanged( QString ) ), this, SLOT( changeName( QString) ) );
@@ -146,7 +142,7 @@ void mixerGuiPlayer::cueNewTrack( )
 
 void mixerGuiPlayer::buttonPressed( int hwChannel, int button )
 {
-	if( hwChannel == this->hwChannel )
+/*	if( hwChannel == this->hwChannel )
 	{
                 mixerGUI::buttonPressed( hwChannel, button );
 		switch( button )
@@ -165,6 +161,7 @@ void mixerGuiPlayer::buttonPressed( int hwChannel, int button )
 				break;
 		}
 	}
+        */
 }
 
 void mixerGuiPlayer::languageChange()

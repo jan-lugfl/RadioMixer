@@ -22,8 +22,11 @@
 
 #include "mixerchannelmanager.h"
 
-mixerChannel* mixerChannelManager::createNewChannel()
-{
+// init static members.
+QVector<mixerChannel*> mixerChannelManager::channel = QVector<mixerChannel*>();
 
+void mixerChannelManager::registerChannel( mixerChannel* newChann )
+{
+    channel.append( newChann );
 }
 

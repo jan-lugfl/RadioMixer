@@ -32,8 +32,10 @@ class playerChannelJackport : public mixerChannel
 {
 Q_OBJECT
 public:
-    playerChannelJackport( soundPlayerJack* jackPlayer, QString chName="", QObject *parent = 0, const char *name = 0 );
+    playerChannelJackport( soundPlayerJack* jackPlayer, QString chName="", const char *name = 0 );
     ~playerChannelJackport();
+
+    virtual QString getType() { return QString("JACK"); }
 
 // Functions for the LevelMeter
    virtual const float getLevelMeterLeft();

@@ -21,10 +21,16 @@
  ***************************************************************************/
 
 #include "mixerchannel.h"
+#include "mixerchannelmanager.h"
 
-mixerChannel::mixerChannel(QObject *parent, const char *name)
- : QObject(parent, name), provides_audiodata( false ), volume(1)
+mixerChannel::mixerChannel( const char *name )
+ : QObject(0, name), provides_audiodata( false ), volume(1)
 {
+    // initiate my thread and move my eventloop into it...
+    thread = new QThread();
+    this->moveToThread( thread );
+    thread->start();
+
 	// allocate Stereo Sound Ringbuffer.,...
 	soundBuffers = new soundRingBuffer[2];
 	soundBuffers[0].setName(name+QString("_left"));
@@ -35,6 +41,9 @@ mixerChannel::mixerChannel(QObject *parent, const char *name)
 	state = 0;
 	volume_left = 1;
 	volume_right = 1;
+
+        // register myself in the channel manager
+        mixerChannelManager::registerChannel( this );
 }
 
 
