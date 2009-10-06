@@ -83,11 +83,12 @@ protected:
 	channelBufMngr* bufferThread;
 
 public slots:
-	virtual void open( playListItem* track );
+        virtual void open( playListItem* track );
 	virtual void close();
 	virtual void stop( );
 	virtual void play();
 	virtual void pause();
+        virtual void cue();
 	virtual void toggleLoop();
 
 signals:

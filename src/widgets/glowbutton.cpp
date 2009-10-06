@@ -80,7 +80,6 @@ void glowButton::setDeactivatedColor( const QColor & newCol )
 
 void glowButton::setState( bool state )
 {
-	this->state = state;
 	if( state )
 		setOn();
 	else

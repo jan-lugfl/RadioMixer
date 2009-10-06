@@ -46,11 +46,9 @@ public:
     mixerGuiPlayer( QWidget* parent = 0, const char* name = 0, Qt::WFlags fl = 0 );
     ~mixerGuiPlayer();
 
-	// Main Player
-        mixerChannel_filePlayer* player;
-
 	virtual void languageChange();
 	virtual QString getType();
+        virtual void associateToChannel( mixerChannel* channel );
 
 protected:
         QGridLayout* meterLayout;
@@ -74,6 +72,7 @@ protected slots:
 	virtual void showPrefs();
 	virtual void setMeta( metaTag );
 	virtual void cued( metaTag );
+        virtual void setState( int newState );
 
 public slots:
 	virtual void buttonPressed( int hwChannel, int button );

@@ -53,27 +53,33 @@ mixerChannel::~mixerChannel()
 
 void mixerChannel::setVolume( int newValue )
 {
-	volume = (100.f-newValue)/100.f;
+        float newVolume = (100.f-newValue)/100.f;
+        if( newVolume != volume )
+        {
+            volume = newVolume;
+            qWarning(QString("volume CHanged ")+QString::number(volume));
+            emit( volumeChanged(newValue) );
+        }
 }
 
 void mixerChannel::play( )
 {
-	state = 1;
+    setState( 1 );
 }
 
 void mixerChannel::stop( )
 {
-	state = 0;
+    setState( 0 );
 }
 
 void mixerChannel::pause( )
 {
-	state = 2;
+    setState( 2 );
 }
 
 void mixerChannel::cue( )
 {
-	state = 3;
+    setState( 3 );
 }
 
 const bool mixerChannel::isPlaying( )
@@ -201,4 +207,10 @@ const float mixerChannel::getLevelMeterRight( )
 bool mixerChannel::providesAudioData()
 {
     return provides_audiodata;
+}
+
+void mixerChannel::setState(int newState )
+{
+    this->state = newState;
+    emit(stateChanged(state));
 }

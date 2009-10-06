@@ -85,6 +85,7 @@ protected:
 	// 2 = Channel is paused
 	// 3 = Channel is cued
 	int state;
+        void setState(int newState );
 
 	soundRingBuffer* soundBuffers;
 
@@ -104,8 +105,10 @@ public slots:
 	virtual void disconnectPort();
 	
 signals:
+        void volumeChanged( int );
 	void newMeta( metaTag );
 	void nameChanged( QString );
+        void stateChanged(int);
 	void refreshed();
 };
 

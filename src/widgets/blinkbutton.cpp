@@ -46,7 +46,7 @@ void blinkButton::blinker( )
                         QToolButton::setPaletteBackgroundColor( deactColor );
 			colState = TRUE;
 		}
-	else if( colState )
+        else if( !colState )
 		glowButton::setOff();
 }
 

@@ -58,7 +58,6 @@ mixerGUI::mixerGUI( QWidget* parent , const char* name , Qt::WFlags fl )
 	trebleSlider->setValue( 0 );
 	trebleSlider->setLineStep(1);
 	trebleSlider->setPageStep(10);
-	connect( trebleSlider, SIGNAL(valueChanged( int )), this, SLOT( setBalance( int ) ) );
 
 	chName = new QLabel( this, "chName" );
         chName->setMaximumHeight( 23 );
@@ -297,8 +296,7 @@ QColor mixerGUI::getColor( )
 
 void mixerGUI::associateToChannel( mixerChannel* channel )
 {
-    if( channel->getType() == this->getType() )
-    {
-        connect( channel, SIGNAL(nameChanged(QString)), this, SLOT(changeName(QString)) );
-    }
+    connect( channel, SIGNAL(nameChanged(QString)), this, SLOT(changeName(QString)) );
+    connect( channel, SIGNAL(volumeChanged( int )), vuSlider, SLOT( setValue( int ) ) );
+    connect( vuSlider, SIGNAL(valueChanged( int )), channel, SLOT( setVolume( int ) ) );
 }

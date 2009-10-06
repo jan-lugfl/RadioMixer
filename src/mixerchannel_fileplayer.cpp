@@ -87,7 +87,7 @@ void mixerChannel_filePlayer::open( playListItem* track )
 				if( meta )
 					dynamic_cast<playListItem*>(meta)->cueing();
 				emit( cued( *meta ) );
-				state = 3;
+                                setState( 3 );
 
 				if(!bufferThread->running())
 					bufferThread->start();
@@ -179,6 +179,11 @@ void mixerChannel_filePlayer::close( )
 		decoder = NULL;
 		fileOpen = FALSE;
 	}
+}
+
+void mixerChannel_filePlayer::cue()
+{
+    //TODO: implement me !!! ( move cueNewTrack function here )
 }
 
 const bool mixerChannel_filePlayer::isFileOpen( )

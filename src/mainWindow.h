@@ -55,6 +55,7 @@ private:
     // used for testing only
     mixerGUI* dummy;
     mixerGUI* dummy2;
+    mixerChannel* dummy2_;
     mixerGUI* dummy3;
     mixerGUI* dummy4;
     mixerGUI* dummy5;

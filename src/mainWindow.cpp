@@ -41,8 +41,11 @@ mainWindow::mainWindow(QWidget *parent) :
     dummy = new mixerGuiAlsaMix();
     rm_ui->horizontalLayout->addWidget( dummy );
     dummy2 = new mixerGuiPlayer();
+    dummy2_ = new mixerChannel_filePlayer("test123");
+    dummy2->associateToChannel( dummy2_ );
     rm_ui->horizontalLayout->addWidget( dummy2 );
     dummy3 = new mixerGuiPlayer();
+    dummy3->associateToChannel( dummy2_ );
     rm_ui->horizontalLayout->addWidget( dummy3 );
     dummy4 = new mixerGuiPlayer();
     rm_ui->horizontalLayout->addWidget( dummy4 );

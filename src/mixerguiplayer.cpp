@@ -42,40 +42,25 @@ mixerGuiPlayer::mixerGuiPlayer( QWidget* parent , const char* name , Qt::WFlags 
         meterLayout->addWidget( levelMeterRight, 1, 2 );
         layout->addLayout( meterLayout, 3, 1, 2, 1 );
 
-	//connect some Signal of the Player....
-/*	connect( vuSlider, SIGNAL(valueChanged( int )), player, SLOT(setVolume( int )) );
-	connect( player, SIGNAL( nameChanged( QString ) ), this, SLOT( changeName( QString) ) );
-	connect( player, SIGNAL( refreshed() ) , this, SLOT( refresh() ) );
-	connect( player, SIGNAL(newMeta( metaTag )), this, SLOT(setMeta( metaTag )));
-	connect( player, SIGNAL(cued( metaTag )), this, SLOT(cued( metaTag )));
-	connect( player, SIGNAL( stopped()), levelMeterLeft, SLOT( reset()));
-	connect( player, SIGNAL( paused()), levelMeterLeft, SLOT( reset()));
-	connect( player, SIGNAL( stopped()), levelMeterRight, SLOT( reset()));
-	connect( player, SIGNAL( paused()), levelMeterRight, SLOT( reset()));
-*/
         playButton = new blinkButton( this, "playButton" );
 	playButton->setActivatedColor( QColor(150, 255, 150) );
         playButton->setIcon(QIcon(":/buttons/play_icon"));
         actionButtons->addWidget( playButton );
-//	connect( playButton, SIGNAL(clicked()), player, SLOT(play()) );
 
 	stopButton = new glowButton( this, "stopButton" );
 	stopButton->setActivatedColor( QColor(255, 150, 150) );
         stopButton->setIcon(QIcon(":/buttons/stop_icon"));
         actionButtons->addWidget( stopButton );
-//	connect( stopButton, SIGNAL(clicked()), player, SLOT(stop()) );
 
 	pauseButton = new blinkButton( this, "pauseButton" );
 	pauseButton->setActivatedColor( QColor(150, 150, 255) );
         pauseButton->setIcon(QIcon(":/buttons/pause_icon"));
         actionButtons->addWidget( pauseButton );
-//	connect( pauseButton, SIGNAL(clicked()), player, SLOT(pause()) );
 
 	cueButton = new blinkButton( this, "cueButton" );
 	cueButton->setActivatedColor( QColor(255, 180, 100) );
         cueButton->setIcon(QIcon(":/buttons/cue_icon"));
         actionButtons->addWidget( cueButton );
-//	connect( cueButton, SIGNAL(clicked()), this, SLOT(cueNewTrack()) );
 	
 	openButton = new blinkButton( this, "openButton" );
 	openButton->setGeometry( QRect( 60, 250, 39, 26 ) );
@@ -89,7 +74,6 @@ mixerGuiPlayer::mixerGuiPlayer( QWidget* parent , const char* name , Qt::WFlags 
 	loopButton = new glowButton( this, "loopButton" );
 	loopButton->setActivatedColor( QColor(255, 240, 0) );
         actionButtons->addWidget( loopButton );
-//	connect( loopButton, SIGNAL(clicked()), player, SLOT(toggleLoop()) );
 
 /*	player->setName( config->readEntry( "/radiomixer/channel_"+QString::number( channelID )+"/name", tr("Kanal")+" "+QString::number(channelID) ) );
 
@@ -110,12 +94,6 @@ mixerGuiPlayer::~mixerGuiPlayer()
 void mixerGuiPlayer::buttonBlinker( )
 {
     /*
-	playButton->setState( player->isPlaying() );
-	stopButton->setState( player->isStopped() );
-	pauseButton->setState( player->isPaused() );
-	cueButton->setState( player->isCued() );
-	loopButton->setState( player->isLooping() );
-	
 	if( player->isFileOpen())
 	{
 		tDisplay->setPosition_Frames( player->getPlayedFrames() );
@@ -256,7 +234,8 @@ QString mixerGuiPlayer::getType( )
 
 void mixerGuiPlayer::cued( metaTag meta )
 {
-	emit( onCue( meta, getName() ) );
+
+//	emit( onCue( meta, getName() ) );
 }
 
 void mixerGuiPlayer::cueTrack( unsigned int playerID, playListItem * song )
@@ -323,4 +302,42 @@ void mixerGuiPlayer::dropEvent(QDropEvent * evt)
 		}
 	}
         */
+}
+
+void mixerGuiPlayer::setState( int newState )
+{
+    playButton->setOff();
+    stopButton->setOff();
+    pauseButton->setOff();
+    cueButton->setOff();
+
+    switch( newState )
+    {
+        case 0:
+           stopButton->setOn();
+           break;
+        case 1:
+           playButton->setOn();
+           break;
+        case 2:
+           pauseButton->setOn();
+           break;
+        case 3:
+           cueButton->setOn();
+           break;
+    }
+}
+
+void mixerGuiPlayer::associateToChannel( mixerChannel* channel )
+{
+    mixerGUI::associateToChannel( channel );
+    connect( this, SIGNAL(openFile(playListItem*)), channel, SLOT(open(playListItem*)) );
+    connect( channel, SIGNAL(cued(metaTag)), this, SLOT(cued(metaTag)) );
+    connect( channel, SIGNAL(stateChanged(int)), this, SLOT(setState(int)) );
+
+    // connect button actions
+    connect( playButton, SIGNAL(clicked()), channel, SLOT(play()));
+    connect( stopButton, SIGNAL(clicked()), channel, SLOT(stop()));
+    connect( pauseButton, SIGNAL(clicked()), channel, SLOT(pause()));
+    connect( cueButton, SIGNAL(clicked()), channel, SLOT(cue()));
 }
