@@ -340,4 +340,8 @@ void mixerGuiPlayer::associateToChannel( mixerChannel* channel )
     connect( stopButton, SIGNAL(clicked()), channel, SLOT(stop()));
     connect( pauseButton, SIGNAL(clicked()), channel, SLOT(pause()));
     connect( cueButton, SIGNAL(clicked()), channel, SLOT(cue()));
+
+    // connect levelMeters
+    connect( channel, SIGNAL(vuMeterChanged_left(float)), levelMeterLeft, SLOT(setLevel(float)) );
+    connect( channel, SIGNAL(vuMeterChanged_right(float)), levelMeterRight, SLOT(setLevel(float)) );
 }

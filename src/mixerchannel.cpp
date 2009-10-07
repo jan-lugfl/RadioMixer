@@ -144,7 +144,8 @@ void mixerChannel::refresh( )
 
 const unsigned int mixerChannel::getSmplRate( )
 {
-	return smplRate;
+//	return smplRate;
+    return 48000;
 }
 
 void mixerChannel::connectPort( )
@@ -172,14 +173,17 @@ bool mixerChannel::canGetData( unsigned int size )
 
 void mixerChannel::getDataLeft( float * dataOut, unsigned int size )
 {
-	if(soundBuffers[0].canRead( size ))
+        emit(vuMeterChanged_left(soundBuffers[0].getLastReadAverage()));
+        if(soundBuffers[0].canRead( size ))
 		soundBuffers[0].read( dataOut, size );
 	else qWarning("oupsi this should never happen........");
+
 }
 
 void mixerChannel::getDataRight( float * dataOut, unsigned int size )
 {
-	if(soundBuffers[1].canRead( size ))
+        emit(vuMeterChanged_right(soundBuffers[1].getLastReadAverage()));
+        if(soundBuffers[1].canRead( size ))
 		soundBuffers[1].read( dataOut, size );
 	else qWarning("oupsi this should never happen........");
 }
@@ -191,16 +195,6 @@ void mixerChannel::checkBuffer( )
 unsigned int mixerChannel::getBuffFill( )
 {
 	return soundBuffers[0].getFill();
-}
-
-const float mixerChannel::getLevelMeterLeft( )
-{
-	return soundBuffers[0].getLastReadAverage();
-}
-
-const float mixerChannel::getLevelMeterRight( )
-{
-	return soundBuffers[1].getLastReadAverage();
 }
 
 bool mixerChannel::providesAudioData()

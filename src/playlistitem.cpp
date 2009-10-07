@@ -69,8 +69,8 @@ void playListItem::setChannels( unsigned int chans )
 
 unsigned int playListItem::getSamplerate( )
 {
-	// return a default rate of 44100
-	return Samplerate?Samplerate:44100;
+        // return a default rate of 44100
+        return Samplerate?Samplerate:44100;
 }
 
 void playListItem::setSamplerate( unsigned int rate )

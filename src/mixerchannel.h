@@ -56,10 +56,6 @@ public:
 
    virtual const unsigned int getSmplRate();
 
-// Functions for the LevelMeter
-   virtual const float getLevelMeterLeft();
-   virtual const float getLevelMeterRight();
-
 // Wrapper functions for the ringbuffer
    virtual bool canGetData( unsigned int size );
    virtual void getDataLeft( float* dataOut, unsigned int size );
@@ -106,6 +102,8 @@ public slots:
 	
 signals:
         void volumeChanged( int );
+        void vuMeterChanged_left( float );
+        void vuMeterChanged_right( float );
 	void newMeta( metaTag );
 	void nameChanged( QString );
         void stateChanged(int);

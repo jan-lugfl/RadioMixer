@@ -103,7 +103,7 @@ void soundPlayer::mixChannels( )
 
 void soundPlayer::fetchSampleData( mixerChannel* channel, float * bufferLeft, float * bufferRight )
 {
-	unsigned int dataToRead = int( (((double)channel->getSmplRate()/(double)outRate)*interMixSamples)+1);
+        unsigned int dataToRead = int( (((double)outRate/(double)channel->getSmplRate())*interMixSamples)+1);
 	float* fetchBufL = new float[dataToRead];
 	float* fetchBufR = new float[dataToRead];
 
@@ -124,7 +124,7 @@ void soundPlayer::fetchSampleData( mixerChannel* channel, float * bufferLeft, fl
 	resamplerData->input_frames = dataToRead;
 	resamplerData->data_out = bufferLeft;
 	resamplerData->output_frames = interMixSamples;
-	resamplerData->src_ratio = (double)outRate/(double)channel->getSmplRate();
+        resamplerData->src_ratio = (double)channel->getSmplRate()/(double)outRate;
 
 	src_simple( resamplerData, 2, 1);
 

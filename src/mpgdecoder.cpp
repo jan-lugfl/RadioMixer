@@ -1,7 +1,7 @@
 /* $Id$ */
 /***************************************************************************
  *   OpenRadio - RadioMixer                                                *
- *   Copyright (C) 2006-2007 by Jan Boysen                                      *
+ *   Copyright (C) 2006-2007 by Jan Boysen                                 *
  *   trekkie@media-mission.de                                              *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
@@ -319,7 +319,6 @@ void mpgDecoder::readMetaFromFile( playListItem * pli )
 			continue;
 		}
 	}
-
 	pli->setSamplerate( scanHeader.samplerate );
 	pli->setChannels( MAD_NCHANNELS(&scanHeader) );
 

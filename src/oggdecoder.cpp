@@ -97,7 +97,7 @@ void oggDecoder::readMetaFromFile( playListItem * pli )
 	{
 		throw( new decoderException("OGGDecoder", tr("error opening File")) );
 	}
-	pli->setSamplerate( decoder.vi->rate );
-	pli->setChannels( decoder.vi->channels );
+        pli->setSamplerate( decoder.vi->rate );
+        pli->setChannels( decoder.vi->channels );
 	ov_clear( &decoder );
 }

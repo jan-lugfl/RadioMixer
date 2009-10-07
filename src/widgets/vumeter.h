@@ -40,7 +40,6 @@ public:
     vuMeter(QWidget *parent = 0, const char *name = 0);
     ~vuMeter();
 
-    virtual void setLevel( float level );
     virtual void setPaletteBackgroundColor ( const QColor & );
     virtual const QColor & paletteBackgroundColor () const;
 
@@ -71,7 +70,8 @@ protected slots:
     virtual void timeSlot();
 
 public slots:
-     virtual void  reset();
+     virtual void reset();
+     virtual void setLevel( float level );
 
 };
 

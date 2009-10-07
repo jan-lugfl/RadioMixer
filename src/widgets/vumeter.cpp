@@ -45,14 +45,15 @@ vuMeter::~vuMeter()
 
 void vuMeter::paintEvent( QPaintEvent * event)
 {
-	Q_UNUSED( event );
-	bitBlt(this, 0, 0, buffer);
+        //Q_UNUSED( event );
+        paint();
+        // bitBlt(this, 0, 0, buffer);
 }
 
 void vuMeter::setLevel( float level )
 {
 	this->level = level;
-	paint();
+        repaint();
 }
 
 void vuMeter::drawLevelMeter( )
@@ -80,14 +81,11 @@ void vuMeter::drawLevelMeter( )
 
     setBackgroundMode(Qt::NoBackground);
     buffer->fill( bgColor );
-    paint();
 }
 
 void vuMeter::paint( )
 {
-    QPainter painter;
-    painter.begin(buffer);
-
+    QPainter painter( buffer );
     for(int i = numLED; i > 0; i--) {
 	if(level >= 1)
 	{
@@ -122,7 +120,6 @@ void vuMeter::resizeEvent( QResizeEvent * event )
 void vuMeter::reset( )
 {
 	level=0.f;
-	paint();
 }
 
 void vuMeter::setPaletteBackgroundColor( const QColor & newColor)
