@@ -22,7 +22,8 @@
 #ifndef TIMEDISPLAY_H
 #define TIMEDISPLAY_H
 
-#include <qlabel.h>
+#include <QLabel>
+#include <QTime>
 
 /**
 	@author Jan Boysen <trekkie@media-mission.de>
@@ -37,27 +38,19 @@ public:
     enum displayMode { FrameDisplay, SecordDisplay };
 
 public slots:
-	virtual void setPosition_Samples( float samples );
-	virtual void setPosition_Seconds( float seconds );
-	virtual void setPosition_Frames( float frames );
-	virtual void setTotal_Samples( float samples );
-	virtual void setTotal_Seconds( float seconds );
-	virtual void setTotal_Frames( float frames );
-	virtual void setPreroll_Frames( float frames );
-	virtual void setSamplerate( unsigned int sRate );
+	virtual void setPosition( QTime position );
+	virtual void setTotal( QTime length );
+	virtual void setPreroll( QTime preroll );
 	virtual void setDisplayMode( displayMode dMode );
+	virtual void reset();
 	virtual void refresh();
 
 protected:
 	QFont timeDisplay_font;
 	displayMode dMode;
-	float saMax;
-	float seMax;
-	float frMax;
-	float curPos;
-	float preroll;
-	unsigned int sampleRate;
-
+	QTime length;
+	QTime preroll;
+	QTime curPos;
 };
 
 #endif

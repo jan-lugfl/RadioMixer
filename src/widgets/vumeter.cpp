@@ -96,7 +96,7 @@ void vuMeter::paint( )
              painter.setBrush(color[i].dark(300));
 	}
         painter.drawRect( 1, height()-10*i, width()-2, 8);
-	level *= 1.25;
+        level *= 1.15;
     }
     painter.end();
     bitBlt(this, 0, 0, buffer);
@@ -105,7 +105,6 @@ void vuMeter::paint( )
 void vuMeter::timeSlot( )
 {
 int i;
-//paint();
 for(i = 0; i < 2 + 2; i++) {
 	peak[i] /= 2;
 }

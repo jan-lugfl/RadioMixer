@@ -96,10 +96,6 @@ void mixerGuiPlayer::buttonBlinker( )
     /*
 	if( player->isFileOpen())
 	{
-		tDisplay->setPosition_Frames( player->getPlayedFrames() );
-		tDisplay->setTotal_Frames( player->getTotalFrames() );
-		tDisplay->setPreroll_Frames( player->getPrerollFrames() );
-		tDisplay->setSamplerate( player->getSmplRate() );
 	}
 
 	if(mixer->isPlaying())
@@ -232,10 +228,10 @@ QString mixerGuiPlayer::getType( )
 	return "PLAYER";
 }
 
-void mixerGuiPlayer::cued( metaTag meta )
+void mixerGuiPlayer::cued( playListItem* track )
 {
-
-//	emit( onCue( meta, getName() ) );
+	tDisplay->setTotal( track->getLength() );
+	tDisplay->setPreroll( track->getPreLength() );
 }
 
 void mixerGuiPlayer::cueTrack( unsigned int playerID, playListItem * song )
@@ -315,7 +311,10 @@ void mixerGuiPlayer::setState( int newState )
     {
         case 0:
            stopButton->setOn();
-           break;
+	   tDisplay->reset();
+	   levelMeterLeft->reset();
+	   levelMeterRight->reset();
+	   break;
         case 1:
            playButton->setOn();
            break;
@@ -332,14 +331,17 @@ void mixerGuiPlayer::associateToChannel( mixerChannel* channel )
 {
     mixerGUI::associateToChannel( channel );
     connect( this, SIGNAL(openFile(playListItem*)), channel, SLOT(open(playListItem*)) );
-    connect( channel, SIGNAL(cued(metaTag)), this, SLOT(cued(metaTag)) );
+    connect( channel, SIGNAL(cued(playListItem*)), this, SLOT(cued(playListItem*)) );
     connect( channel, SIGNAL(stateChanged(int)), this, SLOT(setState(int)) );
+    connect( channel, SIGNAL(loopChanged(bool)), loopButton, SLOT(setState(bool)) );
+    connect( channel, SIGNAL(positionChanged( QTime )), tDisplay, SLOT(setPosition( QTime )));
 
     // connect button actions
     connect( playButton, SIGNAL(clicked()), channel, SLOT(play()));
     connect( stopButton, SIGNAL(clicked()), channel, SLOT(stop()));
     connect( pauseButton, SIGNAL(clicked()), channel, SLOT(pause()));
     connect( cueButton, SIGNAL(clicked()), channel, SLOT(cue()));
+    connect( loopButton, SIGNAL(clicked()), channel, SLOT(toggleLoop()));
 
     // connect levelMeters
     connect( channel, SIGNAL(vuMeterChanged_left(float)), levelMeterLeft, SLOT(setLevel(float)) );

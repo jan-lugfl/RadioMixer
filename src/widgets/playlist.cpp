@@ -1,7 +1,7 @@
 /* $Id$ */
 /***************************************************************************
  *   OpenRadio - RadioMixer                                                *
- *   Copyright (C) 2006-2007 by Jan Boysen                                *
+ *   Copyright (C) 2006-2009 by Jan Boysen                                *
  *   trekkie@media-mission.de                                              *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
@@ -20,7 +20,6 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 #include "playlist.h"
-//Added by qt3to4:
 #include <QDropEvent>
 
 playList::playList( Q3ListView* parent, QString name, QString file )

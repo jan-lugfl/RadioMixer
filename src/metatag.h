@@ -62,7 +62,6 @@ protected:
 	QString Genre;
 	QTime Length;
 	QTime preLength;
-
 };
 
 #endif

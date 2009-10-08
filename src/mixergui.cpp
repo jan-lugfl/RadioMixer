@@ -259,24 +259,6 @@ int mixerGUI::currentPosition( )
 	return playerPos;
 }
 
-void mixerGUI::setBalance( int balance )
-{
-/*	if( balance > 0)
-	{
-                mixer->setLevelLeft( 100-balance );
-		mixer->setLevelRight( 100 );
-	}else if( balance < 0)
-	{
-		mixer->setLevelLeft( 100 );
-		mixer->setLevelRight( 100+balance );
-	}else
-	{
-		mixer->setLevelLeft( 100 );
-		mixer->setLevelRight( 100 );
-	}
-        */
-}
-
 int mixerGUI::getPlayerID( )
 {
 	return channelID;
@@ -299,4 +281,6 @@ void mixerGUI::associateToChannel( mixerChannel* channel )
     connect( channel, SIGNAL(nameChanged(QString)), this, SLOT(changeName(QString)) );
     connect( channel, SIGNAL(volumeChanged( int )), vuSlider, SLOT( setValue( int ) ) );
     connect( vuSlider, SIGNAL(valueChanged( int )), channel, SLOT( setVolume( int ) ) );
+    connect( trebleSlider, SIGNAL(valueChanged( int )), channel, SLOT( setTreble( int ) ) );
+    connect( channel, SIGNAL(trebleChanged( int )), trebleSlider, SLOT( setValue( int ) ) );
 }

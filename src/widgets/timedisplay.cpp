@@ -1,7 +1,7 @@
 /* $Id$ */
 /***************************************************************************
  *   OpenRadio - RadioMixer                                                *
- *   Copyright (C) 2005-2007 by Jan Boysen                                *
+ *   Copyright (C) 2005-2009 by Jan Boysen                                *
  *   trekkie@media-mission.de                                              *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
@@ -20,8 +20,6 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 #include "timedisplay.h"
-//Added by qt3to4:
-#include <QLabel>
 
 timeDisplay::timeDisplay(QWidget *parent, const char *name)
  : QLabel(parent, name), dMode( FrameDisplay )
@@ -35,113 +33,65 @@ timeDisplay::timeDisplay(QWidget *parent, const char *name)
 
     	setFrameShape( QLabel::Panel );
     	setFrameShadow( QLabel::Sunken );
-    	setAlignment( int( Qt::AlignCenter ) );
-	setText( "-0:00.00" );
-
+	setAlignment( int( Qt::AlignCenter ) );
+	reset();
 }
-
 
 timeDisplay::~timeDisplay()
 {
 }
 
-void timeDisplay::setPosition_Samples( float samples )
+void timeDisplay::reset()
 {
-	curPos = samples;
+    setText( "--------" );
+    curPos = QTime(0,0,0,0);
+    length = QTime(0,0,0,0);
+}
+
+void timeDisplay::setPosition( QTime position )
+{
+	curPos = position;
 	refresh();
 }
 
-void timeDisplay::setPosition_Seconds( float seconds )
+void timeDisplay::setTotal( QTime length )
 {
-	curPos = seconds;
-}
-
-void timeDisplay::setTotal_Samples( float samples )
-{
-	saMax = samples;
-}
-
-void timeDisplay::setTotal_Seconds( float seconds )
-{
-	seMax = seconds;
-}
-
-void timeDisplay::refresh( )
-{
-	switch( dMode )
-	{
-		case FrameDisplay:
-			if( saMax == 0 && frMax == 0 )
-			{
-				setText("ERR");
-			}else
-			{
-				QString sekString;
-				QString framString;
-
-				unsigned int disFrames=0;
-				QColor disColor = QColor("black");
-				if( curPos < preroll )
-				{
-					disFrames = int(preroll-curPos);
-					disColor = QColor("orange");
-				}else
-				{
-					disFrames = frMax?( (frMax<curPos)?0:(unsigned int)(frMax-curPos) ):(unsigned int)(((saMax-curPos)/sampleRate)*25);
-					if( disFrames < 400 ) // 400 Frames = 16 seconds...
-						disColor = QColor("red");
-				}
-				unsigned int dMin = disFrames/1500;
-				unsigned int dSec = (disFrames/25)%60;
-				if( dSec < 10 )
-					sekString = "0"+QString::number( dSec );
-				else
-					sekString = QString::number( dSec );
-				unsigned int dFra = disFrames%25;
-				if( dFra < 10 )
-					framString = "0"+QString::number( dFra );
-				else
-					framString = QString::number( dFra );
-
-				setPaletteForegroundColor( disColor );
-				setText("-"+QString::number( dMin)+":"+sekString+"."+framString);
-			}
-			break;
-		case SecordDisplay:
-			if( seMax == 0 )
-			{
-				setText("ERR");
-			}else
-			{
-			}
-			break;
-	}
+	this->length = length;
+	refresh();
 }
 
 void timeDisplay::setDisplayMode( displayMode dMode )
 {
 	this->dMode = dMode;
-}
-
-void timeDisplay::setSamplerate( unsigned int sRate )
-{
-	sampleRate = sRate;
-}
-
-void timeDisplay::setPosition_Frames( float frames )
-{
-	curPos = frames;
 	refresh();
 }
 
-void timeDisplay::setTotal_Frames( float frames )
+void timeDisplay::setPreroll( QTime length )
 {
-	frMax = frames;
+	preroll = length;
+	refresh();
 }
 
-void timeDisplay::setPreroll_Frames( float frames )
+void timeDisplay::refresh( )
 {
-	preroll = frames;
+    QTime remain = QTime(0,0,0,0).addMSecs(curPos.msecsTo( length ));
+
+    if( remain < QTime(0,0,15) && remain != QTime(0,0,0,0) )
+	setPaletteForegroundColor( QColor("red") );
+    else if( curPos < preroll )
+	setPaletteForegroundColor( QColor("orange") );
+    else
+	setPaletteForegroundColor( QColor("black") );
+
+    switch( dMode )
+    {
+	case FrameDisplay:
+	case SecordDisplay:
+		QString remString = remain.toString("mm:ss.zzz");
+		if( remString == QString() )
+		    reset();
+		else
+		    setText(QString("-")+remString);
+		break;
+    }
 }
-
-

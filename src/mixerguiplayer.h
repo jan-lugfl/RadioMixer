@@ -71,7 +71,7 @@ protected slots:
 	virtual void buttonBlinker();
 	virtual void showPrefs();
 	virtual void setMeta( metaTag );
-	virtual void cued( metaTag );
+        virtual void cued( playListItem* );
         virtual void setState( int newState );
 
 public slots:

@@ -48,9 +48,7 @@ public:
     QString getName();
     void setName(QString newName);
     
-    virtual void setLevelLeft( int level );
     virtual int getLevelLeft();
-    virtual void setLevelRight( int level );
     virtual int getLevelRight();
     virtual void checkBuffer();
 
@@ -93,7 +91,8 @@ protected slots:
 	
 public slots:
 	virtual void setVolume( int newValue );
-	virtual void play( );
+        virtual void setTreble( int newValue );
+        virtual void play( );
 	virtual void stop( );
 	virtual void pause( );
 	virtual void cue( );
@@ -102,6 +101,7 @@ public slots:
 	
 signals:
         void volumeChanged( int );
+        void trebleChanged( int );
         void vuMeterChanged_left( float );
         void vuMeterChanged_right( float );
 	void newMeta( metaTag );

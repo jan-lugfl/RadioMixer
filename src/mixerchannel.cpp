@@ -156,14 +156,24 @@ void mixerChannel::disconnectPort( )
 {
 }
 
-void mixerChannel::setLevelLeft( int level )
+void mixerChannel::setTreble( int level )
 {
-	volume_left = level/100.f;
-}
-
-void mixerChannel::setLevelRight( int level )
-{
-	volume_right = level/100.f;
+    if(level > 0)
+    {
+        volume_left = (100-level)/100.f;
+        volume_right = 1.f;
+    }
+    else if(level < 0)
+    {
+        volume_left = 1.f;
+        volume_right = (100+level)/100.f;
+    }
+    else
+    {
+        volume_left = 1.f;
+        volume_right = 1.f;
+    }
+    emit(trebleChanged(level));
 }
 
 bool mixerChannel::canGetData( unsigned int size )

@@ -83,10 +83,12 @@ void mixerChannel_filePlayer::open( playListItem* track )
 //				decoder->setMetaInfos( &meta );
                                 smplRate = track->getSamplerate();
 				channels = track->getChannels();
+				track->setLength( QTime(0,0,0,0 ).addMSecs( decoder->getTotalFrames()*40 ) );
+
 				fileOpen = TRUE;
 				if( meta )
 					dynamic_cast<playListItem*>(meta)->cueing();
-				emit( cued( *meta ) );
+                                emit( cued( track ) );
                                 setState( 3 );
 
 				if(!bufferThread->running())
@@ -110,6 +112,10 @@ void mixerChannel_filePlayer::decode( )
 	unsigned int toFetch = soundBuffers[0].getFree();
 
 	dataFetched = decoder->decode( &decBuff, toFetch );
+
+	// Update track position
+	emit(positionChanged( QTime(0,0,0,0).addMSecs(decoder->getPlayedFrames()*40) ));
+
 	if(dataFetched == 0)
 	{
 		if( loopMode )
@@ -262,10 +268,8 @@ const bool mixerChannel_filePlayer::isLooping( )
 
 void mixerChannel_filePlayer::toggleLoop( )
 {
-	if( loopMode )
-		loopMode = FALSE;
-	else
-		loopMode = TRUE;
+        loopMode = !loopMode;
+        emit(loopChanged( loopMode ));
 }
 
 const float mixerChannel_filePlayer::getPrerollFrames( )

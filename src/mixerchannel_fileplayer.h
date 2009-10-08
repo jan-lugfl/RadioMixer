@@ -95,8 +95,11 @@ signals:
 	void stopped();
 	void paused();
 	void playing();
-	void cued( metaTag );
+        void cued( playListItem* );
 	void trackEnded();
+        void loopChanged( bool );
+	// temporary signal
+	void positionChanged( QTime );
 };
 
 #endif

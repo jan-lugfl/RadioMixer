@@ -91,7 +91,6 @@ protected slots:
 	virtual void buttonBlinker();
 	virtual void showPrefs();
 	virtual void refresh();
-	virtual void setBalance( int balance );	
 	virtual void save();
 
 public slots:

@@ -1,7 +1,7 @@
 /* $Id$ */
 /***************************************************************************
  *   OpenRadio - RadioMixer                                                *
- *   Copyright (C) 2005-2007 by Jan Boysen                                *
+ *   Copyright (C) 2005-2009 by Jan Boysen                                *
  *   trekkie@media-mission.de                                              *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
@@ -34,14 +34,15 @@ public:
     glowButton(QWidget *parent = 0, const char *name = 0);
     ~glowButton();
 
-	virtual void toggle();
-	virtual void setOn();
-	virtual void setOff();
-	virtual void setState( bool state );
-
 	virtual void setPaletteBackgroundColor ( const QColor & newCol);
 	virtual void setActivatedColor ( const QColor &newCol );
 	virtual void setDeactivatedColor ( const QColor &newCol );
+
+public slots:
+        virtual void toggle();
+        virtual void setOn();
+        virtual void setOff();
+        virtual void setState( bool state );
 
 protected:
 	bool state;
