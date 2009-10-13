@@ -24,7 +24,7 @@
 #include "mixerchannelmanager.h"
 
 mixerChannel::mixerChannel( const char *name )
- : QObject(0, name), provides_audiodata( false ), volume(1)
+ : QObject(0, name), provides_audiodata( false ), volume(1), sendVuMeterChanged_left(0), sendVuMeterChanged_right(0)
 {
     // initiate my thread and move my eventloop into it...
     thread = new QThread();
@@ -183,8 +183,15 @@ bool mixerChannel::canGetData( unsigned int size )
 
 void mixerChannel::getDataLeft( float * dataOut, unsigned int size )
 {
-        emit(vuMeterChanged_left(soundBuffers[0].getLastReadAverage()));
-        if(soundBuffers[0].canRead( size ))
+    if(sendVuMeterChanged_left >= 2)
+    {
+	sendVuMeterChanged_left = 0;
+	emit(vuMeterChanged_left(soundBuffers[0].getLastReadAverage()));
+    }
+    else
+	sendVuMeterChanged_left++;
+
+	if(soundBuffers[0].canRead( size ))
 		soundBuffers[0].read( dataOut, size );
 	else qWarning("oupsi this should never happen........");
 
@@ -192,7 +199,14 @@ void mixerChannel::getDataLeft( float * dataOut, unsigned int size )
 
 void mixerChannel::getDataRight( float * dataOut, unsigned int size )
 {
-        emit(vuMeterChanged_right(soundBuffers[1].getLastReadAverage()));
+    if(sendVuMeterChanged_right >= 2)
+    {
+	sendVuMeterChanged_right = 0;
+	emit(vuMeterChanged_right(soundBuffers[1].getLastReadAverage()));
+    }
+    else
+	sendVuMeterChanged_right++;
+
         if(soundBuffers[1].canRead( size ))
 		soundBuffers[1].read( dataOut, size );
 	else qWarning("oupsi this should never happen........");

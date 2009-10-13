@@ -20,7 +20,7 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 #include "vumeter.h"
-//Added by qt3to4:
+
 #include <QPaintEvent>
 #include <QResizeEvent>
 #include <QPixmap>
@@ -35,7 +35,6 @@ vuMeter::vuMeter(QWidget *parent, const char *name)
         // sets some usefull minimum sizes for this widget...
         setMinimumWidth( 10 );
         setMinimumHeight( 100 );
-//       connect(vuTimer, SIGNAL(timeout()), this , SLOT(timeSlot()));
 }
 
 
@@ -45,15 +44,13 @@ vuMeter::~vuMeter()
 
 void vuMeter::paintEvent( QPaintEvent * event)
 {
-        //Q_UNUSED( event );
         paint();
-        // bitBlt(this, 0, 0, buffer);
 }
 
 void vuMeter::setLevel( float level )
 {
-	this->level = level;
-        repaint();
+    this->level = level;
+    repaint();
 }
 
 void vuMeter::drawLevelMeter( )
@@ -67,7 +64,7 @@ void vuMeter::drawLevelMeter( )
        holdTime[i] = 20;
     }
 */
-    numLED = height()/10;
+    numLED = height()/8;
     for( int i = 0; i < numLED; i++) {
 	if( i < numLED*0.75)
 		color[i] = Qt::green;
@@ -95,7 +92,7 @@ void vuMeter::paint( )
 	{
              painter.setBrush(color[i].dark(300));
 	}
-        painter.drawRect( 1, height()-10*i, width()-2, 8);
+	painter.drawRect( 1, height()-8*i, width()-2, 6);
         level *= 1.15;
     }
     painter.end();

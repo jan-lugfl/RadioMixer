@@ -85,6 +85,8 @@ protected:
 
 private:
         QThread* thread;
+	int sendVuMeterChanged_left;
+	int sendVuMeterChanged_right;
 
 protected slots:
 	virtual void refresh();

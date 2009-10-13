@@ -57,7 +57,9 @@ private:
     mixerGUI* dummy2;
     mixerChannel* dummy2_;
     mixerGUI* dummy3;
+    mixerChannel* dummy3_;
     mixerGUI* dummy4;
+    mixerChannel* dummy4_;
     mixerGUI* dummy5;
     mixerGUI* dummy6;
     mixerGUI* dummy7;

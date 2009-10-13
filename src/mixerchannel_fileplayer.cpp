@@ -45,7 +45,7 @@ void mixerChannel_filePlayer::open( playListItem* track )
 	soundBuffers[1].flush();
 
 	if(fileOpen)
-		close();
+	    stop();
 
 	fHandle = fopen( track->getFile(), "r");
 	if( !fHandle )

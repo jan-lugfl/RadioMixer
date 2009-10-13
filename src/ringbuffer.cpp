@@ -1,7 +1,7 @@
 /* $Id$ */
 /***************************************************************************
  *   OpenRadio - RadioMixer                                                *
- *   Copyright (C) 2005, 2006 by Jan Boysen                                *
+ *   Copyright (C) 2005-2009 by Jan Boysen                                 *
  *   trekkie@media-mission.de                                              *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
@@ -74,6 +74,7 @@ void ringBuffer<T>::read( T* dataOut, unsigned int size )
 	}
 	if(waited)
 		qWarning("there were no data available, so I waited a while....");
+	lastReadAverage=0;
 	for(unsigned int i=0;i<size;i++)
 	{
 		if( toEnd( readPos ) <= 0 )
@@ -82,6 +83,7 @@ void ringBuffer<T>::read( T* dataOut, unsigned int size )
 		lastReadAverage +=  float((*readPos)<0?-(*readPos):(*readPos));
 		readPos++;
 	}
+
 	lastReadAverage = lastReadAverage/(size+1);
 }
 
@@ -117,6 +119,7 @@ template <class T>
 void ringBuffer<T>::flush( )
 {
 	readPos = writePos = ringbuffer;
+	lastReadAverage = 0;
 	writePos++;
 }
 
