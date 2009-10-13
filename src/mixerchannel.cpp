@@ -68,6 +68,8 @@ void mixerChannel::play( )
 
 void mixerChannel::stop( )
 {
+    soundBuffers[0].flush();
+    soundBuffers[1].flush();
     setState( 0 );
 }
 
