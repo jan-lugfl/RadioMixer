@@ -47,13 +47,13 @@ void mixerGuiAlsaMix::toggleMute( )
 	if( mute )
 	{
 		muteBut->setOn();
-		alsaMixer->unMute();
+//		alsaMixer->unMute();
 		mute = 0 ;
 	}
 	else
 	{
 		muteBut->setOff();
-		alsaMixer->mute();
+//		alsaMixer->mute();
 		mute = 1;
 	}
 }

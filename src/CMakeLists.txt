@@ -7,7 +7,6 @@ SET( SRC_CPPS
 	metainfo.cpp
 	mixergui.cpp
 	mixerguiplayer.cpp
-	playerchannelalsamix.cpp
 	mixerchannel.cpp
 	radiomixer.cpp
 	soundplayeralsa.cpp
@@ -16,6 +15,7 @@ SET( SRC_CPPS
 	mixerguialsamix.cpp
 	mpgdecoder.cpp
 	mixerchannel_fileplayer.cpp
+	mixerchannel_alsa.cpp
 	playlistitem.cpp
 	soundplayerjack.cpp
 	mipucom.cpp
@@ -32,9 +32,9 @@ SET( SRC_MOC_HDRS
 	metainfo.h
 	mixergui.h
 	mixerguiplayer.h
-	playerchannelalsamix.h
 	mixerchannel.h
 	mixerchannel_fileplayer.h
+	mixerchannel_alsa.h
 	playlistitem.h
 	filedecoder.h
 	mixerguialsamix.h

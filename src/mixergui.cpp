@@ -172,7 +172,7 @@ int mixerGUI::execPrefDlg( )
 		changeName( prefDlg->EditName->text() );
 		setPaletteBackgroundColor( QColor( prefDlg->Rot_Slider->value(), prefDlg->Gruen_Slider->value(), prefDlg->Blau_Slider->value() ) );
 #ifdef ENABLE_HWMIXER
-		hwChannel = prefDlg->hardwareKanal->currentItem();
+//		hwChannel = prefDlg->hardwareKanal->currentItem();
 #endif
 
 		config->writeEntry( "/radiomixer/channel_"+QString::number( channelID )+"/color_red", prefDlg->Rot_Slider->value() );

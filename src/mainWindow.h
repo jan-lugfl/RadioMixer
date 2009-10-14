@@ -54,6 +54,7 @@ private:
     soundPlayer* player;
     // used for testing only
     mixerGUI* dummy;
+    mixerChannel* dummy1_;
     mixerGUI* dummy2;
     mixerChannel* dummy2_;
     mixerGUI* dummy3;

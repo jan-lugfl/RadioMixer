@@ -27,7 +27,7 @@
 
 #include <mixergui.h>
 #include "glowbutton.h"
-#include "playerchannelalsamix.h"
+#include "mixerchannel_alsa.h"
 
 /**
 @author Jan Boysen
@@ -44,7 +44,6 @@ public:
     virtual QString getType();
 
 protected:
-	playerChannelAlsaMix*	alsaMixer;
 	glowButton*	muteBut;
 
 private:

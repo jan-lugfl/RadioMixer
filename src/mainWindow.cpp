@@ -39,11 +39,13 @@ mainWindow::mainWindow(QWidget *parent) :
     // connect aboutQT menu....
     connect( rm_ui->actionAbout_Qt, SIGNAL(triggered()), this, SLOT(aboutQt()) );
 
+    dummy1_ = new mixerChannel_ALSA();
     dummy2_ = new mixerChannel_filePlayer("test123");
     dummy3_ = new mixerChannel_filePlayer("ch4");
     dummy4_ = new mixerChannel_filePlayer("ch5");
 
     dummy = new mixerGuiAlsaMix();
+    dummy->associateToChannel( dummy1_ );
     rm_ui->horizontalLayout->addWidget( dummy );
 
     dummy2 = new mixerGuiPlayer();
