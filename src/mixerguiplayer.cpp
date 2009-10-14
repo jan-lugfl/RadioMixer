@@ -179,34 +179,32 @@ void mixerGuiPlayer::fileOpen( )
 
 void mixerGuiPlayer::showPrefs( )
 {
-    /*
         mixerGUI::createPrefDlg( );
 
 	QCheckBox* autoRecue = new QCheckBox( prefDlg->DynamicBox, "autoRecue" );
 	autoRecue->setText( tr("Auto Recue ?") );
 	autoRecue->setGeometry( QRect( 10, 90, 250, 25) );
 
-	if( config->readNumEntry( "/radiomixer/channel_"+QString::number( channelID )+"/autoRecue", 0 ) )
-		autoRecue->setChecked(1);
+//	if( config->readNumEntry( "/radiomixer/channel_"+QString::number( channelID )+"/autoRecue", 0 ) )
+//		autoRecue->setChecked(1);
 
         if( mixerGUI::execPrefDlg() == QDialog::Accepted)
 	{	
-		player->setName( prefDlg->EditName->text());
+		//player->setName( prefDlg->EditName->text());
 		if( autoRecue->isChecked() )
 		{
-			config->writeEntry( "/radiomixer/channel_"+QString::number( channelID )+"/autoRecue", 1 );
-			connect( player, SIGNAL(trackEnded()), this, SLOT(cueNewTrack()) );
+//			config->writeEntry( "/radiomixer/channel_"+QString::number( channelID )+"/autoRecue", 1 );
+//			connect( player, SIGNAL(trackEnded()), this, SLOT(cueNewTrack()) );
 		}
 		else
 		{
-			config->writeEntry( "/radiomixer/channel_"+QString::number( channelID )+"/autoRecue", 0 );
-			disconnect( player, SIGNAL(trackEnded()), this, SLOT(cueNewTrack()) );
+//			config->writeEntry( "/radiomixer/channel_"+QString::number( channelID )+"/autoRecue", 0 );
+//			disconnect( player, SIGNAL(trackEnded()), this, SLOT(cueNewTrack()) );
 		}
 		levelMeterLeft->setPaletteBackgroundColor( paletteBackgroundColor () );
 		levelMeterRight->setPaletteBackgroundColor( paletteBackgroundColor () );
 	}
         mixerGUI::finishPrefDlg( );
-        */
 }
 
 void mixerGuiPlayer::setMeta( metaTag meta )

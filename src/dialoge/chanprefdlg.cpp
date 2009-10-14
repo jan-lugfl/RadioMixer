@@ -26,6 +26,9 @@ chanPrefDlg::chanPrefDlg(QWidget* parent, const char* name, bool modal, Qt::WFla
     : QDialog(parent,name, modal,fl), Ui::KanalPref_dlg()
 {
 	setupUi( this );
+	connect( Rot_Slider, SIGNAL(valueChanged(int)), this, SLOT(colorChanged()) );
+	connect( Blau_Slider, SIGNAL(valueChanged(int)), this, SLOT(colorChanged()) );
+	connect( Gruen_Slider, SIGNAL(valueChanged(int)), this, SLOT(colorChanged()) );
 }
 
 chanPrefDlg::~chanPrefDlg()
@@ -36,6 +39,5 @@ void chanPrefDlg::colorChanged()
 	colorPrev->setPaletteBackgroundColor( QColor( Rot_Slider->value(), Gruen_Slider->value(), Blau_Slider->value()) );
 }
 
-/*$SPECIALIZATION$*/
 
 

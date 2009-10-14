@@ -32,14 +32,13 @@ mixerGUI::mixerGUI( QWidget* parent , const char* name , Qt::WFlags fl )
 
     setFrameShape( QFrame::StyledPanel );
     setFrameShadow( QFrame::Raised );
+    setAutoFillBackground( TRUE );
     setAcceptDrops( TRUE );
 
 //	config = new QSettings( );
 
         // TODO: hash of name ???
 //        channelID = 0;
-
-//	playerPos = config->readNumEntry( "/radiomixer/channel_"+QString::number( channelID )+"/position", channelID );
 
 	vuSlider = new QSlider( this, "volumeSlider" );
         vuSlider->setMinimumHeight( 150 );
