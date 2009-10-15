@@ -1,7 +1,7 @@
 /* $Id$ */
 /***************************************************************************
  *   OpenRadio - RadioMixer                                                *
- *   Copyright (C) 2005-2009 by Jan Boysen                                *
+ *   Copyright (C) 2005-2009 by Jan Boysen                                 *
  *   trekkie@media-mission.de                                              *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
@@ -22,29 +22,46 @@
 #include "mixerchannel_alsa.h"
 
 mixerChannel_ALSA::mixerChannel_ALSA()
- : mixerChannel()
+ : mixerChannel(), muted( false )
 {
-#ifdef HAVE_ALSA
-    snd_mixer_selem_id_alloca(&chId);
-
-	if( snd_mixer_open( &alsaMixer, 0) )
-		qWarning( tr("Could not open AlsaMixer !!!") );
-
-	snd_mixer_attach(alsaMixer, "hw:1");
-
- 	snd_mixer_selem_register(alsaMixer, NULL, NULL);
-        snd_mixer_load(alsaMixer);             //load up the mixer
-	
-        snd_mixer_selem_id_set_name(chId, "Mic");
-	 
-        alsaChannel = snd_mixer_find_selem(alsaMixer, chId);
-
-	//mute Channel by default
-	snd_mixer_selem_set_playback_switch_all( alsaChannel, 0); 
-#endif
+    startAlsa();
 }
 
 mixerChannel_ALSA::~mixerChannel_ALSA()
+{
+    stopAlsa();
+}
+
+// opens the ALSA API and attaches to the device defined in the settings
+void mixerChannel_ALSA::startAlsa()
+{
+#ifdef HAVE_ALSA
+    snd_mixer_selem_id_alloca(&chId);
+    if( snd_mixer_open( &alsaMixer, 0) )
+	qWarning( tr("Could not open AlsaMixer !!!") );
+
+    char device[16];
+    sprintf(device, "hw:%i", settings["alsa_card"].toInt() );
+    snd_mixer_attach(alsaMixer, device);
+    snd_mixer_selem_register(alsaMixer, NULL, NULL);
+    snd_mixer_load(alsaMixer); //load up the mixer
+
+    char* channel;
+    if( settings["alsa_channel"].isNull() )
+	channel = "Mic";
+    else
+	channel = (char*)settings["alsa_channel"].toString().toStdString().c_str();
+
+    snd_mixer_selem_id_set_name(chId, channel );
+    alsaChannel = snd_mixer_find_selem(alsaMixer, chId);
+    // unmute the channel
+    if(alsaChannel)
+	snd_mixer_selem_set_playback_switch_all( alsaChannel, 1);
+#endif
+}
+
+// closes the ALSA API
+void mixerChannel_ALSA::stopAlsa()
 {
 #ifdef HAVE_ALSA
 	snd_mixer_close(alsaMixer);
@@ -54,6 +71,7 @@ mixerChannel_ALSA::~mixerChannel_ALSA()
 void mixerChannel_ALSA::setVolume( int volume )
 {
 #ifdef HAVE_ALSA
+    if(alsaChannel)
 	snd_mixer_selem_set_playback_volume_all(alsaChannel, int(volume/3) );
 #endif
 }
@@ -61,15 +79,45 @@ void mixerChannel_ALSA::setVolume( int volume )
 void mixerChannel_ALSA::mute( )
 {
 #ifdef HAVE_ALSA
-	snd_mixer_selem_set_playback_switch_all( alsaChannel, 1);
+    if(alsaChannel)
+    {
+	snd_mixer_selem_set_playback_switch_all( alsaChannel, 0);
+	muted = true;
+	emit( muteChanged( true ) );
+    }
 #endif
 }
 
 void mixerChannel_ALSA::unMute( )
 {
 #ifdef HAVE_ALSA
-	snd_mixer_selem_set_playback_switch_all( alsaChannel, 0);
+    if(alsaChannel)
+    {
+	snd_mixer_selem_set_playback_switch_all( alsaChannel, 1);
+	muted = false;
+	emit( muteChanged( false ) );
+    }
 #endif
 }
 
+void mixerChannel_ALSA::toggleMute()
+{
+    if(muted)
+	unMute();
+    else
+	mute();
+}
 
+void mixerChannel_ALSA::updateSettings( mixerChannel::settingsType settings )
+{
+    // save old settings first...
+    settingsType oldSettings = this->settings;
+    // load new settings...
+    mixerChannel::updateSettings( settings );
+    // check if something has changed... if so reinit ALSA device
+    if( oldSettings["alsa_card"] != this->settings["alsa_card"] || oldSettings["alsa_channel"] != this->settings["alsa_channel"] )
+    {
+	stopAlsa();
+	startAlsa();
+    }
+}

@@ -26,6 +26,9 @@
 mixerChannel::mixerChannel( const char *name )
  : QObject(0, name), provides_audiodata( false ), volume(1), sendVuMeterChanged_left(0), sendVuMeterChanged_right(0)
 {
+    // register settings type in QT
+    qRegisterMetaType<mixerChannel::settingsType>("mixerChannel::settingsType");
+
     // initiate my thread and move my eventloop into it...
     thread = new QThread();
     this->moveToThread( thread );
@@ -232,4 +235,10 @@ void mixerChannel::setState(int newState )
 {
     this->state = newState;
     emit(stateChanged(state));
+}
+
+void mixerChannel::updateSettings( settingsType settings )
+{
+    this->settings = settings;
+    emit( settingsChanged( this->settings ) );
 }

@@ -1,7 +1,7 @@
 /* $Id$ */
 /***************************************************************************
  *   OpenRadio - RadioMixer                                                *
- *   Copyright (C) 2005-2007 by Jan Boysen                                *
+ *   Copyright (C) 2005-2009 by Jan Boysen                                *
  *   trekkie@media-mission.de                                              *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
@@ -40,6 +40,7 @@ public:
     mixerGuiAlsaMix( QWidget* parent = 0, const char* name = 0, Qt::WFlags fl = 0 );
     ~mixerGuiAlsaMix();
 
+    virtual void associateToChannel( mixerChannel* channel );
     virtual void languageChange();
     virtual QString getType();
 
@@ -47,14 +48,12 @@ protected:
 	glowButton*	muteBut;
 
 private:
-	bool mute;
+	QComboBox* soundCardSelect;
+	QComboBox* channelSelect;
 
 protected slots:
 	virtual void showPrefs();
-
-public slots:
-	virtual void toggleMute();
-	virtual void buttonPressed( int hwChannel, int button );
+	virtual void cardChanged( int item );
 };
 
 #endif

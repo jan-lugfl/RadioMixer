@@ -43,12 +43,20 @@ private:
 	snd_mixer_t*	alsaMixer;
         snd_mixer_elem_t*	alsaChannel;
 	snd_mixer_selem_id_t *chId;
+	bool muted;
+
+	void startAlsa();
+	void stopAlsa();
 
 public slots:
+	virtual void updateSettings( mixerChannel::settingsType );
 	virtual void setVolume( int volume );
+	virtual void toggleMute();
 	virtual void mute();
 	virtual void unMute();
-	
+
+signals:
+	void muteChanged( bool );
 };
 
 #endif

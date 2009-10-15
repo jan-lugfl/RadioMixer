@@ -142,10 +142,6 @@ void mixerGuiPlayer::languageChange()
 {
     mixerGUI::languageChange();
 //    chName->setText( player->getName() );
-    playButton->setText( tr( "Play" ) );
-    stopButton->setText( tr( "Stop" ) );
-    pauseButton->setText( tr( "Paus" ) );
-    cueButton->setText( tr( "CUE" ) );
     openButton->setText( tr( "Open" ) );
     loopButton->setText( QChar(0x221e) );
 }

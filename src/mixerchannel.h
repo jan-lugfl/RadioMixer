@@ -22,9 +22,11 @@
 #ifndef MIXERCHANNEL_H
 #define MIXERCHANNEL_H
 
-#include <qobject.h>
-#include <qmessagebox.h>
-#include <qthread.h>
+#include <QObject>
+#include <QMessageBox>
+#include <QThread>
+#include <QHash>
+#include <QVariant>
 
 #include "metatag.h"
 #include "ringbuffer.h"
@@ -38,6 +40,8 @@ Q_OBJECT
 public:
     mixerChannel( const char *name = 0 );
     ~mixerChannel();
+
+    typedef QHash<QString, QVariant> settingsType;
 
     const bool isPlaying();
     const bool isStopped();
@@ -63,6 +67,7 @@ public:
    bool providesAudioData();
 
 protected:
+	settingsType settings; // stores the channel dependant settings...
         bool provides_audiodata;
 	float volume_left;
 	float volume_right;
@@ -100,6 +105,7 @@ public slots:
 	virtual void cue( );
 	virtual void connectPort();
 	virtual void disconnectPort();
+	virtual void updateSettings( mixerChannel::settingsType );
 	
 signals:
         void volumeChanged( int );
@@ -110,6 +116,7 @@ signals:
 	void nameChanged( QString );
         void stateChanged(int);
 	void refreshed();
+	void settingsChanged( mixerChannel::settingsType );
 };
 
 #endif

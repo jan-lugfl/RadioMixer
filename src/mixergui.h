@@ -72,8 +72,8 @@ protected:
 	
 	QTimer* buttonBlinkTimer;
 
-	// Config Storage
-	QSettings* config;
+	// channel settings Storage
+	mixerChannel::settingsType settings;
 
 	unsigned short channelID;
 	unsigned short playerPos;
@@ -92,6 +92,7 @@ protected slots:
 	virtual void showPrefs();
 	virtual void refresh();
 	virtual void save();
+	virtual void channelSettingsChanged( mixerChannel::settingsType );
 
 public slots:
 	virtual void changeName( QString newName );
@@ -103,6 +104,7 @@ public slots:
 signals:
 	void refreshed();
 	void newMeta( metaTag );
+	void updateSettings( mixerChannel::settingsType );
 };
 
 #endif
