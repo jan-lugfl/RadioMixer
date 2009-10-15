@@ -19,9 +19,9 @@
  *   Free Software Foundation, Inc.,                                       *
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
-#include "playerchanneljackport.h"
+#include "mixerchannel_jack.h"
 
-playerChannelJackport::playerChannelJackport( soundPlayerJack* jackPlayer, QString chName, const char *name )
+mixerChannel_jack::mixerChannel_jack( soundPlayerJack* jackPlayer, QString chName, const char *name )
  : mixerChannel( name ), levelMeterLeft(0), levelMeterRight(0)
 {
 	this->name = chName;
@@ -33,13 +33,13 @@ playerChannelJackport::playerChannelJackport( soundPlayerJack* jackPlayer, QStri
 }
 
 
-playerChannelJackport::~playerChannelJackport( )
+mixerChannel_jack::~mixerChannel_jack( )
 {
 	if( player->isConnected() )
 		disconnectPort();
 }
 
-void playerChannelJackport::processJackLeft( jack_nframes_t frames  )
+void mixerChannel_jack::processJackLeft( jack_nframes_t frames  )
 {
 	this->frames = frames;
 	jack_default_audio_sample_t*	source = ( jack_default_audio_sample_t* ) jack_port_get_buffer (jackIn[0]->jackport, frames);
@@ -55,7 +55,7 @@ void playerChannelJackport::processJackLeft( jack_nframes_t frames  )
 	levelMeterLeft /= frames;
 }
 
-void playerChannelJackport::processJackRight( jack_nframes_t frames  )
+void mixerChannel_jack::processJackRight( jack_nframes_t frames  )
 {
 	jack_default_audio_sample_t*	source = ( jack_default_audio_sample_t* ) jack_port_get_buffer (jackIn[1]->jackport, frames);
 	jack_default_audio_sample_t*	mixed = ( jack_default_audio_sample_t* ) jack_port_get_buffer (jackOut[1]->jackport, frames);
@@ -70,12 +70,12 @@ void playerChannelJackport::processJackRight( jack_nframes_t frames  )
 	levelMeterRight /= frames;
 }
 
-void playerChannelJackport::setVolume( int volume )
+void mixerChannel_jack::setVolume( int volume )
 {
 	this->volume = float(100.f-volume)/100.f;
 }
 
-void playerChannelJackport::mute( )
+void mixerChannel_jack::mute( )
 {
 	disconnect( jackIn[0], SIGNAL( processData( jack_nframes_t ) ), this, SLOT( processJackLeft( jack_nframes_t ) ) );
 	disconnect( jackIn[1], SIGNAL( processData( jack_nframes_t ) ), this, SLOT( processJackRight( jack_nframes_t ) ) );
@@ -91,13 +91,13 @@ void playerChannelJackport::mute( )
 	}
 }
 
-void playerChannelJackport::unMute( )
+void mixerChannel_jack::unMute( )
 {
 	connect( jackIn[0], SIGNAL( processData( jack_nframes_t ) ), this, SLOT( processJackLeft( jack_nframes_t ) ) );
 	connect( jackIn[1], SIGNAL( processData( jack_nframes_t ) ), this, SLOT( processJackRight( jack_nframes_t ) ) );
 }
 
-void playerChannelJackport::connectPort( )
+void mixerChannel_jack::connectPort( )
 {
 	jackIn[0] = player->registerJackPort( getName()+QString("_leftIn"), JackPortIsInput);
 	jackIn[1] = player->registerJackPort( getName()+QString("_rightIn"), JackPortIsInput);
@@ -106,7 +106,7 @@ void playerChannelJackport::connectPort( )
 	unMute();
 }
 
-void playerChannelJackport::disconnectPort( )
+void mixerChannel_jack::disconnectPort( )
 {
 	mute();
 	player->unregisterJackPort( jackIn[0] );
@@ -115,12 +115,12 @@ void playerChannelJackport::disconnectPort( )
 	player->unregisterJackPort( jackOut[1] );
 }
 
-const float playerChannelJackport::getLevelMeterLeft( )
+const float mixerChannel_jack::getLevelMeterLeft( )
 {
 	return levelMeterLeft;
 }
 
-const float playerChannelJackport::getLevelMeterRight( )
+const float mixerChannel_jack::getLevelMeterRight( )
 {
 	return levelMeterRight;
 }

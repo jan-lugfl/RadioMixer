@@ -25,6 +25,7 @@
 
 #include "mixerguialsamix.h"
 #include "mixerguiplayer.h"
+#include "mixerguijackport.h"
 #include "soundplayerjack.h"
 
 #include <QSettings>
@@ -70,7 +71,7 @@ mainWindow::mainWindow(QWidget *parent) :
     dummy7 = new mixerGuiPlayer();
     rm_ui->horizontalLayout->addWidget( dummy7 );
 
-    dummy8 = new mixerGuiPlayer();
+    dummy8 = new mixerGuiJackport();
     rm_ui->horizontalLayout->addWidget( dummy8 );
 
     player = new soundPlayerJack();

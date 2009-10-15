@@ -30,8 +30,6 @@
 #include "timedisplay.h"
 #include "playlistitemsongdb.h"
 
-#include <q3dragobject.h>
-#include <q3listview.h>
 #include <QDropEvent>
 #include <QDragEnterEvent>
 
@@ -75,7 +73,6 @@ protected slots:
         virtual void setState( int newState );
 
 public slots:
-	virtual void buttonPressed( int hwChannel, int button );
 	virtual void cueTrack( unsigned int playerId, playListItem* song );
 	virtual void cueNewTrack();
 

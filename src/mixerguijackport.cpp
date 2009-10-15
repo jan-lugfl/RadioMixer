@@ -1,7 +1,7 @@
 /* $Id$ */
 /***************************************************************************
  *   OpenRadio - RadioMixer                                                *
- *   Copyright (C) 2005, 2006 by Jan Boysen                                *
+ *   Copyright (C) 2005-2009 by Jan Boysen                                 *
  *   trekkie@media-mission.de                                              *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
@@ -21,61 +21,38 @@
  ***************************************************************************/
 #include "mixerguijackport.h"
 
-mixerGuiJackport::mixerGuiJackport( soundPlayerJack* jackPlayer, int chID, QWidget* parent, const char* name, Qt::WFlags fl )
+mixerGuiJackport::mixerGuiJackport( QWidget* parent, const char* name, Qt::WFlags fl )
  : mixerGUI( parent, name, fl), mute(0)
 {
-        jackMixer = new playerChannelJackport( jackPlayer, name );
-//	connect( vuSlider, SIGNAL(valueChanged( int )), mixer, SLOT(setVolume( int )) );
-
 	muteBut = new glowButton( this, "muteBut" );
-	muteBut->setGeometry( QRect( 60, 60, 39, 26 ) );
 	muteBut->setActivatedColor( QColor( 180, 50, 50 ) );
-	connect( muteBut, SIGNAL(clicked()), this, SLOT( toggleMute() ) );
-
-	connect( trebleSlider, SIGNAL( valueChanged( int )), this, SLOT(setBalance( int )) );
-	languageChange();
+	actionButtons->addWidget( muteBut );
 
 	levelMeterLeft = new vuMeter( this, "levelMeterLeft");
 	levelMeterLeft->setGeometry( QRect( 5, 60, 11, 321 ) );
 	levelMeterLeft->setPaletteBackgroundColor( paletteBackgroundColor () );
-	
+
 	levelMeterRight = new vuMeter( this, "levelMeterRight");
 	levelMeterRight->setGeometry( QRect( 19, 60, 11, 321 ) );
 	levelMeterRight->setPaletteBackgroundColor( paletteBackgroundColor () );
+
+	meterLayout = new QGridLayout();
+	meterLayout->addWidget( levelMeterLeft, 1, 1 );
+	meterLayout->addWidget( levelMeterRight, 1, 2 );
+	layout->addLayout( meterLayout, 3, 1, 2, 1 );
+
+	languageChange();
 }
 
 
 mixerGuiJackport::~mixerGuiJackport()
 {
-	disconnect( trebleSlider, SIGNAL( valueChanged( int )), this, SLOT(setBalance( int )) );
-//	disconnect( vuSlider, SIGNAL(valueChanged( int )), mixer, SLOT(setVolume( int )) );
-	disconnect( muteBut, SIGNAL(clicked()), this, SLOT( toggleMute() ) );
-//	delete mixer;
-	delete muteBut;
 }
 
 void mixerGuiJackport::languageChange( )
 {
         mixerGUI::languageChange();
 	muteBut->setText( tr( "Mute" ) );
-}
-
-void mixerGuiJackport::toggleMute( )
-{
-	if( mute )
-	{
-		muteBut->setOff();
-		jackMixer->unMute();
-		mute = 0 ;
-	}
-	else
-	{
-		muteBut->setOn();
-		jackMixer->mute();
-		mute = 1;
-		levelMeterLeft->reset();
-		levelMeterRight->reset();
-	}
 }
 
 void mixerGuiJackport::changeName( QString newName )
@@ -89,42 +66,21 @@ QString mixerGuiJackport::getType( )
 	return "JACK";
 }
 
-void mixerGuiJackport::buttonBlinker( )
-{
-	if( vuSlider->value() < 100 && !mute)
-	{
-//		levelMeterLeft->setLevel( mixer->getLevelMeterLeft() );
-//		levelMeterRight->setLevel( mixer->getLevelMeterRight() );
-	}else{
-		levelMeterLeft->reset();
-		levelMeterRight->reset();
-	}
-        mixerGUI::buttonBlinker();
-}
-
 void mixerGuiJackport::showPrefs( )
 {
         mixerGUI::createPrefDlg( );
         if( mixerGUI::execPrefDlg() == QDialog::Accepted)
 	{
-		levelMeterLeft->setPaletteBackgroundColor( paletteBackgroundColor () );
-		levelMeterRight->setPaletteBackgroundColor( paletteBackgroundColor () );
 	}
         mixerGUI::finishPrefDlg( );
 }
 
-void mixerGuiJackport::buttonPressed( int hwChannel, int button )
+void mixerGuiJackport::associateToChannel( mixerChannel* channel )
 {
-/*	if( hwChannel == this->hwChannel )
-	{
-                mixerGUI::buttonPressed( hwChannel, button );
-		switch( button )
-		{
-			case 0x10 :
-				toggleMute();
-				break;
-		}
-        }*/
+    mixerGUI::associateToChannel( channel );
+
+    connect( channel, SIGNAL(muteChanged(bool)), muteBut, SLOT(setState(bool)));
+
+    // connect button actions
+    connect( muteBut, SIGNAL(clicked()), channel, SLOT(toggleMute()));
 }
-
-

@@ -1,7 +1,7 @@
 /* $Id$ */
 /***************************************************************************
  *   OpenRadio - RadioMixer                                                *
- *   Copyright (C) 2005 - 2009 by Jan Boysen                                *
+ *   Copyright (C) 2005-2009 by Jan Boysen                                 *
  *   trekkie@media-mission.de                                              *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
@@ -25,7 +25,7 @@
 #include <mixergui.h>
 #include "glowbutton.h"
 #include "soundplayerjack.h"
-#include "playerchanneljackport.h"
+#include "mixerchannel_jack.h"
 
 /**
 @author Jan Boysen
@@ -34,28 +34,26 @@ class mixerGuiJackport : public mixerGUI
 {
 Q_OBJECT
 public:
-    mixerGuiJackport( soundPlayerJack* jackPlayer, int chID, QWidget* parent = 0, const char* name = 0, Qt::WFlags fl = 0);
+    mixerGuiJackport(QWidget* parent = 0, const char* name = 0, Qt::WFlags fl = 0);
     ~mixerGuiJackport();
 
     virtual void languageChange();
     virtual QString getType();
 
 protected:
+	QGridLayout* meterLayout;
 	vuMeter* levelMeterLeft;
 	vuMeter* levelMeterRight;
 	glowButton*	muteBut;
-	playerChannelJackport*	jackMixer;
 
 private:
 	bool mute;
 
 public slots:
-	virtual void toggleMute();
 	virtual void changeName( QString newName );
-	virtual void buttonPressed( int hwChannel, int button );
+	virtual void associateToChannel( mixerChannel* channel );
 
 protected slots:
-	virtual void buttonBlinker();
 	virtual void showPrefs();
 
 };

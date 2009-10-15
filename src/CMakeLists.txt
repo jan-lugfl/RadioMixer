@@ -7,21 +7,21 @@ SET( SRC_CPPS
 	metainfo.cpp
 	mixergui.cpp
 	mixerguiplayer.cpp
-	mixerchannel.cpp
 	radiomixer.cpp
 	soundplayeralsa.cpp
 	filedecoder.cpp
 	metatag.cpp
 	mixerguialsamix.cpp
 	mpgdecoder.cpp
-	mixerchannel_fileplayer.cpp
+	mixerchannel.cpp
 	mixerchannel_alsa.cpp
+	mixerchannel_fileplayer.cpp
+	mixerchannel_jack.cpp
 	playlistitem.cpp
 	soundplayerjack.cpp
 	mipucom.cpp
-	mixerguijackport.cpp
 	oggdecoder.cpp
-	playerchanneljackport.cpp
+	mixerguijackport.cpp
 	playlistitemsongdb.cpp
 	soundplayer.cpp
 	mainWindow.cpp
@@ -33,8 +33,9 @@ SET( SRC_MOC_HDRS
 	mixergui.h
 	mixerguiplayer.h
 	mixerchannel.h
-	mixerchannel_fileplayer.h
 	mixerchannel_alsa.h
+	mixerchannel_fileplayer.h
+	mixerchannel_jack.h
 	playlistitem.h
 	filedecoder.h
 	mixerguialsamix.h
@@ -43,7 +44,6 @@ SET( SRC_MOC_HDRS
 	mipucom.h
 	mixerguijackport.h
 	oggdecoder.h
-	playerchanneljackport.h
 	playlistitemsongdb.h
 	mainWindow.h
 )

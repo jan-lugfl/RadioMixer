@@ -28,12 +28,12 @@
 /**
 @author Jan Boysen
 */
-class playerChannelJackport : public mixerChannel
+class mixerChannel_jack : public mixerChannel
 {
 Q_OBJECT
 public:
-    playerChannelJackport( soundPlayerJack* jackPlayer, QString chName="", const char *name = 0 );
-    ~playerChannelJackport();
+    mixerChannel_jack( soundPlayerJack* jackPlayer, QString chName="", const char *name = 0 );
+    ~mixerChannel_jack();
 
     virtual QString getType() { return QString("JACK"); }
 

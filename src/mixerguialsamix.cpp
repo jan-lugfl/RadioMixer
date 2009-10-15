@@ -82,7 +82,6 @@ void mixerGuiAlsaMix::showPrefs( )
 		snd_card_next(&card);
 	}
 #endif
-	qWarning( settings["alsa_card"].toString() );
 	soundCardSelect->setCurrentIndex( settings["alsa_card"].toInt() );
 	cardChanged( settings["alsa_card"].toInt() );
 
