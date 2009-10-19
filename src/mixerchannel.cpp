@@ -24,7 +24,7 @@
 #include "mixerchannelmanager.h"
 
 mixerChannel::mixerChannel( const char *name )
- : QObject(0, name), provides_audiodata( false ), volume(1), sendVuMeterChanged_left(0), sendVuMeterChanged_right(0)
+ : QObject(0, name), volume(1), sendVuMeterChanged_left(0), sendVuMeterChanged_right(0)
 {
     // register settings type in QT
     qRegisterMetaType<mixerChannel::settingsType>("mixerChannel::settingsType");
@@ -41,17 +41,21 @@ mixerChannel::mixerChannel( const char *name )
 	soundBuffers[0].setBufSize(16384);
 	soundBuffers[1].setBufSize(16384);
 
-	state = 0;
 	volume_left = 1;
 	volume_right = 1;
-
-        // register myself in the channel manager
-        mixerChannelManager::registerChannel( this );
 }
 
 
 mixerChannel::~mixerChannel()
 {
+    // unregister myself in the channel manager
+    mixerChannelManager::unregisterChannel( this );
+}
+
+void mixerChannel::registerChannel()
+{
+    // register myself in the channel manager
+    mixerChannelManager::registerChannel( this );
 }
 
 void mixerChannel::setVolume( int newValue )
@@ -62,60 +66,6 @@ void mixerChannel::setVolume( int newValue )
             volume = newVolume;
             emit( volumeChanged(newValue) );
         }
-}
-
-void mixerChannel::play( )
-{
-    setState( 1 );
-}
-
-void mixerChannel::stop( )
-{
-    soundBuffers[0].flush();
-    soundBuffers[1].flush();
-    setState( 0 );
-}
-
-void mixerChannel::pause( )
-{
-    setState( 2 );
-}
-
-void mixerChannel::cue( )
-{
-    setState( 3 );
-}
-
-const bool mixerChannel::isPlaying( )
-{
-	if( state == 1)
-		return TRUE;
-	else
-		return FALSE;
-}
-
-const bool mixerChannel::isStopped( )
-{
-	if( state == 0)
-		return TRUE;
-	else
-		return FALSE;
-}
-
-const bool mixerChannel::isPaused( )
-{
-	if( state == 2)
-		return TRUE;
-	else
-		return FALSE;
-}
-
-const bool mixerChannel::isCued( )
-{
-	if( state == 3)
-		return TRUE;
-	else
-		return FALSE;
 }
 
 QString mixerChannel::getName( )
@@ -149,16 +99,7 @@ void mixerChannel::refresh( )
 
 const unsigned int mixerChannel::getSmplRate( )
 {
-//	return smplRate;
-    return 48000;
-}
-
-void mixerChannel::connectPort( )
-{
-}
-
-void mixerChannel::disconnectPort( )
-{
+        return smplRate;
 }
 
 void mixerChannel::setTreble( int level )
@@ -224,17 +165,6 @@ void mixerChannel::checkBuffer( )
 unsigned int mixerChannel::getBuffFill( )
 {
 	return soundBuffers[0].getFill();
-}
-
-bool mixerChannel::providesAudioData()
-{
-    return provides_audiodata;
-}
-
-void mixerChannel::setState(int newState )
-{
-    this->state = newState;
-    emit(stateChanged(state));
 }
 
 void mixerChannel::updateSettings( settingsType settings )

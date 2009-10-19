@@ -23,10 +23,31 @@
 #include "mixerchannelmanager.h"
 
 // init static members.
-mixerChannelManager::storageType mixerChannelManager::channels = mixerChannelManager::storageType();
+mixerChannelManager::storageType mixerChannelManager::allChannels = mixerChannelManager::storageType();
+mixerChannelManager::storageType mixerChannelManager::inChannels = mixerChannelManager::storageType();
+mixerChannelManager::storageType mixerChannelManager::outChannels = mixerChannelManager::storageType();
 
 void mixerChannelManager::registerChannel( mixerChannel* newChann )
 {
-    channels.append( newChann );
+    allChannels.append( newChann );
+
+    if( newChann->getAudioDataType() == mixerChannel::AudioDataIn )
+        inChannels.append(newChann );
+
+    if( newChann->getAudioDataType() == mixerChannel::AudioDataOut )
+        outChannels.append(newChann );
 }
 
+void mixerChannelManager::unregisterChannel( mixerChannel* channel )
+{
+    mixerChannelManager::storageType::iterator it;
+    for( it = allChannels.begin(); it != allChannels.end(); it++ )
+        if( (*it) == channel )
+            allChannels.erase( it );
+    for( it = inChannels.begin(); it != inChannels.end(); it++ )
+        if( (*it) == channel )
+            inChannels.erase( it );
+    for( it = outChannels.begin(); it != outChannels.end(); it++ )
+        if( (*it) == channel )
+            outChannels.erase( it );
+}

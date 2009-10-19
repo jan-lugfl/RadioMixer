@@ -28,11 +28,13 @@ mixerChannel_filePlayer::mixerChannel_filePlayer( const char *name )
 	fileOpen = FALSE;
 	loopMode = FALSE;
 	decoder = NULL;
+
+        registerChannel();
 }
 
 mixerChannel_filePlayer::~mixerChannel_filePlayer()
 {
-	if(!isStopped())
+        if(!state == Stopped)
 		stop();
 	bufferThread->terminate();
 }
@@ -89,7 +91,7 @@ void mixerChannel_filePlayer::open( playListItem* track )
 				if( meta )
 					dynamic_cast<playListItem*>(meta)->cueing();
                                 emit( cued( track ) );
-                                setState( 3 );
+                                setState( Cued );
 
 				if(!bufferThread->running())
 					bufferThread->start();
@@ -160,23 +162,23 @@ void mixerChannel_filePlayer::decode( )
 
 void mixerChannel_filePlayer::checkBuffer( )
 {
-	if( soundBuffers[0].canWrite( 1024 ) && isPlaying() )
-	{
+        if( soundBuffers[0].canWrite( 1024 ) && state == Playing )
 		decode();
-                provides_audiodata = true;
-	}
 }
 
 void mixerChannel_filePlayer::stop( )
 {
-        provides_audiodata = false;
-	if( isStopped() )
-		return;
-        mixerChannel::stop();
-	if( fileOpen )
-		dynamic_cast<playListItem*>(meta)->stopped();
-	close();
-	emit( stopped() );
+    if(!bufferThread->running())
+	bufferThread->start();
+    if( state == Stopped )
+        return;
+    if( fileOpen )
+        dynamic_cast<playListItem*>(meta)->stopped();
+    close();
+
+    soundBuffers[0].flush();
+    soundBuffers[1].flush();
+    setState( Stopped );
 }
 
 void mixerChannel_filePlayer::close( )
@@ -189,9 +191,15 @@ void mixerChannel_filePlayer::close( )
 	}
 }
 
-void mixerChannel_filePlayer::cue()
+void mixerChannel_filePlayer::setState(playerState newState )
 {
-    //TODO: implement me !!! ( move cueNewTrack function here )
+    this->state = newState;
+    emit(stateChanged(state));
+}
+
+void mixerChannel_filePlayer::cue( )
+{
+    setState( Cued );
 }
 
 const bool mixerChannel_filePlayer::isFileOpen( )
@@ -218,13 +226,12 @@ void mixerChannel_filePlayer::setName( QString newName )
 
 void mixerChannel_filePlayer::play( )
 {
-	if( !fileOpen || isPlaying() )
-		return;
-        mixerChannel::play();
-	if( fileOpen )
-		dynamic_cast<playListItem*>(meta)->startPlaying();
-	emit( newMeta( *meta ) );
-	emit( playing() );
+    if( !fileOpen || state == Playing )
+        return;
+    if( fileOpen )
+        dynamic_cast<playListItem*>(meta)->startPlaying();
+    setState( Playing );
+    emit( newMeta( *meta ) );
 }
 
 const float mixerChannel_filePlayer::getPosition_Samples( )
@@ -254,11 +261,10 @@ const float mixerChannel_filePlayer::getRemainFrames( )
 
 void mixerChannel_filePlayer::pause( )
 {
-	// pausing if we are not in Play mode makes no sence............
-	if( !isPlaying() )
-		return;
-        mixerChannel::pause();
-	emit( paused() );
+    // pausing if we are not in Play mode makes no sence............
+    if( state != Playing )
+        return;
+    setState( Paused );
 }
 
 const bool mixerChannel_filePlayer::isLooping( )

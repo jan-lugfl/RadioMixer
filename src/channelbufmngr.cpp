@@ -34,12 +34,12 @@ channelBufMngr::~channelBufMngr()
 
 void channelBufMngr::run( )
 {
-	while(!parent->isStopped())
-	{
-		while(parent->getBuffFill() < 95 && parent->isPlaying() )
-			parent->checkBuffer();
-		msleep(100);
-	}
+    while(1)
+    {
+        while(parent->getBuffFill() < 95 )
+                parent->checkBuffer();
+        msleep(100);
+    }
 }
 
 

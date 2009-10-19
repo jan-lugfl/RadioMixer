@@ -40,10 +40,14 @@ mainWindow::mainWindow(QWidget *parent) :
     // connect aboutQT menu....
     connect( rm_ui->actionAbout_Qt, SIGNAL(triggered()), this, SLOT(aboutQt()) );
 
+    soundPlayerJack* jackPlayer = new soundPlayerJack();
+    player = jackPlayer;
+    player->open("RadioMixer");
+
     dummy1_ = new mixerChannel_ALSA();
     dummy2_ = new mixerChannel_filePlayer("test123");
     dummy3_ = new mixerChannel_filePlayer("ch4");
-    dummy4_ = new mixerChannel_filePlayer("ch5");
+    dummy4_ = new mixerChannel_jack(jackPlayer, "ch5");
 
     dummy = new mixerGuiAlsaMix();
     dummy->associateToChannel( dummy1_ );
@@ -73,9 +77,6 @@ mainWindow::mainWindow(QWidget *parent) :
 
     dummy8 = new mixerGuiJackport();
     rm_ui->horizontalLayout->addWidget( dummy8 );
-
-    player = new soundPlayerJack();
-    player->open("RadioMixer");
 
 /*    // read config and set up last saved state
     QSettings* config = new QSettings();

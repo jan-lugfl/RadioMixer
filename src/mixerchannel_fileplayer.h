@@ -55,20 +55,31 @@ public:
 	virtual const bool isFileOpen();
 	virtual const bool isLooping();
 	
-	// Specialisations
-        virtual QString getType() { return QString("PLAYER"); }
-	virtual void setName( QString newName );
-	
-	// Stream Infos
-	const int getRTime();
-	const int getTime();
-	const float getPosition_Samples();
-	const float getTotal_Samples();
+    // Specialisations
+    virtual AudioDataType getAudioDataType() { return mixerChannel::AudioDataIn; }
+    virtual QString getType() { return QString("PLAYER"); }
+    virtual void setName( QString newName );
 
-	virtual const float getPrerollFrames();
-	virtual const float getTotalFrames();
-	virtual const float getPlayedFrames();
-	virtual const float getRemainFrames();
+    // States of the Player
+    enum playerState
+    {
+        Stopped,
+        Playing,
+        Paused,
+        Cued
+    } state;
+    void setState( playerState );
+
+    // Stream Infos
+    const int getRTime();
+    const int getTime();
+    const float getPosition_Samples();
+    const float getTotal_Samples();
+
+    virtual const float getPrerollFrames();
+    virtual const float getTotalFrames();
+    virtual const float getPlayedFrames();
+    virtual const float getRemainFrames();
 
 protected:
 	QString fileName;

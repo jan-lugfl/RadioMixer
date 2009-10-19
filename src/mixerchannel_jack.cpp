@@ -30,6 +30,8 @@ mixerChannel_jack::mixerChannel_jack( soundPlayerJack* jackPlayer, QString chNam
 	connect( jackPlayer, SIGNAL( onDisconnect() ), this, SLOT( disconnectPort()) );
 	if( player->isConnected() )
 		connectPort();
+
+        registerChannel();
 }
 
 
@@ -99,6 +101,7 @@ void mixerChannel_jack::unMute( )
 
 void mixerChannel_jack::connectPort( )
 {
+    qWarning("connectPort()");
 	jackIn[0] = player->registerJackPort( getName()+QString("_leftIn"), JackPortIsInput);
 	jackIn[1] = player->registerJackPort( getName()+QString("_rightIn"), JackPortIsInput);
 	jackOut[0] = player->registerJackPort( getName()+QString("_leftOut"), JackPortIsOutput);
@@ -113,14 +116,4 @@ void mixerChannel_jack::disconnectPort( )
 	player->unregisterJackPort( jackOut[0] );
 	player->unregisterJackPort( jackIn[1] );
 	player->unregisterJackPort( jackOut[1] );
-}
-
-const float mixerChannel_jack::getLevelMeterLeft( )
-{
-	return levelMeterLeft;
-}
-
-const float mixerChannel_jack::getLevelMeterRight( )
-{
-	return levelMeterRight;
 }

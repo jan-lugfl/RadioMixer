@@ -60,11 +60,11 @@ void soundPlayer::mixChannels( )
 			mixBufR[bufPos] = 0;
 		}
                 mixerChannelManager::storageType::iterator it;
-                for( it = mixerChannelManager::channels.begin(); it != mixerChannelManager::channels.end(); it++ )
+                for( it = mixerChannelManager::inChannels.begin(); it != mixerChannelManager::inChannels.end(); it++ )
 		{
-                        if( (*it)->providesAudioData() && (*it)->canGetData( interMixSamples ) )
+                        if( (*it)->canGetData( interMixSamples ) )
 			{
-				// WOW finaly I've got this mixengine working clipfree.....
+                                // WOW finaly I've got this mixengine working clipfree.....
 				// I had the Idea when I was trying to sleep some days ago :-)
 				bool mixed = FALSE;
 				float volume = 1.0f;
@@ -98,12 +98,12 @@ void soundPlayer::mixChannels( )
 		outputBuffers[0].write(mixBufL, interMixSamples );
 		outputBuffers[1].write(mixBufR, interMixSamples );
 	}else
-		qWarning( tr("mix: Buffer overfllow in output buffer") );
+                qWarning( tr("mix: Buffer overflow in output buffer") );
 }
 
 void soundPlayer::fetchSampleData( mixerChannel* channel, float * bufferLeft, float * bufferRight )
 {
-        unsigned int dataToRead = int( (((double)outRate/(double)channel->getSmplRate())*interMixSamples)+1);
+        unsigned int dataToRead = int( (((double)channel->getSmplRate()/(double)outRate)*interMixSamples)+1);
 	float* fetchBufL = new float[dataToRead];
 	float* fetchBufR = new float[dataToRead];
 
@@ -124,7 +124,7 @@ void soundPlayer::fetchSampleData( mixerChannel* channel, float * bufferLeft, fl
 	resamplerData->input_frames = dataToRead;
 	resamplerData->data_out = bufferLeft;
 	resamplerData->output_frames = interMixSamples;
-        resamplerData->src_ratio = (double)channel->getSmplRate()/(double)outRate;
+        resamplerData->src_ratio = (double)outRate/(double)channel->getSmplRate();
 
 	src_simple( resamplerData, 2, 1);
 

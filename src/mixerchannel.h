@@ -23,10 +23,10 @@
 #define MIXERCHANNEL_H
 
 #include <QObject>
-#include <QMessageBox>
 #include <QThread>
 #include <QHash>
 #include <QVariant>
+#include <QMessageBox>
 
 #include "metatag.h"
 #include "ringbuffer.h"
@@ -43,20 +43,23 @@ public:
 
     typedef QHash<QString, QVariant> settingsType;
 
-    const bool isPlaying();
-    const bool isStopped();
-    const bool isPaused();
-    const bool isCued();
+    enum AudioDataType
+    {
+        AudioDataIn,
+        AudioDataOut,
+        AudioDataNone
+    };
     
     virtual QString getType() = 0;
+    virtual AudioDataType getAudioDataType() = 0;
     QString getName();
     void setName(QString newName);
     
-    virtual int getLevelLeft();
-    virtual int getLevelRight();
     virtual void checkBuffer();
 
-   virtual const unsigned int getSmplRate();
+        virtual int getLevelLeft();
+        virtual int getLevelRight();
+        virtual const unsigned int getSmplRate();
 
 // Wrapper functions for the ringbuffer
    virtual bool canGetData( unsigned int size );
@@ -64,11 +67,8 @@ public:
    virtual void getDataRight( float* dataOut, unsigned int size );
    virtual unsigned int getBuffFill( );
 
-   bool providesAudioData();
-
 protected:
 	settingsType settings; // stores the channel dependant settings...
-        bool provides_audiodata;
 	float volume_left;
 	float volume_right;
 	float volume;
@@ -77,17 +77,9 @@ protected:
 	QString name;
 
 	metaTag*	meta;
-
-	// States for the Channels
-	// 0 = Channel is stopped
-	// 1 = Channel is playing somthing
-	// 2 = Channel is paused
-	// 3 = Channel is cued
-	int state;
-        void setState(int newState );
-
 	soundRingBuffer* soundBuffers;
 
+        void registerChannel();
 private:
         QThread* thread;
 	int sendVuMeterChanged_left;
@@ -99,12 +91,6 @@ protected slots:
 public slots:
 	virtual void setVolume( int newValue );
         virtual void setTreble( int newValue );
-        virtual void play( );
-	virtual void stop( );
-	virtual void pause( );
-	virtual void cue( );
-	virtual void connectPort();
-	virtual void disconnectPort();
 	virtual void updateSettings( mixerChannel::settingsType );
 	
 signals:

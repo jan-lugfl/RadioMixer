@@ -36,8 +36,8 @@ public:
     mixerChannel_ALSA();
     ~mixerChannel_ALSA();
 
+    virtual AudioDataType getAudioDataType() { return mixerChannel::AudioDataNone; }
     virtual QString getType() { return QString("ALSAMIX"); }
-
 
 private:
 	snd_mixer_t*	alsaMixer;

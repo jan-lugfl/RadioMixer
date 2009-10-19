@@ -80,9 +80,9 @@ int soundPlayerJack::process( jack_nframes_t frames, void * arg )
 		(*portIt)->process( frames );
 
         mixerChannelManager::storageType::iterator it;
-        for( it = mixerChannelManager::channels.begin(); it != mixerChannelManager::channels.end(); it++ )
+        for( it = mixerChannelManager::inChannels.begin(); it != mixerChannelManager::inChannels.end(); it++ )
 	{
-		if( (*it)->isPlaying() )
+//		if( (*it)->isPlaying() )
 			playing = TRUE;
 	}
 	if( playing )

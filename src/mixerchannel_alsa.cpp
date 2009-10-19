@@ -25,6 +25,7 @@ mixerChannel_ALSA::mixerChannel_ALSA()
  : mixerChannel(), muted( false )
 {
     startAlsa();
+    registerChannel();
 }
 
 mixerChannel_ALSA::~mixerChannel_ALSA()

@@ -19,8 +19,8 @@
  *   Free Software Foundation, Inc.,                                       *
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
-#ifndef PLAYERCHANNELJACKPORT_H
-#define PLAYERCHANNELJACKPORT_H
+#ifndef PLAYERCHANNELJACK_H
+#define PLAYERCHANNELJACK_H
 
 #include <mixerchannel.h>
 #include "soundplayerjack.h"
@@ -35,11 +35,8 @@ public:
     mixerChannel_jack( soundPlayerJack* jackPlayer, QString chName="", const char *name = 0 );
     ~mixerChannel_jack();
 
+    virtual AudioDataType getAudioDataType() { return mixerChannel::AudioDataIn; }
     virtual QString getType() { return QString("JACK"); }
-
-// Functions for the LevelMeter
-   virtual const float getLevelMeterLeft();
-   virtual const float getLevelMeterRight();
 
 protected:
 	jackPort*			jackIn[2];

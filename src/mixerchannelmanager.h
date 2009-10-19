@@ -31,11 +31,13 @@ class mixerChannelManager
 {
 public:
     static void registerChannel( mixerChannel* );
+    static void unregisterChannel( mixerChannel* );
 
     typedef QVector<mixerChannel*> storageType;
 
-    static  storageType channels;
-
+    static  storageType allChannels;
+    static  storageType inChannels;
+    static  storageType outChannels;
 };
 
 #endif // MIXERCHANNELMANAGER_H
