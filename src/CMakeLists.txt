@@ -2,8 +2,10 @@ ADD_SUBDIRECTORY( widgets )
 ADD_SUBDIRECTORY( dialoge )
 
 SET( SRC_CPPS
+	jack.cpp
 	mixerchannelmanager.cpp
 	channelbufmngr.cpp
+	channelmixer.cpp
 	metainfo.cpp
 	mixergui.cpp
 	mixerguiplayer.cpp
@@ -16,9 +18,9 @@ SET( SRC_CPPS
 	mixerchannel.cpp
 	mixerchannel_alsa.cpp
 	mixerchannel_fileplayer.cpp
-	mixerchannel_jack.cpp
+	mixerchannel_jackin.cpp
+	mixerchannel_jackout.cpp
 	playlistitem.cpp
-	soundplayerjack.cpp
 	mipucom.cpp
 	oggdecoder.cpp
 	mixerguijackport.cpp
@@ -28,6 +30,7 @@ SET( SRC_CPPS
 )
 
 SET( SRC_MOC_HDRS
+	channelmixer.h
 	mixerchannelmanager.h
 	metainfo.h
 	mixergui.h
@@ -35,12 +38,12 @@ SET( SRC_MOC_HDRS
 	mixerchannel.h
 	mixerchannel_alsa.h
 	mixerchannel_fileplayer.h
-	mixerchannel_jack.h
+	mixerchannel_jackin.h
+	mixerchannel_jackout.h
 	playlistitem.h
 	filedecoder.h
 	mixerguialsamix.h
 	mpgdecoder.h
-	soundplayerjack.h
 	mipucom.h
 	mixerguijackport.h
 	oggdecoder.h

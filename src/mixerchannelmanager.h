@@ -26,6 +26,7 @@
 #include "mixerchannel.h"
 
 #include <QVector>
+#include <QThread>
 
 class mixerChannelManager
 {

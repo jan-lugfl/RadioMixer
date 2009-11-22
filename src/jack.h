@@ -1,7 +1,7 @@
 /* $Id$ */
 /***************************************************************************
  *   OpenRadio - RadioMixer                                                *
- *   Copyright (C) 2005-2009 by Jan Boysen                                 *
+ *   Copyright (C) 2009 by Jan Boysen                                      *
  *   trekkie@media-mission.de                                              *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
@@ -19,42 +19,30 @@
  *   Free Software Foundation, Inc.,                                       *
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
-#ifndef MIXERGUIJACKPORT_H
-#define MIXERGUIJACKPORT_H
 
-#include <mixergui.h>
-#include "glowbutton.h"
-#include "mixerchannel_jackin.h"
+#include <jack/jack.h>
+#include <QString>
+#include <QMessageBox>
+#include <QObject>
 
-/**
-@author Jan Boysen
-*/
-class mixerGuiJackport : public mixerGUI
+#ifndef JACK_H
+#define JACK_H
+
+class Jack
 {
-Q_OBJECT
 public:
-    mixerGuiJackport(QWidget* parent = 0, const char* name = 0, Qt::WFlags fl = 0);
-    ~mixerGuiJackport();
-
-    virtual void languageChange();
-    virtual QString getType();
-
-protected:
-	QGridLayout* meterLayout;
-	vuMeter* levelMeterLeft;
-	vuMeter* levelMeterRight;
-	glowButton*	muteBut;
+    static void errorHandler( const char* msg );
+    static void connect( QString client_name = QString("RadioMixer") );
+    static jack_port_t* newPort(QString name, unsigned long flags);
+    static int process( jack_nframes_t frames, void * arg );
+    static void jackShutdown( void * arg );
+    static unsigned int getSmplRate();
 
 private:
-	bool mute;
-
-public slots:
-	virtual void changeName( QString newName );
-	virtual void associateToChannel( mixerChannel* channel );
-
-protected slots:
-	virtual void showPrefs();
-
+    static bool connected;
+    static int bufSize;
+    static unsigned int smplRate;
+    static jack_client_t* jack;
 };
 
-#endif
+#endif // JACK_H

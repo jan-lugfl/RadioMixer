@@ -1,7 +1,7 @@
 /* $Id$ */
 /***************************************************************************
  *   OpenRadio - RadioMixer                                                *
- *   Copyright (C) 2005-2009 by Jan Boysen                                 *
+ *   Copyright (C) 2009 by Jan Boysen                                      *
  *   trekkie@media-mission.de                                              *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
@@ -19,41 +19,34 @@
  *   Free Software Foundation, Inc.,                                       *
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
-#ifndef MIXERGUIJACKPORT_H
-#define MIXERGUIJACKPORT_H
+#ifndef CHANNELMIXER_H
+#define CHANNELMIXER_H
 
-#include <mixergui.h>
-#include "glowbutton.h"
-#include "mixerchannel_jackin.h"
+#include <QThread>
+#include <mixerchannel.h>
 
 /**
 @author Jan Boysen
 */
-class mixerGuiJackport : public mixerGUI
+class channelMixer : public QThread
 {
-Q_OBJECT
 public:
-    mixerGuiJackport(QWidget* parent = 0, const char* name = 0, Qt::WFlags fl = 0);
-    ~mixerGuiJackport();
+    channelMixer( );
+    ~channelMixer( );
 
-    virtual void languageChange();
-    virtual QString getType();
-
-protected:
-	QGridLayout* meterLayout;
-	vuMeter* levelMeterLeft;
-	vuMeter* levelMeterRight;
-	glowButton*	muteBut;
-
+    // The main mixer....
+    virtual void run();
 private:
-	bool mute;
+    virtual void fetchSampleData( mixerChannel* channel, float* bufferLeft, float* bufferRight );
 
-public slots:
-	virtual void changeName( QString newName );
-	virtual void associateToChannel( mixerChannel* channel );
+    float*  mixBufL;
+    float*  mixBufR;
 
-protected slots:
-	virtual void showPrefs();
+    float* chanBufL;
+    float* chanBufR;
+
+    float* tempBufL;
+    float* tempBufR;
 
 };
 

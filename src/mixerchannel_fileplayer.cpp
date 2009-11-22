@@ -168,8 +168,8 @@ void mixerChannel_filePlayer::checkBuffer( )
 
 void mixerChannel_filePlayer::stop( )
 {
-    if(!bufferThread->running())
-	bufferThread->start();
+    if(bufferThread->running())
+	bufferThread->stop();
     if( state == Stopped )
         return;
     if( fileOpen )

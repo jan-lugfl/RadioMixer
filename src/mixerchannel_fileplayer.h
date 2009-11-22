@@ -38,6 +38,8 @@
 #include "mpgdecoder.h"
 #endif
 
+// forward declaration
+class channelBufMngr;
 
 /**
 @author Jan Boysen

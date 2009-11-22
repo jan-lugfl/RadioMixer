@@ -1,7 +1,7 @@
 /* $Id$ */
 /***************************************************************************
  *   OpenRadio - RadioMixer                                                *
- *   Copyright (C) 2005-2009 by Jan Boysen                                 *
+ *   Copyright (C) 2009 by Jan Boysen                                      *
  *   trekkie@media-mission.de                                              *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
@@ -19,42 +19,41 @@
  *   Free Software Foundation, Inc.,                                       *
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
-#ifndef MIXERGUIJACKPORT_H
-#define MIXERGUIJACKPORT_H
+#ifndef MIXERCHANNEL_JACKIN_H
+#define MIXERCHANNEL_JACKIN_H
 
-#include <mixergui.h>
-#include "glowbutton.h"
-#include "mixerchannel_jackin.h"
+#include <mixerchannel.h>
+#include "jack.h"
 
 /**
 @author Jan Boysen
 */
-class mixerGuiJackport : public mixerGUI
+class mixerChannel_jackIn : public mixerChannel
 {
 Q_OBJECT
 public:
-    mixerGuiJackport(QWidget* parent = 0, const char* name = 0, Qt::WFlags fl = 0);
-    ~mixerGuiJackport();
+    mixerChannel_jackIn( QString chName="", const char *name = 0 );
+    ~mixerChannel_jackIn();
 
-    virtual void languageChange();
-    virtual QString getType();
+    virtual AudioDataType getAudioDataType() { return mixerChannel::AudioDataIn; }
+    virtual QString getType() { return QString("JACKIN"); }
+    virtual void process( jack_nframes_t );
 
 protected:
-	QGridLayout* meterLayout;
-	vuMeter* levelMeterLeft;
-	vuMeter* levelMeterRight;
-	glowButton*	muteBut;
+	jack_port_t*	jack_port[2];
+	jack_nframes_t	frames;
 
 private:
-	bool mute;
+	float levelMeterLeft;
+	float levelMeterRight;
 
 public slots:
-	virtual void changeName( QString newName );
-	virtual void associateToChannel( mixerChannel* channel );
-
-protected slots:
-	virtual void showPrefs();
+	virtual void setVolume( int volume );
+	virtual void mute();
+	virtual void unMute();
+	virtual void connectPort();
+	virtual void disconnectPort();
 
 };
 
-#endif
+#endif //MIXERCHANNEL_JACKIN

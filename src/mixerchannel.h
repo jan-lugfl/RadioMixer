@@ -61,11 +61,14 @@ public:
         virtual int getLevelRight();
         virtual const unsigned int getSmplRate();
 
-// Wrapper functions for the ringbuffer
-   virtual bool canGetData( unsigned int size );
-   virtual void getDataLeft( float* dataOut, unsigned int size );
-   virtual void getDataRight( float* dataOut, unsigned int size );
-   virtual unsigned int getBuffFill( );
+    // Wrapper functions for the ringbuffer
+    virtual bool canGetData( unsigned int size );
+    virtual void getDataLeft( float* dataOut, unsigned int size );
+    virtual void getDataRight( float* dataOut, unsigned int size );
+    virtual bool canAddData( unsigned int size );
+    virtual void addDataLeft( float* data, unsigned int size );
+    virtual void addDataRight( float* data, unsigned int size );
+    virtual unsigned int getBuffFill( );
 
 protected:
 	settingsType settings; // stores the channel dependant settings...

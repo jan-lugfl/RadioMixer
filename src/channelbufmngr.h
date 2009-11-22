@@ -23,7 +23,10 @@
 #define CHANNELBUFMNGR_H
 
 #include <qthread.h>
-#include "mixerchannel.h"
+#include "mixerchannel_fileplayer.h"
+
+// forward declaration
+class mixerChannel_filePlayer;
 
 /**
 @author Jan Boysen
@@ -31,13 +34,15 @@
 class channelBufMngr : public QThread
 {
 public:
-    channelBufMngr( mixerChannel* parent );
+    channelBufMngr( mixerChannel_filePlayer* parent );
     ~channelBufMngr();
     
     virtual void run();
+    virtual void stop();
 
 private:
-        mixerChannel* parent ;
+	mixerChannel_filePlayer* parent ;
+	bool runBufferMngr;
 	
 	
 };

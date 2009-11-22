@@ -26,7 +26,8 @@
 #include "mixerguialsamix.h"
 #include "mixerguiplayer.h"
 #include "mixerguijackport.h"
-#include "soundplayerjack.h"
+
+#include "mixerchannel_jackout.h"
 
 #include <QSettings>
 
@@ -40,14 +41,14 @@ mainWindow::mainWindow(QWidget *parent) :
     // connect aboutQT menu....
     connect( rm_ui->actionAbout_Qt, SIGNAL(triggered()), this, SLOT(aboutQt()) );
 
-    soundPlayerJack* jackPlayer = new soundPlayerJack();
-    player = jackPlayer;
-    player->open("RadioMixer");
+    Jack::connect();
 
     dummy1_ = new mixerChannel_ALSA();
     dummy2_ = new mixerChannel_filePlayer("test123");
     dummy3_ = new mixerChannel_filePlayer("ch4");
-    dummy4_ = new mixerChannel_jack(jackPlayer, "ch5");
+    dummy4_ = new mixerChannel_filePlayer("ch5");
+    dummy6_ = new mixerChannel_jackIn("ch6");
+    dummy_out = new mixerChannel_jackOut("master");
 
     dummy = new mixerGuiAlsaMix();
     dummy->associateToChannel( dummy1_ );
@@ -69,15 +70,17 @@ mainWindow::mainWindow(QWidget *parent) :
     dummy5->associateToChannel( dummy4_ );
     rm_ui->horizontalLayout->addWidget( dummy5 );
 
-    dummy6 = new mixerGuiPlayer();
+    dummy6 = new mixerGuiJackport();
+    dummy6->associateToChannel( dummy6_ );
     rm_ui->horizontalLayout->addWidget( dummy6 );
 
-    dummy7 = new mixerGuiPlayer();
+    dummy7 = new mixerGuiJackport();
+    dummy7->associateToChannel( dummy_out );
     rm_ui->horizontalLayout->addWidget( dummy7 );
-
+/*
     dummy8 = new mixerGuiJackport();
     rm_ui->horizontalLayout->addWidget( dummy8 );
-
+*/
 /*    // read config and set up last saved state
     QSettings* config = new QSettings();
     if( config->readBoolEntry( "/radiomixer/meta/enable", FALSE ) )
@@ -129,6 +132,10 @@ mainWindow::mainWindow(QWidget *parent) :
     }
     delete config;
     */
+
+    // start the mixer thread...
+    mixer = new channelMixer();
+    mixer->start();
 }
 
 mainWindow::~mainWindow()

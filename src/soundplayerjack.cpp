@@ -24,7 +24,7 @@
 soundPlayerJack::soundPlayerJack( )
 : soundPlayer( ), buffResetted( FALSE)
 {
-    jack_set_error_function( jackError );
+
 }
 
 soundPlayerJack::~soundPlayerJack()
@@ -32,33 +32,6 @@ soundPlayerJack::~soundPlayerJack()
 	close();
 }
 
-void soundPlayerJack::open( QString device )
-{
-	if(devOpened)
-	{
-		QMessageBox::warning( NULL, tr("RadioMixer - JackD"), tr("already connected to JackD Server %1...").arg(device), QMessageBox::Ok, QMessageBox::NoButton, QMessageBox::NoButton);
-	}else
-	{
-		if ((jack = jack_client_new ("RadioMixer")) == 0)
-			QMessageBox::warning( NULL, tr("RadioMixer - JackD"), tr("could not connect to JackD Server\nmaybe it is not running ? "), QMessageBox::Ok, QMessageBox::NoButton, QMessageBox::NoButton);
-		else
-		{
-			devOpened = TRUE;
-			// register new Jack Ports
-			
-			outputPorts[0] = jack_port_register( jack, "Master_Left",  JACK_DEFAULT_AUDIO_TYPE,JackPortIsOutput ,0 );
-			outputPorts[1] = jack_port_register( jack, "Master_Right",  JACK_DEFAULT_AUDIO_TYPE,JackPortIsOutput ,0 );
-                        jack_set_process_callback(jack, process, (void *)this);
-                        jack_on_shutdown(jack, jackShutdown, (void*)this);
-			jack_activate (jack);
-
-			bufSize = jack_get_buffer_size( jack );
-
-			outRate = jack_get_sample_rate( jack );
-			emit onConnect();
-		}
-	}
-}
 
 void soundPlayerJack::close( )
 {
@@ -139,19 +112,6 @@ jackPort::~ jackPort( )
 void jackPort::process( jack_nframes_t frames )
 {
 	emit processData( frames );
-}
-
-void soundPlayerJack::jackShutdown( void * arg )
-{
-	soundPlayerJack* self = (soundPlayerJack*)arg;
-	qWarning("got shotdown signal from jackd in connected state");
-	self->devOpened = FALSE;
-//	emit self->onDisconnect();
-}
-
-void soundPlayerJack::jackError( const char* msg )
-{
-    qWarning(msg);
 }
 
 void soundPlayerJack::unregisterJackPort( jackPort * port)

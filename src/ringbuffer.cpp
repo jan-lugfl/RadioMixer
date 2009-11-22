@@ -23,6 +23,7 @@
 template <class T>
 ringBuffer<T>::ringBuffer(unsigned int bufSize) : bufferSize(bufSize)
 {
+    this->name = name;
 	readPos = ringbuffer = writePos = new T[bufferSize];
 	writePos++;
 }
@@ -47,10 +48,10 @@ void ringBuffer<T>::write( T* data, unsigned int size )
 		qWarning("there was no space available, so I waited a while....");
 	for(unsigned int i=0;i<size;i++)
 	{
-		if( toEnd( writePos ) <= 0 )
+	    if( toEnd( writePos ) <= 0 )
 			writePos = ringbuffer;
-		(*writePos) = data[i];
-		writePos++;
+	    (*writePos) = data[i];
+	    writePos++;
 	}
 }
 
@@ -133,8 +134,17 @@ template <class T>
 void ringBuffer<T>::setBufSize( unsigned int newSize )
 {
 	T* tempBuffer = new T[newSize];
-	for(unsigned int i=0;i<bufferSize;i++)
+	// update our read/write pointers
+	if( newSize >= bufferSize )
+	{
+	    for(unsigned int i=0;i<bufferSize;i++)
 		tempBuffer[i] = ringbuffer[i];
+	    writePos = tempBuffer + fromStart(writePos);
+	    readPos = tempBuffer + fromStart(readPos);
+	}
+	else // if shrinking the buffer reset it...
+	    readPos = writePos = tempBuffer;
+
 	delete[] ringbuffer;
 	ringbuffer = tempBuffer;
 	bufferSize = newSize;

@@ -21,8 +21,8 @@
  ***************************************************************************/
 #include "channelbufmngr.h"
 
-channelBufMngr::channelBufMngr(mixerChannel* parent)
- : QThread()
+channelBufMngr::channelBufMngr(mixerChannel_filePlayer* parent)
+ : QThread(), runBufferMngr( true )
 {
 	this->parent = parent;
 }
@@ -32,13 +32,18 @@ channelBufMngr::~channelBufMngr()
 {
 }
 
+void channelBufMngr::stop()
+{
+    runBufferMngr = false;
+}
+
 void channelBufMngr::run( )
 {
-    while(1)
+    while( parent->state != mixerChannel_filePlayer::Stopped )
     {
-        while(parent->getBuffFill() < 95 )
+	while(parent->getBuffFill() < 95 && parent->state == mixerChannel_filePlayer::Playing)
                 parent->checkBuffer();
-        msleep(100);
+	msleep(100);
     }
 }
 

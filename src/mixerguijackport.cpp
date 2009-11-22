@@ -83,4 +83,8 @@ void mixerGuiJackport::associateToChannel( mixerChannel* channel )
 
     // connect button actions
     connect( muteBut, SIGNAL(clicked()), channel, SLOT(toggleMute()));
+
+    // connect levelMeters
+    connect( channel, SIGNAL(vuMeterChanged_left(float)), levelMeterLeft, SLOT(setLevel(float)) );
+    connect( channel, SIGNAL(vuMeterChanged_right(float)), levelMeterRight, SLOT(setLevel(float)) );
 }

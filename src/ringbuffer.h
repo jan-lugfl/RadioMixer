@@ -31,7 +31,7 @@ template <class T>
 class ringBuffer
 {
 public:
-    ringBuffer(unsigned int bufSize = 8192 );
+    ringBuffer(unsigned int bufSize = 8192);
     ~ringBuffer();
 
 	bool		canRead( unsigned int size );

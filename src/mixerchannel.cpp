@@ -31,8 +31,9 @@ mixerChannel::mixerChannel( const char *name )
 
     // initiate my thread and move my eventloop into it...
     thread = new QThread();
-    this->moveToThread( thread );
+    //this->moveToThread( thread );
     thread->start();
+    this->name = name;
 
 	// allocate Stereo Sound Ringbuffer.,...
 	soundBuffers = new soundRingBuffer[2];
@@ -137,10 +138,9 @@ void mixerChannel::getDataLeft( float * dataOut, unsigned int size )
     else
 	sendVuMeterChanged_left++;
 
-	if(soundBuffers[0].canRead( size ))
-		soundBuffers[0].read( dataOut, size );
-	else qWarning("oupsi this should never happen........");
-
+    if(soundBuffers[0].canRead( size ))
+	soundBuffers[0].read( dataOut, size );
+    else qWarning("read: oupsi this should never happen........");
 }
 
 void mixerChannel::getDataRight( float * dataOut, unsigned int size )
@@ -153,9 +153,28 @@ void mixerChannel::getDataRight( float * dataOut, unsigned int size )
     else
 	sendVuMeterChanged_right++;
 
-        if(soundBuffers[1].canRead( size ))
-		soundBuffers[1].read( dataOut, size );
-	else qWarning("oupsi this should never happen........");
+    if(soundBuffers[1].canRead( size ))
+	soundBuffers[1].read( dataOut, size );
+    else qWarning("read: oupsi this should never happen........");
+}
+
+bool mixerChannel::canAddData( unsigned int size )
+{
+    return ( soundBuffers[0].canWrite( size ) && soundBuffers[1].canWrite( size ) );
+}
+
+void mixerChannel::addDataLeft( float * data, unsigned int size )
+{
+    if(soundBuffers[0].canWrite( size ))
+	soundBuffers[0].write( data, size );
+    else qWarning("write: oupsi this should never happen........");
+}
+
+void mixerChannel::addDataRight( float * data, unsigned int size )
+{
+    if(soundBuffers[1].canWrite( size ))
+	soundBuffers[1].write( data, size );
+    else qWarning("Write: oupsi this should never happen........");
 }
 
 void mixerChannel::checkBuffer( )

@@ -26,6 +26,7 @@
 #include "metainfo.h"
 #include "soundplayer.h"
 #include "mixerguialsamix.h"
+#include "channelmixer.h"
 
 #include <QtGui/QMainWindow>
 
@@ -63,11 +64,17 @@ private:
     mixerChannel* dummy4_;
     mixerGUI* dummy5;
     mixerGUI* dummy6;
+    mixerChannel* dummy6_;
     mixerGUI* dummy7;
     mixerGUI* dummy8;
 
+    mixerChannel* dummy_out;
+
     // Meta Info for Live Streaming with Ices
     metaInfo meta;
+
+    // object for our channel mixer thread which the mixing engine for all channels...
+    channelMixer* mixer;
 
 signals:
     void showAboutQt();

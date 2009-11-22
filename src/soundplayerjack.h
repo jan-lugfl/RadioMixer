@@ -24,7 +24,6 @@
 
 #include "soundplayer.h"
 #include <jack/jack.h>
-#include <q3valuevector.h>
 
 /**
 @author Jan Boysen
@@ -49,11 +48,11 @@ protected:
 	// Jack Callbacks !
 	static  int process(jack_nframes_t frames, void *arg);
 	static void jackShutdown( void* arg);
-        static void jackError( const char* msg );
+
 
 	// Jack Stuff below
 	jack_client_t*				jack;
-	Q3ValueVector<jackPort*>	jackPorts;
+	QValueVector<jackPort*>	jackPorts;
 	jack_port_t*				outputPorts[2];
 	bool						buffResetted;
 
@@ -74,9 +73,7 @@ public:
     jackPort( jack_client_t* jackClient,  jack_port_t* jPort );
     ~jackPort();
 
-    virtual void process( jack_nframes_t frames );
-    jack_client_t*	jack;
-    jack_port_t*		jackport;
+
 
 signals:
 	void processData( jack_nframes_t );

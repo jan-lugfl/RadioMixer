@@ -1,7 +1,7 @@
 /* $Id$ */
 /***************************************************************************
  *   OpenRadio - RadioMixer                                                *
- *   Copyright (C) 2005-2007 by Jan Boysen                                *
+ *   Copyright (C) 2009 by Jan Boysen                                      *
  *   trekkie@media-mission.de                                              *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
@@ -19,30 +19,29 @@
  *   Free Software Foundation, Inc.,                                       *
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
-#ifndef PLAYERCHANNELJACK_H
-#define PLAYERCHANNELJACK_H
+#ifndef MIXERCHANNEL_JACKOUT_H
+#define MIXERCHANNEL_JACKOUT_H
 
 #include <mixerchannel.h>
-#include "soundplayerjack.h"
+#include "jack.h"
 
 /**
 @author Jan Boysen
 */
-class mixerChannel_jack : public mixerChannel
+class mixerChannel_jackOut : public mixerChannel
 {
 Q_OBJECT
 public:
-    mixerChannel_jack( soundPlayerJack* jackPlayer, QString chName="", const char *name = 0 );
-    ~mixerChannel_jack();
+    mixerChannel_jackOut( QString chName="", const char *name = 0 );
+    ~mixerChannel_jackOut();
 
-    virtual AudioDataType getAudioDataType() { return mixerChannel::AudioDataIn; }
-    virtual QString getType() { return QString("JACK"); }
+    virtual AudioDataType getAudioDataType() { return mixerChannel::AudioDataOut; }
+    virtual QString getType() { return QString("JACKOUT"); }
+    virtual void process( jack_nframes_t );
 
 protected:
-	jackPort*			jackIn[2];
-	jackPort*			jackOut[2];
+	jack_port_t*	jack_port[2];
 	jack_nframes_t	frames;
-	soundPlayerJack*	player;
 
 private:
 	float levelMeterLeft;
@@ -54,10 +53,6 @@ public slots:
 	virtual void unMute();
 	virtual void connectPort();
 	virtual void disconnectPort();
-
-protected slots:
-	virtual void processJackLeft( jack_nframes_t );
-	virtual void processJackRight( jack_nframes_t );
 };
 
-#endif
+#endif //MIXERCHANNEL_JACKOUT

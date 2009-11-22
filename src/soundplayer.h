@@ -24,7 +24,6 @@
 
 #include <qthread.h>
 #include <qmessagebox.h>
-#include <samplerate.h>
 
 #include "mixerchannelmanager.h"
 #include "mixerchannel.h"
@@ -60,8 +59,6 @@ protected:
 	unsigned int outRate;
 
 	virtual void mixChannels();
-
-        virtual void fetchSampleData( mixerChannel* channel, float* bufferLeft, float* bufferRight );
 
 	unsigned int 	interMixSamples;
 };
