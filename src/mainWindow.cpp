@@ -30,6 +30,7 @@
 #include "settings.h"
 
 #include "dialogs/settingsdialog.h"
+#include "dialogs/aboutdialog.h"
 
 #include <QSettings>
 
@@ -54,7 +55,6 @@ mainWindow::mainWindow(QWidget *parent) :
     // load channels from Config...
     foreach(QString itm, Settings::get("channels").toStringList())
     {
-        qWarning( itm );
         mixerChannel::settingsType settings = Settings::get("channels/"+itm).value<mixerChannel::settingsType>();
         addNewChannel( settings["type"].toString(), QUuid( itm ) );
         mixerChannel* newChan = mixerChannelManager::getChannelByUuid( QUuid(itm) );
@@ -179,4 +179,10 @@ QUuid mainWindow::addNewChannel( QString type, QUuid uuid )
     rm_ui->horizontalLayout->addWidget( newGui );
 
     return newChan->getUuid();
+}
+
+void mainWindow::on_action_About_triggered()
+{
+    aboutDialog win(this);
+    win.exec();
 }

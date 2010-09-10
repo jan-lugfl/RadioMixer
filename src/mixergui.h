@@ -75,12 +75,10 @@ protected:
 			
 protected slots:
 	virtual void refresh();
-	virtual void save();
 	virtual void channelSettingsChanged( mixerChannel::settingsType );
 
 public slots:
 	virtual void changeName( QString newName );
-        virtual void saveSettings();
 
 signals:
 	void refreshed();

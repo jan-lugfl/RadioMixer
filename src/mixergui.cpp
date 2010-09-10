@@ -98,21 +98,6 @@ QString mixerGUI::getName( )
 	return chName->text();
 }
 
-void mixerGUI::save( )
-{
-//	config->writeEntry( "/radiomixer/channel_"+QString::number( channelID )+"/setMeta", refreshMeta );
-//	config->writeEntry( "/radiomixer/channel_"+QString::number( channelID )+"/metaMode", metaMode );
-//	config->writeEntry( "/radiomixer/channel_"+QString::number( channelID )+"/metaText", staticMetaText );
-//	config->writeEntry( "/radiomixer/channel_"+QString::number( channelID )+"/position", playerPos );
-//	config->writeEntry( "/radiomixer/channel_"+QString::number( channelID )+"/name", getName() );
-//	config->writeEntry( "/radiomixer/channel_"+QString::number( channelID )+"/hwControl", hwChannel );
-//	config->writeEntry( "/radiomixer/channel_"+QString::number( channelID )+"/type", getType() );
-}
-
-void mixerGUI::saveSettings( )
-{
-}
-
 QColor mixerGUI::getColor( )
 {
 	return paletteBackgroundColor();
@@ -130,8 +115,6 @@ void mixerGUI::channelSettingsChanged( mixerChannel::settingsType settings )
 void mixerGUI::associateToChannel( mixerChannel* channel )
 {
     this->uuid = channel->getUuid();
-
-    connect( channel, SIGNAL(nameChanged(QString)), this, SLOT(changeName(QString)) );
     connect( channel, SIGNAL(volumeChanged( int )), vuSlider, SLOT( setValue( int ) ) );
     connect( vuSlider, SIGNAL(valueChanged( int )), channel, SLOT( setVolume( int ) ) );
     connect( trebleSlider, SIGNAL(valueChanged( int )), channel, SLOT( setTreble( int ) ) );

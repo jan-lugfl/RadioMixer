@@ -14,7 +14,6 @@ SET( DIALOGE_MOC_HDRS
 
 SET( DIALOGE_UIS
 	kanalpreferences.ui
-	aboutDialog.ui
 	ch_add_dlg.ui
 	ch_del_dlg.ui
 	ch_move_dlg.ui

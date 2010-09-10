@@ -1,7 +1,7 @@
 /* $Id:$ */
 /***************************************************************************
  *   OpenRadio - RadioMixer                                                *
- *   Copyright (C) 2005-2009 by Jan Boysen                                *
+ *   Copyright (C) 2010 by Jan Boysen                                      *
  *   trekkie@media-mission.de                                              *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
@@ -19,71 +19,29 @@
  *   Free Software Foundation, Inc.,                                       *
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
+#include "aboutdialog.h"
+#include "ui_aboutDialog.h"
 
-#ifndef MAINWINDOW_H
-#define MAINWINDOW_H
-
-#include "metainfo.h"
-#include "soundplayer.h"
-#include "mixerguialsamix.h"
-#include "channelmixer.h"
-#include "remotecontrol_midi.h"
-
-#include <QtGui/QMainWindow>
-
-namespace Ui {
-    class RadioMixer;
+aboutDialog::aboutDialog(QWidget *parent) :
+    QDialog(parent),
+    ui(new Ui::aboutDialog)
+{
+    ui->setupUi(this);
 }
 
-class mainWindow : public QMainWindow {
-    Q_OBJECT
-    Q_DISABLE_COPY(mainWindow)
-public:
-    explicit mainWindow(QWidget *parent = 0);
-    virtual ~mainWindow();
+aboutDialog::~aboutDialog()
+{
+    delete ui;
+}
 
-    QUuid addNewChannel( QString type, QUuid uuid = QUuid() );
-    Ui::RadioMixer *rm_ui;
-
-public slots:
-    virtual void aboutQt();
-    virtual void showSettings();
-
-protected:
-    virtual void changeEvent(QEvent *e);
-
-private:
-    soundPlayer* player;
-    // used for testing only
-    mixerGUI* dummy;
-    mixerChannel* dummy1_;
-    mixerGUI* dummy2;
-    mixerChannel* dummy2_;
-    mixerGUI* dummy3;
-    mixerChannel* dummy3_;
-    mixerGUI* dummy4;
-    mixerChannel* dummy4_;
-    mixerGUI* dummy5;
-    mixerGUI* dummy6;
-    mixerChannel* dummy6_;
-    mixerGUI* dummy7;
-    mixerGUI* dummy8;
-
-    mixerChannel* dummy_out;
-
-    remoteControl* rc;
-
-    // Meta Info for Live Streaming with Ices
-    metaInfo meta;
-
-    // object for our channel mixer thread which the mixing engine for all channels...
-    channelMixer* mixer;
-
-signals:
-    void showAboutQt();
-
-private slots:
-    void on_action_About_triggered();
-};
-
-#endif // MAINWINDOW_H
+void aboutDialog::changeEvent(QEvent *e)
+{
+    QDialog::changeEvent(e);
+    switch (e->type()) {
+    case QEvent::LanguageChange:
+        ui->retranslateUi(this);
+        break;
+    default:
+        break;
+    }
+}

@@ -71,11 +71,6 @@
     <string>&amp;Settings</string>
    </property>
   </action>
-  <action name="action_Add">
-   <property name="text">
-    <string>&amp;Add</string>
-   </property>
-  </action>
   <action name="actionAbout_Qt">
    <property name="text">
     <string>About &amp;Qt</string>
