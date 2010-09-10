@@ -36,6 +36,7 @@ public:
     virtual ~mixerChannel_jackOut();
 
     static QString const Type;
+    virtual void setName(QString newName); // reimplement setName() as jackports needs to be renamed on channel name changes
 
     virtual AudioDataType getAudioDataType() { return mixerChannel::AudioDataOut; }
     virtual QString getType() { return Type; }
@@ -54,6 +55,8 @@ public slots:
 	virtual void unMute();
 	virtual void connectPort();
 	virtual void disconnectPort();
+        virtual void updateSettings( mixerChannel::settingsType settings ); // reimplement updateSettings as Jack Port names needs to be changes too
+
 };
 
 #endif //MIXERCHANNEL_JACKOUT

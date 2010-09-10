@@ -55,7 +55,7 @@ public:
     virtual QString getType() = 0;
     virtual AudioDataType getAudioDataType() = 0;
     QString getName();
-    void setName(QString newName);
+    virtual void setName(QString newName);
     QUuid getUuid();
     
     virtual void checkBuffer();
@@ -100,7 +100,7 @@ protected slots:
 public slots:
 	virtual void setVolume( int newValue );
         virtual void setTreble( int newValue );
-	virtual void updateSettings( mixerChannel::settingsType );
+        virtual void updateSettings( mixerChannel::settingsType settings );
 	
 signals:
         void volumeChanged( int );

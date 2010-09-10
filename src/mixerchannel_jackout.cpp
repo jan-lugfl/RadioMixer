@@ -101,3 +101,16 @@ void mixerChannel_jackOut::disconnectPort( )
 //	player->unregisterJackPort( jackOut[1] );
 }
 
+void mixerChannel_jackOut::setName( QString newName )
+{
+    mixerChannel::setName( newName );
+    jack_port_set_name(jack_port[0], settings["name"].toString()+QString("_L") );
+    jack_port_set_name(jack_port[1], settings["name"].toString()+QString("_R") );
+}
+
+void mixerChannel_jackOut::updateSettings( settingsType settings )
+{
+    jack_port_set_name(jack_port[0], settings["name"].toString()+QString("_L") );
+    jack_port_set_name(jack_port[1], settings["name"].toString()+QString("_R") );
+    mixerChannel::updateSettings( settings );
+}
