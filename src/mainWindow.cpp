@@ -61,104 +61,20 @@ mainWindow::mainWindow(QWidget *parent) :
         if(newChan)
             newChan->updateSettings( settings );
     }
-/*
-    dummy1_ = new mixerChannel_ALSA();
-    dummy2_ = new mixerChannel_filePlayer("test123");
-    dummy3_ = new mixerChannel_filePlayer("ch4");
-    dummy4_ = new mixerChannel_filePlayer("ch5");
-    dummy6_ = new mixerChannel_jackIn("ch6");
-    dummy_out = new mixerChannel_jackOut("master");
 
-    dummy = new mixerGuiAlsaMix();
-    dummy->associateToChannel( dummy1_ );
-    rc->channels[0]->associateToChannel( dummy1_);
-    rm_ui->horizontalLayout->addWidget( dummy );
-
-    dummy2 = new mixerGuiPlayer();
-    dummy2->associateToChannel( dummy2_ );
-    rc->channels[1]->associateToChannel( dummy2_);
-    rm_ui->horizontalLayout->addWidget( dummy2 );
-
-    dummy3 = new mixerGuiPlayer();
-    dummy3->associateToChannel( dummy2_ );
-    rc->channels[2]->associateToChannel( dummy2_);
-    rm_ui->horizontalLayout->addWidget( dummy3 );
-
-    dummy4 = new mixerGuiPlayer();
-    dummy4->associateToChannel( dummy3_ );
-    rc->channels[3]->associateToChannel( dummy3_);
-    rm_ui->horizontalLayout->addWidget( dummy4 );
-
-    dummy5 = new mixerGuiPlayer();
-    dummy5->associateToChannel( dummy4_ );
-    rc->channels[4]->associateToChannel( dummy4_);
-    rm_ui->horizontalLayout->addWidget( dummy5 );
-
-    dummy6 = new mixerGuiJackport();
-    dummy6->associateToChannel( dummy6_ );
-    rc->channels[5]->associateToChannel( dummy6_);
-    rm_ui->horizontalLayout->addWidget( dummy6 );
-
-    dummy7 = new mixerGuiJackport();
-    dummy7->associateToChannel( dummy_out );
-    rc->channels[7]->associateToChannel( dummy_out );
-    rm_ui->horizontalLayout->addWidget( dummy7 );
-*/
-/*
-    dummy8 = new mixerGuiJackport();
-    rm_ui->horizontalLayout->addWidget( dummy8 );
-*/
-/*    // read config and set up last saved state
-    QSettings* config = new QSettings();
-    if( config->readBoolEntry( "/radiomixer/meta/enable", FALSE ) )
-        meta.enable();
-    else
-        meta.disable();
-    switch( config->readNumEntry( "/radiomixer/meta/mode", 0 ) )
+    // create default layout...
+    if( mixerChannelManager::allChannels.isEmpty() )
     {
-        case 0:
-            meta.setNormalMode();
-            break;
-        case 1:
-            meta.setStationMode( config->readEntry( "/radiomixer/meta/stationID", "" ) );
-            break;
-    }
-    meta.setMetaMode( config->readNumEntry( "/radiomixer/meta/metaMode", 1 ));
-
-    if( config->readEntry( "/radiomixer/sound/mode", "jack" ) == "jack" )
-    {
+        mixerChannelManager::getChannelByUuid(addNewChannel( "PLAYER" ))->setName(tr("Player 1"));
+        mixerChannelManager::getChannelByUuid(addNewChannel( "PLAYER" ))->setName(tr("Player 2"));
+        mixerChannelManager::getChannelByUuid(addNewChannel( "PLAYER" ))->setName(tr("Player 3"));
+        mixerChannelManager::getChannelByUuid(addNewChannel( "PLAYER" ))->setName(tr("Player 4"));
+        mixerChannelManager::getChannelByUuid(addNewChannel( "PLAYER" ))->setName(tr("Player 5"));
 #ifdef HAVE_JACK
-        player = new soundPlayerJack();
-#else
-        qWarning( tr("JackD is not supported by this system..") );
-        config->writeEntry( "/radiomixer/sound/mode", "alsa" );
+        mixerChannelManager::getChannelByUuid(addNewChannel( "JACKOUT" ))->setName(tr("Master (Jack out)"));
 #endif
-    }
-    if( config->readEntry( "/radiomixer/sound/mode", "jack" ) == "alsa" )
-    {
-#ifdef HAVE_ALSA
-        player = new soundPlayerALSA();
-#else
-        qWarning( tr("ALSA is not supported by this system..") );
-#endif
-    }
 
-    for(int i=1;i<=config->readNumEntry( "/radiomixer/General/numChannels", 8 ) ;i++)
-    {
-        QString type = config->readEntry( "/radiomixer/channel_"+QString::number(i)+"/type", "PLAYER" );
-        if( type == "PLAYER" )
-            addNewFilePlayer( );
-#ifdef HAVE_ALSA
-        else if( type == "ALSAMIX" )
-            addNewMixerChannel( );
-#endif
-#ifdef HAVE_JACK
-        else if( type == "JACK" && (config->readEntry( "/radiomixer/sound/mode", "jack" ) == "jack" ) )
-            addNewJackChannel( config->readEntry( "/radiomixer/channel_"+QString::number(i)+"/name", "JACKPORT_"+QString::number(i+1) ) );
-#endif
     }
-    delete config;
-    */
 
     // start the mixer thread...
     mixer = new channelMixer();
