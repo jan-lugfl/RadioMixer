@@ -1,7 +1,7 @@
-/* $Id$ */
+/* $Id:$ */
 /***************************************************************************
  *   OpenRadio - RadioMixer                                                *
- *   Copyright (C) 2005-2010 by Jan Boysen                                *
+ *   Copyright (C) 2010 by Jan Boysen                                      *
  *   trekkie@media-mission.de                                              *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
@@ -19,47 +19,29 @@
  *   Free Software Foundation, Inc.,                                       *
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
-#include "soundplayer.h"
+#ifndef REMOTECONTROL_H
+#define REMOTECONTROL_H
 
-soundPlayer::soundPlayer( )
+#include "remotecontrolchannel.h"
+#include <QObject>
+#include <QVector>
+
+class remoteControl : public QObject
 {
-	devOpened = FALSE;
-	interMixSamples = 1024;
-	outputBuffers = new soundRingBuffer[2];
-	outputBuffers[0].setName("outputBuffer_left");
-	outputBuffers[1].setName("outputBuffer_right");
+    Q_OBJECT
+public:
+    remoteControl(QObject *parent = 0, QString name = QString("Remote Control"), bool bidirectional = true );
 
-	mixBufL = new float[interMixSamples];
-	mixBufR = new float[interMixSamples];
-	tempBufL = new float[interMixSamples];
-	tempBufR = new float[interMixSamples];
-	chanBufL = new float[interMixSamples];
-	chanBufR = new float[interMixSamples];
-}
+    // needs to be public as maybe existing threads needs access to iterate channels
+    QVector<remoteControlChannel*> channels;
 
+protected:
+    bool bidirectional;
 
-soundPlayer::~soundPlayer()
-{
-	delete[] outputBuffers;
-	delete[] mixBufL;
-	delete[] mixBufR;
-	delete[] tempBufL;
-	delete[] tempBufR;
-	delete[] chanBufL;
-	delete[] chanBufR;
-}
+signals:
 
-void soundPlayer::mixChannels( )
-{
-}
+public slots:
 
-const unsigned int soundPlayer::getOutputSampleRate( )
-{
-	return outRate;
-}
+};
 
-bool soundPlayer::isConnected( )
-{
-	return devOpened;
-}
-
+#endif // REMOTECONTROL_H

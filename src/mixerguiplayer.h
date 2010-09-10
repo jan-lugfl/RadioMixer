@@ -1,7 +1,7 @@
 /* $Id$ */
 /***************************************************************************
  *   OpenRadio - RadioMixer                                                *
- *   Copyright (C) 2005-2007 by Jan Boysen                                *
+ *   Copyright (C) 2005-2010 by Jan Boysen                                 *
  *   trekkie@media-mission.de                                              *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
@@ -51,7 +51,7 @@ public:
 protected:
         QGridLayout* meterLayout;
 	timeDisplay* tDisplay;
-	blinkButton* playButton;
+        glowButton* playButton;
 	glowButton* stopButton;
 	blinkButton* pauseButton;
 	blinkButton* cueButton;
@@ -66,8 +66,6 @@ protected:
 
 protected slots:
 	virtual void fileOpen();
-	virtual void buttonBlinker();
-	virtual void showPrefs();
 	virtual void setMeta( metaTag );
         virtual void cued( playListItem* );
         virtual void setState( int newState );

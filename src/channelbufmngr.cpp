@@ -43,8 +43,6 @@ void channelBufMngr::run( )
     {
 	while(parent->getBuffFill() < 95 && parent->state == mixerChannel_filePlayer::Playing)
                 parent->checkBuffer();
-	msleep(100);
+        msleep(100);
     }
 }
-
-

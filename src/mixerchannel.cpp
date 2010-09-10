@@ -1,7 +1,7 @@
 /* $Id$ */
 /***************************************************************************
  *   OpenRadio - RadioMixer                                                *
- *   Copyright (C) 2005-2009 by Jan Boysen                                *
+ *   Copyright (C) 2005-2010 by Jan Boysen                                 *
  *   trekkie@media-mission.de                                              *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
@@ -19,31 +19,47 @@
  *   Free Software Foundation, Inc.,                                       *
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
-
+#include "settings.h"
 #include "mixerchannel.h"
 #include "mixerchannelmanager.h"
 
-mixerChannel::mixerChannel( const char *name )
+#include <QPalette>
+
+QString const mixerChannel::Type = QString("unknown");
+
+mixerChannel::mixerChannel( const char *name, QUuid uuid )
  : QObject(0, name), volume(1), sendVuMeterChanged_left(0), sendVuMeterChanged_right(0)
 {
     // register settings type in QT
     qRegisterMetaType<mixerChannel::settingsType>("mixerChannel::settingsType");
 
+    if(uuid.isNull())
+        this->uuid = QUuid::createUuid(); // generate UUID..
+    else
+        this->uuid = uuid;
+
+    if(name == QString())
+            name = this->uuid.toString();
+
+    settings["name"] = name;
+    // get systems default color...
+    QPalette pal;
+    settings["color"] = pal.background().color();
+
     // initiate my thread and move my eventloop into it...
     thread = new QThread();
     //this->moveToThread( thread );
     thread->start();
-    this->name = name;
 
-	// allocate Stereo Sound Ringbuffer.,...
-	soundBuffers = new soundRingBuffer[2];
-	soundBuffers[0].setName(name+QString("_left"));
-	soundBuffers[1].setName(name+QString("_right"));
-	soundBuffers[0].setBufSize(16384);
-	soundBuffers[1].setBufSize(16384);
+    // allocate Stereo Sound Ringbuffer.,...
+    soundBuffers = new soundRingBuffer[2];
+    soundBuffers[0].setName(name+QString("_left"));
+    soundBuffers[1].setName(name+QString("_right"));
+    soundBuffers[0].setBufSize(16384);
+    soundBuffers[1].setBufSize(16384);
 
-	volume_left = 1;
-	volume_right = 1;
+    volume_left = 1;
+    volume_right = 1;
 }
 
 
@@ -51,6 +67,7 @@ mixerChannel::~mixerChannel()
 {
     // unregister myself in the channel manager
     mixerChannelManager::unregisterChannel( this );
+    Settings::remove("channels/"+uuid.toString());
 }
 
 void mixerChannel::registerChannel()
@@ -71,23 +88,33 @@ void mixerChannel::setVolume( int newValue )
 
 QString mixerChannel::getName( )
 {
-	return name;
+        return settings["name"].toString();
 }
 
 void mixerChannel::setName( QString newName )
 {
-	name = newName;
-	emit( nameChanged( name ) );
+        settings["name"] = newName;
+        emit( settingsChanged( settings ) );
 }
 
-int mixerChannel::getLevelLeft( )
+QUuid mixerChannel::getUuid()
 {
-	return int(volume_left*100);
+    return uuid;
 }
 
-int mixerChannel::getLevelRight( )
+mixerChannel::settingsType mixerChannel::getSettings()
 {
-	return int(volume_right*100);
+    return settings;
+}
+
+float mixerChannel::getLevelLeft( )
+{
+        return volume*volume_left;
+}
+
+float mixerChannel::getLevelRight( )
+{
+        return volume*volume_right;
 }
 
 /**
@@ -189,5 +216,7 @@ unsigned int mixerChannel::getBuffFill( )
 void mixerChannel::updateSettings( settingsType settings )
 {
     this->settings = settings;
+    settings.insert("type", type);
+    Settings::set("channels/"+uuid.toString(), settings);
     emit( settingsChanged( this->settings ) );
 }

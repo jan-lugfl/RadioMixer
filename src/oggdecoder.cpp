@@ -41,7 +41,14 @@ oggDecoder::~oggDecoder()
 
 unsigned int oggDecoder::decode( float*** data, int count )
 {
-	return ov_read_float( decoder, data, count, &current_section);
+    int ret = -1;
+    while( ret < 0)
+    {
+        ret = ov_read_float( decoder, data, count, &current_section);
+        if(ret == OV_HOLE)
+            qWarning("Hole in ogg datastream detected.. skipping...");
+    }
+    return ret;
 }
 
 const int oggDecoder::getRTime( )

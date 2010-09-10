@@ -1,7 +1,7 @@
 /* $Id$ */
 /***************************************************************************
  *   OpenRadio - RadioMixer                                                *
- *   Copyright (C) 2009 by Jan Boysen                                      *
+ *   Copyright (C) 2009-2010 by Jan Boysen                                 *
  *   trekkie@media-mission.de                                              *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
@@ -21,14 +21,15 @@
  ***************************************************************************/
 #include "mixerchannel_jackout.h"
 
-mixerChannel_jackOut::mixerChannel_jackOut( QString chName, const char *name )
- : mixerChannel( name ), levelMeterLeft(0), levelMeterRight(0)
-{
-	this->name = chName;
+QString const mixerChannel_jackOut::Type = QString("JACKOUT");
 
+mixerChannel_jackOut::mixerChannel_jackOut( const char *name, QUuid uuid )
+ : mixerChannel( name, uuid ), levelMeterLeft(0), levelMeterRight(0)
+{
+    type = Type;
 	// shrink the buffer size for lower latency...
-	soundBuffers[0].setBufSize(8192);
-	soundBuffers[1].setBufSize(8192);
+        soundBuffers[0].setBufSize(4096);
+        soundBuffers[1].setBufSize(4096);
 
 #warning TODO.......
 //	connect( jackPlayer, SIGNAL( onConnect() ), this, SLOT( connectPort()) );
@@ -60,11 +61,6 @@ void mixerChannel_jackOut::process( jack_nframes_t frames  )
 		destL[i] = 0;
 		destR[i] = 0;
 	    }
-}
-
-void mixerChannel_jackOut::setVolume( int volume )
-{
-	this->volume = float(100.f-volume)/100.f;
 }
 
 void mixerChannel_jackOut::mute( )

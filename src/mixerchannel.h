@@ -1,7 +1,7 @@
 /* $Id$ */
 /***************************************************************************
  *   OpenRadio - RadioMixer                                                *
- *   Copyright (C) 2005-2009 by Jan Boysen                                *
+ *   Copyright (C) 2005-2010 by Jan Boysen                                 *
  *   trekkie@media-mission.de                                              *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
@@ -27,6 +27,7 @@
 #include <QHash>
 #include <QVariant>
 #include <QMessageBox>
+#include <QUuid>
 
 #include "metatag.h"
 #include "ringbuffer.h"
@@ -38,9 +39,10 @@ class mixerChannel : public QObject
 {
 Q_OBJECT
 public:
-    mixerChannel( const char *name = 0 );
-    ~mixerChannel();
+    explicit mixerChannel( const char *name = 0, QUuid uuid = QUuid() );
+    virtual ~mixerChannel();
 
+    static QString const Type;
     typedef QHash<QString, QVariant> settingsType;
 
     enum AudioDataType
@@ -49,17 +51,18 @@ public:
         AudioDataOut,
         AudioDataNone
     };
-    
+
     virtual QString getType() = 0;
     virtual AudioDataType getAudioDataType() = 0;
     QString getName();
     void setName(QString newName);
+    QUuid getUuid();
     
     virtual void checkBuffer();
 
-        virtual int getLevelLeft();
-        virtual int getLevelRight();
-        virtual const unsigned int getSmplRate();
+    virtual float getLevelLeft();
+    virtual float getLevelRight();
+    virtual const unsigned int getSmplRate();
 
     // Wrapper functions for the ringbuffer
     virtual bool canGetData( unsigned int size );
@@ -70,14 +73,17 @@ public:
     virtual void addDataRight( float* data, unsigned int size );
     virtual unsigned int getBuffFill( );
 
+    mixerChannel::settingsType getSettings();
+
 protected:
-	settingsType settings; // stores the channel dependant settings...
+        settingsType settings; // stores the channel settings...
 	float volume_left;
 	float volume_right;
 	float volume;
 	unsigned int smplRate;
 	unsigned int channels;
-	QString name;
+        QString type;
+        QUuid uuid;
 
 	metaTag*	meta;
 	soundRingBuffer* soundBuffers;
@@ -102,7 +108,6 @@ signals:
         void vuMeterChanged_left( float );
         void vuMeterChanged_right( float );
 	void newMeta( metaTag );
-	void nameChanged( QString );
         void stateChanged(int);
 	void refreshed();
 	void settingsChanged( mixerChannel::settingsType );

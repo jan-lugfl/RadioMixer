@@ -1,7 +1,7 @@
 /* $Id$ */
 /***************************************************************************
  *   OpenRadio - RadioMixer                                                *
- *   Copyright (C) 2006-2007 by Jan Boysen                                 *
+ *   Copyright (C) 2006-2010 by Jan Boysen                                 *
  *   trekkie@media-mission.de                                              *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
@@ -36,6 +36,7 @@ mpgDecoder::mpgDecoder(FILE* File, QObject *parent, const char *name)
 	madSynth = new mad_synth;
 	madTimer = new mad_timer_t;
 	mad_inputBuffer = new unsigned char[163840+MAD_BUFFER_GUARD];
+        memset(mad_inputBuffer,0 , 163840+MAD_BUFFER_GUARD);
 
 	// Initiate libMad structs
 	mad_stream_init( madStream );
@@ -51,6 +52,8 @@ mpgDecoder::mpgDecoder(FILE* File, QObject *parent, const char *name)
 	returnBuffer = new float*[2];
 	returnBuffer[0] = new float[8192];
 	returnBuffer[1] = new float[8192];
+        memset(returnBuffer[0], 0, 8192*sizeof(float));
+        memset(returnBuffer[1], 0, 8192*sizeof(float));
 
 	frameCounter=0;
 }
@@ -65,7 +68,7 @@ mpgDecoder::~mpgDecoder()
 unsigned int mpgDecoder::decode( float *** data, int count )
 {
 #ifdef HAVE_MAD
-         if(data)
+        if(data)
 		*data=returnBuffer;
 
 	while( mad_outputBuffer[0].canWrite(1152) )  // well letts refill the Input buffer..........
@@ -101,7 +104,7 @@ unsigned int mpgDecoder::decode( float *** data, int count )
 				readCnt++;
 			}
 			
-			//bei EOF ein paar GUARD 0Bytes anhängen die MAD benötigt..
+                        //bei EOF ein paar GUARD 0Bytes anhaengen die MAD benötigt..
 			if( madFile->atEnd() )
 			{
 				guardPtr = readStart + readCnt;
@@ -131,16 +134,21 @@ unsigned int mpgDecoder::decode( float *** data, int count )
 		for( int j=0; j<channels; j++ )
 			for(int i=0; i<madSynth->pcm.length; i++ )
 			{
-				float temp = scale( madSynth->pcm.samples[j][i]);
-				mad_outputBuffer[j].write( &temp, 1 );
-			}
+                                float temp = scale( madSynth->pcm.samples[j][i]);
+                                mad_outputBuffer[j].write( &temp, 1 );
+                        }
 	}
 	//nice little workarround so the buffer never gets so much back it wants to....
 	int dataAvailable = mad_outputBuffer[0].canRead(count*.95)?count*.95:mad_outputBuffer[0].getAvailable()-8;
 
-	for( int j=0; j<channels; j++ )
+        // ensure the return buffer is clean...
+        memset(returnBuffer[0], 0, 8192*sizeof(float));
+        memset(returnBuffer[1], 0, 8192*sizeof(float));
+
+        for( int j=0; j<channels; j++ )
 		mad_outputBuffer[j].read( returnBuffer[j], dataAvailable );
-	return dataAvailable;
+
+        return dataAvailable;
 #endif
 }
 

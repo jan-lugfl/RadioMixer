@@ -1,8 +1,10 @@
 ADD_SUBDIRECTORY( widgets )
+ADD_SUBDIRECTORY( dialogs )
 ADD_SUBDIRECTORY( dialoge )
 
 SET( SRC_CPPS
 	jack.cpp
+	jack_midicontrol.cpp
 	mixerchannelmanager.cpp
 	channelbufmngr.cpp
 	channelmixer.cpp
@@ -20,6 +22,9 @@ SET( SRC_CPPS
 	mixerchannel_fileplayer.cpp
 	mixerchannel_jackin.cpp
 	mixerchannel_jackout.cpp
+	remotecontrolchannel.cpp
+	remotecontrol.cpp
+	remotecontrol_midi.cpp
 	playlistitem.cpp
 	mipucom.cpp
 	oggdecoder.cpp
@@ -27,6 +32,7 @@ SET( SRC_CPPS
 	playlistitemsongdb.cpp
 	soundplayer.cpp
 	mainWindow.cpp
+	settings.cpp
 )
 
 SET( SRC_MOC_HDRS
@@ -41,6 +47,9 @@ SET( SRC_MOC_HDRS
 	mixerchannel_jackin.h
 	mixerchannel_jackout.h
 	playlistitem.h
+	remotecontrolchannel.h
+	remotecontrol.h
+	remotecontrol_midi.h
 	filedecoder.h
 	mixerguialsamix.h
 	mpgdecoder.h
@@ -65,5 +74,5 @@ QT4_WRAP_UI( SRC_UI_HDRS ${SRC_UIS} )
 QT4_ADD_RESOURCES( RADIOMIXER_RC_SRCS ${RADIOMIXER_RCS} )
 ADD_EXECUTABLE(radiomixer ${SRC_CPPS} ${SRC_UI_HDRS} ${SRC_MOC_SRCS} ${RADIOMIXER_RC_SRCS} )
 
-TARGET_LINK_LIBRARIES(radiomixer ${QT_LIBRARIES} ${ALSA_LIBRARIES} ${JACKD_LIBRARIES} ${MAD_LIBRARIES} ${OGG_LIBRARIES} ${SAMPLERATE_LIBRARIES} dialoge widgets )
-ADD_DEPENDENCIES( radiomixer dialoge widgets )
+TARGET_LINK_LIBRARIES(radiomixer ${QT_LIBRARIES} ${ALSA_LIBRARIES} ${JACKD_LIBRARIES} ${MAD_LIBRARIES} ${OGG_LIBRARIES} ${SAMPLERATE_LIBRARIES} dialoge dialogs widgets )
+ADD_DEPENDENCIES( radiomixer dialoge dialogs widgets )

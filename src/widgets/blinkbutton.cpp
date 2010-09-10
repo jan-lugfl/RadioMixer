@@ -1,7 +1,7 @@
 /* $Id$ */
 /***************************************************************************
  *   OpenRadio - RadioMixer                                                *
- *   Copyright (C) 2005-2007 by Jan Boysen                                *
+ *   Copyright (C) 2005-2010 by Jan Boysen                                 *
  *   trekkie@media-mission.de                                              *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
@@ -37,14 +37,18 @@ void blinkButton::blinker( )
 {
 	if(state)
 		if( colState )
-		{
-                        QToolButton::setPaletteBackgroundColor( actColor );
-			colState = FALSE;
+                {
+                    QPalette tempPal = this->palette();
+                    tempPal.setColor( QPalette::Button, actColor );
+                    this->setPalette( tempPal );
+                    colState = FALSE;
 		}
 		else
 		{
-                        QToolButton::setPaletteBackgroundColor( deactColor );
-			colState = TRUE;
+                    QPalette tempPal = this->palette();
+                    tempPal.setColor( QPalette::Button, deactColor );
+                    this->setPalette( tempPal );
+                    colState = TRUE;
 		}
         else if( !colState )
 		glowButton::setOff();

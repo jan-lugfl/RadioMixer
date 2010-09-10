@@ -1,7 +1,7 @@
 /* $Id$ */
 /***************************************************************************
  *   OpenRadio - RadioMixer                                                *
- *   Copyright (C) 2009 by Jan Boysen                                      *
+ *   Copyright (C) 2009-2010 by Jan Boysen                                 *
  *   trekkie@media-mission.de                                              *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
@@ -32,11 +32,13 @@ class mixerChannel_jackIn : public mixerChannel
 {
 Q_OBJECT
 public:
-    mixerChannel_jackIn( QString chName="", const char *name = 0 );
-    ~mixerChannel_jackIn();
+    explicit mixerChannel_jackIn( const char *name = 0, QUuid uuid = QUuid() );
+    virtual ~mixerChannel_jackIn();
+
+    static QString const Type;
 
     virtual AudioDataType getAudioDataType() { return mixerChannel::AudioDataIn; }
-    virtual QString getType() { return QString("JACKIN"); }
+    virtual QString getType() { return Type; }
     virtual void process( jack_nframes_t );
 
 protected:
@@ -48,7 +50,6 @@ private:
 	float levelMeterRight;
 
 public slots:
-	virtual void setVolume( int volume );
 	virtual void mute();
 	virtual void unMute();
 	virtual void connectPort();

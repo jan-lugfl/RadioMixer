@@ -1,7 +1,7 @@
-/* $Id$ */
+/* $Id:$ */
 /***************************************************************************
  *   OpenRadio - RadioMixer                                                *
- *   Copyright (C) 2005-2010 by Jan Boysen                                *
+ *   Copyright (C) 2010 by Jan Boysen                                      *
  *   trekkie@media-mission.de                                              *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
@@ -19,47 +19,22 @@
  *   Free Software Foundation, Inc.,                                       *
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
-#include "soundplayer.h"
+#ifndef SETTINGS_H
+#define SETTINGS_H
 
-soundPlayer::soundPlayer( )
+#include <QSettings>
+
+class Settings
 {
-	devOpened = FALSE;
-	interMixSamples = 1024;
-	outputBuffers = new soundRingBuffer[2];
-	outputBuffers[0].setName("outputBuffer_left");
-	outputBuffers[1].setName("outputBuffer_right");
+public:
+    static QVariant get(const QString &key, const QVariant &defaultValue = QVariant());
+    static void set( const QString &key, const QVariant &value );
+    static void remove( const QString& key );
+    static QStringList getSubKeys( const QString& key );
 
-	mixBufL = new float[interMixSamples];
-	mixBufR = new float[interMixSamples];
-	tempBufL = new float[interMixSamples];
-	tempBufR = new float[interMixSamples];
-	chanBufL = new float[interMixSamples];
-	chanBufR = new float[interMixSamples];
-}
+protected:
+    static QSettings settings;
 
+};
 
-soundPlayer::~soundPlayer()
-{
-	delete[] outputBuffers;
-	delete[] mixBufL;
-	delete[] mixBufR;
-	delete[] tempBufL;
-	delete[] tempBufR;
-	delete[] chanBufL;
-	delete[] chanBufR;
-}
-
-void soundPlayer::mixChannels( )
-{
-}
-
-const unsigned int soundPlayer::getOutputSampleRate( )
-{
-	return outRate;
-}
-
-bool soundPlayer::isConnected( )
-{
-	return devOpened;
-}
-
+#endif // SETTINGS_H

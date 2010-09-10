@@ -1,7 +1,7 @@
-/* $Id$ */
+/* $Id:$ */
 /***************************************************************************
  *   OpenRadio - RadioMixer                                                *
- *   Copyright (C) 2005-2010 by Jan Boysen                                *
+ *   Copyright (C) 2010 by Jan Boysen                                      *
  *   trekkie@media-mission.de                                              *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
@@ -19,47 +19,43 @@
  *   Free Software Foundation, Inc.,                                       *
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
-#include "soundplayer.h"
+#ifndef SETTINGSDIALOG_H
+#define SETTINGSDIALOG_H
 
-soundPlayer::soundPlayer( )
-{
-	devOpened = FALSE;
-	interMixSamples = 1024;
-	outputBuffers = new soundRingBuffer[2];
-	outputBuffers[0].setName("outputBuffer_left");
-	outputBuffers[1].setName("outputBuffer_right");
+#include "mixerchannel.h"
 
-	mixBufL = new float[interMixSamples];
-	mixBufR = new float[interMixSamples];
-	tempBufL = new float[interMixSamples];
-	tempBufR = new float[interMixSamples];
-	chanBufL = new float[interMixSamples];
-	chanBufR = new float[interMixSamples];
+#include <QDialog>
+#include <QListWidgetItem>
+
+namespace Ui {
+    class settingsDialog;
 }
 
+class settingsDialog : public QDialog {
+    Q_OBJECT
+public:
+    settingsDialog(QWidget *parent = 0);
+    ~settingsDialog();
 
-soundPlayer::~soundPlayer()
-{
-	delete[] outputBuffers;
-	delete[] mixBufL;
-	delete[] mixBufR;
-	delete[] tempBufL;
-	delete[] tempBufR;
-	delete[] chanBufL;
-	delete[] chanBufR;
-}
+    QList<QUuid> channels;
 
-void soundPlayer::mixChannels( )
-{
-}
+protected:
+    void changeEvent(QEvent *e);
 
-const unsigned int soundPlayer::getOutputSampleRate( )
-{
-	return outRate;
-}
+private:
+    Ui::settingsDialog *ui;
+    QMap<QUuid, mixerChannel::settingsType> settingsCache; // used to store the channel settings untill we apply the changes
 
-bool soundPlayer::isConnected( )
-{
-	return devOpened;
-}
+protected slots:
+    virtual void accept();
 
+private slots:
+    void on_channel_add_clicked();
+    void on_colorChooser_clicked();
+    void on_channelList_currentItemChanged(QListWidgetItem* current, QListWidgetItem* previous);
+    void on_channel_remove_clicked();
+    void on_downButton_clicked();
+    void on_upButton_clicked();
+};
+
+#endif // SETTINGSDIALOG_H

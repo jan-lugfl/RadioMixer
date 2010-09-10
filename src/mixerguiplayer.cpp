@@ -1,7 +1,7 @@
 /* $Id$ */
 /***************************************************************************
  *   OpenRadio - RadioMixer                                                *
- *   Copyright (C) 2005-2009 by Jan Boysen                                *
+ *   Copyright (C) 2005-2010 by Jan Boysen                                 *
  *   trekkie@media-mission.de                                              *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
@@ -42,7 +42,7 @@ mixerGuiPlayer::mixerGuiPlayer( QWidget* parent , const char* name , Qt::WFlags 
         meterLayout->addWidget( levelMeterRight, 1, 2 );
         layout->addLayout( meterLayout, 3, 1, 2, 1 );
 
-        playButton = new blinkButton( this, "playButton" );
+        playButton = new glowButton( this, "playButton" );
 	playButton->setActivatedColor( QColor(150, 255, 150) );
         playButton->setIcon(QIcon(":/buttons/play_icon"));
         actionButtons->addWidget( playButton );
@@ -50,6 +50,7 @@ mixerGuiPlayer::mixerGuiPlayer( QWidget* parent , const char* name , Qt::WFlags 
 	stopButton = new glowButton( this, "stopButton" );
 	stopButton->setActivatedColor( QColor(255, 150, 150) );
         stopButton->setIcon(QIcon(":/buttons/stop_icon"));
+        stopButton->setState( true );
         actionButtons->addWidget( stopButton );
 
 	pauseButton = new blinkButton( this, "pauseButton" );
@@ -91,23 +92,6 @@ mixerGuiPlayer::~mixerGuiPlayer()
 {
 }
 
-void mixerGuiPlayer::buttonBlinker( )
-{
-    /*
-	if( player->isFileOpen())
-	{
-	}
-
-	if(mixer->isPlaying())
-	{
-		levelMeterLeft->setLevel( mixer->getLevelMeterLeft() );
-		levelMeterRight->setLevel( mixer->getLevelMeterRight() );
-	}
-
-        mixerGUI::buttonBlinker();
-        */
-}
-
 void mixerGuiPlayer::cueNewTrack( )
 {
 //	if( player->isStopped() )
@@ -125,7 +109,7 @@ void mixerGuiPlayer::languageChange()
 void mixerGuiPlayer::fileOpen( )
 {
    QString extensions = ""
-#ifdef HAVE_VORBIS
+#ifdef HAVE_OGG
    +QString(" *.ogg")
 #endif
 #ifdef HAVE_MAD
@@ -133,7 +117,7 @@ void mixerGuiPlayer::fileOpen( )
 #endif
    ;
    QString fileTypes = tr("all supported soundfiles (%1)").arg(extensions)
-#ifdef HAVE_VORBIS
+#ifdef HAVE_OGG
    +QString(";;OGG/Vorbis (*.ogg)")
 #endif
 #ifdef HAVE_MAD
@@ -147,15 +131,6 @@ void mixerGuiPlayer::fileOpen( )
                     fileTypes);
     if( s.length() >0)
         emit openFile( new playListItem(s) );
-}
-
-void mixerGuiPlayer::showPrefs( )
-{
-        mixerGUI::createPrefDlg( );
-        if( mixerGUI::execPrefDlg() == QDialog::Accepted)
-	{	
-	}
-        mixerGUI::finishPrefDlg( );
 }
 
 void mixerGuiPlayer::setMeta( metaTag meta )
@@ -185,10 +160,10 @@ void mixerGuiPlayer::cued( playListItem* track )
 
 void mixerGuiPlayer::cueTrack( unsigned int playerID, playListItem * song )
 {
-	if( this->channelID == playerID )
-	{
+//	if( this->channelID == playerID )
+//	{
 //		player->open( song );
-	}
+//	}
 }
 
 void mixerGuiPlayer::dragEnterEvent(QDragEnterEvent * evt)
@@ -258,19 +233,21 @@ void mixerGuiPlayer::setState( int newState )
 
     switch( newState )
     {
-        case 0:
+    case mixerChannel_filePlayer::Stopped:
            stopButton->setOn();
 	   tDisplay->reset();
 	   levelMeterLeft->reset();
 	   levelMeterRight->reset();
 	   break;
-        case 1:
+    case mixerChannel_filePlayer::Playing:
            playButton->setOn();
            break;
-        case 2:
+    case mixerChannel_filePlayer::Paused:
            pauseButton->setOn();
+           levelMeterLeft->reset();
+           levelMeterRight->reset();
            break;
-        case 3:
+    case mixerChannel_filePlayer::Cued:
            cueButton->setOn();
            break;
     }

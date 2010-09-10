@@ -1,7 +1,7 @@
-/* $Id$ */
+/* $Id:$ */
 /***************************************************************************
  *   OpenRadio - RadioMixer                                                *
- *   Copyright (C) 2005-2010 by Jan Boysen                                *
+ *   Copyright (C) 2010 by Jan Boysen                                      *
  *   trekkie@media-mission.de                                              *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
@@ -19,47 +19,52 @@
  *   Free Software Foundation, Inc.,                                       *
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
-#include "soundplayer.h"
+#ifndef JACK_MIDICONTROL_H
+#define JACK_MIDICONTROL_H
 
-soundPlayer::soundPlayer( )
+#include <jack/jack.h>
+#include <QQueue>
+#include <QMutex>
+
+class jack_MIDIControl
 {
-	devOpened = FALSE;
-	interMixSamples = 1024;
-	outputBuffers = new soundRingBuffer[2];
-	outputBuffers[0].setName("outputBuffer_left");
-	outputBuffers[1].setName("outputBuffer_right");
+public:
+    jack_MIDIControl();
+    ~jack_MIDIControl();
 
-	mixBufL = new float[interMixSamples];
-	mixBufR = new float[interMixSamples];
-	tempBufL = new float[interMixSamples];
-	tempBufR = new float[interMixSamples];
-	chanBufL = new float[interMixSamples];
-	chanBufR = new float[interMixSamples];
-}
+    void process( int frames );
 
+    bool is_bidirectional;
+    jack_port_t* input;
+    jack_port_t* output;
 
-soundPlayer::~soundPlayer()
-{
-	delete[] outputBuffers;
-	delete[] mixBufL;
-	delete[] mixBufR;
-	delete[] tempBufL;
-	delete[] tempBufR;
-	delete[] chanBufL;
-	delete[] chanBufR;
-}
+    struct _jack_midi_message
+    {
+        jack_nframes_t time;
+        int len;
+        unsigned char  data[3];
+    };
 
-void soundPlayer::mixChannels( )
-{
-}
+    struct midi_message
+    {
+        int command;
+        int par;
+        int value;
+    };
 
-const unsigned int soundPlayer::getOutputSampleRate( )
-{
-	return outRate;
-}
+    bool isInQueueEmpty( );
+    void enqueue_message_in( midi_message msg );
+    midi_message dequeue_message_in();
 
-bool soundPlayer::isConnected( )
-{
-	return devOpened;
-}
+    bool isOutQueueEmpty( );
+    void enqueue_message_out( midi_message msg );
+    midi_message dequeue_message_out( );
 
+private:
+    QMutex* lock_inqueue;
+    QQueue<midi_message> message_queue_in;
+    QMutex* lock_outqueue;
+    QQueue<midi_message> message_queue_out;
+};
+
+#endif // JACK_MIDICONTROL_H

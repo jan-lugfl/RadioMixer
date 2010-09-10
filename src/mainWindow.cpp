@@ -1,7 +1,7 @@
 /* $Id:$ */
 /***************************************************************************
  *   OpenRadio - RadioMixer                                                *
- *   Copyright (C) 2005-2009 by Jan Boysen                                *
+ *   Copyright (C) 2005-2010 by Jan Boysen                                 *
  *   trekkie@media-mission.de                                              *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
@@ -26,8 +26,10 @@
 #include "mixerguialsamix.h"
 #include "mixerguiplayer.h"
 #include "mixerguijackport.h"
-
 #include "mixerchannel_jackout.h"
+#include "settings.h"
+
+#include "dialogs/settingsdialog.h"
 
 #include <QSettings>
 
@@ -41,8 +43,25 @@ mainWindow::mainWindow(QWidget *parent) :
     // connect aboutQT menu....
     connect( rm_ui->actionAbout_Qt, SIGNAL(triggered()), this, SLOT(aboutQt()) );
 
+    // connect settings dialog....
+    connect( rm_ui->action_Settings, SIGNAL(triggered()), this, SLOT(showSettings()));
+
     Jack::connect();
 
+    // create one remote control
+    rc = new remoteControl_MIDI(this, "BCF2000");
+
+    // load channels from Config...
+    foreach(QString itm, Settings::getSubKeys( "channels" ))
+    {
+        qWarning( itm );
+        mixerChannel::settingsType settings = Settings::get("channels/"+itm).value<mixerChannel::settingsType>();
+        addNewChannel( settings["type"].toString(), QUuid( itm ) );
+        mixerChannel* newChan = mixerChannelManager::getChannelByUuid( QUuid(itm) );
+        if(newChan)
+            newChan->updateSettings( settings );
+    }
+/*
     dummy1_ = new mixerChannel_ALSA();
     dummy2_ = new mixerChannel_filePlayer("test123");
     dummy3_ = new mixerChannel_filePlayer("ch4");
@@ -52,31 +71,39 @@ mainWindow::mainWindow(QWidget *parent) :
 
     dummy = new mixerGuiAlsaMix();
     dummy->associateToChannel( dummy1_ );
+    rc->channels[0]->associateToChannel( dummy1_);
     rm_ui->horizontalLayout->addWidget( dummy );
 
     dummy2 = new mixerGuiPlayer();
     dummy2->associateToChannel( dummy2_ );
+    rc->channels[1]->associateToChannel( dummy2_);
     rm_ui->horizontalLayout->addWidget( dummy2 );
 
     dummy3 = new mixerGuiPlayer();
     dummy3->associateToChannel( dummy2_ );
+    rc->channels[2]->associateToChannel( dummy2_);
     rm_ui->horizontalLayout->addWidget( dummy3 );
 
     dummy4 = new mixerGuiPlayer();
     dummy4->associateToChannel( dummy3_ );
+    rc->channels[3]->associateToChannel( dummy3_);
     rm_ui->horizontalLayout->addWidget( dummy4 );
 
     dummy5 = new mixerGuiPlayer();
     dummy5->associateToChannel( dummy4_ );
+    rc->channels[4]->associateToChannel( dummy4_);
     rm_ui->horizontalLayout->addWidget( dummy5 );
 
     dummy6 = new mixerGuiJackport();
     dummy6->associateToChannel( dummy6_ );
+    rc->channels[5]->associateToChannel( dummy6_);
     rm_ui->horizontalLayout->addWidget( dummy6 );
 
     dummy7 = new mixerGuiJackport();
     dummy7->associateToChannel( dummy_out );
+    rc->channels[7]->associateToChannel( dummy_out );
     rm_ui->horizontalLayout->addWidget( dummy7 );
+*/
 /*
     dummy8 = new mixerGuiJackport();
     rm_ui->horizontalLayout->addWidget( dummy8 );
@@ -160,29 +187,76 @@ void mainWindow::aboutQt()
     emit( showAboutQt() );
 }
 
-void mainWindow::addNewFilePlayer()
+void mainWindow::showSettings()
 {
-//        mixerGuiPlayer* channel = new mixerGuiPlayer( playerGuis.count()+1, player, channelLayout, "channelXY");
-//        playerGuis.append( channel );
-//        reorderChannels();
-//	connect( channel, SIGNAL(getNextTrack( unsigned int )), playListMgr, SLOT(cueNewTrack( unsigned int ) ));
-//	connect( playListMgr, SIGNAL(cueTrack( unsigned int, playListItem* )), channel, SLOT(cueTrack( unsigned int, playListItem* ) ));
-#ifdef ENABLE_HWMIXER
-//	connect( miPu, SIGNAL( butPres( int, int )), channel, SLOT( buttonPressed( int, int ) ) );
-//	connect( miPu, SIGNAL( sliderMove( int, int )), channel, SLOT( setSlider( int, int ) ) );
-#endif
-//	connect( channel, SIGNAL(newMeta( metaTag )), &meta, SLOT( setMeta( metaTag ) ) );
+    settingsDialog* win = new settingsDialog( this );
+    win->exec();
 
-//        playListManager::filePlayer playerInfo = { channel->getPlayerID(), channel->getName(), channel->getColor() };
-//        playListMgr->addPlayer( playerInfo );
+    // apply channel order..
+    // first remove all items...
+    QMap<QUuid,QLayoutItem*> temp;
+    while( rm_ui->horizontalLayout->count() )
+    {
+        QLayoutItem* item = rm_ui->horizontalLayout->takeAt(0);
+        mixerGUI* mixer = dynamic_cast<mixerGUI*>( item->widget() );
+        temp[mixer->getUuid()] = item;
+    }
+
+    foreach( QUuid item, win->channels )
+    {
+        rm_ui->horizontalLayout->addItem( temp[item] );
+        temp.remove( item );
+    }
+
+    // destroy all remaining channels in temp as they seems to have been deleted...
+    foreach( QUuid item, temp.keys() )
+    {
+        // delete channels GUI
+        temp[item]->widget()->disconnect();
+        delete temp[item]->widget();
+        temp.remove( item );
+
+        // delete channel too..
+        foreach( mixerChannel* channel, mixerChannelManager::allChannels )
+            if(channel->getUuid() == item)
+            {
+                channel->disconnect();
+                delete channel;
+            }
+    }
 }
 
-void mainWindow::addNewMixerChannel()
+QUuid mainWindow::addNewChannel( QString type, QUuid uuid )
 {
+    mixerChannel* newChan;
+    mixerGUI* newGui;
+    if(type == mixerChannel_ALSA::Type)
+    {
+        newChan = new mixerChannel_ALSA( "", uuid );
+        newGui = new mixerGuiAlsaMix();
+    }
+    else if(type == mixerChannel_filePlayer::Type)
+    {
+        newChan = new mixerChannel_filePlayer( "", uuid );
+        newGui = new mixerGuiPlayer();
+    }
+    else if(type == mixerChannel_jackIn::Type)
+    {
+        newChan = new mixerChannel_jackIn( "", uuid );
+        newGui = new mixerGuiJackport();
+    }
+    else if(type == mixerChannel_jackOut::Type)
+    {
+        newChan = new mixerChannel_jackOut( "", uuid );
+        newGui = new mixerGuiJackport();
+    }
+    else
+    {
+        qWarning("unknown mixerchannel");
+        return 0;
+    }
+    newGui->associateToChannel( newChan );
+    rm_ui->horizontalLayout->addWidget( newGui );
 
-}
-
-void mainWindow::addNewJackChannel( QString chName )
-{
-
+    return newChan->getUuid();
 }

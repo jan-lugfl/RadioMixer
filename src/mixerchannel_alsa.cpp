@@ -1,7 +1,7 @@
 /* $Id$ */
 /***************************************************************************
  *   OpenRadio - RadioMixer                                                *
- *   Copyright (C) 2005-2009 by Jan Boysen                                 *
+ *   Copyright (C) 2005-2010 by Jan Boysen                                 *
  *   trekkie@media-mission.de                                              *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
@@ -21,8 +21,10 @@
  ***************************************************************************/
 #include "mixerchannel_alsa.h"
 
-mixerChannel_ALSA::mixerChannel_ALSA()
- : mixerChannel(), muted( false )
+QString const mixerChannel_ALSA::Type = QString("ALSAMIX");
+
+mixerChannel_ALSA::mixerChannel_ALSA( const char *name, QUuid uuid )
+ : mixerChannel(name, uuid), muted( false )
 {
     startAlsa();
     registerChannel();

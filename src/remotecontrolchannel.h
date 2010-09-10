@@ -1,7 +1,7 @@
-/* $Id$ */
+/* $Id:$ */
 /***************************************************************************
  *   OpenRadio - RadioMixer                                                *
- *   Copyright (C) 2005-2010 by Jan Boysen                                *
+ *   Copyright (C) 2010 by Jan Boysen                                      *
  *   trekkie@media-mission.de                                              *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
@@ -19,47 +19,52 @@
  *   Free Software Foundation, Inc.,                                       *
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
-#include "soundplayer.h"
+#ifndef REMOTECONTROLCHANNEL_H
+#define REMOTECONTROLCHANNEL_H
 
-soundPlayer::soundPlayer( )
+#include "mixerchannel.h"
+#include <QObject>
+
+class remoteControlChannel : public QObject
 {
-	devOpened = FALSE;
-	interMixSamples = 1024;
-	outputBuffers = new soundRingBuffer[2];
-	outputBuffers[0].setName("outputBuffer_left");
-	outputBuffers[1].setName("outputBuffer_right");
+Q_OBJECT
+public:
+    explicit remoteControlChannel( int channel_id, QObject *parent = 0 );
 
-	mixBufL = new float[interMixSamples];
-	mixBufR = new float[interMixSamples];
-	tempBufL = new float[interMixSamples];
-	tempBufR = new float[interMixSamples];
-	chanBufL = new float[interMixSamples];
-	chanBufR = new float[interMixSamples];
-}
+    // contains the local channel ID the controller uses to identify the channel upon signals from the remote control
+    int channel_id;
 
+    enum RemoteControlerEvent
+    {
+        event_volumeFader,
+        event_balanceFader,
+        event_playButton,
+        event_stopButton,
+        event_pauseButton,
+        event_queueButton,
+        event_repeatButton,
+        event_openButton
+    };
 
-soundPlayer::~soundPlayer()
-{
-	delete[] outputBuffers;
-	delete[] mixBufL;
-	delete[] mixBufR;
-	delete[] tempBufL;
-	delete[] tempBufR;
-	delete[] chanBufL;
-	delete[] chanBufR;
-}
+    void process_event( RemoteControlerEvent event, QString value );
+    void associateToChannel( mixerChannel* channel );
 
-void soundPlayer::mixChannels( )
-{
-}
+signals:
+    void volumeChanged( int );
+    void balanceChanged( int );
+    void play();
+    void stop();
+    void pause();
+    void queue();
+    void repeat();
+    void open();
+    void stateChanged( int channel_id, remoteControlChannel::RemoteControlerEvent, QString );
 
-const unsigned int soundPlayer::getOutputSampleRate( )
-{
-	return outRate;
-}
+public slots:
+    virtual void changeVolume( int value );
+    virtual void changeBalance( int value );
+    virtual void changeState( int state );
+    virtual void repeat( bool state );
+};
 
-bool soundPlayer::isConnected( )
-{
-	return devOpened;
-}
-
+#endif // REMOTECONTROLCHANNEL_H

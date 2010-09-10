@@ -27,6 +27,7 @@
 #include "soundplayer.h"
 #include "mixerguialsamix.h"
 #include "channelmixer.h"
+#include "remotecontrol_midi.h"
 
 #include <QtGui/QMainWindow>
 
@@ -41,17 +42,17 @@ public:
     explicit mainWindow(QWidget *parent = 0);
     virtual ~mainWindow();
 
+    QUuid addNewChannel( QString type, QUuid uuid = QUuid() );
+    Ui::RadioMixer *rm_ui;
+
 public slots:
     virtual void aboutQt();
-    virtual void addNewFilePlayer();
-    virtual void addNewMixerChannel();
-    virtual void addNewJackChannel( QString chName );
+    virtual void showSettings();
 
 protected:
     virtual void changeEvent(QEvent *e);
 
 private:
-    Ui::RadioMixer *rm_ui;
     soundPlayer* player;
     // used for testing only
     mixerGUI* dummy;
@@ -69,6 +70,8 @@ private:
     mixerGUI* dummy8;
 
     mixerChannel* dummy_out;
+
+    remoteControl* rc;
 
     // Meta Info for Live Streaming with Ices
     metaInfo meta;

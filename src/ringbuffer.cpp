@@ -1,7 +1,7 @@
 /* $Id$ */
 /***************************************************************************
  *   OpenRadio - RadioMixer                                                *
- *   Copyright (C) 2005-2009 by Jan Boysen                                 *
+ *   Copyright (C) 2005-2010 by Jan Boysen                                 *
  *   trekkie@media-mission.de                                              *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
@@ -20,12 +20,15 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 
+#include <QString>
+
 template <class T>
 ringBuffer<T>::ringBuffer(unsigned int bufSize) : bufferSize(bufSize)
 {
     this->name = name;
-	readPos = ringbuffer = writePos = new T[bufferSize];
-	writePos++;
+    readPos = ringbuffer = writePos = new T[bufferSize];
+    memset(ringbuffer, 0, bufferSize*sizeof(T));
+    writePos++;
 }
 
 template <class T>
@@ -38,14 +41,8 @@ ringBuffer<T>::~ringBuffer()
 template <class T>
 void ringBuffer<T>::write( T* data, unsigned int size )
 {
-	bool waited=false;
 	while( !canWrite( size ) )
-	{
-		usleep(2);
-		waited=true;
-	}
-	if(waited)
-		qWarning("there was no space available, so I waited a while....");
+            usleep(2);
 	for(unsigned int i=0;i<size;i++)
 	{
 	    if( toEnd( writePos ) <= 0 )
@@ -67,14 +64,8 @@ bool ringBuffer<T>::canWrite( unsigned int size )
 template <class T>
 void ringBuffer<T>::read( T* dataOut, unsigned int size )
 {
-	bool waited=false;
 	while( !canRead( size ) )
-	{
 		usleep(2);
-		waited=true;
-	}
-	if(waited)
-		qWarning("there were no data available, so I waited a while....");
 	lastReadAverage=0;
 	for(unsigned int i=0;i<size;i++)
 	{
@@ -120,6 +111,7 @@ template <class T>
 void ringBuffer<T>::flush( )
 {
 	readPos = writePos = ringbuffer;
+        memset(ringbuffer, 0, bufferSize*sizeof(T));
 	lastReadAverage = 0;
 	writePos++;
 }

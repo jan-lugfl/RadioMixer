@@ -1,7 +1,7 @@
 /* $Id$ */
 /***************************************************************************
  *   OpenRadio - RadioMixer                                                *
- *   Copyright (C) 2009 by Jan Boysen                                      *
+ *   Copyright (C) 2009-2010 by Jan Boysen                                 *
  *   trekkie@media-mission.de                                              *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
@@ -26,6 +26,7 @@
 mixerChannelManager::storageType mixerChannelManager::allChannels = mixerChannelManager::storageType();
 mixerChannelManager::storageType mixerChannelManager::inChannels = mixerChannelManager::storageType();
 mixerChannelManager::storageType mixerChannelManager::outChannels = mixerChannelManager::storageType();
+QMap<QString,QString> mixerChannelManager::supportedChannelTypes = QMap<QString,QString>();
 
 void mixerChannelManager::registerChannel( mixerChannel* newChann )
 {
@@ -50,4 +51,45 @@ void mixerChannelManager::unregisterChannel( mixerChannel* channel )
     for( it = outChannels.begin(); it != outChannels.end(); it++ )
         if( (*it) == channel )
             outChannels.erase( it );
+}
+
+mixerChannel* mixerChannelManager::getChannelByUuid( QUuid uuid )
+{
+    foreach( mixerChannel* chan, allChannels )
+        if( chan->getUuid() == uuid )
+            return chan;
+    return 0;
+}
+
+void mixerChannelManager::init_supportedChannels()
+{
+    supportedChannelTypes.insert("PLAYER", QObject::tr("File player"));
+#ifdef HAVE_ALSA
+    supportedChannelTypes.insert("ALSAMIX", QObject::tr("ALSA Mixer"));
+#endif
+#ifdef HAVE_JACK
+    supportedChannelTypes.insert("JACKIN", QObject::tr("Jack input"));
+    supportedChannelTypes.insert("JACKOUT", QObject::tr("Jack output"));
+#endif
+}
+
+QStringList mixerChannelManager::getChannelTypes()
+{
+    if(supportedChannelTypes.isEmpty())
+        init_supportedChannels();
+    return supportedChannelTypes.keys();
+}
+
+QStringList mixerChannelManager::getChannelTypeNames()
+{
+    if(supportedChannelTypes.isEmpty())
+        init_supportedChannels();
+    return supportedChannelTypes.values();
+}
+
+QString mixerChannelManager::getChannelTypeFromTypeName( QString typeName )
+{
+    if(supportedChannelTypes.isEmpty())
+        init_supportedChannels();
+    return supportedChannelTypes.key( typeName );
 }

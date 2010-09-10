@@ -1,7 +1,7 @@
-/* $Id$ */
+/* $Id:$ */
 /***************************************************************************
  *   OpenRadio - RadioMixer                                                *
- *   Copyright (C) 2005-2010 by Jan Boysen                                *
+ *   Copyright (C) 2010 by Jan Boysen                                      *
  *   trekkie@media-mission.de                                              *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
@@ -19,47 +19,29 @@
  *   Free Software Foundation, Inc.,                                       *
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
-#include "soundplayer.h"
+#include "settings.h"
 
-soundPlayer::soundPlayer( )
+QSettings Settings::settings("RadioMixer", "RadioMixer");
+
+QVariant Settings::get(const QString &key, const QVariant &defaultValue)
 {
-	devOpened = FALSE;
-	interMixSamples = 1024;
-	outputBuffers = new soundRingBuffer[2];
-	outputBuffers[0].setName("outputBuffer_left");
-	outputBuffers[1].setName("outputBuffer_right");
-
-	mixBufL = new float[interMixSamples];
-	mixBufR = new float[interMixSamples];
-	tempBufL = new float[interMixSamples];
-	tempBufR = new float[interMixSamples];
-	chanBufL = new float[interMixSamples];
-	chanBufR = new float[interMixSamples];
+    return Settings::settings.value( key, defaultValue);
 }
 
-
-soundPlayer::~soundPlayer()
+void Settings::set( const QString &key, const QVariant &value )
 {
-	delete[] outputBuffers;
-	delete[] mixBufL;
-	delete[] mixBufR;
-	delete[] tempBufL;
-	delete[] tempBufR;
-	delete[] chanBufL;
-	delete[] chanBufR;
+    Settings::settings.setValue( key, value );
 }
 
-void soundPlayer::mixChannels( )
+void Settings::remove( const QString &key )
 {
+    Settings::settings.remove( key );
 }
 
-const unsigned int soundPlayer::getOutputSampleRate( )
+QStringList Settings::getSubKeys(const QString &key)
 {
-	return outRate;
+    Settings::settings.beginGroup( key );
+    QStringList ret = Settings::settings.allKeys();
+    Settings::settings.endGroup();
+    return ret;
 }
-
-bool soundPlayer::isConnected( )
-{
-	return devOpened;
-}
-

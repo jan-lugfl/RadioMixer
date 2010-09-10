@@ -1,10 +1,11 @@
-<ui version="4.0" >
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
  <class>PreferencesDlg</class>
- <widget class="QDialog" name="PreferencesDlg" >
-  <property name="enabled" >
+ <widget class="QDialog" name="PreferencesDlg">
+  <property name="enabled">
    <bool>true</bool>
   </property>
-  <property name="geometry" >
+  <property name="geometry">
    <rect>
     <x>0</x>
     <y>0</y>
@@ -12,61 +13,54 @@
     <height>471</height>
    </rect>
   </property>
-  <property name="windowTitle" >
+  <property name="windowTitle">
    <string>Preferences</string>
   </property>
-  <property name="windowIcon" >
-   <iconset/>
+  <property name="windowIcon">
+   <iconset>
+    <normaloff/>
+   </iconset>
   </property>
-  <property name="toolTip" >
+  <property name="toolTip">
    <string/>
   </property>
-  <property name="whatsThis" >
+  <property name="whatsThis">
    <string>Preferences</string>
   </property>
-  <property name="sizeGripEnabled" >
+  <property name="sizeGripEnabled">
    <bool>true</bool>
   </property>
-  <layout class="QGridLayout" >
-   <item row="1" column="0" >
-    <layout class="QHBoxLayout" >
-     <property name="spacing" >
+  <layout class="QGridLayout">
+   <item row="1" column="0">
+    <layout class="QHBoxLayout">
+     <property name="spacing">
       <number>6</number>
      </property>
-     <property name="leftMargin" >
-      <number>0</number>
-     </property>
-     <property name="topMargin" >
-      <number>0</number>
-     </property>
-     <property name="rightMargin" >
-      <number>0</number>
-     </property>
-     <property name="bottomMargin" >
+     <property name="margin">
       <number>0</number>
      </property>
      <item>
-      <widget class="QPushButton" name="buttonHelp" >
-       <property name="text" >
+      <widget class="QPushButton" name="buttonHelp">
+       <property name="text">
         <string>He&amp;lp</string>
        </property>
-       <property name="shortcut" >
+       <property name="shortcut">
         <string>Alt+L</string>
        </property>
-       <property name="autoDefault" >
+       <property name="autoDefault">
         <bool>true</bool>
        </property>
       </widget>
      </item>
      <item>
       <spacer>
-       <property name="orientation" >
+       <property name="orientation">
         <enum>Qt::Horizontal</enum>
        </property>
-       <property name="sizeType" >
+       <property name="sizeType">
         <enum>QSizePolicy::Expanding</enum>
        </property>
-       <property name="sizeHint" >
+       <property name="sizeHint" stdset="0">
         <size>
          <width>20</width>
          <height>20</height>
@@ -75,47 +69,47 @@
       </spacer>
      </item>
      <item>
-      <widget class="QPushButton" name="buttonOk" >
-       <property name="text" >
+      <widget class="QPushButton" name="buttonOk">
+       <property name="text">
         <string>&amp;OK</string>
        </property>
-       <property name="shortcut" >
+       <property name="shortcut">
         <string/>
        </property>
-       <property name="autoDefault" >
+       <property name="autoDefault">
         <bool>true</bool>
        </property>
-       <property name="default" >
+       <property name="default">
         <bool>true</bool>
        </property>
       </widget>
      </item>
      <item>
-      <widget class="QPushButton" name="buttonCancel" >
-       <property name="text" >
+      <widget class="QPushButton" name="buttonCancel">
+       <property name="text">
         <string>&amp;Cancel</string>
        </property>
-       <property name="shortcut" >
+       <property name="shortcut">
         <string/>
        </property>
-       <property name="autoDefault" >
+       <property name="autoDefault">
         <bool>true</bool>
        </property>
       </widget>
      </item>
     </layout>
    </item>
-   <item row="0" column="0" >
-    <widget class="QTabWidget" name="Einstellungen" >
-     <property name="currentIndex" >
-      <number>3</number>
+   <item row="0" column="0">
+    <widget class="QTabWidget" name="Einstellungen">
+     <property name="currentIndex">
+      <number>0</number>
      </property>
-     <widget class="QWidget" name="Widget9" >
-      <attribute name="title" >
+     <widget class="QWidget" name="Widget9">
+      <attribute name="title">
        <string>&amp;Sound</string>
       </attribute>
-      <widget class="QWidget" name="layout9" >
-       <property name="geometry" >
+      <widget class="QWidget" name="layout9">
+       <property name="geometry">
         <rect>
          <x>21</x>
          <y>32</y>
@@ -123,30 +117,30 @@
          <height>200</height>
         </rect>
        </property>
-       <layout class="QVBoxLayout" >
+       <layout class="QVBoxLayout">
         <item>
-         <widget class="QRadioButton" name="alsaMode" >
-          <property name="text" >
+         <widget class="QRadioButton" name="alsaMode">
+          <property name="text">
            <string>&amp;Alsa Mode</string>
           </property>
-          <property name="shortcut" >
+          <property name="shortcut">
            <string>Alt+A</string>
           </property>
          </widget>
         </item>
         <item>
-         <widget class="Q3Frame" name="frame3" >
-          <property name="frameShape" >
+         <widget class="Q3Frame" name="frame3">
+          <property name="frameShape">
            <enum>QFrame::NoFrame</enum>
           </property>
-          <property name="frameShadow" >
+          <property name="frameShadow">
            <enum>QFrame::Plain</enum>
           </property>
-          <widget class="QLabel" name="sndDeviceLabel" >
-           <property name="enabled" >
+          <widget class="QLabel" name="sndDeviceLabel">
+           <property name="enabled">
             <bool>false</bool>
            </property>
-           <property name="geometry" >
+           <property name="geometry">
             <rect>
              <x>21</x>
              <y>21</y>
@@ -154,18 +148,18 @@
              <height>27</height>
             </rect>
            </property>
-           <property name="text" >
+           <property name="text">
             <string>Sound Device:</string>
            </property>
-           <property name="wordWrap" >
+           <property name="wordWrap">
             <bool>false</bool>
            </property>
           </widget>
-          <widget class="QComboBox" name="sndDevice" >
-           <property name="enabled" >
+          <widget class="QComboBox" name="sndDevice">
+           <property name="enabled">
             <bool>false</bool>
            </property>
-           <property name="geometry" >
+           <property name="geometry">
             <rect>
              <x>21</x>
              <y>54</y>
@@ -177,22 +171,22 @@
          </widget>
         </item>
         <item>
-         <widget class="QRadioButton" name="jackMode" >
-          <property name="text" >
+         <widget class="QRadioButton" name="jackMode">
+          <property name="text">
            <string>&amp;Jackd Mode</string>
           </property>
-          <property name="shortcut" >
+          <property name="shortcut">
            <string>Alt+J</string>
           </property>
-          <property name="checked" >
+          <property name="checked">
            <bool>false</bool>
           </property>
          </widget>
         </item>
        </layout>
       </widget>
-      <widget class="QLabel" name="textLabel1" >
-       <property name="geometry" >
+      <widget class="QLabel" name="textLabel1">
+       <property name="geometry">
         <rect>
          <x>20</x>
          <y>350</y>
@@ -200,20 +194,20 @@
          <height>20</height>
         </rect>
        </property>
-       <property name="text" >
+       <property name="text">
         <string>Note: A changes of the mode requires a restart of the radiomixer</string>
        </property>
-       <property name="wordWrap" >
+       <property name="wordWrap">
         <bool>false</bool>
        </property>
       </widget>
      </widget>
-     <widget class="QWidget" name="TabPage" >
-      <attribute name="title" >
+     <widget class="QWidget" name="TabPage">
+      <attribute name="title">
        <string>Input De&amp;vice</string>
       </attribute>
-      <widget class="QWidget" name="layout9" >
-       <property name="geometry" >
+      <widget class="QWidget" name="layout9">
+       <property name="geometry">
         <rect>
          <x>30</x>
          <y>40</y>
@@ -221,31 +215,31 @@
          <height>70</height>
         </rect>
        </property>
-       <layout class="QVBoxLayout" >
+       <layout class="QVBoxLayout">
         <item>
-         <layout class="QHBoxLayout" >
+         <layout class="QHBoxLayout">
           <item>
-           <widget class="QLabel" name="textLabel2" >
-            <property name="text" >
+           <widget class="QLabel" name="textLabel2">
+            <property name="text">
              <string>Input Device IP:</string>
             </property>
-            <property name="wordWrap" >
+            <property name="wordWrap">
              <bool>false</bool>
             </property>
            </widget>
           </item>
           <item>
-           <widget class="QLineEdit" name="Input_IP" >
-            <property name="maximumSize" >
+           <widget class="QLineEdit" name="Input_IP">
+            <property name="maximumSize">
              <size>
               <width>146</width>
               <height>32767</height>
              </size>
             </property>
-            <property name="inputMask" >
+            <property name="inputMask">
              <string>990.990.990.990; </string>
             </property>
-            <property name="text" >
+            <property name="text">
              <string>...</string>
             </property>
            </widget>
@@ -253,29 +247,29 @@
          </layout>
         </item>
         <item>
-         <layout class="QHBoxLayout" >
+         <layout class="QHBoxLayout">
           <item>
-           <widget class="QLabel" name="textLabel3" >
-            <property name="text" >
+           <widget class="QLabel" name="textLabel3">
+            <property name="text">
              <string>Input Device Port:</string>
             </property>
-            <property name="wordWrap" >
+            <property name="wordWrap">
              <bool>false</bool>
             </property>
            </widget>
           </item>
           <item>
-           <widget class="QLineEdit" name="Input_Device_Port" >
-            <property name="maximumSize" >
+           <widget class="QLineEdit" name="Input_Device_Port">
+            <property name="maximumSize">
              <size>
               <width>61</width>
               <height>32767</height>
              </size>
             </property>
-            <property name="inputMask" >
+            <property name="inputMask">
              <string>99990; </string>
             </property>
-            <property name="text" >
+            <property name="text">
              <string/>
             </property>
            </widget>
@@ -285,12 +279,12 @@
        </layout>
       </widget>
      </widget>
-     <widget class="QWidget" name="TabPage" >
-      <attribute name="title" >
+     <widget class="QWidget" name="TabPage">
+      <attribute name="title">
        <string>&amp;Metadata</string>
       </attribute>
-      <widget class="QCheckBox" name="metaEnable" >
-       <property name="geometry" >
+      <widget class="QCheckBox" name="metaEnable">
+       <property name="geometry">
         <rect>
          <x>30</x>
          <y>10</y>
@@ -298,18 +292,18 @@
          <height>23</height>
         </rect>
        </property>
-       <property name="text" >
+       <property name="text">
         <string>activate Metadata</string>
        </property>
-       <property name="shortcut" >
+       <property name="shortcut">
         <string/>
        </property>
       </widget>
-      <widget class="QRadioButton" name="metaNormalMode" >
-       <property name="enabled" >
+      <widget class="QRadioButton" name="metaNormalMode">
+       <property name="enabled">
         <bool>false</bool>
        </property>
-       <property name="geometry" >
+       <property name="geometry">
         <rect>
          <x>70</x>
          <y>40</y>
@@ -317,21 +311,21 @@
          <height>23</height>
         </rect>
        </property>
-       <property name="text" >
+       <property name="text">
         <string>Normal Metadata &amp;with artist and title</string>
        </property>
-       <property name="shortcut" >
+       <property name="shortcut">
         <string>Alt+W</string>
        </property>
-       <property name="checked" >
+       <property name="checked">
         <bool>true</bool>
        </property>
       </widget>
-      <widget class="QRadioButton" name="metaStationMode" >
-       <property name="enabled" >
+      <widget class="QRadioButton" name="metaStationMode">
+       <property name="enabled">
         <bool>false</bool>
        </property>
-       <property name="geometry" >
+       <property name="geometry">
         <rect>
          <x>70</x>
          <y>60</y>
@@ -339,18 +333,18 @@
          <height>40</height>
         </rect>
        </property>
-       <property name="text" >
+       <property name="text">
         <string>&amp;Put artist and title together and take folling text as title</string>
        </property>
-       <property name="shortcut" >
+       <property name="shortcut">
         <string>Alt+P</string>
        </property>
       </widget>
-      <widget class="QLineEdit" name="metaStationText" >
-       <property name="enabled" >
+      <widget class="QLineEdit" name="metaStationText">
+       <property name="enabled">
         <bool>false</bool>
        </property>
-       <property name="geometry" >
+       <property name="geometry">
         <rect>
          <x>90</x>
          <y>100</y>
@@ -359,11 +353,11 @@
         </rect>
        </property>
       </widget>
-      <widget class="QLineEdit" name="metaPath" >
-       <property name="enabled" >
+      <widget class="QLineEdit" name="metaPath">
+       <property name="enabled">
         <bool>false</bool>
        </property>
-       <property name="geometry" >
+       <property name="geometry">
         <rect>
          <x>70</x>
          <y>180</y>
@@ -372,11 +366,11 @@
         </rect>
        </property>
       </widget>
-      <widget class="QLineEdit" name="metaCommand" >
-       <property name="enabled" >
+      <widget class="QLineEdit" name="metaCommand">
+       <property name="enabled">
         <bool>false</bool>
        </property>
-       <property name="geometry" >
+       <property name="geometry">
         <rect>
          <x>70</x>
          <y>250</y>
@@ -385,11 +379,11 @@
         </rect>
        </property>
       </widget>
-      <widget class="Q3ButtonGroup" name="metaFormatGroup" >
-       <property name="enabled" >
+      <widget class="Q3ButtonGroup" name="metaFormatGroup">
+       <property name="enabled">
         <bool>false</bool>
        </property>
-       <property name="geometry" >
+       <property name="geometry">
         <rect>
          <x>130</x>
          <y>290</y>
@@ -397,11 +391,11 @@
          <height>50</height>
         </rect>
        </property>
-       <property name="title" >
+       <property name="title">
         <string>&amp;Format of metadata file</string>
        </property>
-       <widget class="QRadioButton" name="metaFormatOddcast3" >
-        <property name="geometry" >
+       <widget class="QRadioButton" name="metaFormatOddcast3">
+        <property name="geometry">
          <rect>
           <x>120</x>
           <y>20</y>
@@ -409,15 +403,15 @@
           <height>23</height>
          </rect>
         </property>
-        <property name="text" >
+        <property name="text">
          <string>Oddcast V&amp;3</string>
         </property>
-        <property name="shortcut" >
+        <property name="shortcut">
          <string>Alt+3</string>
         </property>
        </widget>
-       <widget class="QRadioButton" name="metaFormatIces2" >
-        <property name="geometry" >
+       <widget class="QRadioButton" name="metaFormatIces2">
+        <property name="geometry">
          <rect>
           <x>10</x>
           <y>20</y>
@@ -425,22 +419,22 @@
           <height>23</height>
          </rect>
         </property>
-        <property name="text" >
+        <property name="text">
          <string>Ices &amp;2</string>
         </property>
-        <property name="shortcut" >
+        <property name="shortcut">
          <string>Alt+2</string>
         </property>
-        <property name="checked" >
+        <property name="checked">
          <bool>true</bool>
         </property>
        </widget>
       </widget>
-      <widget class="QLabel" name="metaPathLabel" >
-       <property name="enabled" >
+      <widget class="QLabel" name="metaPathLabel">
+       <property name="enabled">
         <bool>false</bool>
        </property>
-       <property name="geometry" >
+       <property name="geometry">
         <rect>
          <x>70</x>
          <y>160</y>
@@ -448,18 +442,18 @@
          <height>20</height>
         </rect>
        </property>
-       <property name="text" >
+       <property name="text">
         <string>Save metadata to File:</string>
        </property>
-       <property name="wordWrap" >
+       <property name="wordWrap">
         <bool>false</bool>
        </property>
       </widget>
-      <widget class="QLabel" name="metaCommandLabel" >
-       <property name="enabled" >
+      <widget class="QLabel" name="metaCommandLabel">
+       <property name="enabled">
         <bool>false</bool>
        </property>
-       <property name="geometry" >
+       <property name="geometry">
         <rect>
          <x>70</x>
          <y>230</y>
@@ -467,20 +461,20 @@
          <height>20</height>
         </rect>
        </property>
-       <property name="text" >
+       <property name="text">
         <string>Execute the following command if metadata changes</string>
        </property>
-       <property name="wordWrap" >
+       <property name="wordWrap">
         <bool>false</bool>
        </property>
       </widget>
      </widget>
-     <widget class="QWidget" name="TabPage" >
-      <attribute name="title" >
+     <widget class="QWidget" name="TabPage">
+      <attribute name="title">
        <string>&amp;Misc</string>
       </attribute>
-      <widget class="Q3GroupBox" name="songDBBox" >
-       <property name="geometry" >
+      <widget class="Q3GroupBox" name="songDBBox">
+       <property name="geometry">
         <rect>
          <x>20</x>
          <y>20</y>
@@ -488,11 +482,11 @@
          <height>230</height>
         </rect>
        </property>
-       <property name="title" >
+       <property name="title">
         <string>SongDB</string>
        </property>
-       <widget class="QLabel" name="textLabel3_2" >
-        <property name="geometry" >
+       <widget class="QLabel" name="textLabel3_2">
+        <property name="geometry">
          <rect>
           <x>20</x>
           <y>30</y>
@@ -500,15 +494,15 @@
           <height>20</height>
          </rect>
         </property>
-        <property name="text" >
+        <property name="text">
          <string>Hostname/IP Address:</string>
         </property>
-        <property name="wordWrap" >
+        <property name="wordWrap">
          <bool>false</bool>
         </property>
        </widget>
-       <widget class="QLineEdit" name="songDBHostname" >
-        <property name="geometry" >
+       <widget class="QLineEdit" name="songDBHostname">
+        <property name="geometry">
          <rect>
           <x>30</x>
           <y>50</y>
@@ -516,12 +510,12 @@
           <height>25</height>
          </rect>
         </property>
-        <property name="text" >
+        <property name="text">
          <string>localhost</string>
         </property>
        </widget>
-       <widget class="QLabel" name="textLabel4" >
-        <property name="geometry" >
+       <widget class="QLabel" name="textLabel4">
+        <property name="geometry">
          <rect>
           <x>20</x>
           <y>90</y>
@@ -529,15 +523,15 @@
           <height>20</height>
          </rect>
         </property>
-        <property name="text" >
+        <property name="text">
          <string>Scriptname URL:</string>
         </property>
-        <property name="wordWrap" >
+        <property name="wordWrap">
          <bool>false</bool>
         </property>
        </widget>
-       <widget class="QLabel" name="textLabel1_2" >
-        <property name="geometry" >
+       <widget class="QLabel" name="textLabel1_2">
+        <property name="geometry">
          <rect>
           <x>20</x>
           <y>150</y>
@@ -545,15 +539,15 @@
           <height>20</height>
          </rect>
         </property>
-        <property name="text" >
+        <property name="text">
          <string>Song DB Storage:</string>
         </property>
-        <property name="wordWrap" >
+        <property name="wordWrap">
          <bool>false</bool>
         </property>
        </widget>
-       <widget class="QLineEdit" name="songDBScriptname" >
-        <property name="geometry" >
+       <widget class="QLineEdit" name="songDBScriptname">
+        <property name="geometry">
          <rect>
           <x>30</x>
           <y>110</y>
@@ -561,12 +555,12 @@
           <height>25</height>
          </rect>
         </property>
-        <property name="text" >
+        <property name="text">
          <string>/xmlctrl.pl</string>
         </property>
        </widget>
-       <widget class="QLineEdit" name="songDBBasePath" >
-        <property name="geometry" >
+       <widget class="QLineEdit" name="songDBBasePath">
+        <property name="geometry">
          <rect>
           <x>30</x>
           <y>170</y>
@@ -574,7 +568,7 @@
           <height>25</height>
          </rect>
         </property>
-        <property name="text" >
+        <property name="text">
          <string>/songs/</string>
         </property>
        </widget>
@@ -584,7 +578,7 @@
    </item>
   </layout>
  </widget>
- <layoutdefault spacing="6" margin="11" />
+ <layoutdefault spacing="6" margin="11"/>
  <customwidgets>
   <customwidget>
    <class>Q3GroupBox</class>
@@ -613,11 +607,11 @@
    <receiver>PreferencesDlg</receiver>
    <slot>accept()</slot>
    <hints>
-    <hint type="sourcelabel" >
-     <x>20</x>
-     <y>20</y>
+    <hint type="sourcelabel">
+     <x>405</x>
+     <y>462</y>
     </hint>
-    <hint type="destinationlabel" >
+    <hint type="destinationlabel">
      <x>20</x>
      <y>20</y>
     </hint>
@@ -629,11 +623,11 @@
    <receiver>PreferencesDlg</receiver>
    <slot>reject()</slot>
    <hints>
-    <hint type="sourcelabel" >
-     <x>20</x>
-     <y>20</y>
+    <hint type="sourcelabel">
+     <x>460</x>
+     <y>462</y>
     </hint>
-    <hint type="destinationlabel" >
+    <hint type="destinationlabel">
      <x>20</x>
      <y>20</y>
     </hint>
@@ -645,13 +639,13 @@
    <receiver>metaFormatGroup</receiver>
    <slot>setEnabled(bool)</slot>
    <hints>
-    <hint type="sourcelabel" >
-     <x>20</x>
-     <y>20</y>
+    <hint type="sourcelabel">
+     <x>38</x>
+     <y>50</y>
     </hint>
-    <hint type="destinationlabel" >
-     <x>20</x>
-     <y>20</y>
+    <hint type="destinationlabel">
+     <x>138</x>
+     <y>320</y>
     </hint>
    </hints>
   </connection>
@@ -661,13 +655,13 @@
    <receiver>metaNormalMode</receiver>
    <slot>setEnabled(bool)</slot>
    <hints>
-    <hint type="sourcelabel" >
-     <x>20</x>
-     <y>20</y>
+    <hint type="sourcelabel">
+     <x>38</x>
+     <y>50</y>
     </hint>
-    <hint type="destinationlabel" >
-     <x>20</x>
-     <y>20</y>
+    <hint type="destinationlabel">
+     <x>78</x>
+     <y>70</y>
     </hint>
    </hints>
   </connection>
@@ -677,13 +671,13 @@
    <receiver>metaStationMode</receiver>
    <slot>setEnabled(bool)</slot>
    <hints>
-    <hint type="sourcelabel" >
-     <x>20</x>
-     <y>20</y>
+    <hint type="sourcelabel">
+     <x>38</x>
+     <y>50</y>
     </hint>
-    <hint type="destinationlabel" >
-     <x>20</x>
-     <y>20</y>
+    <hint type="destinationlabel">
+     <x>78</x>
+     <y>90</y>
     </hint>
    </hints>
   </connection>
@@ -693,13 +687,13 @@
    <receiver>metaStationText</receiver>
    <slot>setEnabled(bool)</slot>
    <hints>
-    <hint type="sourcelabel" >
-     <x>20</x>
-     <y>20</y>
+    <hint type="sourcelabel">
+     <x>38</x>
+     <y>50</y>
     </hint>
-    <hint type="destinationlabel" >
-     <x>20</x>
-     <y>20</y>
+    <hint type="destinationlabel">
+     <x>98</x>
+     <y>130</y>
     </hint>
    </hints>
   </connection>
@@ -709,13 +703,13 @@
    <receiver>metaCommand</receiver>
    <slot>setEnabled(bool)</slot>
    <hints>
-    <hint type="sourcelabel" >
-     <x>20</x>
-     <y>20</y>
+    <hint type="sourcelabel">
+     <x>38</x>
+     <y>50</y>
     </hint>
-    <hint type="destinationlabel" >
-     <x>20</x>
-     <y>20</y>
+    <hint type="destinationlabel">
+     <x>78</x>
+     <y>280</y>
     </hint>
    </hints>
   </connection>
@@ -725,13 +719,13 @@
    <receiver>metaCommandLabel</receiver>
    <slot>setEnabled(bool)</slot>
    <hints>
-    <hint type="sourcelabel" >
-     <x>20</x>
-     <y>20</y>
+    <hint type="sourcelabel">
+     <x>38</x>
+     <y>50</y>
     </hint>
-    <hint type="destinationlabel" >
-     <x>20</x>
-     <y>20</y>
+    <hint type="destinationlabel">
+     <x>78</x>
+     <y>260</y>
     </hint>
    </hints>
   </connection>
@@ -741,13 +735,13 @@
    <receiver>metaPath</receiver>
    <slot>setEnabled(bool)</slot>
    <hints>
-    <hint type="sourcelabel" >
-     <x>20</x>
-     <y>20</y>
+    <hint type="sourcelabel">
+     <x>38</x>
+     <y>50</y>
     </hint>
-    <hint type="destinationlabel" >
-     <x>20</x>
-     <y>20</y>
+    <hint type="destinationlabel">
+     <x>78</x>
+     <y>210</y>
     </hint>
    </hints>
   </connection>
@@ -757,13 +751,13 @@
    <receiver>metaPathLabel</receiver>
    <slot>setEnabled(bool)</slot>
    <hints>
-    <hint type="sourcelabel" >
-     <x>20</x>
-     <y>20</y>
+    <hint type="sourcelabel">
+     <x>38</x>
+     <y>50</y>
     </hint>
-    <hint type="destinationlabel" >
-     <x>20</x>
-     <y>20</y>
+    <hint type="destinationlabel">
+     <x>78</x>
+     <y>190</y>
     </hint>
    </hints>
   </connection>
@@ -773,13 +767,13 @@
    <receiver>metaStationMode</receiver>
    <slot>toggle()</slot>
    <hints>
-    <hint type="sourcelabel" >
-     <x>20</x>
-     <y>20</y>
+    <hint type="sourcelabel">
+     <x>78</x>
+     <y>70</y>
     </hint>
-    <hint type="destinationlabel" >
-     <x>20</x>
-     <y>20</y>
+    <hint type="destinationlabel">
+     <x>78</x>
+     <y>90</y>
     </hint>
    </hints>
   </connection>
@@ -789,13 +783,13 @@
    <receiver>metaNormalMode</receiver>
    <slot>toggle()</slot>
    <hints>
-    <hint type="sourcelabel" >
-     <x>20</x>
-     <y>20</y>
+    <hint type="sourcelabel">
+     <x>78</x>
+     <y>90</y>
     </hint>
-    <hint type="destinationlabel" >
-     <x>20</x>
-     <y>20</y>
+    <hint type="destinationlabel">
+     <x>78</x>
+     <y>70</y>
     </hint>
    </hints>
   </connection>
@@ -805,13 +799,13 @@
    <receiver>jackMode</receiver>
    <slot>toggle()</slot>
    <hints>
-    <hint type="sourcelabel" >
-     <x>20</x>
-     <y>20</y>
+    <hint type="sourcelabel">
+     <x>30</x>
+     <y>63</y>
     </hint>
-    <hint type="destinationlabel" >
-     <x>20</x>
-     <y>20</y>
+    <hint type="destinationlabel">
+     <x>30</x>
+     <y>240</y>
     </hint>
    </hints>
   </connection>
@@ -821,13 +815,13 @@
    <receiver>alsaMode</receiver>
    <slot>toggle()</slot>
    <hints>
-    <hint type="sourcelabel" >
-     <x>20</x>
-     <y>20</y>
+    <hint type="sourcelabel">
+     <x>30</x>
+     <y>240</y>
     </hint>
-    <hint type="destinationlabel" >
-     <x>20</x>
-     <y>20</y>
+    <hint type="destinationlabel">
+     <x>30</x>
+     <y>63</y>
     </hint>
    </hints>
   </connection>
@@ -837,13 +831,13 @@
    <receiver>sndDevice</receiver>
    <slot>setEnabled(bool)</slot>
    <hints>
-    <hint type="sourcelabel" >
-     <x>20</x>
-     <y>20</y>
+    <hint type="sourcelabel">
+     <x>30</x>
+     <y>63</y>
     </hint>
-    <hint type="destinationlabel" >
-     <x>20</x>
-     <y>20</y>
+    <hint type="destinationlabel">
+     <x>51</x>
+     <y>142</y>
     </hint>
    </hints>
   </connection>
@@ -853,13 +847,13 @@
    <receiver>sndDeviceLabel</receiver>
    <slot>setEnabled(bool)</slot>
    <hints>
-    <hint type="sourcelabel" >
-     <x>20</x>
-     <y>20</y>
+    <hint type="sourcelabel">
+     <x>30</x>
+     <y>63</y>
     </hint>
-    <hint type="destinationlabel" >
-     <x>20</x>
-     <y>20</y>
+    <hint type="destinationlabel">
+     <x>51</x>
+     <y>109</y>
     </hint>
    </hints>
   </connection>

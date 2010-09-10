@@ -1,11 +1,20 @@
 <RCC>
-  <qresource prefix="/logo" >
-    <file>images/radiomixer-trans.png</file>
-  </qresource>
-  <qresource prefix="/buttons" >
-    <file alias="stop_icon" >images/button_stop.png</file>
-    <file alias="cue_icon" >images/button_cue.png</file>
-    <file alias="pause_icon" >images/button_pause.png</file>
-    <file alias="play_icon" >images/button_play.png</file>
-  </qresource>
+    <qresource prefix="/logo">
+        <file>images/radiomixer-trans.png</file>
+        <file>images/jack-logo.png</file>
+    </qresource>
+    <qresource prefix="/buttons">
+        <file alias="stop_icon">images/button_stop.png</file>
+        <file alias="cue_icon">images/button_cue.png</file>
+        <file alias="pause_icon">images/button_pause.png</file>
+        <file alias="play_icon">images/button_play.png</file>
+    </qresource>
+    <qresource prefix="/icons">
+        <file>images/server-database.png</file>
+        <file>images/applications-development.png</file>
+        <file>images/text-sgml.png</file>
+        <file>images/esd.png</file>
+        <file>images/jack-icon.png</file>
+        <file>images/channels_icon.png</file>
+    </qresource>
 </RCC>

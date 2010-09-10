@@ -1,7 +1,7 @@
-/* $Id$ */
+/* $Id:$ */
 /***************************************************************************
  *   OpenRadio - RadioMixer                                                *
- *   Copyright (C) 2005-2010 by Jan Boysen                                *
+ *   Copyright (C) 2010 by Jan Boysen                                      *
  *   trekkie@media-mission.de                                              *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
@@ -19,47 +19,60 @@
  *   Free Software Foundation, Inc.,                                       *
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
-#include "soundplayer.h"
+#ifndef REMOTECONTROL_MIDI_H
+#define REMOTECONTROL_MIDI_H
 
-soundPlayer::soundPlayer( )
+#include "remotecontrol.h"
+#include "remotecontrolchannel.h"
+#include "jack_midicontrol.h"
+
+#include <QThread>
+#include <QTimer>
+#include <QMap>
+
+// forward declaration for queue thread class
+class remoteControl_MIDIQueueThread;
+
+class remoteControl_MIDI : public remoteControl
 {
-	devOpened = FALSE;
-	interMixSamples = 1024;
-	outputBuffers = new soundRingBuffer[2];
-	outputBuffers[0].setName("outputBuffer_left");
-	outputBuffers[1].setName("outputBuffer_right");
+Q_OBJECT
+public:
+    explicit remoteControl_MIDI(QObject *parent = 0, QString name = QString('Remote Control'), bool biderectional = true);
 
-	mixBufL = new float[interMixSamples];
-	mixBufR = new float[interMixSamples];
-	tempBufL = new float[interMixSamples];
-	tempBufR = new float[interMixSamples];
-	chanBufL = new float[interMixSamples];
-	chanBufR = new float[interMixSamples];
-}
+private:
+    void queueMIDIMessage( int par, int val );
 
+    jack_MIDIControl* controller;
+    remoteControl_MIDIQueueThread* queue_thread;
+    enum channelStates
+    {
+        Playing,
+        Paused,
+        Stopped,
+        Cued
+    };
+    QMap<int, channelStates> channel_states;
+    QTimer* refreshTimer; // used to refresh the midi device
+    bool blink_state; // used to let buttons blink...
 
-soundPlayer::~soundPlayer()
+signals:
+
+public slots:
+       virtual void setControllerState( int channel_id, remoteControlChannel::RemoteControlerEvent event, QString value );
+
+private slots:
+       virtual void refreshTimerTimeout();
+};
+
+class remoteControl_MIDIQueueThread : public QThread
 {
-	delete[] outputBuffers;
-	delete[] mixBufL;
-	delete[] mixBufR;
-	delete[] tempBufL;
-	delete[] tempBufR;
-	delete[] chanBufL;
-	delete[] chanBufR;
-}
+Q_OBJECT
+public:
+    jack_MIDIControl* controller;
+    remoteControl_MIDI* remoteControl;
+protected:
+    // worker function...
+    void run();
+};
 
-void soundPlayer::mixChannels( )
-{
-}
-
-const unsigned int soundPlayer::getOutputSampleRate( )
-{
-	return outRate;
-}
-
-bool soundPlayer::isConnected( )
-{
-	return devOpened;
-}
-
+#endif // REMOTECONTROL_MIDI_H

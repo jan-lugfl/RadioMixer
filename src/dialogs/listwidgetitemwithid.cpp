@@ -1,7 +1,7 @@
-/* $Id$ */
+/* $Id:$ */
 /***************************************************************************
  *   OpenRadio - RadioMixer                                                *
- *   Copyright (C) 2005-2010 by Jan Boysen                                *
+ *   Copyright (C) 2010 by Jan Boysen                                      *
  *   trekkie@media-mission.de                                              *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
@@ -19,47 +19,23 @@
  *   Free Software Foundation, Inc.,                                       *
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
-#include "soundplayer.h"
+#include "listwidgetitemwithid.h"
 
-soundPlayer::soundPlayer( )
-{
-	devOpened = FALSE;
-	interMixSamples = 1024;
-	outputBuffers = new soundRingBuffer[2];
-	outputBuffers[0].setName("outputBuffer_left");
-	outputBuffers[1].setName("outputBuffer_right");
+// initialize our type
+int const listWidgetItemWithId::type(1001);
 
-	mixBufL = new float[interMixSamples];
-	mixBufR = new float[interMixSamples];
-	tempBufL = new float[interMixSamples];
-	tempBufR = new float[interMixSamples];
-	chanBufL = new float[interMixSamples];
-	chanBufR = new float[interMixSamples];
-}
-
-
-soundPlayer::~soundPlayer()
-{
-	delete[] outputBuffers;
-	delete[] mixBufL;
-	delete[] mixBufR;
-	delete[] tempBufL;
-	delete[] tempBufR;
-	delete[] chanBufL;
-	delete[] chanBufR;
-}
-
-void soundPlayer::mixChannels( )
+listWidgetItemWithId::listWidgetItemWithId( QListWidget* parent, QUuid uuid, int type)
+    : QListWidgetItem( parent, listWidgetItemWithId::type ), uuid( uuid )
 {
 }
 
-const unsigned int soundPlayer::getOutputSampleRate( )
+void listWidgetItemWithId::setUuid( QUuid uuid )
 {
-	return outRate;
+    this->uuid = uuid;
 }
 
-bool soundPlayer::isConnected( )
+QUuid listWidgetItemWithId::getUuid()
 {
-	return devOpened;
+    return uuid;
 }
 

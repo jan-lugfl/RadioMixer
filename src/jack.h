@@ -20,10 +20,16 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 
+// include Jacks headers
 #include <jack/jack.h>
+#include <jack/midiport.h>
+
+// include needed QT stuff
 #include <QString>
 #include <QMessageBox>
-#include <QObject>
+#include <QVector>
+
+#include "jack_midicontrol.h"
 
 #ifndef JACK_H
 #define JACK_H
@@ -34,6 +40,7 @@ public:
     static void errorHandler( const char* msg );
     static void connect( QString client_name = QString("RadioMixer") );
     static jack_port_t* newPort(QString name, unsigned long flags);
+    static jack_MIDIControl* newController( QString name = QString("Remote Control"), bool bidirectional = true );
     static int process( jack_nframes_t frames, void * arg );
     static void jackShutdown( void * arg );
     static unsigned int getSmplRate();
@@ -43,6 +50,7 @@ private:
     static int bufSize;
     static unsigned int smplRate;
     static jack_client_t* jack;
+    static QVector<jack_MIDIControl*> midi_controllers;
 };
 
 #endif // JACK_H

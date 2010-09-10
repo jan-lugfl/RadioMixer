@@ -1,7 +1,7 @@
-/* $Id$ */
+/* $Id:$ */
 /***************************************************************************
  *   OpenRadio - RadioMixer                                                *
- *   Copyright (C) 2005-2010 by Jan Boysen                                *
+ *   Copyright (C) 2010 by Jan Boysen                                      *
  *   trekkie@media-mission.de                                              *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
@@ -19,47 +19,24 @@
  *   Free Software Foundation, Inc.,                                       *
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
-#include "soundplayer.h"
+#ifndef LISTWIDGETITEMWITHID_H
+#define LISTWIDGETITEMWITHID_H
 
-soundPlayer::soundPlayer( )
+#include <QUuid>
+#include <QListWidget>
+#include <QListWidgetItem>
+
+class listWidgetItemWithId : public QListWidgetItem
 {
-	devOpened = FALSE;
-	interMixSamples = 1024;
-	outputBuffers = new soundRingBuffer[2];
-	outputBuffers[0].setName("outputBuffer_left");
-	outputBuffers[1].setName("outputBuffer_right");
+public:
+    static int const type;
+    explicit listWidgetItemWithId( QListWidget * parent = 0, QUuid uuid = QUuid(), int type = type );
 
-	mixBufL = new float[interMixSamples];
-	mixBufR = new float[interMixSamples];
-	tempBufL = new float[interMixSamples];
-	tempBufR = new float[interMixSamples];
-	chanBufL = new float[interMixSamples];
-	chanBufR = new float[interMixSamples];
-}
+    virtual void setUuid( QUuid id );
+    QUuid getUuid();
 
+protected:
+    QUuid uuid; // a hidden field identifier...
+};
 
-soundPlayer::~soundPlayer()
-{
-	delete[] outputBuffers;
-	delete[] mixBufL;
-	delete[] mixBufR;
-	delete[] tempBufL;
-	delete[] tempBufR;
-	delete[] chanBufL;
-	delete[] chanBufR;
-}
-
-void soundPlayer::mixChannels( )
-{
-}
-
-const unsigned int soundPlayer::getOutputSampleRate( )
-{
-	return outRate;
-}
-
-bool soundPlayer::isConnected( )
-{
-	return devOpened;
-}
-
+#endif // LISTWIDGETITEMWITHID_H

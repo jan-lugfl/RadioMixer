@@ -1,7 +1,7 @@
 /* $Id$ */
 /***************************************************************************
  *   OpenRadio - RadioMixer                                                *
- *   Copyright (C) 2005-2009 by Jan Boysen                                *
+ *   Copyright (C) 2005-2010 by Jan Boysen                                 *
  *   trekkie@media-mission.de                                              *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
@@ -28,6 +28,7 @@ glowButton::glowButton(QWidget *parent, const char *name)
         deactColor = paletteBackgroundColor();
         setMinimumHeight( 32 );
         setMinimumWidth( 32 );
+        setAutoFillBackground( true );
         setSizePolicy( QSizePolicy::Expanding, QSizePolicy::Expanding );
 }
 
@@ -53,29 +54,50 @@ void glowButton::toggle( )
 void glowButton::setOn( )
 {
 	state = TRUE;
-        QToolButton::setPaletteBackgroundColor( actColor );
+        QPalette tempPal = this->palette();
+        tempPal.setColor( QPalette::Button, actColor );
+        this->setPalette( tempPal );
 }
 
 void glowButton::setOff( )
 {
 	state = FALSE;
-        QToolButton::setPaletteBackgroundColor( deactColor );
+        QPalette tempPal = this->palette();
+        tempPal.setColor( QPalette::Button, deactColor );
+        this->setPalette( tempPal );
 }
 
 void glowButton::setPaletteBackgroundColor( const QColor & newCol )
 {
 	actColor = newCol;
-        QToolButton::setPaletteForegroundColor( newCol );
+        if(state)
+        {
+            QPalette tempPal = this->palette();
+            tempPal.setColor( QPalette::Button, actColor );
+            this->setPalette( tempPal );
+        }
 }
 
 void glowButton::setActivatedColor( const QColor & newCol )
 {
 	actColor = newCol;
+        if(state)
+        {
+            QPalette tempPal = this->palette();
+            tempPal.setColor( QPalette::Button, actColor );
+            this->setPalette( tempPal );
+        }
 }
 
 void glowButton::setDeactivatedColor( const QColor & newCol )
 {
 	deactColor = newCol;
+        if(!state)
+        {
+            QPalette tempPal = this->palette();
+            tempPal.setColor( QPalette::Button, actColor );
+            this->setPalette( tempPal );
+        }
 }
 
 void glowButton::setState( bool state )

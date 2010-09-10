@@ -1,7 +1,7 @@
 /* $Id$ */
 /***************************************************************************
  *   OpenRadio - RadioMixer                                                *
- *   Copyright (C) 2005-2009 by Jan Boysen                                *
+ *   Copyright (C) 2005-2010 by Jan Boysen                                 *
  *   trekkie@media-mission.de                                              *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
@@ -22,21 +22,16 @@
 #ifndef MIXERGUI_H
 #define MIXERGUI_H
 
-#include <qframe.h>
-#include <qgridlayout.h>
-#include <qlabel.h>
-#include <qtoolbutton.h>
-#include <qtimer.h>
-#include <qmessagebox.h>
-#include <q3valuevector.h>
-#include <qsettings.h>
-#include <qdial.h>
-#include <q3groupbox.h>
-#include <qthread.h>
+#include <QFrame>
+#include <QGridLayout>
+#include <QLabel>
+#include <QToolButton>
+#include <QTimer>
+#include <QDial>
+#include <QSlider>
 
 #include "widgets/vumeter.h"
 #include "mixerchannel_fileplayer.h"
-#include "dialoge/chanprefdlg.h"
 #include "metatag.h"
 
 /**
@@ -47,13 +42,13 @@ class mixerGUI : public QFrame
   Q_OBJECT
 
 public:
-    mixerGUI( QWidget* parent = 0, const char* name = 0, Qt::WFlags fl = 0 );
-    ~mixerGUI();
+    explicit mixerGUI( QWidget* parent = 0, const char* name = 0, Qt::WFlags fl = 0 );
+    virtual ~mixerGUI();
+
+    QUuid getUuid();
 
 	virtual void languageChange();
-	int currentPosition();
         virtual QString getName();
-	virtual int getPlayerID();
 	virtual QColor getColor();
 	virtual QString getType() = 0;
         virtual void associateToChannel( mixerChannel* channel );
@@ -66,40 +61,26 @@ protected:
 
         QDial* trebleSlider;
 	QSlider* vuSlider;
-	QToolButton* prefButton;
 
 	QLabel* chName;
 	
-	QTimer* buttonBlinkTimer;
-
 	// channel settings Storage
 	mixerChannel::settingsType settings;
 
-	unsigned short channelID;
-	unsigned short playerPos;
+    QUuid uuid;
+
 	bool refreshMeta;
 	int metaMode;
 	QString staticMetaText;
-
-	//Dialogs
-	chanPrefDlg* prefDlg;
-	virtual void createPrefDlg();
-	virtual int execPrefDlg();
-	virtual void finishPrefDlg();
 			
 protected slots:
-	virtual void buttonBlinker();
-	virtual void showPrefs();
 	virtual void refresh();
 	virtual void save();
 	virtual void channelSettingsChanged( mixerChannel::settingsType );
 
 public slots:
 	virtual void changeName( QString newName );
-	virtual void changePos( int newPos );
-	virtual void setSlider( int hwChannel, int value );
-	virtual void buttonPressed( int hwChannel, int button );
-	virtual void saveSettings();
+        virtual void saveSettings();
 
 signals:
 	void refreshed();

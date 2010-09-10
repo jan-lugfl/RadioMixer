@@ -52,7 +52,6 @@ private:
 	QComboBox* channelSelect;
 
 protected slots:
-	virtual void showPrefs();
 	virtual void cardChanged( int item );
 };
 

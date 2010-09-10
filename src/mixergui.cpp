@@ -1,7 +1,7 @@
 /* $Id$ */
 /***************************************************************************
  *   OpenRadio - RadioMixer                                                *
- *   Copyright (C) 2005-2009 by Jan Boysen                                *
+ *   Copyright (C) 2005-2010 by Jan Boysen                                 *
  *   trekkie@media-mission.de                                              *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
@@ -20,8 +20,7 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 #include "mixergui.h"
-#include <QFrame>
-#include <QLabel>
+#include <QMessageBox>
 
 mixerGUI::mixerGUI( QWidget* parent , const char* name , Qt::WFlags fl )
  : QFrame( parent, name, fl)
@@ -35,195 +34,58 @@ mixerGUI::mixerGUI( QWidget* parent , const char* name , Qt::WFlags fl )
     setAutoFillBackground( TRUE );
     setAcceptDrops( TRUE );
 
-//	config = new QSettings( );
+    vuSlider = new QSlider( this, "volumeSlider" );
+    vuSlider->setMinimumHeight( 150 );
+    vuSlider->setOrientation( Qt::Vertical );
+    vuSlider->setTickmarks( QSlider::Both );
+    vuSlider->setMinValue( 0 );
+    vuSlider->setMaxValue( 100 );
+    vuSlider->setLineStep( 1 );
+    vuSlider->setPageStep( 10 );
+    vuSlider->setValue( 100 );
+    vuSlider->setTickInterval( 10 );
 
-        // TODO: hash of name ???
-//        channelID = 0;
+    trebleSlider = new QDial( this, "trebleSlider" );
+    trebleSlider->setMaxValue( 100 );
+    trebleSlider->setMinValue( -100 );
+    trebleSlider->setValue( 0 );
+    trebleSlider->setLineStep(1);
+    trebleSlider->setPageStep(10);
 
-	vuSlider = new QSlider( this, "volumeSlider" );
-        vuSlider->setMinimumHeight( 150 );
-        vuSlider->setOrientation( Qt::Vertical );
-	vuSlider->setTickmarks( QSlider::Both );
-	vuSlider->setMinValue( 0 );
-	vuSlider->setMaxValue( 100 );
-	vuSlider->setLineStep( 1 );
-	vuSlider->setPageStep( 10 );
-        vuSlider->setValue( 100 );
-	vuSlider->setTickInterval( 10 );
-
-	trebleSlider = new QDial( this, "trebleSlider" );
-        trebleSlider->setMaxValue( 100 );
-	trebleSlider->setMinValue( -100 );
-	trebleSlider->setValue( 0 );
-	trebleSlider->setLineStep(1);
-	trebleSlider->setPageStep(10);
-
-	chName = new QLabel( this, "chName" );
-        chName->setMaximumHeight( 23 );
-        chName->setFrameShape( QLabel::Panel );
-    	chName->setFrameShadow( QLabel::Sunken );
-    	chName->setAlignment( int( Qt::AlignCenter ) );
-//	changeName( config->readEntry( "/radiomixer/channel_"+QString::number( channelID )+"/name", tr("channel")+" "+QString::number(channelID) ) );
+    chName = new QLabel( this, "chName" );
+    chName->setMaximumHeight( 23 );
+    chName->setFrameShape( QLabel::Panel );
+    chName->setFrameShadow( QLabel::Sunken );
+    chName->setAlignment( int( Qt::AlignCenter ) );
 	
-	prefButton = new QToolButton( this, "prefButton" );
-        connect( prefButton, SIGNAL(clicked()), this, SLOT(showPrefs()) );
+    layout->addWidget( chName, 1, 1, 1, -1 );
+    layout->addLayout( actionButtons, 3, 3, Qt::AlignTop );
+    layout->addWidget( vuSlider, 3, 2, 2, 1 );
+    layout->addLayout( toolButtons, 4, 3, Qt::AlignBottom );
 
-	buttonBlinkTimer = new QTimer( this );
-	connect( buttonBlinkTimer, SIGNAL(timeout()), this, SLOT(buttonBlinker()));
-	buttonBlinkTimer->start( 30, FALSE );
-
-        layout->addWidget( chName, 1, 1, 1, -1 );
-        layout->addLayout( actionButtons, 3, 3, Qt::AlignTop );
-        layout->addWidget( vuSlider, 3, 2, 2, 1 );
-        layout->addLayout( toolButtons, 4, 3, Qt::AlignBottom );
-
-        toolButtons->addWidget( prefButton, 9, 1, Qt::AlignBottom );
-        toolButtons->addWidget( trebleSlider, 10, 1, Qt::AlignBottom );
-
-//	languageChange();
-	
-	// get default colors......
-//	int red, green, blue;
-//	paletteBackgroundColor().getRgb( &red, &green, &blue );
-
-//	refreshMeta = config->readBoolEntry( "/radiomixer/channel_"+QString::number( channelID )+"/setMeta", FALSE );
-//	metaMode = config->readNumEntry( "/radiomixer/channel_"+QString::number( channelID )+"/metaMode", 0 );
-
-//	setPaletteBackgroundColor( QColor(
-//		config->readNumEntry( "/radiomixer/channel_"+QString::number( channelID )+"/color_red", red ),
-//		config->readNumEntry( "/radiomixer/channel_"+QString::number( channelID )+"/color_green", green ),
-//		config->readNumEntry( "/radiomixer/channel_"+QString::number( channelID )+"/color_blue", blue )
-//	 		) );
-
-//	hwChannel = config->readNumEntry( "/radiomixer/channel_"+QString::number( channelID )+"/hwControl", 1 );
-//	delete config;
+    toolButtons->addWidget( trebleSlider, 10, 1, Qt::AlignBottom );
 }
 
 
 mixerGUI::~mixerGUI()
 {
-	delete trebleSlider;
-	delete vuSlider;
-	delete prefButton;
-	delete chName;
-	delete buttonBlinkTimer;
+    delete trebleSlider;
+    delete vuSlider;
+    delete chName;
 }
 
 void mixerGUI::languageChange()
 {
-    prefButton->setText( tr( "Pref" ) );
 }
 
-void mixerGUI::buttonBlinker()
+QUuid mixerGUI::getUuid()
 {
-}
-
-void mixerGUI::createPrefDlg( )
-{
-	int red, green, blue;
-	paletteBackgroundColor().getRgb( &red, &green, &blue );
-	
-	prefDlg = new chanPrefDlg( this, "ChannelPrefDlg");
-
-	prefDlg->EditName->setText( getName() );
-
-	prefDlg->Rot_Slider->setValue( red );
-	prefDlg->Gruen_Slider->setValue( green );
-	prefDlg->Blau_Slider->setValue( blue );
-	prefDlg->colorChanged();
-	
-	prefDlg->metaEnable->setChecked( refreshMeta );
-	prefDlg->metaAutoCheck->setChecked( FALSE );
-	prefDlg->metaAutoCheck->setChecked( FALSE );
-
-#ifdef ENABLE_HWMIXER
-	prefDlg->hardwareKanal->insertItem( tr("- none -") );
-	prefDlg->hardwareKanal->insertItem( tr("Channel 1") );
-	prefDlg->hardwareKanal->insertItem( tr("Channel 2") );
-	prefDlg->hardwareKanal->insertItem( tr("Channel 3") );
-	prefDlg->hardwareKanal->insertItem( tr("Channel 4") );
-	prefDlg->hardwareKanal->insertItem( tr("Channel 5") );
-	prefDlg->hardwareKanal->insertItem( tr("Channel 6") );
-	prefDlg->hardwareKanal->insertItem( tr("Channel 7") );
-	prefDlg->hardwareKanal->insertItem( tr("Channel 8") );
-//	prefDlg->hardwareKanal->setCurrentItem( config->readNumEntry( "/radiomixer/channel_"+QString::number( channelID )+"/hwControl", channelID ) );
-#else
-	delete prefDlg->hwChannelBox;
-#endif
-	// Hide type dependant settings area per default...
-	prefDlg->typeDependantSettings->hide();
-
-	switch( metaMode )
-	{
-		case 0:
-			prefDlg->metaAutoCheck->setChecked( TRUE);
-			break;
-		case 1:
-			prefDlg->metaManualCheck->setChecked( TRUE);
-			break;
-	}
-	prefDlg->metaManualText->setText( staticMetaText );
-}
-
-int mixerGUI::execPrefDlg( )
-{
-	int result = prefDlg->exec();
-	if( result == QDialog::Accepted )
-	{
-		changeName( prefDlg->EditName->text() );
-		setPaletteBackgroundColor( QColor( prefDlg->Rot_Slider->value(), prefDlg->Gruen_Slider->value(), prefDlg->Blau_Slider->value() ) );
-#ifdef ENABLE_HWMIXER
-//		hwChannel = prefDlg->hardwareKanal->currentItem();
-#endif
-
-//		config->writeEntry( "/radiomixer/channel_"+QString::number( channelID )+"/color_red", prefDlg->Rot_Slider->value() );
-//		config->writeEntry( "/radiomixer/channel_"+QString::number( channelID )+"/color_green", prefDlg->Gruen_Slider->value() );
-//		config->writeEntry( "/radiomixer/channel_"+QString::number( channelID )+"/color_blue", prefDlg->Blau_Slider->value() );
-
-		refreshMeta = prefDlg->metaEnable->isChecked();
-
-		if(prefDlg->metaEnable->isChecked())
-		{
-			if( prefDlg->metaManualCheck->isChecked() )
-				metaMode = 1;
-			else
-				metaMode = 0;
-			staticMetaText = prefDlg->metaManualText->text();
-		}
-		save();
-	}
-	return result;
-}
-
-void mixerGUI::showPrefs( )
-{
-	createPrefDlg();
-	execPrefDlg();
-	finishPrefDlg();	
-}
-
-void mixerGUI::setSlider( int hwChannel, int value )
-{
-/*	if( hwChannel == this->hwChannel-1 )
-	{
-		vuSlider->setValue(100-value );
-	}
-        */
+    return uuid;
 }
 
 void mixerGUI::changeName( QString newName )
 {
 	chName->setText( newName );
-}
-
-void mixerGUI::buttonPressed( int hwChannel, int button )
-{
-	qDebug("Channel: "+QString::number(hwChannel)+"Button: "+QString::number(button));
-}
-
-void mixerGUI::finishPrefDlg( )
-{
-	delete prefDlg;
 }
 
 void mixerGUI::refresh( )
@@ -236,12 +98,6 @@ QString mixerGUI::getName( )
 	return chName->text();
 }
 
-void mixerGUI::changePos( int newPos )
-{
-	playerPos = newPos>=0?newPos:channelID;
-	refresh();
-}
-
 void mixerGUI::save( )
 {
 //	config->writeEntry( "/radiomixer/channel_"+QString::number( channelID )+"/setMeta", refreshMeta );
@@ -251,16 +107,6 @@ void mixerGUI::save( )
 //	config->writeEntry( "/radiomixer/channel_"+QString::number( channelID )+"/name", getName() );
 //	config->writeEntry( "/radiomixer/channel_"+QString::number( channelID )+"/hwControl", hwChannel );
 //	config->writeEntry( "/radiomixer/channel_"+QString::number( channelID )+"/type", getType() );
-}
-
-int mixerGUI::currentPosition( )
-{
-	return playerPos;
-}
-
-int mixerGUI::getPlayerID( )
-{
-	return channelID;
 }
 
 void mixerGUI::saveSettings( )
@@ -275,10 +121,16 @@ QColor mixerGUI::getColor( )
 void mixerGUI::channelSettingsChanged( mixerChannel::settingsType settings )
 {
     this->settings = settings;
+
+    changeName( settings["name"].toString() );
+    setPaletteBackgroundColor( settings["color"].value<QColor>() );
+
 }
 
 void mixerGUI::associateToChannel( mixerChannel* channel )
 {
+    this->uuid = channel->getUuid();
+
     connect( channel, SIGNAL(nameChanged(QString)), this, SLOT(changeName(QString)) );
     connect( channel, SIGNAL(volumeChanged( int )), vuSlider, SLOT( setValue( int ) ) );
     connect( vuSlider, SIGNAL(valueChanged( int )), channel, SLOT( setVolume( int ) ) );
@@ -286,4 +138,6 @@ void mixerGUI::associateToChannel( mixerChannel* channel )
     connect( channel, SIGNAL(trebleChanged( int )), trebleSlider, SLOT( setValue( int ) ) );
     connect( channel, SIGNAL(settingsChanged( mixerChannel::settingsType ) ), this, SLOT( channelSettingsChanged( mixerChannel::settingsType ) ) );
     connect( this, SIGNAL(updateSettings( mixerChannel::settingsType ) ), channel, SLOT( updateSettings( mixerChannel::settingsType ) ) );
+    // fetch settings..
+    channelSettingsChanged( channel->getSettings() );
 }

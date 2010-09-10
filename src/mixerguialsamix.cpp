@@ -43,7 +43,7 @@ void mixerGuiAlsaMix::languageChange( )
 	muteBut->setText( tr( "Mute" ) );
 }
 
-void mixerGuiAlsaMix::showPrefs( )
+/*void mixerGuiAlsaMix::showPrefs( )
 {
         mixerGUI::createPrefDlg( );
 
@@ -97,6 +97,7 @@ void mixerGuiAlsaMix::showPrefs( )
 	delete channelSelect;
 	mixerGUI::finishPrefDlg( );
 }
+*/
 
 void mixerGuiAlsaMix::cardChanged( int card )
 {

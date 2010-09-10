@@ -22,21 +22,16 @@
    </property>
    <layout class="QHBoxLayout" name="horizontalLayout"/>
   </widget>
+  <widget class="QStatusBar" name="statusbar"/>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
     <rect>
      <x>0</x>
      <y>0</y>
      <width>800</width>
-     <height>27</height>
+     <height>21</height>
     </rect>
    </property>
-   <widget class="QMenu" name="menu_Channel">
-    <property name="title">
-     <string>&amp;Channel</string>
-    </property>
-    <addaction name="action_Add"/>
-   </widget>
    <widget class="QMenu" name="menu_Help">
     <property name="title">
      <string>&amp;Help</string>
@@ -53,11 +48,9 @@
     <addaction name="separator"/>
     <addaction name="action_Settings"/>
    </widget>
-   <addaction name="menu_Channel"/>
    <addaction name="menu_Window"/>
    <addaction name="menu_Help"/>
   </widget>
-  <widget class="QStatusBar" name="statusbar"/>
   <action name="action_About">
    <property name="text">
     <string>&amp;About</string>

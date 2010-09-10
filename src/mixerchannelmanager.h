@@ -33,6 +33,13 @@ class mixerChannelManager
 public:
     static void registerChannel( mixerChannel* );
     static void unregisterChannel( mixerChannel* );
+    static void init_supportedChannels();
+    static mixerChannel* getChannelByUuid( QUuid uuid );
+    static QStringList getChannelTypes();
+    static QStringList getChannelTypeNames();
+    static QString getChannelTypeFromTypeName( QString typeName );
+
+    static QMap<QString,QString> supportedChannelTypes;
 
     typedef QVector<mixerChannel*> storageType;
 

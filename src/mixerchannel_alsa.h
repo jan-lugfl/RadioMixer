@@ -33,11 +33,12 @@ class mixerChannel_ALSA : public mixerChannel
 	Q_OBJECT
 
 public:
-    mixerChannel_ALSA();
-    ~mixerChannel_ALSA();
+    explicit mixerChannel_ALSA( const char *name = 0, QUuid uuid = QUuid() );
+    virtual ~mixerChannel_ALSA();
 
+    static QString const Type;
     virtual AudioDataType getAudioDataType() { return mixerChannel::AudioDataNone; }
-    virtual QString getType() { return QString("ALSAMIX"); }
+    virtual QString getType() { return Type; }
 
 private:
 	snd_mixer_t*	alsaMixer;

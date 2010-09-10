@@ -1,7 +1,7 @@
 /* $Id$ */
 /***************************************************************************
  *   OpenRadio - RadioMixer                                                *
- *   Copyright (C) 2005-2009 by Jan Boysen                                *
+ *   Copyright (C) 2005-2010 by Jan Boysen                                 *
  *   trekkie@media-mission.de                                              *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
@@ -21,9 +21,12 @@
  ***************************************************************************/
 #include "mixerchannel_fileplayer.h"
 
-mixerChannel_filePlayer::mixerChannel_filePlayer( const char *name )
- : mixerChannel(name)
+QString const mixerChannel_filePlayer::Type = QString("PLAYER");
+
+mixerChannel_filePlayer::mixerChannel_filePlayer( const char *name, QUuid uuid )
+ : mixerChannel(name, uuid)
 {
+    type = Type;
 	bufferThread = new channelBufMngr(this);
 	fileOpen = FALSE;
 	loopMode = FALSE;
@@ -61,7 +64,7 @@ void mixerChannel_filePlayer::open( playListItem* track )
 	{
 		QRegExp rx( "^(.*)\\.(\\w+)$" );
 		if ( rx.search( track->getFilename() ) != -1 ) {
-#ifdef HAVE_VORBIS
+#ifdef HAVE_OGG
 			if( rx.cap(2).lower() == "ogg" )
 			{
 				qWarning( tr("OGG/Vorbis File detected") );
@@ -113,14 +116,14 @@ void mixerChannel_filePlayer::decode( )
 	int dataFetched;
 	unsigned int toFetch = soundBuffers[0].getFree();
 
-	dataFetched = decoder->decode( &decBuff, toFetch );
+        dataFetched = decoder->decode( &decBuff, toFetch );
 
 	// Update track position
 	emit(positionChanged( QTime(0,0,0,0).addMSecs(decoder->getPlayedFrames()*40) ));
 
-	if(dataFetched == 0)
+        if(dataFetched == 0)
 	{
-		if( loopMode )
+                if( loopMode )
 		{
 			decoder->reset();
 			dataFetched = decoder->decode( &decBuff, toFetch );
@@ -137,21 +140,12 @@ void mixerChannel_filePlayer::decode( )
 		if( channels == 1 )
 		{
 			decBuff[1] = new float[dataFetched];
-			for(int i=0; i<(dataFetched); i++)
-			{
-				decBuff[1][i] = decBuff[0][i];
-			}
-		}
-		//mix volumes
-		for(int i=0; i<(dataFetched); i++)
-		{
-			decBuff[0][i] *= volume * volume_left;
-			decBuff[1][i] *= volume * volume_right;
-		}
-		//Write Data to ringbuffer
+                        memcpy(decBuff[1], decBuff[0], dataFetched );
+                }
+                //Write Data to ringbuffer
 		soundBuffers[0].write( decBuff[0], dataFetched );
 		soundBuffers[1].write( decBuff[1], dataFetched );
-	
+
 		//deallocate Memory if we are mixing mono to strereo
 		if( channels == 1 )
 			delete decBuff[1];
@@ -220,7 +214,6 @@ const int mixerChannel_filePlayer::getTime( )
 void mixerChannel_filePlayer::setName( QString newName )
 {
         mixerChannel::setName( newName );
-	emit( nameChanged( newName ) );
 	emit( refreshed() );
 }
 

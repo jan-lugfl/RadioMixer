@@ -1,7 +1,7 @@
 /* $Id$ */
 /***************************************************************************
  *   OpenRadio - RadioMixer                                                *
- *   Copyright (C) 2005-2007 by Jan Boysen                                *
+ *   Copyright (C) 2005-2010 by Jan Boysen                                 *
  *   trekkie@media-mission.de                                              *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
@@ -30,7 +30,7 @@
 #include <stdio.h>
 #include <qregexp.h>
 
-#ifdef HAVE_VORBIS
+#ifdef HAVE_OGG
 #include "oggdecoder.h"
 #endif
 
@@ -49,9 +49,11 @@ class mixerChannel_filePlayer : public mixerChannel
   Q_OBJECT
 
 public:
-    mixerChannel_filePlayer( const char *name = 0 );
-    ~mixerChannel_filePlayer();
-	
+    explicit mixerChannel_filePlayer( const char *name = 0, QUuid uuid = QUuid() );
+    virtual ~mixerChannel_filePlayer();
+
+    static QString const Type;
+
 	// Public Member for the BufferMngr Thread
 	virtual void checkBuffer();
 	virtual const bool isFileOpen();
@@ -59,7 +61,7 @@ public:
 	
     // Specialisations
     virtual AudioDataType getAudioDataType() { return mixerChannel::AudioDataIn; }
-    virtual QString getType() { return QString("PLAYER"); }
+    virtual QString getType() { return Type; }
     virtual void setName( QString newName );
 
     // States of the Player

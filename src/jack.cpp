@@ -30,6 +30,7 @@ bool Jack::connected = false;
 int Jack::bufSize = 0;
 unsigned int Jack::smplRate = 0;
 jack_client_t* Jack::jack = NULL;
+QVector<jack_MIDIControl*> Jack::midi_controllers;
 
 void Jack::errorHandler( const char* msg )
 {
@@ -50,6 +51,11 @@ int Jack::process( jack_nframes_t frames, void * arg )
     for( it = mixerChannelManager::outChannels.begin(); it != mixerChannelManager::outChannels.end(); it++ )
 	if( (*it)->getType() == "JACKOUT" )
 	    dynamic_cast<mixerChannel_jackOut*>(*it)->process( frames );
+
+    // process MIDI data..
+    QVector<jack_MIDIControl*>::iterator midi_it;
+    for( midi_it = midi_controllers.begin(); midi_it != midi_controllers.end(); midi_it++ )
+        (*midi_it)->process( frames );
 
     return 0;
 }
@@ -93,7 +99,25 @@ void Jack::connect( QString client_name )
 jack_port_t* Jack::newPort( QString name, unsigned long flags )
 {
     if( Jack::connected )
-	return  jack_port_register( jack, name,  JACK_DEFAULT_AUDIO_TYPE, flags ,0 );
+        return  jack_port_register( jack, name, JACK_DEFAULT_AUDIO_TYPE, flags ,0 );
     else
 	return NULL;
+}
+
+// This registers a new controller port
+jack_MIDIControl* Jack::newController( QString name, bool bidirectional )
+{
+    jack_MIDIControl* controller = NULL;
+    if( Jack::connected )
+    {
+        controller = new jack_MIDIControl();
+        controller->input = jack_port_register( jack, name+"_in", JACK_DEFAULT_MIDI_TYPE, JackPortIsInput ,0 );
+        if( bidirectional )
+        {
+            controller->is_bidirectional = true;
+            controller->output = jack_port_register( jack, name+"_out", JACK_DEFAULT_MIDI_TYPE, JackPortIsOutput ,0 );
+        }
+        midi_controllers.append( controller );
+    }
+    return controller;
 }
