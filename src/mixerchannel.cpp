@@ -67,7 +67,6 @@ mixerChannel::~mixerChannel()
 {
     // unregister myself in the channel manager
     mixerChannelManager::unregisterChannel( this );
-    Settings::remove("channels/"+uuid.toString());
 }
 
 void mixerChannel::registerChannel()

@@ -52,7 +52,7 @@ mainWindow::mainWindow(QWidget *parent) :
     rc = new remoteControl_MIDI(this, "BCF2000");
 
     // load channels from Config...
-    foreach(QString itm, Settings::getSubKeys( "channels" ))
+    foreach(QString itm, Settings::get("channels").toStringList())
     {
         qWarning( itm );
         mixerChannel::settingsType settings = Settings::get("channels/"+itm).value<mixerChannel::settingsType>();
@@ -167,6 +167,7 @@ mainWindow::mainWindow(QWidget *parent) :
 
 mainWindow::~mainWindow()
 {
+    Settings::sync();
     delete rm_ui;
 }
 
@@ -202,11 +203,14 @@ void mainWindow::showSettings()
         temp[mixer->getUuid()] = item;
     }
 
+    QStringList channelOrder;
     foreach( QUuid item, win->channels )
     {
         rm_ui->horizontalLayout->addItem( temp[item] );
+        channelOrder.append( item.toString() );
         temp.remove( item );
     }
+    Settings::set("channels", channelOrder);
 
     // destroy all remaining channels in temp as they seems to have been deleted...
     foreach( QUuid item, temp.keys() )

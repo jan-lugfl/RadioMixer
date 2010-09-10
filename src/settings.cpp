@@ -45,3 +45,8 @@ QStringList Settings::getSubKeys(const QString &key)
     Settings::settings.endGroup();
     return ret;
 }
+
+void Settings::sync()
+{
+    Settings::settings.sync();
+}
