@@ -186,3 +186,9 @@ void mainWindow::on_action_About_triggered()
     aboutDialog win(this);
     win.exec();
 }
+
+void mainWindow::on_action_Playlist_Manager_triggered()
+{
+    playlistDlg = new playlistDialog(this);
+    playlistDlg->show();
+}

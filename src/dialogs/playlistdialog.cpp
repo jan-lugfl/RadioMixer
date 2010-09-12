@@ -1,7 +1,7 @@
 /* $Id:$ */
 /***************************************************************************
  *   OpenRadio - RadioMixer                                                *
- *   Copyright (C) 2005-2009 by Jan Boysen                                *
+ *   Copyright (C) 2010 by Jan Boysen                                      *
  *   trekkie@media-mission.de                                              *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
@@ -19,60 +19,29 @@
  *   Free Software Foundation, Inc.,                                       *
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
+#include "playlistdialog.h"
+#include "ui_playlistdialog.h"
 
-#ifndef MAINWINDOW_H
-#define MAINWINDOW_H
-
-#include "metainfo.h"
-#include "soundplayer.h"
-#include "mixerguialsamix.h"
-#include "channelmixer.h"
-#include "remotecontrol_midi.h"
-
-#include "dialogs/playlistdialog.h"
-
-#include <QtGui/QMainWindow>
-
-namespace Ui {
-    class RadioMixer;
+playlistDialog::playlistDialog(QWidget *parent) :
+    QDialog(parent),
+    ui(new Ui::playlistDialog)
+{
+    ui->setupUi(this);
 }
 
-class mainWindow : public QMainWindow {
-    Q_OBJECT
-    Q_DISABLE_COPY(mainWindow)
-public:
-    explicit mainWindow(QWidget *parent = 0);
-    virtual ~mainWindow();
+playlistDialog::~playlistDialog()
+{
+    delete ui;
+}
 
-    QUuid addNewChannel( QString type, QUuid uuid = QUuid() );
-    Ui::RadioMixer *rm_ui;
-
-public slots:
-    virtual void aboutQt();
-    virtual void showSettings();
-
-protected:
-    virtual void changeEvent(QEvent *e);
-
-private:
-    soundPlayer* player;
-    // used for testing only
-    remoteControl* rc;
-
-    // Meta Info for Live Streaming with Ices
-    metaInfo meta;
-
-    // object for our channel mixer thread which the mixing engine for all channels...
-    channelMixer* mixer;
-
-    playlistDialog* playlistDlg;
-
-signals:
-    void showAboutQt();
-
-private slots:
-    void on_action_Playlist_Manager_triggered();
-    void on_action_About_triggered();
-};
-
-#endif // MAINWINDOW_H
+void playlistDialog::changeEvent(QEvent *e)
+{
+    QDialog::changeEvent(e);
+    switch (e->type()) {
+    case QEvent::LanguageChange:
+        ui->retranslateUi(this);
+        break;
+    default:
+        break;
+    }
+}

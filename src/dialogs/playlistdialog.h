@@ -1,7 +1,7 @@
 /* $Id:$ */
 /***************************************************************************
  *   OpenRadio - RadioMixer                                                *
- *   Copyright (C) 2005-2009 by Jan Boysen                                *
+ *   Copyright (C) 2010 by Jan Boysen                                      *
  *   trekkie@media-mission.de                                              *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
@@ -19,60 +19,26 @@
  *   Free Software Foundation, Inc.,                                       *
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
+#ifndef PLAYLISTDIALOG_H
+#define PLAYLISTDIALOG_H
 
-#ifndef MAINWINDOW_H
-#define MAINWINDOW_H
-
-#include "metainfo.h"
-#include "soundplayer.h"
-#include "mixerguialsamix.h"
-#include "channelmixer.h"
-#include "remotecontrol_midi.h"
-
-#include "dialogs/playlistdialog.h"
-
-#include <QtGui/QMainWindow>
+#include <QDialog>
 
 namespace Ui {
-    class RadioMixer;
+    class playlistDialog;
 }
 
-class mainWindow : public QMainWindow {
+class playlistDialog : public QDialog {
     Q_OBJECT
-    Q_DISABLE_COPY(mainWindow)
 public:
-    explicit mainWindow(QWidget *parent = 0);
-    virtual ~mainWindow();
-
-    QUuid addNewChannel( QString type, QUuid uuid = QUuid() );
-    Ui::RadioMixer *rm_ui;
-
-public slots:
-    virtual void aboutQt();
-    virtual void showSettings();
+    playlistDialog(QWidget *parent = 0);
+    ~playlistDialog();
 
 protected:
-    virtual void changeEvent(QEvent *e);
+    void changeEvent(QEvent *e);
 
 private:
-    soundPlayer* player;
-    // used for testing only
-    remoteControl* rc;
-
-    // Meta Info for Live Streaming with Ices
-    metaInfo meta;
-
-    // object for our channel mixer thread which the mixing engine for all channels...
-    channelMixer* mixer;
-
-    playlistDialog* playlistDlg;
-
-signals:
-    void showAboutQt();
-
-private slots:
-    void on_action_Playlist_Manager_triggered();
-    void on_action_About_triggered();
+    Ui::playlistDialog *ui;
 };
 
-#endif // MAINWINDOW_H
+#endif // PLAYLISTDIALOG_H

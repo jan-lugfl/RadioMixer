@@ -2,15 +2,18 @@ SET( DIALOGS_CPPS
 	aboutdialog.cpp
 	settingsdialog.cpp
 	listwidgetitemwithid.cpp
+        playlistdialog.cpp
 )
 
 SET( DIALOGS_MOC_HDRS
 	aboutdialog.h
 	settingsdialog.h
+        playlistdialog.h
 )
 
 SET( DIALOGS_UIS
 	uis/settingsdialog.ui
+        uis/playlistdialog.ui
         uis/aboutDialog.ui
 )
 
