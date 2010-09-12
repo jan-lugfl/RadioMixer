@@ -1,19 +1,15 @@
 SET( WIDGETS_CPPS
 	blinkbutton.cpp
 	glowbutton.cpp
-	playlist.cpp
-	playlistviewitem.cpp
-	songlistview.cpp
 	timedisplay.cpp
 	timer.cpp
 	vumeter.cpp
+	playlistwidget.cpp
 )
 
 SET( WIDGETS_MOC_HDRS
 	blinkbutton.h
 	glowbutton.h
-	playlistviewitem.h
-	songlistview.h
 	timedisplay.h
 	timer.h
 	vumeter.h

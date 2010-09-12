@@ -52,6 +52,14 @@ mainWindow::mainWindow(QWidget *parent) :
     // create one remote control
     rc = new remoteControl_MIDI(this, "BCF2000");
 
+    // create some test playlists..
+    playList* pls1 = new playList();
+    pls1->rename("Playlist 1");
+    playList* pls2 = new playList();
+    pls2->rename("Playlist 2");
+    playList* pls3 = new playList();
+    pls3->rename("Playlist 3");
+
     // load channels from Config...
     foreach(QString itm, Settings::get("channels").toStringList())
     {

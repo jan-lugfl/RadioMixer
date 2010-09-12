@@ -19,34 +19,41 @@
  *   Free Software Foundation, Inc.,                                       *
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
-#ifndef PLAYLISTDIALOG_H
-#define PLAYLISTDIALOG_H
-
-#include <QDialog>
-#include <QListWidgetItem>
-
+#include "playlist.h"
 #include "playlistmanager.h"
 
-namespace Ui {
-    class playlistDialog;
+playList::playList(QObject *parent) :
+    QObject(parent)
+{
+    // get manager an register myself... The manager connects some signals ans slots...
+    playlistManager::getInstance()->registerPlaylist( this );
 }
 
-class playlistDialog : public QDialog {
-    Q_OBJECT
-public:
-    playlistDialog(QWidget *parent = 0);
-    ~playlistDialog();
+playList::~playList()
+{
+    emit( destroyed() );
 
-protected:
-    void changeEvent(QEvent *e);
-    playlistManager* plm;
+    // destroy all items...
+    foreach(playListItem* item, items)
+        delete item;
+}
 
-private:
-    Ui::playlistDialog *ui;
+QString playList::getName()
+{
+    return name;
+}
 
-private slots:
-    void on_playlistList_currentItemChanged(QListWidgetItem* current, QListWidgetItem* previous);
-    void on_playlistList_itemChanged(QListWidgetItem* item);
-};
+void playList::rename(QString name)
+{
+    qWarning("renaming playlist to "+name);
+    if(name != this->name)
+    {
+        this->name = name;
+        emit( renamed( this->name ) );
+    }
+}
 
-#endif // PLAYLISTDIALOG_H
+void playList::addItem( playListItem* newItem )
+{
+    items.append( newItem );
+}

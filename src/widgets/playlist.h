@@ -19,26 +19,27 @@
  *   Free Software Foundation, Inc.,                                       *
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
-#ifndef PLAYLIST_H
-#define PLAYLIST_H
+//#ifndef PLAYLIST_H
+//#define PLAYLIST_H
 
-#include "playlistviewitem.h"
+//#include "playlistviewitem.h"
 
-#include <q3listview.h>
-#include <qobject.h>
-#include <qfile.h>
-#include <QTextStream>
-#include <qdom.h>
-#include <qmessagebox.h>
-#include <q3valuelist.h>
+//#include <q3listview.h>
+//#include <qobject.h>
+//#include <qfile.h>
+//#include <QTextStream>
+//#include <qdom.h>
+//#include <qmessagebox.h>
+//#include <q3valuelist.h>
 //Added by qt3to4:
-#include <QDropEvent>
+//#include <QDropEvent>
 
-#define PLAYLIST_RTTI 1001
+//#define PLAYLIST_RTTI 1001
 
 /**
 	@author Jan Boysen <trekkie@media-mission.de>
 */
+/*
 class playList : public Q3ListViewItem
 {
 public:
@@ -88,5 +89,5 @@ public:
 	~playlistDragObject();
 
 };
-
-#endif
+*/
+//#endif

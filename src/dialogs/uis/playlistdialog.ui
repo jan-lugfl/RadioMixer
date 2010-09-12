@@ -37,6 +37,9 @@
           <height>16777215</height>
          </size>
         </property>
+        <property name="uniformItemSizes">
+         <bool>true</bool>
+        </property>
        </widget>
       </item>
       <item row="0" column="1">

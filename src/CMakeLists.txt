@@ -1,6 +1,5 @@
 ADD_SUBDIRECTORY( widgets )
 ADD_SUBDIRECTORY( dialogs )
-ADD_SUBDIRECTORY( dialoge )
 
 SET( SRC_CPPS
 	jack.cpp
@@ -33,6 +32,8 @@ SET( SRC_CPPS
 	soundplayer.cpp
 	mainWindow.cpp
 	settings.cpp
+	playlist.cpp
+	playlistmanager.cpp
 )
 
 SET( SRC_MOC_HDRS
@@ -58,6 +59,8 @@ SET( SRC_MOC_HDRS
 	oggdecoder.h
 	playlistitemsongdb.h
 	mainWindow.h
+	playlist.h
+	playlistmanager.h
 )
 
 SET( SRC_UIS
@@ -68,11 +71,11 @@ SET( RADIOMIXER_RCS
 	../radiomixer.qrc
 )
 
-INCLUDE_DIRECTORIES( "." "widgets" "dialoge" ${CMAKE_BINARY_DIR}/src/widgets ${CMAKE_BINARY_DIR}/src/dialoge ${CMAKE_BINARY_DIR}/src )
+INCLUDE_DIRECTORIES( "." "widgets" "dialogs" ${CMAKE_BINARY_DIR}/src/widgets ${CMAKE_BINARY_DIR}/src/dialogs ${CMAKE_BINARY_DIR}/src )
 QT4_WRAP_CPP( SRC_MOC_SRCS ${SRC_MOC_HDRS} )
 QT4_WRAP_UI( SRC_UI_HDRS ${SRC_UIS} )
 QT4_ADD_RESOURCES( RADIOMIXER_RC_SRCS ${RADIOMIXER_RCS} )
 ADD_EXECUTABLE(radiomixer ${SRC_CPPS} ${SRC_UI_HDRS} ${SRC_MOC_SRCS} ${RADIOMIXER_RC_SRCS} )
 
-TARGET_LINK_LIBRARIES(radiomixer ${QT_LIBRARIES} ${ALSA_LIBRARIES} ${JACKD_LIBRARIES} ${MAD_LIBRARIES} ${OGG_LIBRARIES} ${SAMPLERATE_LIBRARIES} dialoge dialogs widgets )
-ADD_DEPENDENCIES( radiomixer dialoge dialogs widgets )
+TARGET_LINK_LIBRARIES(radiomixer ${QT_LIBRARIES} ${ALSA_LIBRARIES} ${JACKD_LIBRARIES} ${MAD_LIBRARIES} ${OGG_LIBRARIES} ${SAMPLERATE_LIBRARIES} dialogs widgets )
+ADD_DEPENDENCIES( radiomixer dialogs widgets )

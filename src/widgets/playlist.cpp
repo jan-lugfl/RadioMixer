@@ -19,9 +19,10 @@
  *   Free Software Foundation, Inc.,                                       *
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
-#include "playlist.h"
-#include <QDropEvent>
+//#include "playlist.h"
+//#include <QDropEvent>
 
+/*
 playList::playList( Q3ListView* parent, QString name, QString file )
  : Q3ListViewItem( parent, name ), manualNextSongPtr( NULL ), recuePlayed( FALSE )
 {
@@ -291,3 +292,4 @@ Q3StoredDrag( "application/x-radiomixer-playlist", dragSource, name )
 playlistDragObject::~playlistDragObject()
 {
 }
+*/

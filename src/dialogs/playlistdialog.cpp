@@ -22,11 +22,19 @@
 #include "playlistdialog.h"
 #include "ui_playlistdialog.h"
 
+#include "playlistwidget.h"
+
 playlistDialog::playlistDialog(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::playlistDialog)
 {
     ui->setupUi(this);
+
+    // get playlist manager singleton...
+    plm = playlistManager::getInstance();
+
+    foreach( playList* playlist, plm->getAllPlaylists() )
+        new playlistWidget( playlist, ui->playlistList );
 }
 
 playlistDialog::~playlistDialog()
@@ -44,4 +52,16 @@ void playlistDialog::changeEvent(QEvent *e)
     default:
         break;
     }
+}
+
+void playlistDialog::on_playlistList_itemChanged(QListWidgetItem* item)
+{
+    playlistWidget* pls = dynamic_cast<playlistWidget*>(item);
+    if(pls)
+        pls->playlist->rename( item->text() );
+}
+
+void playlistDialog::on_playlistList_currentItemChanged(QListWidgetItem* current, QListWidgetItem* previous)
+{
+
 }

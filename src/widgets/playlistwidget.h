@@ -19,34 +19,21 @@
  *   Free Software Foundation, Inc.,                                       *
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
-#ifndef PLAYLISTDIALOG_H
-#define PLAYLISTDIALOG_H
+#ifndef PLAYLISTWIDGET_H
+#define PLAYLISTWIDGET_H
 
-#include <QDialog>
 #include <QListWidgetItem>
 
-#include "playlistmanager.h"
+#include "../playlist.h"
 
-namespace Ui {
-    class playlistDialog;
-}
+#define LISTWIDGETITEM_PLAYLIST 1002
 
-class playlistDialog : public QDialog {
-    Q_OBJECT
+class playlistWidget : public QListWidgetItem
+{
 public:
-    playlistDialog(QWidget *parent = 0);
-    ~playlistDialog();
+    explicit playlistWidget( playList* playlist, QListWidget* parent = 0 );
 
-protected:
-    void changeEvent(QEvent *e);
-    playlistManager* plm;
-
-private:
-    Ui::playlistDialog *ui;
-
-private slots:
-    void on_playlistList_currentItemChanged(QListWidgetItem* current, QListWidgetItem* previous);
-    void on_playlistList_itemChanged(QListWidgetItem* item);
+    playList* playlist;
 };
 
-#endif // PLAYLISTDIALOG_H
+#endif // PLAYLISTWIDGET_H
