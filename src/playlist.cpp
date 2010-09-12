@@ -43,9 +43,13 @@ QString playList::getName()
     return name;
 }
 
+QList<playListItem*> playList::getItems()
+{
+    return items;
+}
+
 void playList::rename(QString name)
 {
-    qWarning("renaming playlist to "+name);
     if(name != this->name)
     {
         this->name = name;

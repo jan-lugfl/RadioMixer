@@ -36,6 +36,7 @@ public:
     virtual ~playList();
 
     QString getName();
+    QList<playListItem*> getItems();
 
 protected:
     QString name;

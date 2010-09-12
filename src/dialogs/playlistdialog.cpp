@@ -23,6 +23,7 @@
 #include "ui_playlistdialog.h"
 
 #include "playlistwidget.h"
+#include <QTreeWidgetItem>
 
 playlistDialog::playlistDialog(QWidget *parent) :
     QDialog(parent),
@@ -63,5 +64,12 @@ void playlistDialog::on_playlistList_itemChanged(QListWidgetItem* item)
 
 void playlistDialog::on_playlistList_currentItemChanged(QListWidgetItem* current, QListWidgetItem* previous)
 {
-
+    ui->playListView->clear();
+    playList* plst = dynamic_cast<playlistWidget*>(current)->playlist;
+    foreach(playListItem* item, plst->getItems())
+    {
+        QTreeWidgetItem* itm = new QTreeWidgetItem( ui->playListView );
+        itm->setText( 0, item->getTitle() );
+        itm->setText( 1, item->getArtist() );
+    }
 }

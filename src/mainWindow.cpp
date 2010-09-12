@@ -55,6 +55,7 @@ mainWindow::mainWindow(QWidget *parent) :
     // create some test playlists..
     playList* pls1 = new playList();
     pls1->rename("Playlist 1");
+    pls1->addItem( new playListItem("/mp3/inmyhand.mp3") );
     playList* pls2 = new playList();
     pls2->rename("Playlist 2");
     playList* pls3 = new playList();
