@@ -37,13 +37,16 @@ playlistDialog::playlistDialog(QWidget *parent) :
 
     foreach( playList* playlist, plm->getAllPlaylists() )
         new playlistWidget( playlist, ui->playlistList );
+    ui->playlistList->setCurrentRow(0);
 
     // append one initial file browser source tab...
     fileBrowser* filebrowser = new fileBrowser( ui->itemSourceTab );
     ui->itemSourceTab->insertTab( filebrowser, tr("Filebrowser") );
+    connect( filebrowser, SIGNAL(itemSelected(playListItem*)), this, SLOT(addItemToCurrentPlaylist(playListItem*)));
 
     songDbBrowser* songdb = new songDbBrowser( ui->itemSourceTab );
     ui->itemSourceTab->insertTab( songdb, tr("SongDB browser") );
+    connect( songdb, SIGNAL(itemSelected(playListItem*)), this, SLOT(addItemToCurrentPlaylist(playListItem*)));
 }
 
 playlistDialog::~playlistDialog()
@@ -72,12 +75,34 @@ void playlistDialog::on_playlistList_itemChanged(QListWidgetItem* item)
 
 void playlistDialog::on_playlistList_currentItemChanged(QListWidgetItem* current, QListWidgetItem* previous)
 {
+    playlistWidget* prev = dynamic_cast<playlistWidget*>(previous);
+    if(prev)
+        disconnect( prev->playlist, SIGNAL(changed()), this, SLOT(reloadPlaylist()));
+    playlistWidget* cur = dynamic_cast<playlistWidget*>(previous);
+    if(cur)
+        connect( cur->playlist, SIGNAL(changed()), this, SLOT(reloadPlaylist()));
+    reloadPlaylist();
+}
+
+void playlistDialog::reloadPlaylist()
+{
     ui->playListView->clear();
-    playList* plst = dynamic_cast<playlistWidget*>(current)->playlist;
+    playList* plst = dynamic_cast<playlistWidget*>(ui->playlistList->currentItem())->playlist;
     foreach(playListItem* item, plst->getItems())
     {
         QTreeWidgetItem* itm = new QTreeWidgetItem( ui->playListView );
         itm->setText( 0, item->getTitle() );
         itm->setText( 1, item->getArtist() );
     }
+    ui->playListView->resizeColumnToContents(0);
+    ui->playListView->resizeColumnToContents(1);
+}
+
+void playlistDialog::addItemToCurrentPlaylist( playListItem* item )
+{
+    playlistWidget* plst = dynamic_cast<playlistWidget*>(ui->playlistList->currentItem());
+    if(plst)
+        plst->playlist->addItem( item );
+    else
+        qWarning("FATAL: trying to add item to playlist but non selected...");
 }

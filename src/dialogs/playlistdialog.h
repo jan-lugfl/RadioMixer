@@ -47,6 +47,9 @@ private:
 private slots:
     void on_playlistList_currentItemChanged(QListWidgetItem* current, QListWidgetItem* previous);
     void on_playlistList_itemChanged(QListWidgetItem* item);
+
+    void addItemToCurrentPlaylist( playListItem* item );
+    void reloadPlaylist();
 };
 
 #endif // PLAYLISTDIALOG_H

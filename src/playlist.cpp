@@ -54,10 +54,12 @@ void playList::rename(QString name)
     {
         this->name = name;
         emit( renamed( this->name ) );
+        emit( changed() );
     }
 }
 
 void playList::addItem( playListItem* newItem )
 {
     items.append( newItem );
+    emit( changed() );
 }

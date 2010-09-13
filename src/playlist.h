@@ -44,6 +44,7 @@ protected:
 
 signals:
     void renamed( QString );
+    void changed();
 
 public slots:
     virtual void rename( QString name );

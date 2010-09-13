@@ -31,8 +31,8 @@ namespace Ui {
 class songDbBrowser : public QWidget {
     Q_OBJECT
 public:
-    songDbBrowser(QWidget *parent = 0);
-    ~songDbBrowser();
+    explicit songDbBrowser(QWidget *parent = 0);
+    virtual ~songDbBrowser();
 
 protected:
     void changeEvent(QEvent *e);
