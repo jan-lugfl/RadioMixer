@@ -143,11 +143,11 @@
         <layout class="QGridLayout" name="gridLayout_2">
          <item row="0" column="0" colspan="2">
           <widget class="QListWidget" name="channelList">
-           <property name="maximumSize">
-            <size>
-             <width>180</width>
-             <height>16777215</height>
-            </size>
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+             <horstretch>1</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
            </property>
           </widget>
          </item>
@@ -205,6 +205,12 @@
          </item>
          <item row="0" column="2">
           <widget class="QToolBox" name="channelSettings">
+           <property name="sizePolicy">
+            <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+             <horstretch>4</horstretch>
+             <verstretch>0</verstretch>
+            </sizepolicy>
+           </property>
            <property name="currentIndex">
             <number>0</number>
            </property>
@@ -213,7 +219,7 @@
              <rect>
               <x>0</x>
               <y>0</y>
-              <width>289</width>
+              <width>307</width>
               <height>337</height>
              </rect>
             </property>
@@ -258,8 +264,8 @@
              <rect>
               <x>0</x>
               <y>0</y>
-              <width>100</width>
-              <height>30</height>
+              <width>275</width>
+              <height>337</height>
              </rect>
             </property>
             <attribute name="label">

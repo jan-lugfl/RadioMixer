@@ -5,6 +5,8 @@ SET( WIDGETS_CPPS
 	timer.cpp
 	vumeter.cpp
 	playlistwidget.cpp
+	songdbbrowser.cpp
+	filebrowser.cpp
 )
 
 SET( WIDGETS_MOC_HDRS
@@ -13,10 +15,14 @@ SET( WIDGETS_MOC_HDRS
 	timedisplay.h
 	timer.h
 	vumeter.h
+	songdbbrowser.h
+	filebrowser.h
 )
 
 SET( WIDGETS_UIS
 	timerSettings.ui
+	uis/songdbbrowser.ui
+	uis/filebrowser.ui
 )
 
 INCLUDE_DIRECTORIES( "." ".." ${CMAKE_BINARY_DIR}/src/widgets/ )

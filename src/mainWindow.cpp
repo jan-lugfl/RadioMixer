@@ -47,7 +47,7 @@ mainWindow::mainWindow(QWidget *parent) :
     // connect settings dialog....
     connect( rm_ui->action_Settings, SIGNAL(triggered()), this, SLOT(showSettings()));
 
-    Jack::connect();
+    Jack::connect("RM1");
 
     // create one remote control
     rc = new remoteControl_MIDI(this, "BCF2000");

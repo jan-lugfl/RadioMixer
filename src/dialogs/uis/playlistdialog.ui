@@ -26,16 +26,10 @@
       <item row="0" column="0">
        <widget class="QListWidget" name="playlistList">
         <property name="sizePolicy">
-         <sizepolicy hsizetype="Fixed" vsizetype="Expanding">
-          <horstretch>0</horstretch>
+         <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+          <horstretch>1</horstretch>
           <verstretch>0</verstretch>
          </sizepolicy>
-        </property>
-        <property name="maximumSize">
-         <size>
-          <width>120</width>
-          <height>16777215</height>
-         </size>
         </property>
         <property name="iconSize">
          <size>
@@ -59,6 +53,12 @@
       </item>
       <item row="0" column="1">
        <widget class="QTreeWidget" name="playListView">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+          <horstretch>4</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
         <property name="rootIsDecorated">
          <bool>false</bool>
         </property>
@@ -79,6 +79,11 @@
         <column>
          <property name="text">
           <string>Artist</string>
+         </property>
+        </column>
+        <column>
+         <property name="text">
+          <string>Genre</string>
          </property>
         </column>
         <column>

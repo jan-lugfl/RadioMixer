@@ -19,65 +19,29 @@
  *   Free Software Foundation, Inc.,                                       *
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
-#include "playlistdialog.h"
-#include "ui_playlistdialog.h"
-
-#include "playlistwidget.h"
-#include "filebrowser.h"
 #include "songdbbrowser.h"
+#include "ui_songdbbrowser.h"
 
-playlistDialog::playlistDialog(QWidget *parent) :
-    QDialog(parent),
-    ui(new Ui::playlistDialog)
+songDbBrowser::songDbBrowser(QWidget *parent) :
+    QWidget(parent),
+    ui(new Ui::songDbBrowser)
 {
     ui->setupUi(this);
-
-    // get playlist manager singleton...
-    plm = playlistManager::getInstance();
-
-    foreach( playList* playlist, plm->getAllPlaylists() )
-        new playlistWidget( playlist, ui->playlistList );
-
-    // append one initial file browser source tab...
-    fileBrowser* filebrowser = new fileBrowser( ui->itemSourceTab );
-    ui->itemSourceTab->insertTab( filebrowser, tr("Filebrowser") );
-
-    songDbBrowser* songdb = new songDbBrowser( ui->itemSourceTab );
-    ui->itemSourceTab->insertTab( songdb, tr("SongDB browser") );
 }
 
-playlistDialog::~playlistDialog()
+songDbBrowser::~songDbBrowser()
 {
     delete ui;
 }
 
-void playlistDialog::changeEvent(QEvent *e)
+void songDbBrowser::changeEvent(QEvent *e)
 {
-    QDialog::changeEvent(e);
+    QWidget::changeEvent(e);
     switch (e->type()) {
     case QEvent::LanguageChange:
         ui->retranslateUi(this);
         break;
     default:
         break;
-    }
-}
-
-void playlistDialog::on_playlistList_itemChanged(QListWidgetItem* item)
-{
-    playlistWidget* pls = dynamic_cast<playlistWidget*>(item);
-    if(pls)
-        pls->playlist->rename( item->text() );
-}
-
-void playlistDialog::on_playlistList_currentItemChanged(QListWidgetItem* current, QListWidgetItem* previous)
-{
-    ui->playListView->clear();
-    playList* plst = dynamic_cast<playlistWidget*>(current)->playlist;
-    foreach(playListItem* item, plst->getItems())
-    {
-        QTreeWidgetItem* itm = new QTreeWidgetItem( ui->playListView );
-        itm->setText( 0, item->getTitle() );
-        itm->setText( 1, item->getArtist() );
     }
 }
