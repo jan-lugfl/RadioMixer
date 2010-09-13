@@ -23,7 +23,7 @@
 #include "playlistmanager.h"
 
 playList::playList(QObject *parent) :
-    QObject(parent)
+    QObject(parent), currentIndex(0)
 {
     // get manager an register myself... The manager connects some signals ans slots...
     playlistManager::getInstance()->registerPlaylist( this );
@@ -31,7 +31,8 @@ playList::playList(QObject *parent) :
 
 playList::~playList()
 {
-    emit( destroyed() );
+    // get manager an register myself... The manager connects some signals ans slots...
+    playlistManager::getInstance()->unregisterPlaylist( this );
 
     // destroy all items...
     foreach(playListItem* item, items)
@@ -62,4 +63,9 @@ void playList::addItem( playListItem* newItem )
 {
     items.append( newItem );
     emit( changed() );
+}
+
+playListItem* playList::getNext()
+{
+    return items[currentIndex++];
 }

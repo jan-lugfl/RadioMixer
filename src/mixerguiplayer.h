@@ -23,7 +23,7 @@
 #define MIXERGUIPLAYER_H
 
 #include <mixergui.h>
-#include "widgets/playlist.h"
+#include "playlist.h"
 #include "soundplayer.h"
 #include "glowbutton.h"
 #include "blinkbutton.h"
@@ -32,6 +32,7 @@
 
 #include <QDropEvent>
 #include <QDragEnterEvent>
+#include <QComboBox>
 
 /**
 @author Jan Boysen
@@ -59,6 +60,7 @@ protected:
 	glowButton* loopButton;
 	vuMeter* levelMeterLeft;
 	vuMeter* levelMeterRight;
+        QComboBox* playlist;
 
 	// DnD
 	virtual void dragEnterEvent( QDragEnterEvent* evt );
@@ -69,6 +71,8 @@ protected slots:
 	virtual void setMeta( metaTag );
         virtual void cued( playListItem* );
         virtual void setState( int newState );
+        virtual void reloadPlaylists();
+        virtual void changePlaylist( int index );
 
 public slots:
 	virtual void cueTrack( unsigned int playerId, playListItem* song );
@@ -79,7 +83,7 @@ signals:
 	void sixSecondsLeft();
         void openFile( playListItem* );
 	void onCue( metaTag, QString );
-
+        void playlistChanged( playList* );
 };
 
 #endif

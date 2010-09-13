@@ -27,12 +27,13 @@ mixerChannel_filePlayer::mixerChannel_filePlayer( const char *name, QUuid uuid )
  : mixerChannel(name, uuid)
 {
     type = Type;
-	bufferThread = new channelBufMngr(this);
-	fileOpen = FALSE;
-	loopMode = FALSE;
-	decoder = NULL;
+    bufferThread = new channelBufMngr(this);
+    fileOpen = FALSE;
+    loopMode = FALSE;
+    decoder = NULL;
+    playlist = NULL;
 
-        registerChannel();
+    registerChannel();
 }
 
 mixerChannel_filePlayer::~mixerChannel_filePlayer()
@@ -109,6 +110,16 @@ void mixerChannel_filePlayer::open( playListItem* track )
 	}
 }
 
+void mixerChannel_filePlayer::attachToPlaylist( playList* playlist )
+{
+    this->playlist = playlist;
+}
+
+void mixerChannel_filePlayer::detachPlaylist( )
+{
+    this->playlist = NULL;
+}
+
 void mixerChannel_filePlayer::decode( )
 {
 	bool endOfTrack = 0;
@@ -151,7 +162,20 @@ void mixerChannel_filePlayer::decode( )
 			delete decBuff[1];
 	}
 	if( endOfTrack )
-		emit( trackEnded() );
+            this->endOfTrack();
+}
+
+void mixerChannel_filePlayer::endOfTrack()
+{
+    // first ensure the current file is closed after the track has ended..
+    this->close();
+
+    // auto recue from playlist ??
+    if(settings["autoload_fromplaylist"].toBool())
+        this->cue();
+
+    // send end of track signal..
+    emit( trackEnded() );
 }
 
 void mixerChannel_filePlayer::checkBuffer( )
@@ -193,7 +217,8 @@ void mixerChannel_filePlayer::setState(playerState newState )
 
 void mixerChannel_filePlayer::cue( )
 {
-    setState( Cued );
+    if(playlist != NULL)
+        this->open( playlist->getNext() );
 }
 
 const bool mixerChannel_filePlayer::isFileOpen( )

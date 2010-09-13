@@ -38,8 +38,11 @@ public:
     QString getName();
     QList<playListItem*> getItems();
 
+    virtual playListItem* getNext();
+
 protected:
     QString name;
+    int currentIndex;
     QList<playListItem*> items;
 
 signals:

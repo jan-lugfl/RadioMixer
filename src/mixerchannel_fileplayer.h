@@ -25,7 +25,7 @@
 #include "mixerchannel.h"
 #include "channelbufmngr.h"
 #include "filedecoder.h"
-#include "playlistitem.h"
+#include "playlist.h"
 
 #include <stdio.h>
 #include <qregexp.h>
@@ -90,16 +90,20 @@ protected:
 	FILE* fHandle;
 	bool fileOpen;
 	bool loopMode;
+        playList* playlist;
 
 	fileDecoder* decoder;
 	void decode();
+        void endOfTrack();
 
 	// Buffer Manager
 	channelBufMngr* bufferThread;
 
 public slots:
         virtual void open( playListItem* track );
-	virtual void close();
+        virtual void attachToPlaylist( playList* playlist ); // giving NULL pointer will detach from playlists too
+        virtual void detachPlaylist( );
+        virtual void close();
 	virtual void stop( );
 	virtual void play();
 	virtual void pause();

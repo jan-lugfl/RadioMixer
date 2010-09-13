@@ -39,6 +39,13 @@ playlistManager* playlistManager::getInstance()
 void playlistManager::registerPlaylist( playList* newPlaylist )
 {
     playlists.append( newPlaylist );
+    emit( changed() );
+}
+
+void playlistManager::unregisterPlaylist( playList* playlist )
+{
+    playlists.removeOne( playlist );
+    emit( changed() );
 }
 
 QList<playList*> playlistManager::getAllPlaylists()

@@ -20,6 +20,7 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 #include "mixerguiplayer.h"
+#include "playlistmanager.h"
 #include <QFileDialog>
 #include <QDropEvent>
 #include <QDragEnterEvent>
@@ -27,8 +28,6 @@
 mixerGuiPlayer::mixerGuiPlayer( QWidget* parent , const char* name , Qt::WFlags fl )
  : mixerGUI( parent, name, fl)
 {
-//	QSettings* config = new QSettings;
-
         levelMeterLeft = new vuMeter( this, "levelMeterLeft");
 	levelMeterLeft->setGeometry( QRect( 5, 60, 11, 321 ) );
 	levelMeterLeft->setPaletteBackgroundColor( paletteBackgroundColor () );
@@ -76,17 +75,14 @@ mixerGuiPlayer::mixerGuiPlayer( QWidget* parent , const char* name , Qt::WFlags 
 	loopButton->setActivatedColor( QColor(255, 240, 0) );
         actionButtons->addWidget( loopButton );
 
-/*	player->setName( config->readEntry( "/radiomixer/channel_"+QString::number( channelID )+"/name", tr("Kanal")+" "+QString::number(channelID) ) );
+        playlist = new QComboBox( this );
+        reloadPlaylists();
+        connect( playlistManager::getInstance(), SIGNAL(changed()), this, SLOT(reloadPlaylists()));
+        connect( playlist, SIGNAL(currentIndexChanged(int)), this, SLOT(changePlaylist(int)));
+        layout->addWidget( playlist, 5, 1, 1, -1 );
 
-	if( config->readNumEntry( "/radiomixer/channel_"+QString::number( channelID )+"/autoRecue", 0 ) )
-		connect( player, SIGNAL(trackEnded()), this, SLOT(cueNewTrack()) );
-
-	delete config;
-*/
         languageChange();
-
 }
-
 
 mixerGuiPlayer::~mixerGuiPlayer()
 {
@@ -101,7 +97,6 @@ void mixerGuiPlayer::cueNewTrack( )
 void mixerGuiPlayer::languageChange()
 {
     mixerGUI::languageChange();
-//    chName->setText( player->getName() );
     openButton->setText( tr( "Open" ) );
     loopButton->setText( QChar(0x221e) );
 }
@@ -261,6 +256,7 @@ void mixerGuiPlayer::associateToChannel( mixerChannel* channel )
     connect( channel, SIGNAL(stateChanged(int)), this, SLOT(setState(int)) );
     connect( channel, SIGNAL(loopChanged(bool)), loopButton, SLOT(setState(bool)) );
     connect( channel, SIGNAL(positionChanged( QTime )), tDisplay, SLOT(setPosition( QTime )));
+    connect( this, SIGNAL(playlistChanged(playList*)), channel, SLOT(attachToPlaylist(playList*)));
 
     // connect button actions
     connect( playButton, SIGNAL(clicked()), channel, SLOT(play()));
@@ -272,4 +268,29 @@ void mixerGuiPlayer::associateToChannel( mixerChannel* channel )
     // connect levelMeters
     connect( channel, SIGNAL(vuMeterChanged_left(float)), levelMeterLeft, SLOT(setLevel(float)) );
     connect( channel, SIGNAL(vuMeterChanged_right(float)), levelMeterRight, SLOT(setLevel(float)) );
+}
+
+void mixerGuiPlayer::reloadPlaylists()
+{
+    QString selected = playlist->currentText();
+    playlist->clear();
+    playlist->addItem( tr("-- none --") );
+
+    foreach(playList* plst, playlistManager::getInstance()->getAllPlaylists())
+        playlist->addItem( plst->getName() );
+
+    playlist->setEditText( selected );
+}
+
+void mixerGuiPlayer::changePlaylist( int index )
+{
+    if( index == 0 ) // none ( detach )
+        emit( playlistChanged( NULL ) );
+    else
+    {
+        // get selected playlist and attach it...
+        playList* plst = playlistManager::getInstance()->getAllPlaylists()[index-1];
+        if(plst)
+            emit( playlistChanged( plst ) );
+    }
 }

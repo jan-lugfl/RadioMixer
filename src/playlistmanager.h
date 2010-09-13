@@ -44,9 +44,11 @@ public:
 
     // normal object stuff below...
     void registerPlaylist( playList* newPlaylist );
+    void unregisterPlaylist( playList* playlist );
     QList<playList*> getAllPlaylists();
 
 signals:
+    void changed();
 
 public slots:
 
