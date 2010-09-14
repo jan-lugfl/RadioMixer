@@ -22,10 +22,15 @@
 #include "remotecontrolchannel.h"
 #include "mixerchannel_fileplayer.h"
 
-remoteControlChannel::remoteControlChannel(int channel_id, QObject *parent) :
-    channel_id(channel_id), QObject(parent)
+remoteControlChannel::remoteControlChannel( QObject *parent, QUuid uuid ) :
+    QObject(parent)
 {
-    name = tr("unnamed");
+    if(uuid.isNull())
+        this->uuid = QUuid::createUuid();
+    else
+        this->uuid = uuid;
+
+    name = tr("unnamed")+" "+this->uuid.toString();
 }
 
 // This function processes the events and sends QT signals depending on the event...
@@ -64,35 +69,35 @@ void remoteControlChannel::process_event( RemoteControlerEvent event, QString va
 
 void remoteControlChannel::changeVolume( int value )
 {
-    emit stateChanged( channel_id, event_volumeFader, QString::number(value));
+    emit stateChanged( uuid, event_volumeFader, QString::number(value));
 }
 
 void remoteControlChannel::changeBalance( int value )
 {
-    emit stateChanged( channel_id, event_balanceFader, QString::number(value));
+    emit stateChanged( uuid, event_balanceFader, QString::number(value));
 }
 
 void remoteControlChannel::changeState( int state )
 {
     //turn all buttons off
-    emit stateChanged( channel_id, event_playButton, QString::number(0));
-    emit stateChanged( channel_id, event_stopButton, QString::number(0));
-    emit stateChanged( channel_id, event_pauseButton, QString::number(0));
-    emit stateChanged( channel_id, event_queueButton, QString::number(0));
+    emit stateChanged( uuid, event_playButton, QString::number(0));
+    emit stateChanged( uuid, event_stopButton, QString::number(0));
+    emit stateChanged( uuid, event_pauseButton, QString::number(0));
+    emit stateChanged( uuid, event_queueButton, QString::number(0));
 
     switch(state)
     {
     case mixerChannel_filePlayer::Playing:
-        emit stateChanged( channel_id, event_playButton, QString::number(127));
+        emit stateChanged( uuid, event_playButton, QString::number(127));
         break;
     case mixerChannel_filePlayer::Stopped:
-        emit stateChanged( channel_id, event_stopButton, QString::number(127));
+        emit stateChanged( uuid, event_stopButton, QString::number(127));
         break;
     case mixerChannel_filePlayer::Paused:
-        emit stateChanged( channel_id, event_pauseButton, QString::number(127));
+        emit stateChanged( uuid, event_pauseButton, QString::number(127));
         break;
     case mixerChannel_filePlayer::Cued:
-        emit stateChanged( channel_id, event_queueButton, QString::number(127));
+        emit stateChanged( uuid, event_queueButton, QString::number(127));
         break;
     }
 }
@@ -105,6 +110,7 @@ void remoteControlChannel::repeat( bool state )
 // starts to control a given channel...
 void remoteControlChannel::associateToChannel( mixerChannel* channel )
 {
+    attached_to.append( channel->getUuid().toString() );
 //    connect( channel, SIGNAL(nameChanged(QString)), this, SLOT(changeName(QString)) );
     connect( this, SIGNAL(volumeChanged( int )), channel, SLOT( setVolume( int ) ) );
     connect( channel, SIGNAL(volumeChanged( int )), this, SLOT( changeVolume( int ) ) );
@@ -123,4 +129,14 @@ void remoteControlChannel::setName(QString newName)
 QString remoteControlChannel::getName()
 {
     return name;
+}
+
+QUuid remoteControlChannel::getUuid()
+{
+    return uuid;
+}
+
+QStringList remoteControlChannel::getAttachedTo()
+{
+    return attached_to;
 }

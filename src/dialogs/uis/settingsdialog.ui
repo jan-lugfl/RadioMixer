@@ -405,6 +405,9 @@
              <height>50</height>
             </size>
            </property>
+           <property name="sortingEnabled">
+            <bool>true</bool>
+           </property>
           </widget>
          </item>
          <item row="0" column="1">
@@ -448,18 +451,134 @@
                 <verstretch>0</verstretch>
                </sizepolicy>
               </property>
+              <property name="sortingEnabled">
+               <bool>true</bool>
+              </property>
              </widget>
             </item>
             <item row="0" column="1" rowspan="2">
-             <widget class="QStackedWidget" name="stackedWidget_2">
+             <widget class="QStackedWidget" name="controlChannelSettings">
               <property name="sizePolicy">
                <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
                 <horstretch>4</horstretch>
                 <verstretch>0</verstretch>
                </sizepolicy>
               </property>
-              <widget class="QWidget" name="page"/>
-              <widget class="QWidget" name="page_2"/>
+              <property name="currentIndex">
+               <number>0</number>
+              </property>
+              <widget class="QWidget" name="page">
+               <layout class="QGridLayout" name="gridLayout_5">
+                <item row="0" column="0">
+                 <widget class="QLabel" name="label_2">
+                  <property name="text">
+                   <string>Settings for MIDI Control Channel</string>
+                  </property>
+                 </widget>
+                </item>
+                <item row="1" column="0">
+                 <layout class="QFormLayout" name="formLayout_3">
+                  <item row="0" column="0">
+                   <widget class="QLabel" name="label_3">
+                    <property name="text">
+                     <string>Volume Fader</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="0" column="1">
+                   <widget class="QSpinBox" name="volumeMIDIId"/>
+                  </item>
+                  <item row="1" column="0">
+                   <widget class="QLabel" name="label_4">
+                    <property name="text">
+                     <string>Balance Fader</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="1" column="1">
+                   <widget class="QSpinBox" name="balanceMIDIId"/>
+                  </item>
+                  <item row="2" column="0">
+                   <widget class="QLabel" name="label_5">
+                    <property name="text">
+                     <string>Play Button</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="2" column="1">
+                   <widget class="QSpinBox" name="playMIDIId"/>
+                  </item>
+                  <item row="3" column="0">
+                   <widget class="QLabel" name="label_6">
+                    <property name="text">
+                     <string>Stop Button</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="3" column="1">
+                   <widget class="QSpinBox" name="stopMIDIId"/>
+                  </item>
+                  <item row="4" column="0">
+                   <widget class="QLabel" name="label_7">
+                    <property name="text">
+                     <string>Pause Button</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="4" column="1">
+                   <widget class="QSpinBox" name="pauseMIDIId"/>
+                  </item>
+                  <item row="5" column="0">
+                   <widget class="QLabel" name="label_8">
+                    <property name="text">
+                     <string>Cue Button</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="5" column="1">
+                   <widget class="QSpinBox" name="cueMIDIId"/>
+                  </item>
+                  <item row="6" column="0">
+                   <widget class="QLabel" name="label_9">
+                    <property name="text">
+                     <string>repeat Button</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="6" column="1">
+                   <widget class="QSpinBox" name="repeatMIDIId"/>
+                  </item>
+                  <item row="7" column="0">
+                   <widget class="QLabel" name="label_10">
+                    <property name="text">
+                     <string>open Button</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="7" column="1">
+                   <widget class="QSpinBox" name="openMIDIId"/>
+                  </item>
+                  <item row="8" column="0">
+                   <widget class="QLabel" name="label_11">
+                    <property name="text">
+                     <string>mute Button</string>
+                    </property>
+                   </widget>
+                  </item>
+                  <item row="8" column="1">
+                   <widget class="QSpinBox" name="muteMIDIId"/>
+                  </item>
+                 </layout>
+                </item>
+                <item row="2" column="0">
+                 <widget class="QPushButton" name="attachToMixer">
+                  <property name="text">
+                   <string>attach to mixer</string>
+                  </property>
+                 </widget>
+                </item>
+               </layout>
+              </widget>
              </widget>
             </item>
             <item row="1" column="0">

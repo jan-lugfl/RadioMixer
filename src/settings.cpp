@@ -36,12 +36,24 @@ void Settings::set( const QString &key, const QVariant &value )
 void Settings::remove( const QString &key )
 {
     Settings::settings.remove( key );
+    Settings::settings.beginGroup( key );
+    foreach( QString del_key, Settings::settings.allKeys() )
+        Settings::settings.remove( del_key );
+    Settings::settings.endGroup();
 }
 
 QStringList Settings::getSubKeys(const QString &key)
 {
     Settings::settings.beginGroup( key );
-    QStringList ret = Settings::settings.allKeys();
+    QStringList ret = Settings::settings.childKeys();
+    Settings::settings.endGroup();
+    return ret;
+}
+
+QStringList Settings::getSubGroups( const QString& key )
+{
+    Settings::settings.beginGroup( key );
+    QStringList ret = Settings::settings.childGroups();
     Settings::settings.endGroup();
     return ret;
 }

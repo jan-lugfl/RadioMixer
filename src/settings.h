@@ -31,6 +31,7 @@ public:
     static void set( const QString &key, const QVariant &value );
     static void remove( const QString& key );
     static QStringList getSubKeys( const QString& key );
+    static QStringList getSubGroups( const QString& key );
     static void sync();
 
 protected:

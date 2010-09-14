@@ -47,10 +47,7 @@ mainWindow::mainWindow(QWidget *parent) :
     // connect settings dialog....
     connect( rm_ui->action_Settings, SIGNAL(triggered()), this, SLOT(showSettings()));
 
-    Jack::connect("RM1");
-
-    // create one remote control
-    rc = new remoteControl_MIDI(this, "BCF2000");
+    Jack::connect();
 
     // create some test playlists..
     playList* pls1 = new playList();
@@ -84,6 +81,10 @@ mainWindow::mainWindow(QWidget *parent) :
 #endif
 
     }
+
+    // load remote controls from Config...
+    foreach(QString itm, Settings::getSubGroups("remote_controls"))
+        remoteControl::createFromConfig( itm );
 
     // start the mixer thread...
     mixer = new channelMixer();

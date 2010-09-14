@@ -22,8 +22,8 @@
 #include "settingsdialog.h"
 #include "ui_settingsdialog.h"
 #include "mixerchannelmanager.h"
-#include "remotecontrol.h"
 #include "listwidgetitemwithid.h"
+#include "remotecontrol_midi.h"
 
 #include "mixerchannel_jackin.h"
 #include "mixerchannel_jackout.h"
@@ -223,7 +223,7 @@ void settingsDialog::on_add_controller_clicked()
 
     if( type == tr("MIDI Device") )
     {
-        remoteControl_MIDI* cntrl = new remoteControl_MIDI( 0, name );
+        remoteControl_MIDI* cntrl = new remoteControl_MIDI();
         cntrl->setName( name );
         ui->remoteControllerList->insertItem( ui->remoteControllerList->count(), cntrl->getName() );
     }
@@ -248,18 +248,119 @@ void settingsDialog::on_remoteControllerList_currentItemChanged(QListWidgetItem*
         return;
 
     // get controller
-    remoteControl* control = NULL;
     foreach(remoteControl* controlIt, remoteControl::getAllControls())
         if(controlIt->getName() == current->text())
-            control = controlIt;
+            selected_controller = controlIt;
 
     // empty the list...
     ui->remoteController_channels->clear();
 
     // set the configured channels for the controller up
-    if(control)
+    if(selected_controller)
     {
-        foreach(remoteControlChannel* chan, control->channels)
+        foreach(remoteControlChannel* chan, selected_controller->channels)
             ui->remoteController_channels->insertItem( ui->remoteControllerList->count(), chan->getName() );
     }
+}
+
+void settingsDialog::on_attachToMixer_clicked()
+{
+    // abort if no controller is selected..
+    if(!selected_controller || !selected_controlChannel)
+    {
+        qWarning("could not attach to channel due to missing selection...");
+        return;
+    }
+
+    bool ok;
+    QStringList mixers;
+    foreach(mixerChannel* channel, mixerChannelManager::allChannels)
+        mixers.append( channel->getName() );
+
+    QString chan = QInputDialog::getItem( this, tr("Attach to mixer"), tr("Please select the mixer to attach to"), mixers, 0, false, &ok);
+    if(!ok)
+        return;
+
+    foreach(mixerChannel* channel, mixerChannelManager::allChannels)
+        if( chan == channel->getName() )
+            selected_controlChannel->associateToChannel( channel );
+}
+
+void settingsDialog::on_remoteController_channels_currentItemChanged(QListWidgetItem* current, QListWidgetItem* previous)
+{
+    // assign values to onject
+    if(previous && selected_controlChannel && selected_controller)
+    {
+        remoteControl_MIDI* midiContr = dynamic_cast<remoteControl_MIDI*>(selected_controller);
+        if(!midiContr)
+        {
+            qWarning("only MIDI controller supported right now...");
+            return;
+        }
+        remoteControl_MIDI::channelConfig config = midiContr->getChannelConfig( selected_controlChannel->getUuid() );
+        config[remoteControlChannel::event_volumeFader] = ui->volumeMIDIId->value();
+        config[remoteControlChannel::event_balanceFader] = ui->balanceMIDIId->value();
+        config[remoteControlChannel::event_playButton] = ui->playMIDIId->value();
+        config[remoteControlChannel::event_stopButton] = ui->stopMIDIId->value();
+        config[remoteControlChannel::event_pauseButton] = ui->pauseMIDIId->value();
+        config[remoteControlChannel::event_queueButton] = ui->cueMIDIId->value();
+        config[remoteControlChannel::event_repeatButton] = ui->repeatMIDIId->value();
+        config[remoteControlChannel::event_openButton] = ui->openMIDIId->value();
+        config[remoteControlChannel::event_muteButton] = ui->muteMIDIId->value();
+        midiContr->setChannelConfig(selected_controlChannel->getUuid(), config);
+    }
+
+    foreach(remoteControlChannel* chan, selected_controller->channels)
+        if( chan->getName() == current->text() )
+            selected_controlChannel = chan;
+
+    if(!selected_controlChannel)
+    {
+        qWarning("could not find control channel...");
+        return;
+    }
+
+    remoteControl_MIDI* midiContr = dynamic_cast<remoteControl_MIDI*>(selected_controller);
+    if(!midiContr)
+    {
+        qWarning("only MIDI controller supported right now...");
+        return;
+    }
+
+    // set data..
+    remoteControl_MIDI::channelConfig config = midiContr->getChannelConfig( selected_controlChannel->getUuid() );
+    ui->volumeMIDIId->setValue( config[remoteControlChannel::event_volumeFader].toInt() );
+    ui->balanceMIDIId->setValue( config[remoteControlChannel::event_balanceFader].toInt() );
+    ui->playMIDIId->setValue( config[remoteControlChannel::event_playButton].toInt() );
+    ui->stopMIDIId->setValue( config[remoteControlChannel::event_stopButton].toInt() );
+    ui->pauseMIDIId->setValue( config[remoteControlChannel::event_pauseButton].toInt() );
+    ui->cueMIDIId->setValue( config[remoteControlChannel::event_queueButton].toInt() );
+    ui->repeatMIDIId->setValue( config[remoteControlChannel::event_repeatButton].toInt() );
+    ui->openMIDIId->setValue( config[remoteControlChannel::event_openButton].toInt() );
+    ui->muteMIDIId->setValue( config[remoteControlChannel::event_muteButton].toInt() );
+
+    selected_controller->saveConfig();
+}
+
+void settingsDialog::on_add_controller_channel_clicked()
+{
+    bool ok;
+    QString name = QInputDialog::getText( this, tr("Name of new channel"), tr("Please enter the name for the new channel"), QLineEdit::Normal, tr("New Channel"), &ok);
+    if(!ok)
+        return;
+    remoteControlChannel* newChan = selected_controller->createChannel();
+    newChan->setName( name );
+    selected_controller->saveConfig();
+    ui->remoteController_channels->insertItem( ui->remoteControllerList->count(), newChan->getName() );
+}
+
+void settingsDialog::on_remove_controller_channel_clicked()
+{
+    selected_controlChannel->disconnect();
+    selected_controller->channels.remove( selected_controller->channels.indexOf(selected_controlChannel));
+    selected_controller->removeChannelConfig( selected_controlChannel->getUuid() );
+    selected_controller->saveConfig();
+    delete selected_controlChannel;
+    ui->remoteController_channels->takeItem(ui->remoteController_channels->currentRow() );
+    selected_controlChannel = NULL;
 }

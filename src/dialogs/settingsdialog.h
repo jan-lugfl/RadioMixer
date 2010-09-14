@@ -23,6 +23,7 @@
 #define SETTINGSDIALOG_H
 
 #include "mixerchannel.h"
+#include "remotecontrol.h"
 
 #include <QDialog>
 #include <QListWidgetItem>
@@ -46,10 +47,17 @@ private:
     Ui::settingsDialog *ui;
     QMap<QUuid, mixerChannel::settingsType> settingsCache; // used to store the channel settings untill we apply the changes
 
+    remoteControl* selected_controller;
+    remoteControlChannel* selected_controlChannel;
+
 protected slots:
     virtual void accept();
 
 private slots:
+    void on_remove_controller_channel_clicked();
+    void on_add_controller_channel_clicked();
+    void on_remoteController_channels_currentItemChanged(QListWidgetItem* current, QListWidgetItem* previous);
+    void on_attachToMixer_clicked();
     void on_remoteControllerList_currentItemChanged(QListWidgetItem* current, QListWidgetItem* previous);
     void on_remove_controller_clicked();
     void on_add_controller_clicked();

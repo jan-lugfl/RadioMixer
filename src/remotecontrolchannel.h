@@ -24,15 +24,13 @@
 
 #include "mixerchannel.h"
 #include <QObject>
+#include <QUuid>
 
 class remoteControlChannel : public QObject
 {
 Q_OBJECT
 public:
-    explicit remoteControlChannel( int channel_id, QObject *parent = 0 );
-
-    // contains the local channel ID the controller uses to identify the channel upon signals from the remote control
-    int channel_id;
+    explicit remoteControlChannel( QObject *parent = 0, QUuid uuid = QUuid::createUuid() );
 
     enum RemoteControlerEvent
     {
@@ -43,7 +41,8 @@ public:
         event_pauseButton,
         event_queueButton,
         event_repeatButton,
-        event_openButton
+        event_openButton,
+        event_muteButton
     };
 
     void process_event( RemoteControlerEvent event, QString value );
@@ -52,8 +51,17 @@ public:
     QString getName();
     void setName( QString newName );
 
+    QUuid getUuid();
+    QStringList getAttachedTo();
+
 protected:
     QString name;
+
+    // contains the local channel ID the controller uses to identify the channel upon signals from the remote control
+    QUuid uuid;
+
+    // this holds the information to which mixer I am attached to, so we can restore this from config...
+    QStringList attached_to;
 
 signals:
     void volumeChanged( int );
@@ -64,7 +72,7 @@ signals:
     void queue();
     void repeat();
     void open();
-    void stateChanged( int channel_id, remoteControlChannel::RemoteControlerEvent, QString );
+    void stateChanged( QUuid uuid, remoteControlChannel::RemoteControlerEvent, QString );
 
 public slots:
     virtual void changeVolume( int value );

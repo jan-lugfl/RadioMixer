@@ -28,7 +28,6 @@
 
 #include <QThread>
 #include <QTimer>
-#include <QMap>
 
 // forward declaration for queue thread class
 class remoteControl_MIDIQueueThread;
@@ -38,6 +37,8 @@ class remoteControl_MIDI : public remoteControl
 Q_OBJECT
 public:
     explicit remoteControl_MIDI(QObject *parent = 0, QString name = QString('Remote Control'), bool biderectional = true);
+
+    virtual remoteControlChannel* createChannel(QUuid uuid = QUuid());
 
 private:
     void queueMIDIMessage( int par, int val );
@@ -51,14 +52,14 @@ private:
         Stopped,
         Cued
     };
-    QMap<int, channelStates> channel_states;
+    QMap<QUuid, channelStates> channel_states;
     QTimer* refreshTimer; // used to refresh the midi device
     bool blink_state; // used to let buttons blink...
 
 signals:
 
 public slots:
-       virtual void setControllerState( int channel_id, remoteControlChannel::RemoteControlerEvent event, QString value );
+       virtual void setControllerState( QUuid uuid, remoteControlChannel::RemoteControlerEvent event, QString value );
 
 private slots:
        virtual void refreshTimerTimeout();

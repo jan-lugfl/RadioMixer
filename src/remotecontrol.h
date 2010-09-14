@@ -25,6 +25,7 @@
 #include "remotecontrolchannel.h"
 #include <QObject>
 #include <QVector>
+#include <QMap>
 
 class remoteControl : public QObject
 {
@@ -41,9 +42,20 @@ public:
 
     static QList<remoteControl*> getAllControls();
 
+    typedef QMap<remoteControlChannel::RemoteControlerEvent, QVariant> channelConfig;
+    void setChannelConfig( QUuid channel, channelConfig config );
+    void removeChannelConfig( QUuid uuid );
+    remoteControl::channelConfig getChannelConfig( QUuid channel );
+
+    virtual remoteControlChannel* createChannel(QUuid uuid = QUuid()) = 0;
+
+    void saveConfig();
+    static remoteControl* createFromConfig( QString nameInConfig );
+
 protected:
     QString name;
     bool bidirectional;
+    QMap<QUuid, channelConfig> controller_config;
 
 private:
     static QList<remoteControl*> allControls; // used to get all existing controls...
