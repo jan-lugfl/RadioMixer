@@ -219,8 +219,8 @@
              <rect>
               <x>0</x>
               <y>0</y>
-              <width>307</width>
-              <height>256</height>
+              <width>116</width>
+              <height>64</height>
              </rect>
             </property>
             <attribute name="label">
@@ -264,8 +264,8 @@
              <rect>
               <x>0</x>
               <y>0</y>
-              <width>307</width>
-              <height>256</height>
+              <width>100</width>
+              <height>30</height>
              </rect>
             </property>
             <attribute name="label">
@@ -273,12 +273,20 @@
             </attribute>
            </widget>
            <widget class="QWidget" name="fileplayer_settings">
+            <property name="geometry">
+             <rect>
+              <x>0</x>
+              <y>0</y>
+              <width>309</width>
+              <height>256</height>
+             </rect>
+            </property>
             <attribute name="label">
              <string>Fileplayer Settings</string>
             </attribute>
             <layout class="QFormLayout" name="formLayout_2">
              <item row="0" column="0">
-              <widget class="QCheckBox" name="checkBox_2">
+              <widget class="QCheckBox" name="fileplayer_autoload">
                <property name="text">
                 <string>enable autoload from playlist</string>
                </property>
@@ -287,11 +295,27 @@
             </layout>
            </widget>
            <widget class="QWidget" name="alsa_settings">
+            <property name="geometry">
+             <rect>
+              <x>0</x>
+              <y>0</y>
+              <width>100</width>
+              <height>30</height>
+             </rect>
+            </property>
             <attribute name="label">
              <string>ALSA Settings</string>
             </attribute>
            </widget>
            <widget class="QWidget" name="jack_settings">
+            <property name="geometry">
+             <rect>
+              <x>0</x>
+              <y>0</y>
+              <width>100</width>
+              <height>30</height>
+             </rect>
+            </property>
             <attribute name="label">
              <string>JACK Settings</string>
             </attribute>
