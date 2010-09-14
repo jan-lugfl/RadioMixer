@@ -212,7 +212,7 @@
             </sizepolicy>
            </property>
            <property name="currentIndex">
-            <number>0</number>
+            <number>2</number>
            </property>
            <widget class="QWidget" name="general">
             <property name="geometry">
@@ -220,7 +220,7 @@
               <x>0</x>
               <y>0</y>
               <width>307</width>
-              <height>337</height>
+              <height>256</height>
              </rect>
             </property>
             <attribute name="label">
@@ -264,12 +264,36 @@
              <rect>
               <x>0</x>
               <y>0</y>
-              <width>275</width>
-              <height>337</height>
+              <width>307</width>
+              <height>256</height>
              </rect>
             </property>
             <attribute name="label">
              <string>Automation</string>
+            </attribute>
+           </widget>
+           <widget class="QWidget" name="fileplayer_settings">
+            <attribute name="label">
+             <string>Fileplayer Settings</string>
+            </attribute>
+            <layout class="QFormLayout" name="formLayout_2">
+             <item row="0" column="0">
+              <widget class="QCheckBox" name="checkBox_2">
+               <property name="text">
+                <string>enable autoload from playlist</string>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </widget>
+           <widget class="QWidget" name="alsa_settings">
+            <attribute name="label">
+             <string>ALSA Settings</string>
+            </attribute>
+           </widget>
+           <widget class="QWidget" name="jack_settings">
+            <attribute name="label">
+             <string>JACK Settings</string>
             </attribute>
            </widget>
           </widget>

@@ -24,6 +24,9 @@
 #include "mixerchannelmanager.h"
 #include "listwidgetitemwithid.h"
 
+#include "mixerchannel_jackin.h"
+#include "mixerchannel_jackout.h"
+
 #include "mainWindow.h"
 
 #include <QColorDialog>
@@ -155,6 +158,18 @@ void settingsDialog::on_channelList_currentItemChanged(QListWidgetItem* current,
     ui->name->setText( settingsCache[cur_uuid]["name"].toString() );
     pal.setColor( QPalette::Button, settingsCache[cur_uuid]["color"].value<QColor>() );
     ui->colorChooser->setPalette( pal );
+
+    // show/hide channel type dependant settings
+    ui->channelSettings->setItemEnabled(2, false);
+    ui->channelSettings->setItemEnabled(3, false);
+    ui->channelSettings->setItemEnabled(4, false);
+
+    if( settingsCache[cur_uuid]["type"] == mixerChannel_filePlayer::Type )
+            ui->channelSettings->setItemEnabled(2, true);
+    if( settingsCache[cur_uuid]["type"] == mixerChannel_ALSA::Type )
+            ui->channelSettings->setItemEnabled(3, true);
+    if( settingsCache[cur_uuid]["type"] == mixerChannel_jackIn::Type || settingsCache[cur_uuid]["type"] == mixerChannel_jackOut::Type )
+            ui->channelSettings->setItemEnabled(4, true);
 }
 
 void settingsDialog::on_colorChooser_clicked()
