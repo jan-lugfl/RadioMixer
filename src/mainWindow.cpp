@@ -118,6 +118,9 @@ void mainWindow::showSettings()
     settingsDialog* win = new settingsDialog( this );
     win->exec();
 
+    if(win->result() != QDialog::Accepted)
+        return;
+
     // apply channel order..
     // first remove all items...
     QMap<QUuid,QLayoutItem*> temp;
