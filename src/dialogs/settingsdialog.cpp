@@ -85,6 +85,14 @@ void settingsDialog::accept()
             settingsCache[new_uuid] = settingsCache[uuid];
             settingsCache[new_uuid].remove("create_channel_type");
             settingsCache.remove( uuid );
+
+            // update uuid in channel list too...
+            foreach(QListWidgetItem* item, ui->channelList->findItems("*", Qt::MatchWildcard))
+            {
+                listWidgetItemWithId* itm = dynamic_cast<listWidgetItemWithId*>(item);
+                if( itm->getUuid() == uuid )
+                    itm->setUuid( new_uuid );
+            }
         }
 
     // apply settings
