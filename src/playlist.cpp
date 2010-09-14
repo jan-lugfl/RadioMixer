@@ -22,9 +22,14 @@
 #include "playlist.h"
 #include "playlistmanager.h"
 
-playList::playList(QObject *parent) :
+playList::playList(QUuid uuid, QObject *parent) :
     QObject(parent), currentIndex(0)
 {
+    if(!uuid.isNull())
+        this->uuid = uuid;
+    else
+        this->uuid = QUuid::createUuid();
+
     // get manager an register myself... The manager connects some signals ans slots...
     playlistManager::getInstance()->registerPlaylist( this );
 }
@@ -47,6 +52,11 @@ QString playList::getName()
 QList<playListItem*> playList::getItems()
 {
     return items;
+}
+
+QUuid playList::getUuid()
+{
+    return uuid;
 }
 
 void playList::rename(QString name)

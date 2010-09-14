@@ -272,19 +272,19 @@ void mixerGuiPlayer::associateToChannel( mixerChannel* channel )
 
 void mixerGuiPlayer::reloadPlaylists()
 {
-    QString selected = playlist->currentText();
+    QVariant selected = playlist->itemData( playlist->currentIndex() );
     playlist->clear();
     playlist->addItem( tr("-- none --") );
 
     foreach(playList* plst, playlistManager::getInstance()->getAllPlaylists())
-        playlist->addItem( plst->getName() );
+        playlist->addItem( plst->getName(), plst->getUuid().toString() );
 
-    playlist->setEditText( selected );
+    playlist->setCurrentIndex( playlist->findData( selected ));
 }
 
 void mixerGuiPlayer::changePlaylist( int index )
 {
-    if( index == 0 ) // none ( detach )
+    if( index <= 0 ) // none ( detach )
         emit( playlistChanged( NULL ) );
     else
     {

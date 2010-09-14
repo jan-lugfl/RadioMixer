@@ -39,11 +39,13 @@ playlistManager* playlistManager::getInstance()
 void playlistManager::registerPlaylist( playList* newPlaylist )
 {
     playlists.append( newPlaylist );
+    connect( newPlaylist, SIGNAL(changed()), this, SLOT(onPlaylistChange()) );
     emit( changed() );
 }
 
 void playlistManager::unregisterPlaylist( playList* playlist )
 {
+    disconnect( playlist, SIGNAL(changed()), this, SLOT(onPlaylistChange()) );
     playlists.removeOne( playlist );
     emit( changed() );
 }
@@ -51,4 +53,9 @@ void playlistManager::unregisterPlaylist( playList* playlist )
 QList<playList*> playlistManager::getAllPlaylists()
 {
     return playlists;
+}
+
+void playlistManager::onPlaylistChange()
+{
+    emit( changed() );
 }

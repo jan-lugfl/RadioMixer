@@ -25,6 +25,7 @@
 #include <QObject>
 #include <QString>
 #include <QList>
+#include <QUuid>
 
 #include "playlistitem.h"
 
@@ -32,11 +33,12 @@ class playList : public QObject
 {
 Q_OBJECT
 public:
-    explicit playList(QObject *parent = 0);
+    explicit playList(QUuid uuid = QUuid(), QObject *parent = 0);
     virtual ~playList();
 
     QString getName();
     QList<playListItem*> getItems();
+    QUuid getUuid();
 
     virtual playListItem* getNext();
 
@@ -44,6 +46,9 @@ protected:
     QString name;
     int currentIndex;
     QList<playListItem*> items;
+
+private:
+    QUuid uuid;
 
 signals:
     void renamed( QString );

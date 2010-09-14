@@ -50,8 +50,8 @@ public:
 signals:
     void changed();
 
-public slots:
-
+protected slots:
+    virtual void onPlaylistChange();
 };
 
 #endif // PLAYLISTMANAGER_H
