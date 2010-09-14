@@ -30,6 +30,9 @@ QMap<QString,QString> mixerChannelManager::supportedChannelTypes = QMap<QString,
 
 void mixerChannelManager::registerChannel( mixerChannel* newChann )
 {
+    if(!newChann) // registering NULL pointer makes no sence...
+        return;
+
     allChannels.append( newChann );
 
     if( newChann->getAudioDataType() == mixerChannel::AudioDataIn )
@@ -41,6 +44,9 @@ void mixerChannelManager::registerChannel( mixerChannel* newChann )
 
 void mixerChannelManager::unregisterChannel( mixerChannel* channel )
 {
+    if(!channel) // unregistering null pointer makes no sence :D
+        return;
+
     mixerChannelManager::storageType::iterator it;
     for( it = allChannels.begin(); it != allChannels.end(); it++ )
         if( (*it) == channel )
