@@ -50,6 +50,8 @@ protected slots:
     virtual void accept();
 
 private slots:
+    void on_remove_controller_clicked();
+    void on_add_controller_clicked();
     void on_channel_add_clicked();
     void on_colorChooser_clicked();
     void on_channelList_currentItemChanged(QListWidgetItem* current, QListWidgetItem* previous);

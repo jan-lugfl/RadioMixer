@@ -201,3 +201,13 @@ void settingsDialog::on_channel_add_clicked()
     item->setText( tr("New channel") );
     ui->channelList->setCurrentItem( item );
 }
+
+void settingsDialog::on_add_controller_clicked()
+{
+
+}
+
+void settingsDialog::on_remove_controller_clicked()
+{
+
+}
