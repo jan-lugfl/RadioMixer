@@ -25,6 +25,7 @@
 remoteControlChannel::remoteControlChannel(int channel_id, QObject *parent) :
     channel_id(channel_id), QObject(parent)
 {
+    name = tr("unnamed");
 }
 
 // This function processes the events and sends QT signals depending on the event...
@@ -112,4 +113,14 @@ void remoteControlChannel::associateToChannel( mixerChannel* channel )
     connect( channel, SIGNAL(stateChanged(int)), this, SLOT(changeState(int)));
     connect( this, SIGNAL(play() ), channel, SLOT( play() ) );
     connect( this, SIGNAL(pause() ), channel, SLOT( pause() ) );
+}
+
+void remoteControlChannel::setName(QString newName)
+{
+    name = newName;
+}
+
+QString remoteControlChannel::getName()
+{
+    return name;
 }

@@ -30,13 +30,23 @@ class remoteControl : public QObject
 {
     Q_OBJECT
 public:
-    remoteControl(QObject *parent = 0, QString name = QString("Remote Control"), bool bidirectional = true );
+    explicit remoteControl(QObject *parent = 0, QString name = QString("Remote Control"), bool bidirectional = true );
+    virtual ~remoteControl();
 
     // needs to be public as maybe existing threads needs access to iterate channels
     QVector<remoteControlChannel*> channels;
 
+    void setName( QString newName );
+    QString getName();
+
+    static QList<remoteControl*> getAllControls();
+
 protected:
+    QString name;
     bool bidirectional;
+
+private:
+    static QList<remoteControl*> allControls; // used to get all existing controls...
 
 signals:
 

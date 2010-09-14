@@ -43,6 +43,10 @@ jack_MIDIControl::~jack_MIDIControl()
 
 void jack_MIDIControl::process(int frames)
 {
+    // return if channels are not available
+    if(!input | !output)
+        return;
+
     // get MIDI input data...
     void* port_buffer = NULL;
     int read, events;

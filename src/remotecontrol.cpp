@@ -21,7 +21,34 @@
  ***************************************************************************/
 #include "remotecontrol.h"
 
+// init static controls list
+QList<remoteControl*> remoteControl::allControls;
+
 remoteControl::remoteControl(QObject *parent, QString name, bool bidirectional) :
-    QObject(parent, name), bidirectional(bidirectional)
+    QObject(parent), bidirectional(bidirectional)
 {
+    allControls.append(this);
+    setName( name );
+}
+
+remoteControl::~remoteControl()
+{
+    qWarning("destructor called...");
+    allControls.removeOne( this );
+}
+
+void remoteControl::setName(QString newName)
+{
+    name = newName;
+}
+
+QString remoteControl::getName()
+{
+    return name;
+}
+
+QList<remoteControl*> remoteControl::getAllControls()
+{
+    qWarning(QString::number( allControls.count()));
+    return allControls;
 }

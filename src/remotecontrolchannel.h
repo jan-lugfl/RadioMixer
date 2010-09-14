@@ -49,6 +49,12 @@ public:
     void process_event( RemoteControlerEvent event, QString value );
     void associateToChannel( mixerChannel* channel );
 
+    QString getName();
+    void setName( QString newName );
+
+protected:
+    QString name;
+
 signals:
     void volumeChanged( int );
     void balanceChanged( int );

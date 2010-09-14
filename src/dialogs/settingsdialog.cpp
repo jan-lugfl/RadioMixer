@@ -22,6 +22,7 @@
 #include "settingsdialog.h"
 #include "ui_settingsdialog.h"
 #include "mixerchannelmanager.h"
+#include "remotecontrol.h"
 #include "listwidgetitemwithid.h"
 
 #include "mixerchannel_jackin.h"
@@ -47,6 +48,11 @@ settingsDialog::settingsDialog(QWidget *parent) :
         item->setText( channel->getName() );
     }
     ui->channelList->setCurrentRow(0);
+
+    // fill the remote controller list
+    foreach( remoteControl* controller, remoteControl::getAllControls() )
+        ui->remoteControllerList->insertItem( ui->remoteControllerList->count(), controller->getName() );
+
 }
 
 settingsDialog::~settingsDialog()
@@ -190,6 +196,9 @@ void settingsDialog::on_channel_add_clicked()
     bool ok;
     QString type = QInputDialog::getItem( this, tr("Type of the new channel"), tr("Please select the typr for the new channel"), mixerChannelManager::getChannelTypeNames(), 0, false, &ok);
 
+    if(!ok)
+        return;
+
     QUuid newChannelUuid = QUuid::createUuid();
     mixerChannel::settingsType newChannelSettings;
     newChannelSettings["create_channel_type"] = mixerChannelManager::getChannelTypeFromTypeName( type );
@@ -204,10 +213,53 @@ void settingsDialog::on_channel_add_clicked()
 
 void settingsDialog::on_add_controller_clicked()
 {
+    bool ok;
+    QString type = QInputDialog::getItem( this, tr("Type of the new controller"), tr("Please select the typr for the new controller"), QStringList(tr("MIDI Device")), 0, false, &ok);
+    if(!ok)
+        return;
+    QString name = QInputDialog::getText( this, tr("Name of new controller"), tr("Please enter the name for the new controller"), QLineEdit::Normal, tr("New Controller"), &ok);
+    if(!ok)
+        return;
 
+    if( type == tr("MIDI Device") )
+    {
+        remoteControl_MIDI* cntrl = new remoteControl_MIDI( 0, name );
+        cntrl->setName( name );
+        ui->remoteControllerList->insertItem( ui->remoteControllerList->count(), cntrl->getName() );
+    }
 }
 
 void settingsDialog::on_remove_controller_clicked()
 {
+    // get controller
+    foreach(remoteControl* control, remoteControl::getAllControls())
+        if(control->getName() == ui->remoteControllerList->currentItem()->text())
+        {
+            ui->remoteControllerList->takeItem( ui->remoteControllerList->currentRow() );
+            control->disconnect();
+            delete control;
+            return; // only remove a single item...
+        }
+}
 
+void settingsDialog::on_remoteControllerList_currentItemChanged(QListWidgetItem* current, QListWidgetItem* previous)
+{
+    if(!current)
+        return;
+
+    // get controller
+    remoteControl* control = NULL;
+    foreach(remoteControl* controlIt, remoteControl::getAllControls())
+        if(controlIt->getName() == current->text())
+            control = controlIt;
+
+    // empty the list...
+    ui->remoteController_channels->clear();
+
+    // set the configured channels for the controller up
+    if(control)
+    {
+        foreach(remoteControlChannel* chan, control->channels)
+            ui->remoteController_channels->insertItem( ui->remoteControllerList->count(), chan->getName() );
+    }
 }
