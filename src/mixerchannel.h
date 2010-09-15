@@ -39,7 +39,7 @@ class mixerChannel : public QObject
 {
 Q_OBJECT
 public:
-    explicit mixerChannel( const char *name = 0, QUuid uuid = QUuid() );
+    explicit mixerChannel( QString name = QString(), QUuid uuid = QUuid() );
     virtual ~mixerChannel();
 
     static QString const Type;

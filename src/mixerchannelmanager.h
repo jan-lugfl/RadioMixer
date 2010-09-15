@@ -46,6 +46,9 @@ public:
     static  storageType allChannels;
     static  storageType inChannels;
     static  storageType outChannels;
+
+private:
+    static void removeChannelFromVector( storageType* stor, mixerChannel* chan );
 };
 
 #endif // MIXERCHANNELMANAGER_H

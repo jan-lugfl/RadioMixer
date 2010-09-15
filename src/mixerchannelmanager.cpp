@@ -47,16 +47,20 @@ void mixerChannelManager::unregisterChannel( mixerChannel* channel )
     if(!channel) // unregistering null pointer makes no sence :D
         return;
 
+    removeChannelFromVector( &allChannels, channel );
+    removeChannelFromVector( &inChannels, channel );
+    removeChannelFromVector( &outChannels, channel );
+}
+
+void mixerChannelManager::removeChannelFromVector( storageType* stor, mixerChannel* chan )
+{
     mixerChannelManager::storageType::iterator it;
-    for( it = allChannels.begin(); it != allChannels.end(); it++ )
-        if( (*it) == channel )
-            allChannels.erase( it );
-    for( it = inChannels.begin(); it != inChannels.end(); it++ )
-        if( (*it) == channel )
-            inChannels.erase( it );
-    for( it = outChannels.begin(); it != outChannels.end(); it++ )
-        if( (*it) == channel )
-            outChannels.erase( it );
+    for( it = stor->begin(); it != stor->end(); it++ )
+        if( (*it) == chan )
+        {
+            stor->erase( it );
+            return;
+        }
 }
 
 mixerChannel* mixerChannelManager::getChannelByUuid( QUuid uuid )

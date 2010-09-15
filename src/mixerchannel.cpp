@@ -27,8 +27,8 @@
 
 QString const mixerChannel::Type = QString("unknown");
 
-mixerChannel::mixerChannel( const char *name, QUuid uuid )
- : QObject(0, name), volume(1), sendVuMeterChanged_left(0), sendVuMeterChanged_right(0)
+mixerChannel::mixerChannel(  QString name, QUuid uuid )
+ : QObject(0), volume(1), sendVuMeterChanged_left(0), sendVuMeterChanged_right(0)
 {
     // register settings type in QT
     qRegisterMetaType<mixerChannel::settingsType>("mixerChannel::settingsType");
@@ -66,7 +66,7 @@ mixerChannel::mixerChannel( const char *name, QUuid uuid )
 mixerChannel::~mixerChannel()
 {
     // unregister myself in the channel manager
-    mixerChannelManager::unregisterChannel( this );
+    //mixerChannelManager::unregisterChannel( this );
 }
 
 void mixerChannel::registerChannel()
@@ -87,13 +87,13 @@ void mixerChannel::setVolume( int newValue )
 
 QString mixerChannel::getName( )
 {
-        return settings["name"].toString();
+    return settings["name"].toString();
 }
 
 void mixerChannel::setName( QString newName )
 {
-        settings["name"] = newName;
-        emit( settingsChanged( settings ) );
+    settings["name"] = newName;
+    emit( settingsChanged( settings ) );
 }
 
 QUuid mixerChannel::getUuid()

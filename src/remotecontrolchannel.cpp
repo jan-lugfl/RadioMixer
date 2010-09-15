@@ -110,6 +110,7 @@ void remoteControlChannel::repeat( bool state )
 // starts to control a given channel...
 void remoteControlChannel::associateToChannel( mixerChannel* channel )
 {
+    attached_to.clear(); // currently only one item is aalowed as the setting dialog currently cant display more items..
     attached_to.append( channel->getUuid().toString() );
 //    connect( channel, SIGNAL(nameChanged(QString)), this, SLOT(changeName(QString)) );
     connect( this, SIGNAL(volumeChanged( int )), channel, SLOT( setVolume( int ) ) );

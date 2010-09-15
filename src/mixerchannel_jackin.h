@@ -32,7 +32,7 @@ class mixerChannel_jackIn : public mixerChannel
 {
 Q_OBJECT
 public:
-    explicit mixerChannel_jackIn( const char *name = 0, QUuid uuid = QUuid() );
+    explicit mixerChannel_jackIn( QString name = QString(), QUuid uuid = QUuid() );
     virtual ~mixerChannel_jackIn();
 
     static QString const Type;

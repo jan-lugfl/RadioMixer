@@ -121,3 +121,10 @@ jack_MIDIControl* Jack::newController( QString name, bool bidirectional )
     }
     return controller;
 }
+
+// unregisteres a port when its not used anymore...
+void Jack::unregisterPort( jack_port_t* port )
+{
+    jack_port_unregister( jack, port );
+    port = NULL;
+}

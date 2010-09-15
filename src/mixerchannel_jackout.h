@@ -32,7 +32,7 @@ class mixerChannel_jackOut : public mixerChannel
 {
 Q_OBJECT
 public:
-    explicit mixerChannel_jackOut( const char *name = 0, QUuid uuid = QUuid() );
+    explicit mixerChannel_jackOut( QString name = QString(), QUuid uuid = QUuid() );
     virtual ~mixerChannel_jackOut();
 
     static QString const Type;

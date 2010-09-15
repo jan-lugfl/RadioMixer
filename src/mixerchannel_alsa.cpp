@@ -23,7 +23,7 @@
 
 QString const mixerChannel_ALSA::Type = QString("ALSAMIX");
 
-mixerChannel_ALSA::mixerChannel_ALSA( const char *name, QUuid uuid )
+mixerChannel_ALSA::mixerChannel_ALSA( QString name, QUuid uuid )
  : mixerChannel(name, uuid), muted( false )
 {
     startAlsa();

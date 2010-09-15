@@ -49,7 +49,7 @@ class mixerChannel_filePlayer : public mixerChannel
   Q_OBJECT
 
 public:
-    explicit mixerChannel_filePlayer( const char *name = 0, QUuid uuid = QUuid() );
+    explicit mixerChannel_filePlayer( QString name = QString(), QUuid uuid = QUuid() );
     virtual ~mixerChannel_filePlayer();
 
     static QString const Type;

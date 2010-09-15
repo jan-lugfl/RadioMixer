@@ -20,10 +20,11 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 #include "mixerchannel_fileplayer.h"
+#include "mixerchannelmanager.h"
 
 QString const mixerChannel_filePlayer::Type = QString("PLAYER");
 
-mixerChannel_filePlayer::mixerChannel_filePlayer( const char *name, QUuid uuid )
+mixerChannel_filePlayer::mixerChannel_filePlayer( QString name, QUuid uuid )
  : mixerChannel(name, uuid)
 {
     type = Type;
@@ -38,9 +39,12 @@ mixerChannel_filePlayer::mixerChannel_filePlayer( const char *name, QUuid uuid )
 
 mixerChannel_filePlayer::~mixerChannel_filePlayer()
 {
-        if(!state == Stopped)
-		stop();
-	bufferThread->terminate();
+    // unregister myself in the channel manager
+    mixerChannelManager::unregisterChannel( this );
+
+    if(!state == Stopped)
+        stop();
+    bufferThread->terminate();
 }
 
 void mixerChannel_filePlayer::open( playListItem* track )

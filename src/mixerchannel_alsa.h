@@ -33,7 +33,7 @@ class mixerChannel_ALSA : public mixerChannel
 	Q_OBJECT
 
 public:
-    explicit mixerChannel_ALSA( const char *name = 0, QUuid uuid = QUuid() );
+    explicit mixerChannel_ALSA( QString name = QString(), QUuid uuid = QUuid() );
     virtual ~mixerChannel_ALSA();
 
     static QString const Type;
