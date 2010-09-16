@@ -126,9 +126,9 @@ void mixerChannel_filePlayer::detachPlaylist( )
 
 void mixerChannel_filePlayer::decode( )
 {
-	bool endOfTrack = 0;
+        bool endOfTrack = false;
 	float** decBuff = new float*[2];		//Buffer for Sound Decoder
-	int dataFetched;
+        int dataFetched = 0;
 	unsigned int toFetch = soundBuffers[0].getFree();
 
         dataFetched = decoder->decode( &decBuff, toFetch );
@@ -146,8 +146,10 @@ void mixerChannel_filePlayer::decode( )
 				stop();
 		}
 		else
-			stop();
-		endOfTrack = 1;
+                {
+                    stop();
+                    endOfTrack = 1;
+                }
 	}else
 	{
 		// process Audio....

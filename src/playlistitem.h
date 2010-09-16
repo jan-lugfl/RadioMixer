@@ -24,10 +24,10 @@
 
 #include "metatag.h"
 
-#include <qobject.h>
-#include <qregexp.h>
-#include <qcolor.h>
-#include <qdom.h>
+#include <QObject>
+#include <QRegExp>
+#include <QColor>
+#include <QDomElement>
 
 /**
 	@author Jan Boysen <trekkie@media-mission.de>
