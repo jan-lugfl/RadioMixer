@@ -72,6 +72,7 @@ void playList::rename(QString name)
 void playList::addItem( playListItem* newItem )
 {
     items.append( newItem );
+    connect( newItem, SIGNAL(refreshed()), this, SLOT(itemChanged()));
     emit( changed() );
 }
 
@@ -81,4 +82,10 @@ playListItem* playList::getNext()
         return new playListItem("");
 
     return items[currentIndex++];
+}
+
+void playList::itemChanged()
+{
+    // currently only a signal wrapper...
+    emit( changed() );
 }

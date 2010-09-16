@@ -156,16 +156,15 @@ void mixerChannel_filePlayer::decode( )
 		//mix Monot to Stereo
 		if( channels == 1 )
 		{
-			decBuff[1] = new float[dataFetched];
-                        memcpy(decBuff[1], decBuff[0], dataFetched );
+                    //Write Data to ringbuffer mono mode...
+                    soundBuffers[0].write( decBuff[0], dataFetched );
+                    soundBuffers[1].write( decBuff[0], dataFetched );
+                }else
+                {
+                    //Write Data to ringbuffer stereo mode..
+                    soundBuffers[0].write( decBuff[0], dataFetched );
+                    soundBuffers[1].write( decBuff[1], dataFetched );
                 }
-                //Write Data to ringbuffer
-		soundBuffers[0].write( decBuff[0], dataFetched );
-		soundBuffers[1].write( decBuff[1], dataFetched );
-
-		//deallocate Memory if we are mixing mono to strereo
-		if( channels == 1 )
-			delete decBuff[1];
 	}
 	if( endOfTrack )
             this->endOfTrack();

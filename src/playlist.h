@@ -54,10 +54,12 @@ signals:
     void renamed( QString );
     void changed();
 
+protected slots:
+    virtual void itemChanged();
+
 public slots:
     virtual void rename( QString name );
     virtual void addItem( playListItem* newItem );
-
 };
 
 #endif // PLAYLIST_H

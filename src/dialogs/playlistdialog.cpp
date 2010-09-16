@@ -39,6 +39,8 @@ playlistDialog::playlistDialog(QWidget *parent) :
         new playlistWidget( playlist, ui->playlistList );
     ui->playlistList->setCurrentRow(0);
 
+    ui->playListView->setAlternatingRowColors( true );
+
     // append one initial file browser source tab...
     fileBrowser* filebrowser = new fileBrowser( ui->itemSourceTab );
     ui->itemSourceTab->insertTab( filebrowser, tr("Filebrowser") );
@@ -93,6 +95,34 @@ void playlistDialog::reloadPlaylist()
         QTreeWidgetItem* itm = new QTreeWidgetItem( ui->playListView );
         itm->setText( 0, item->getTitle() );
         itm->setText( 1, item->getArtist() );
+        switch( item->getState() )
+        {
+        case playListItem::Loading:
+            itm->setBackgroundColor( 0, Qt::yellow);
+            itm->setBackgroundColor( 1, Qt::yellow);
+            itm->setBackgroundColor( 2, Qt::yellow);
+            itm->setBackgroundColor( 3, Qt::yellow);
+            break;
+        case playListItem::Normal:
+            break;
+        case playListItem::Cued:
+            itm->setBackgroundColor( 0, Qt::gray );
+            itm->setBackgroundColor( 1, Qt::gray );
+            itm->setBackgroundColor( 2, Qt::gray );
+            itm->setBackgroundColor( 3, Qt::gray );
+            ui->playListView->scrollToItem( itm, QAbstractItemView::PositionAtCenter );
+            break;
+        case playListItem::Playing:
+            itm->setBackgroundColor( 0, Qt::green );
+            itm->setBackgroundColor( 1, Qt::green );
+            itm->setBackgroundColor( 2, Qt::green );
+            itm->setBackgroundColor( 3, Qt::green );
+            ui->playListView->scrollToItem( itm, QAbstractItemView::PositionAtCenter );
+            break;
+        case playListItem::Played:
+            itm->setDisabled( true );
+            break;
+        }
     }
     ui->playListView->resizeColumnToContents(0);
     ui->playListView->resizeColumnToContents(1);
