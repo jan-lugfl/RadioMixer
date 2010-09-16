@@ -72,6 +72,7 @@ signals:
     void queue();
     void repeat();
     void open();
+    void mute();
     void stateChanged( QUuid uuid, remoteControlChannel::RemoteControlerEvent, QString );
 
 public slots:

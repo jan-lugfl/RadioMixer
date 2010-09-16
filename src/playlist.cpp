@@ -77,5 +77,8 @@ void playList::addItem( playListItem* newItem )
 
 playListItem* playList::getNext()
 {
+    if(currentIndex >= items.count())
+        return new playListItem("");
+
     return items[currentIndex++];
 }

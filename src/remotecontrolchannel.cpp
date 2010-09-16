@@ -62,6 +62,9 @@ void remoteControlChannel::process_event( RemoteControlerEvent event, QString va
         case event_openButton:
                     emit open( );
                     break;
+        case event_muteButton:
+                    emit mute( );
+                    break;
         default:
                 qWarning("unknown event triggered...");
     };

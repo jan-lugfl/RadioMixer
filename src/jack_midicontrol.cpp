@@ -36,7 +36,7 @@ jack_MIDIControl::jack_MIDIControl() :
 
 jack_MIDIControl::~jack_MIDIControl()
 {
-    // Init the Mutexes
+    // free the Mutexes
     free(lock_inqueue);
     free(lock_outqueue);
 }
@@ -69,7 +69,9 @@ void jack_MIDIControl::process(int frames)
         message.command = buf[0];
         message.par = buf[1];
         message.value = buf[2];
+        lock_inqueue->lock();
         message_queue_in.enqueue( message );
+        lock_inqueue->unlock();
     }
 
     // Process output if we have something in the queue...
@@ -84,7 +86,9 @@ void jack_MIDIControl::process(int frames)
             midi_message message;
             while(!message_queue_out.empty() )
             {
+                lock_outqueue->lock();
                 message = message_queue_out.dequeue();
+                lock_outqueue->unlock();
                 oMsg.data[0] = message.command;
                 oMsg.data[1] = message.par;
                 oMsg.data[2] = message.value;

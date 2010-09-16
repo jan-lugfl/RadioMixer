@@ -111,7 +111,7 @@ void channelMixer::run()
 
 void channelMixer::fetchSampleData( mixerChannel* channel, float * bufferLeft, float * bufferRight )
 {
-	unsigned int dataToRead = int( (((double)channel->getSmplRate()/(double)48000)*1024)+1);
+        unsigned int dataToRead = int( (((double)channel->getSmplRate()/(double)48000)*1024)+1);
 
 	if( channel->canGetData(dataToRead) )
 	{

@@ -29,8 +29,8 @@ mixerChannel_jackOut::mixerChannel_jackOut( QString name, QUuid uuid )
 {
     type = Type;
 	// shrink the buffer size for lower latency...
-        soundBuffers[0].setBufSize(4096);
-        soundBuffers[1].setBufSize(4096);
+        soundBuffers[0].setBufSize(2050);
+        soundBuffers[1].setBufSize(2050);
 
 #warning TODO.......
 //	connect( jackPlayer, SIGNAL( onConnect() ), this, SLOT( connectPort()) );
@@ -51,20 +51,21 @@ void mixerChannel_jackOut::process( jack_nframes_t frames  )
 {
     if(!jack_port[0]||!jack_port[1])
         return;
-	jack_default_audio_sample_t*	destL = ( jack_default_audio_sample_t* ) jack_port_get_buffer (jack_port[0], frames);
-	jack_default_audio_sample_t*	destR = ( jack_default_audio_sample_t* ) jack_port_get_buffer (jack_port[1], frames);
 
-	if( canGetData(frames) )
-	{
-	    getDataLeft( destL, frames );
-	    getDataRight( destR, frames );
-	}
-	else
-	    for(int i;i<=frames;i++)
-	    {
-		destL[i] = 0;
-		destR[i] = 0;
-	    }
+    jack_default_audio_sample_t*	destL = ( jack_default_audio_sample_t* ) jack_port_get_buffer (jack_port[0], frames);
+    jack_default_audio_sample_t*	destR = ( jack_default_audio_sample_t* ) jack_port_get_buffer (jack_port[1], frames);
+
+    if( canGetData(frames) )
+    {
+        getDataLeft( destL, frames );
+        getDataRight( destR, frames );
+    }
+    else
+        for(int i;i<=frames;i++)
+        {
+            destL[i] = 0;
+            destR[i] = 0;
+        }
 }
 
 void mixerChannel_jackOut::mute( )

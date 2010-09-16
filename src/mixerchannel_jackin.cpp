@@ -31,8 +31,8 @@ mixerChannel_jackIn::mixerChannel_jackIn( QString name, QUuid uuid )
 	smplRate = Jack::getSmplRate();
 
 	// shrink the buffer size for lower latency...
-        soundBuffers[0].setBufSize(4096);
-        soundBuffers[1].setBufSize(4096);
+        soundBuffers[0].setBufSize(3072);
+        soundBuffers[1].setBufSize(3072);
 
 //	connect( jackPlayer, SIGNAL( onConnect() ), this, SLOT( connectPort()) );
 //	connect( jackPlayer, SIGNAL( onDisconnect() ), this, SLOT( disconnectPort()) );
