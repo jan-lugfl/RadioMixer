@@ -22,7 +22,9 @@
 #ifndef MIXERGUIJACKPORT_H
 #define MIXERGUIJACKPORT_H
 
-#include <mixergui.h>
+#include <QRadioButton>
+
+#include "mixergui.h"
 #include "glowbutton.h"
 #include "mixerchannel_jackin.h"
 
@@ -45,12 +47,16 @@ protected:
 	vuMeter* levelMeterRight;
 	glowButton*	muteBut;
 
+protected slots:
+        virtual void switchMuteButton();
+
 private:
-	bool mute;
+        bool mode_onAir;
 
 public slots:
 	virtual void changeName( QString newName );
 	virtual void associateToChannel( mixerChannel* channel );
+        virtual void muteChanged( bool state );
 
 };
 

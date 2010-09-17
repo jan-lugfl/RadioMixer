@@ -22,11 +22,12 @@
 #include "mixerguijackport.h"
 
 mixerGuiJackport::mixerGuiJackport( QWidget* parent, const char* name, Qt::WFlags fl )
- : mixerGUI( parent, name, fl), mute(0)
+ : mixerGUI( parent, name, fl), mode_onAir(false)
 {
 	muteBut = new glowButton( this, "muteBut" );
 	muteBut->setActivatedColor( QColor( 180, 50, 50 ) );
 	actionButtons->addWidget( muteBut );
+        connect( muteBut, SIGNAL(rightClicked()), this, SLOT(switchMuteButton()));
 
 	levelMeterLeft = new vuMeter( this, "levelMeterLeft");
 	levelMeterLeft->setGeometry( QRect( 5, 60, 11, 321 ) );
@@ -52,7 +53,10 @@ mixerGuiJackport::~mixerGuiJackport()
 void mixerGuiJackport::languageChange( )
 {
         mixerGUI::languageChange();
-	muteBut->setText( tr( "Mute" ) );
+        if(mode_onAir)
+            muteBut->setText( tr( "onAir" ) );
+        else
+            muteBut->setText( tr( "Mute" ) );
 }
 
 void mixerGuiJackport::changeName( QString newName )
@@ -70,7 +74,7 @@ void mixerGuiJackport::associateToChannel( mixerChannel* channel )
 {
     mixerGUI::associateToChannel( channel );
 
-    connect( channel, SIGNAL(muteChanged(bool)), muteBut, SLOT(setState(bool)));
+    connect( channel, SIGNAL(muteChanged(bool)), this, SLOT(muteChanged(bool)));
 
     // connect button actions
     connect( muteBut, SIGNAL(clicked()), channel, SLOT(toggleMute()));
@@ -78,4 +82,27 @@ void mixerGuiJackport::associateToChannel( mixerChannel* channel )
     // connect levelMeters
     connect( channel, SIGNAL(vuMeterChanged_left(float)), levelMeterLeft, SLOT(setLevel(float)) );
     connect( channel, SIGNAL(vuMeterChanged_right(float)), levelMeterRight, SLOT(setLevel(float)) );
+}
+
+void mixerGuiJackport::muteChanged( bool state )
+{
+    if(mode_onAir)
+        muteBut->setState( !state );
+    else
+        muteBut->setState( state );
+}
+
+void mixerGuiJackport::switchMuteButton()
+{
+    mode_onAir = !mode_onAir;
+    languageChange();
+    if(mode_onAir)
+    {
+        muteBut->setActivatedColor( QColor( 255, 0, 0 ) );
+        muteBut->toggle();
+    }else
+    {
+        muteBut->setActivatedColor( QColor( 180, 50, 50 ) );
+        muteBut->toggle();
+    }
 }

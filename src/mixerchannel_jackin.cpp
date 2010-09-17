@@ -28,16 +28,14 @@ mixerChannel_jackIn::mixerChannel_jackIn( QString name, QUuid uuid )
  : mixerChannel( name, uuid ), levelMeterLeft(0), levelMeterRight(0)
 {
     type = Type;
-	smplRate = Jack::getSmplRate();
+    smplRate = Jack::getSmplRate();
 
-	// shrink the buffer size for lower latency...
-        soundBuffers[0].setBufSize(3072);
-        soundBuffers[1].setBufSize(3072);
+    // shrink the buffer size for lower latency...
+    soundBuffers[0].setBufSize(3072);
+    soundBuffers[1].setBufSize(3072);
 
-//	connect( jackPlayer, SIGNAL( onConnect() ), this, SLOT( connectPort()) );
-//	connect( jackPlayer, SIGNAL( onDisconnect() ), this, SLOT( disconnectPort()) );
-	connectPort();
-        registerChannel();
+    connectPort();
+    registerChannel();
 }
 
 
@@ -55,33 +53,32 @@ void mixerChannel_jackIn::process( jack_nframes_t frames  )
     jack_default_audio_sample_t*    sourceL = ( jack_default_audio_sample_t* ) jack_port_get_buffer (jack_port[0], frames);
     jack_default_audio_sample_t*    sourceR = ( jack_default_audio_sample_t* ) jack_port_get_buffer (jack_port[1], frames);
 
-    // copy Jacks buffer to our own...
-    if( soundBuffers[0].canWrite( frames ) )
-	soundBuffers[0].write( sourceL, frames);
-    if( soundBuffers[1].canWrite( frames ) )
-	soundBuffers[1].write( sourceR, frames);
+    if(!muted)
+    {
+        // copy Jacks buffer to our own...
+        if( soundBuffers[0].canWrite( frames ) )
+            soundBuffers[0].write( sourceL, frames);
+        if( soundBuffers[1].canWrite( frames ) )
+            soundBuffers[1].write( sourceR, frames);
+    }
 }
 
 void mixerChannel_jackIn::mute( )
 {
-//	disconnect( jackIn[0], SIGNAL( processData( jack_nframes_t ) ), this, SLOT( processJackLeft( jack_nframes_t ) ) );
-//	disconnect( jackIn[1], SIGNAL( processData( jack_nframes_t ) ), this, SLOT( processJackRight( jack_nframes_t ) ) );
-
-//	jack_default_audio_sample_t*	mixedL = ( jack_default_audio_sample_t* ) jack_port_get_buffer (jackOut[0]->jackport, frames);
-//	jack_default_audio_sample_t*	mixedR = ( jack_default_audio_sample_t* ) jack_port_get_buffer (jackOut[1]->jackport, frames);
-//	unsigned int sample_off = 0;
-//	while( sample_off < frames )
-//	{
-//		mixedL[sample_off] = 0.f;
-//		mixedR[sample_off] = 0.f;
-//		sample_off++;
-//	}
+    muted = true;
+    emit( muteChanged(muted) );
 }
 
 void mixerChannel_jackIn::unMute( )
 {
-//	connect( jackIn[0], SIGNAL( processData( jack_nframes_t ) ), this, SLOT( processJackLeft( jack_nframes_t ) ) );
-//	connect( jackIn[1], SIGNAL( processData( jack_nframes_t ) ), this, SLOT( processJackRight( jack_nframes_t ) ) );
+    muted = false;
+    emit( muteChanged(muted) );
+}
+
+void mixerChannel_jackIn::toggleMute()
+{
+    muted = !muted;
+    emit( muteChanged(muted));
 }
 
 void mixerChannel_jackIn::connectPort( )

@@ -63,7 +63,7 @@ void remoteControlChannel::process_event( RemoteControlerEvent event, QString va
                     emit open( );
                     break;
         case event_muteButton:
-                    emit mute( );
+                    emit toggleMute( );
                     break;
         default:
                 qWarning("unknown event triggered...");
@@ -123,6 +123,9 @@ void remoteControlChannel::associateToChannel( mixerChannel* channel )
     connect( channel, SIGNAL(stateChanged(int)), this, SLOT(changeState(int)));
     connect( this, SIGNAL(play() ), channel, SLOT( play() ) );
     connect( this, SIGNAL(pause() ), channel, SLOT( pause() ) );
+
+    connect( this, SIGNAL(toggleMute()), channel, SLOT(toggleMute()));
+    connect( channel, SIGNAL(muteChanged()), this, SLOT(changeMute()));
 }
 
 void remoteControlChannel::setName(QString newName)

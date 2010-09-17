@@ -21,6 +21,8 @@
  ***************************************************************************/
 #include "glowbutton.h"
 
+#include <QMouseEvent>
+
 glowButton::glowButton(QWidget *parent, const char *name)
  : QToolButton(parent, name), state(FALSE)
 {
@@ -108,4 +110,9 @@ void glowButton::setState( bool state )
 		setOff();
 }
 
-
+void glowButton::mouseReleaseEvent ( QMouseEvent * e )
+{
+    if( e->button() == Qt::RightButton )
+        emit( rightClicked() );
+    QAbstractButton::mouseReleaseEvent( e );
+}

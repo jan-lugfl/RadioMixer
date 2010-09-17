@@ -48,6 +48,11 @@ protected:
 	bool state;
 	QColor actColor;
 	QColor deactColor;
+
+        virtual void mouseReleaseEvent ( QMouseEvent * e );
+
+signals:
+        void rightClicked();
 };
 
 #endif

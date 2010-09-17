@@ -43,20 +43,24 @@ public:
     virtual void process( jack_nframes_t );
 
 protected:
-	jack_port_t*	jack_port[2];
-	jack_nframes_t	frames;
+    jack_port_t*	jack_port[2];
+    jack_nframes_t	frames;
+    bool muted;
 
 private:
-	float levelMeterLeft;
-	float levelMeterRight;
+    float levelMeterLeft;
+    float levelMeterRight;
 
 public slots:
-	virtual void mute();
-	virtual void unMute();
-	virtual void connectPort();
-	virtual void disconnectPort();
-        virtual void updateSettings( mixerChannel::settingsType settings ); // reimplement updateSettings as Jack Port names needs to be changes too
+    virtual void mute();
+    virtual void unMute();
+    virtual void toggleMute();
+    virtual void connectPort();
+    virtual void disconnectPort();
+    virtual void updateSettings( mixerChannel::settingsType settings ); // reimplement updateSettings as Jack Port names needs to be changes too
 
+signals:
+    void muteChanged( bool );
 };
 
 #endif //MIXERCHANNEL_JACKOUT

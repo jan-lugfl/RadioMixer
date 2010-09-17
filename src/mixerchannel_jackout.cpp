@@ -28,15 +28,13 @@ mixerChannel_jackOut::mixerChannel_jackOut( QString name, QUuid uuid )
  : mixerChannel( name, uuid ), levelMeterLeft(0), levelMeterRight(0)
 {
     type = Type;
-	// shrink the buffer size for lower latency...
-        soundBuffers[0].setBufSize(2050);
-        soundBuffers[1].setBufSize(2050);
 
-#warning TODO.......
-//	connect( jackPlayer, SIGNAL( onConnect() ), this, SLOT( connectPort()) );
-//	connect( jackPlayer, SIGNAL( onDisconnect() ), this, SLOT( disconnectPort()) );
-	connectPort();
-        registerChannel();
+    // shrink the buffer size for lower latency...
+    soundBuffers[0].setBufSize(2050);
+    soundBuffers[1].setBufSize(2050);
+
+    connectPort();
+    registerChannel();
 }
 
 
@@ -55,7 +53,7 @@ void mixerChannel_jackOut::process( jack_nframes_t frames  )
     jack_default_audio_sample_t*	destL = ( jack_default_audio_sample_t* ) jack_port_get_buffer (jack_port[0], frames);
     jack_default_audio_sample_t*	destR = ( jack_default_audio_sample_t* ) jack_port_get_buffer (jack_port[1], frames);
 
-    if( canGetData(frames) )
+    if( canGetData(frames) && !muted )
     {
         getDataLeft( destL, frames );
         getDataRight( destR, frames );
@@ -70,24 +68,20 @@ void mixerChannel_jackOut::process( jack_nframes_t frames  )
 
 void mixerChannel_jackOut::mute( )
 {
-//	disconnect( jackIn[0], SIGNAL( processData( jack_nframes_t ) ), this, SLOT( processJackLeft( jack_nframes_t ) ) );
-//	disconnect( jackIn[1], SIGNAL( processData( jack_nframes_t ) ), this, SLOT( processJackRight( jack_nframes_t ) ) );
-
-//	jack_default_audio_sample_t*	mixedL = ( jack_default_audio_sample_t* ) jack_port_get_buffer (jackOut[0]->jackport, frames);
-//	jack_default_audio_sample_t*	mixedR = ( jack_default_audio_sample_t* ) jack_port_get_buffer (jackOut[1]->jackport, frames);
-//	unsigned int sample_off = 0;
-//	while( sample_off < frames )
-//	{
-//		mixedL[sample_off] = 0.f;
-//		mixedR[sample_off] = 0.f;
-//		sample_off++;
-//	}
+    muted = true;
+    emit( muteChanged(muted) );
 }
 
 void mixerChannel_jackOut::unMute( )
 {
-//	connect( jackIn[0], SIGNAL( processData( jack_nframes_t ) ), this, SLOT( processJackLeft( jack_nframes_t ) ) );
-//	connect( jackIn[1], SIGNAL( processData( jack_nframes_t ) ), this, SLOT( processJackRight( jack_nframes_t ) ) );
+    muted = false;
+    emit( muteChanged(muted) );
+}
+
+void mixerChannel_jackOut::toggleMute()
+{
+    muted = !muted;
+    emit( muteChanged(muted) );
 }
 
 void mixerChannel_jackOut::connectPort( )
@@ -116,9 +110,10 @@ void mixerChannel_jackOut::setName( QString newName )
 
 void mixerChannel_jackOut::updateSettings( settingsType settings )
 {
-    if(!jack_port[0]||!jack_port[1])
-        return;
-    jack_port_set_name(jack_port[0], settings["name"].toString()+QString("_L") );
-    jack_port_set_name(jack_port[1], settings["name"].toString()+QString("_R") );
+    if(jack_port[0] && jack_port[1])
+    {
+        jack_port_set_name(jack_port[0], settings["name"].toString()+QString("_L") );
+        jack_port_set_name(jack_port[1], settings["name"].toString()+QString("_R") );
+    }
     mixerChannel::updateSettings( settings );
 }
