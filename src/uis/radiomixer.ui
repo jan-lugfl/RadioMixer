@@ -44,8 +44,6 @@
      <string>&amp;Window</string>
     </property>
     <addaction name="action_Playlist_Manager"/>
-    <addaction name="action_Queues"/>
-    <addaction name="separator"/>
     <addaction name="action_Settings"/>
    </widget>
    <addaction name="menu_Window"/>
@@ -59,11 +57,6 @@
   <action name="action_Playlist_Manager">
    <property name="text">
     <string>&amp;Playlist Manager</string>
-   </property>
-  </action>
-  <action name="action_Queues">
-   <property name="text">
-    <string>&amp;Queues</string>
    </property>
   </action>
   <action name="action_Settings">
