@@ -22,8 +22,8 @@
 #include "mixergui.h"
 #include <QMessageBox>
 
-mixerGUI::mixerGUI( QWidget* parent , const char* name , Qt::WFlags fl )
- : QFrame( parent, name, fl)
+mixerGUI::mixerGUI( QWidget* parent, Qt::WFlags fl )
+ : QFrame( parent, fl)
 {
     layout = new QGridLayout( this );
     actionButtons = new QGridLayout();
@@ -34,29 +34,27 @@ mixerGUI::mixerGUI( QWidget* parent , const char* name , Qt::WFlags fl )
     setAutoFillBackground( TRUE );
     setAcceptDrops( TRUE );
 
-    vuSlider = new QSlider( this, "volumeSlider" );
+    vuSlider = new QSlider( this );
     vuSlider->setMinimumHeight( 150 );
     vuSlider->setOrientation( Qt::Vertical );
-    vuSlider->setTickmarks( QSlider::Both );
-    vuSlider->setMinValue( 0 );
-    vuSlider->setMaxValue( 100 );
-    vuSlider->setLineStep( 1 );
+    vuSlider->setTickPosition( QSlider::TicksBothSides );
+    vuSlider->setRange( 0, 100 );
+    vuSlider->setSingleStep( 1 );
     vuSlider->setPageStep( 10 );
     vuSlider->setValue( 100 );
     vuSlider->setTickInterval( 10 );
 
-    trebleSlider = new QDial( this, "trebleSlider" );
-    trebleSlider->setMaxValue( 100 );
-    trebleSlider->setMinValue( -100 );
+    trebleSlider = new QDial( this );
+    trebleSlider->setRange( -100, 100 );
     trebleSlider->setValue( 0 );
-    trebleSlider->setLineStep(1);
+    trebleSlider->setSingleStep(1);
     trebleSlider->setPageStep(10);
 
-    chName = new QLabel( this, "chName" );
+    chName = new QLabel( this );
     chName->setMaximumHeight( 23 );
     chName->setFrameShape( QLabel::Panel );
     chName->setFrameShadow( QLabel::Sunken );
-    chName->setAlignment( int( Qt::AlignCenter ) );
+    chName->setAlignment( Qt::AlignCenter );
 	
     layout->addWidget( chName, 1, 1, 1, -1 );
     layout->addLayout( actionButtons, 3, 3, Qt::AlignTop );
@@ -98,18 +96,21 @@ QString mixerGUI::getName( )
 	return chName->text();
 }
 
+/*
 QColor mixerGUI::getColor( )
 {
 	return paletteBackgroundColor();
 }
+*/
 
 void mixerGUI::channelSettingsChanged( mixerChannel::settingsType settings )
 {
     this->settings = settings;
 
     changeName( settings["name"].toString() );
-    setPaletteBackgroundColor( settings["color"].value<QColor>() );
-
+    QPalette pal = palette();
+    pal.setColor( QPalette::Base, settings["color"].value<QColor>() );
+    setPalette( pal );
 }
 
 void mixerGUI::associateToChannel( mixerChannel* channel )

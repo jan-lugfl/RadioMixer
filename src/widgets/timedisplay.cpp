@@ -21,8 +21,8 @@
  ***************************************************************************/
 #include "timedisplay.h"
 
-timeDisplay::timeDisplay(QWidget *parent, const char *name)
- : QLabel(parent, name), dMode( FrameDisplay )
+timeDisplay::timeDisplay(QWidget *parent)
+ : QLabel(parent), dMode( FrameDisplay )
 {
     	timeDisplay_font = font();
 
@@ -33,7 +33,7 @@ timeDisplay::timeDisplay(QWidget *parent, const char *name)
 
     	setFrameShape( QLabel::Panel );
     	setFrameShadow( QLabel::Sunken );
-	setAlignment( int( Qt::AlignCenter ) );
+        setAlignment( Qt::AlignCenter );
 	reset();
 }
 
@@ -76,12 +76,13 @@ void timeDisplay::refresh( )
 {
     QTime remain = QTime(0,0,0,0).addMSecs(curPos.msecsTo( length ));
 
+    QPalette pal = palette();
     if( remain < QTime(0,0,15) && remain != QTime(0,0,0,0) )
-	setPaletteForegroundColor( QColor("red") );
+        pal.setColor( QPalette::Text, Qt::red );
     else if( curPos < preroll )
-	setPaletteForegroundColor( QColor("orange") );
+        pal.setColor( QPalette::Text, QColor( 255,255,0,0 ) );
     else
-	setPaletteForegroundColor( QColor("black") );
+        pal.setColor( QPalette::Text, Qt::black );
 
     switch( dMode )
     {

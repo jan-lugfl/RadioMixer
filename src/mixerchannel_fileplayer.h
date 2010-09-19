@@ -99,6 +99,8 @@ protected:
 	// Buffer Manager
 	channelBufMngr* bufferThread;
 
+        int position_change_counter;
+
 public slots:
         virtual void open( playListItem* track );
         virtual void attachToPlaylist( playList* playlist ); // giving NULL pointer will detach from playlists too

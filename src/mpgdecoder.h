@@ -22,9 +22,10 @@
 #ifndef MPGDECODER_H
 #define MPGDECODER_H
 
-#include <filedecoder.h>
+#include <QFile>
+
+#include "filedecoder.h"
 #include "ringbuffer.h"
-#include <qfile.h>
 
 // Includes libMAD for MPEG decoding
 #include <mad.h>
@@ -38,8 +39,7 @@ class mpgDecoder : public fileDecoder
 {
 Q_OBJECT
 public:
-	mpgDecoder(FILE* File, QObject *parent = 0, const char *name = 0);
-
+        mpgDecoder(FILE* File, QObject *parent = 0 );
 	~mpgDecoder();
 
 	virtual unsigned int decode( float*** data, int count );

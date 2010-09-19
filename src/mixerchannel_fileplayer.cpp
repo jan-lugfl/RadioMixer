@@ -57,10 +57,10 @@ void mixerChannel_filePlayer::open( playListItem* track )
 	if(fileOpen)
 	    stop();
 
-	fHandle = fopen( track->getFile(), "r");
+        fHandle = fopen( track->getFile().toAscii(), "r");
 	if( !fHandle )
 	{
-		qWarning(tr("file open error.. proberly not found..")+track->getFile());
+                qWarning(QString(tr("file open error.. proberly not found..")+track->getFile()).toAscii());
 		return;
 	}
 	fileName = track->getFile();
@@ -74,7 +74,7 @@ void mixerChannel_filePlayer::open( playListItem* track )
 			{
 				qWarning( tr("OGG/Vorbis File detected") );
 				oggDecoder::readMetaFromFile( track );
-				decoder = new oggDecoder( fHandle, this, "OGGDecoder" );
+                                decoder = new oggDecoder( fHandle, this );
 			}
 #endif
 #ifdef HAVE_MAD
@@ -82,7 +82,7 @@ void mixerChannel_filePlayer::open( playListItem* track )
 			{
 				qWarning( tr("MPEG-1 Layer III File detected") );
 				mpgDecoder::readMetaFromFile( track );
-				decoder = new mpgDecoder( fHandle, this, "MPGDecoder" );
+                                decoder = new mpgDecoder( fHandle, this );
 			}
 #endif
 			if( decoder == NULL )
@@ -134,7 +134,12 @@ void mixerChannel_filePlayer::decode( )
         dataFetched = decoder->decode( &decBuff, toFetch );
 
 	// Update track position
-	emit(positionChanged( QTime(0,0,0,0).addMSecs(decoder->getPlayedFrames()*40) ));
+        if(position_change_counter >= 1)
+        {
+            emit(positionChanged( QTime(0,0,0,0).addMSecs(decoder->getPlayedFrames()*40) ));
+            position_change_counter = 0;
+        }else
+            position_change_counter++;
 
         if(dataFetched == 0)
 	{

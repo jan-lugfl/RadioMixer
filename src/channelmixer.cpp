@@ -152,7 +152,7 @@ void channelMixer::fetchSampleData( mixerChannel* channel, float * bufferLeft, f
         }
         else
         {
-            qWarning( tr("channelMixer::fetchSampleData: Buffer underrun in Channel ")+channel->getName()+tr(" while Mixing....") );
+            qWarning( QString(tr("channelMixer::fetchSampleData: Buffer underrun in Channel ")+channel->getName()+tr(" while Mixing....")).toAscii() );
             // fill output buffer with empty data to not disturb the sound...
             memset(bufferLeft, 0, 1024*sizeof(float));
             memset(bufferRight, 0, 1024*sizeof(float));

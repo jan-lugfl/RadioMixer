@@ -43,11 +43,11 @@ playlistDialog::playlistDialog(QWidget *parent) :
 
     // append one initial file browser source tab...
     fileBrowser* filebrowser = new fileBrowser( ui->itemSourceTab );
-    ui->itemSourceTab->insertTab( filebrowser, tr("Filebrowser") );
+    ui->itemSourceTab->insertTab( 0, filebrowser, tr("Filebrowser") );
     connect( filebrowser, SIGNAL(itemSelected(playListItem*)), this, SLOT(addItemToCurrentPlaylist(playListItem*)));
 
     songDbBrowser* songdb = new songDbBrowser( ui->itemSourceTab );
-    ui->itemSourceTab->insertTab( songdb, tr("SongDB browser") );
+    ui->itemSourceTab->insertTab( 1, songdb, tr("SongDB browser") );
     connect( songdb, SIGNAL(itemSelected(playListItem*)), this, SLOT(addItemToCurrentPlaylist(playListItem*)));
 }
 

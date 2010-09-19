@@ -25,16 +25,16 @@
 #include <QResizeEvent>
 #include <QPixmap>
 
-vuMeter::vuMeter(QWidget *parent, const char *name)
- : QWidget(parent, name), level(0.f), canRepaint(FALSE)
+vuMeter::vuMeter(QWidget *parent)
+ : QWidget(parent), level(0.f), canRepaint(FALSE)
 {
-	bgColor = parent->paletteBackgroundColor();
-	buffer = new QPixmap();
-	vuTimer = new QTimer(this, "vu Timer");
+    bgColor = parent->palette().color( QPalette::Base );
+//    buffer = new QPixmap();
+    vuTimer = new QTimer(this);
 
-        // sets some usefull minimum sizes for this widget...
-        setMinimumWidth( 10 );
-        setMinimumHeight( 100 );
+    // sets some usefull minimum sizes for this widget...
+    setMinimumWidth( 10 );
+    setMinimumHeight( 100 );
 }
 
 
@@ -44,21 +44,26 @@ vuMeter::~vuMeter()
 
 void vuMeter::paintEvent( QPaintEvent * event)
 {
+    if(canRepaint == true)
         paint();
 }
 
 void vuMeter::setLevel( float level )
 {
+    if( level == this->level)
+        return;
+
     this->level = level;
+    drawLevelMeter( );
     repaint();
 }
 
 void vuMeter::drawLevelMeter( )
 {
 	canRepaint = TRUE;
-	if(!buffer)
+/*	if(!buffer)
 		qWarning("NULL pixmap buffer!");
-/*
+
     for(int i = 0; i < 2 + 2; i++) {
        peak[i] = hold[i] = 1;
        holdTime[i] = 20;
@@ -76,13 +81,14 @@ void vuMeter::drawLevelMeter( )
 		color[i] = Qt::blue;
     }
 
-    setBackgroundMode(Qt::NoBackground);
-    buffer->fill( bgColor );
+    //setBackgroundMode(Qt::NoBackground);
+    //buffer->fill( bgColor );
 }
 
 void vuMeter::paint( )
 {
-    QPainter painter( buffer );
+    QPainter painter( this );
+    painter.beginNativePainting();
     for(int i = numLED; i > 0; i--) {
 	if(level >= 1)
 	{
@@ -96,7 +102,6 @@ void vuMeter::paint( )
         level *= 1.15;
     }
     painter.end();
-    bitBlt(this, 0, 0, buffer);
 }
 
 void vuMeter::timeSlot( )
@@ -107,27 +112,14 @@ for(i = 0; i < 2 + 2; i++) {
 }
 }
 
+
 void vuMeter::resizeEvent( QResizeEvent * event )
 {
-	buffer->resize(event->size());
-	drawLevelMeter();
+        drawLevelMeter();
 }
+
 
 void vuMeter::reset( )
 {
 	level=0.f;
 }
-
-void vuMeter::setPaletteBackgroundColor( const QColor & newColor)
-{
-	bgColor = newColor;
-	if(canRepaint)
-		drawLevelMeter( );
-}
-
-const QColor & vuMeter::paletteBackgroundColor( ) const
-{
-	return bgColor;
-}
-
-

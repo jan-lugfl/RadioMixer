@@ -41,7 +41,7 @@ void mixerChannel_ALSA::startAlsa()
 #ifdef HAVE_ALSA
     snd_mixer_selem_id_alloca(&chId);
     if( snd_mixer_open( &alsaMixer, 0) )
-	qWarning( tr("Could not open AlsaMixer !!!") );
+        qWarning( tr("Could not open AlsaMixer !!!").toAscii() );
 
     char device[16];
     sprintf(device, "hw:%i", settings["alsa_card"].toInt() );

@@ -35,16 +35,16 @@ class mixerGuiJackport : public mixerGUI
 {
 Q_OBJECT
 public:
-    mixerGuiJackport(QWidget* parent = 0, const char* name = 0, Qt::WFlags fl = 0);
-    ~mixerGuiJackport();
+    explicit mixerGuiJackport(QWidget* parent = 0, Qt::WFlags fl = 0);
+    virtual ~mixerGuiJackport();
 
     virtual void languageChange();
     virtual QString getType();
 
 protected:
 	QGridLayout* meterLayout;
-	vuMeter* levelMeterLeft;
-	vuMeter* levelMeterRight;
+        vuMeter* levelMeterLeft;
+        vuMeter* levelMeterRight;
 	glowButton*	muteBut;
 
 protected slots:

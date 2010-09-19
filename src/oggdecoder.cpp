@@ -22,8 +22,8 @@
 
 #include "oggdecoder.h"
 
-oggDecoder::oggDecoder(FILE* File, QObject *parent, const char *name)
- : fileDecoder(File, parent, name)
+oggDecoder::oggDecoder(FILE* File, QObject *parent)
+ : fileDecoder(File, parent )
 {
 	decoder = new OggVorbis_File;
 	if(ov_open( File, decoder, NULL, 0) != 0 )

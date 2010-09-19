@@ -21,25 +21,23 @@
  ***************************************************************************/
 #include "mixerguijackport.h"
 
-mixerGuiJackport::mixerGuiJackport( QWidget* parent, const char* name, Qt::WFlags fl )
- : mixerGUI( parent, name, fl), mode_onAir(false)
+mixerGuiJackport::mixerGuiJackport( QWidget* parent, Qt::WFlags fl )
+ : mixerGUI( parent, fl), mode_onAir(false)
 {
-	muteBut = new glowButton( this, "muteBut" );
+        muteBut = new glowButton( this );
 	muteBut->setActivatedColor( QColor( 180, 50, 50 ) );
 	actionButtons->addWidget( muteBut );
         connect( muteBut, SIGNAL(rightClicked()), this, SLOT(switchMuteButton()));
 
-	levelMeterLeft = new vuMeter( this, "levelMeterLeft");
+        levelMeterLeft = new vuMeter( this );
 	levelMeterLeft->setGeometry( QRect( 5, 60, 11, 321 ) );
-	levelMeterLeft->setPaletteBackgroundColor( paletteBackgroundColor () );
 
-	levelMeterRight = new vuMeter( this, "levelMeterRight");
+        levelMeterRight = new vuMeter( this );
 	levelMeterRight->setGeometry( QRect( 19, 60, 11, 321 ) );
-	levelMeterRight->setPaletteBackgroundColor( paletteBackgroundColor () );
 
 	meterLayout = new QGridLayout();
-	meterLayout->addWidget( levelMeterLeft, 1, 1 );
-	meterLayout->addWidget( levelMeterRight, 1, 2 );
+        meterLayout->addWidget( levelMeterLeft, 1, 1 );
+        meterLayout->addWidget( levelMeterRight, 1, 2 );
 	layout->addLayout( meterLayout, 3, 1, 2, 1 );
 
 	languageChange();

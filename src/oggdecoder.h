@@ -1,7 +1,7 @@
 /* $Id$ */
 /***************************************************************************
  *   OpenRadio - RadioMixer                                                *
- *   Copyright (C) 2006-2007 by Jan Boysen                                      *
+ *   Copyright (C) 2006-2010 by Jan Boysen                                 *
  *   trekkie@media-mission.de                                              *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
@@ -37,7 +37,7 @@ class oggDecoder : public fileDecoder
 {
 Q_OBJECT
 public:
-	oggDecoder(FILE* File, QObject *parent = 0, const char *name = 0);
+        oggDecoder(FILE* File, QObject *parent = 0);
 	~oggDecoder();
 
 	virtual unsigned int decode( float*** data, int count );

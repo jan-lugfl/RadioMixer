@@ -21,8 +21,8 @@
  ***************************************************************************/
 #include "blinkbutton.h"
 
-blinkButton::blinkButton(QWidget *parent, const char *name)
- : glowButton(parent, name), colState(FALSE)
+blinkButton::blinkButton(QWidget *parent)
+ : glowButton(parent), colState(FALSE)
 {
 	connect( &blinkTimer, SIGNAL(timeout()), this, SLOT( blinker()));
 	blinkTimer.start( BLINKSPEED );

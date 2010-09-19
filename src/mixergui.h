@@ -42,14 +42,14 @@ class mixerGUI : public QFrame
   Q_OBJECT
 
 public:
-    explicit mixerGUI( QWidget* parent = 0, const char* name = 0, Qt::WFlags fl = 0 );
+    explicit mixerGUI( QWidget* parent = 0, Qt::WFlags fl = 0 );
     virtual ~mixerGUI();
 
     QUuid getUuid();
 
 	virtual void languageChange();
         virtual QString getName();
-	virtual QColor getColor();
+//	virtual QColor getColor();
 	virtual QString getType() = 0;
         virtual void associateToChannel( mixerChannel* channel );
 

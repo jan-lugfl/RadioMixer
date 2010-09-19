@@ -22,10 +22,10 @@
 #ifndef MIXERGUIALSAMIX_H
 #define MIXERGUIALSAMIX_H
 
-#include <qcombobox.h>
-#include <qlabel.h>
+#include <QComboBox>
+#include <QLabel>
 
-#include <mixergui.h>
+#include "mixergui.h"
 #include "glowbutton.h"
 #include "mixerchannel_alsa.h"
 
@@ -37,7 +37,7 @@ class mixerGuiAlsaMix : public mixerGUI
   Q_OBJECT
 
 public:
-    mixerGuiAlsaMix( QWidget* parent = 0, const char* name = 0, Qt::WFlags fl = 0 );
+    mixerGuiAlsaMix( QWidget* parent = 0, Qt::WFlags fl = 0 );
     ~mixerGuiAlsaMix();
 
     virtual void associateToChannel( mixerChannel* channel );

@@ -22,11 +22,11 @@
 #ifndef VUMETER_H
 #define VUMETER_H
 
-#include <qwidget.h>
-#include <qpainter.h>
-#include <qpixmap.h>
-#include <qtimer.h>
-//Added by qt3to4:
+#include <QWidget>
+#include <QTimer>
+#include <QPixmap>
+#include <QPainter>
+
 #include <QPaintEvent>
 #include <QResizeEvent>
 
@@ -37,11 +37,8 @@ class vuMeter : public QWidget
 {
 Q_OBJECT
 public:
-    vuMeter(QWidget *parent = 0, const char *name = 0);
+    vuMeter(QWidget *parent = 0);
     ~vuMeter();
-
-    virtual void setPaletteBackgroundColor ( const QColor & );
-    virtual const QColor & paletteBackgroundColor () const;
 
 protected:
     virtual void paintEvent(QPaintEvent* event);

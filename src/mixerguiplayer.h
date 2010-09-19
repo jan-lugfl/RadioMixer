@@ -28,7 +28,8 @@
 #include "glowbutton.h"
 #include "blinkbutton.h"
 #include "timedisplay.h"
-#include "playlistitemsongdb.h"
+// TODO reimplement SongDB
+//#include "playlistitemsongdb.h"
 
 #include <QDropEvent>
 #include <QDragEnterEvent>
@@ -42,8 +43,8 @@ class mixerGuiPlayer : public mixerGUI
   Q_OBJECT
 
 public:
-    mixerGuiPlayer( QWidget* parent = 0, const char* name = 0, Qt::WFlags fl = 0 );
-    ~mixerGuiPlayer();
+    explicit mixerGuiPlayer( QWidget* parent = 0, Qt::WFlags fl = 0 );
+    virtual ~mixerGuiPlayer();
 
 	virtual void languageChange();
 	virtual QString getType();

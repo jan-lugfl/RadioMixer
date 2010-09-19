@@ -34,7 +34,7 @@ class blinkButton : public glowButton
 {
 Q_OBJECT
 public:
-    blinkButton(QWidget *parent = 0, const char *name = 0);
+    blinkButton(QWidget *parent = 0);
     ~blinkButton();
 
 	virtual void setState( bool state );

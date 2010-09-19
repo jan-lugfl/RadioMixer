@@ -22,10 +22,10 @@
 #include "mixerguialsamix.h"
 #include <QLabel>
 
-mixerGuiAlsaMix::mixerGuiAlsaMix( QWidget* parent , const char* name , Qt::WFlags fl )
- : mixerGUI( parent, name, fl)
+mixerGuiAlsaMix::mixerGuiAlsaMix( QWidget* parent , Qt::WFlags fl )
+ : mixerGUI( parent, fl)
 {
-	muteBut = new glowButton( this, "muteBut" );
+        muteBut = new glowButton( this );
 	muteBut->setGeometry( QRect( 60, 60, 39, 26 ) );
         actionButtons->addWidget( muteBut );
 	languageChange();

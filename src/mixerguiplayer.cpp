@@ -25,53 +25,51 @@
 #include <QDropEvent>
 #include <QDragEnterEvent>
 
-mixerGuiPlayer::mixerGuiPlayer( QWidget* parent , const char* name , Qt::WFlags fl )
- : mixerGUI( parent, name, fl)
+mixerGuiPlayer::mixerGuiPlayer( QWidget* parent, Qt::WFlags fl )
+ : mixerGUI( parent, fl)
 {
-        levelMeterLeft = new vuMeter( this, "levelMeterLeft");
+        levelMeterLeft = new vuMeter( this );
 	levelMeterLeft->setGeometry( QRect( 5, 60, 11, 321 ) );
-	levelMeterLeft->setPaletteBackgroundColor( paletteBackgroundColor () );
 	
-	levelMeterRight = new vuMeter( this, "levelMeterRight");
+        levelMeterRight = new vuMeter( this );
 	levelMeterRight->setGeometry( QRect( 19, 60, 11, 321 ) );
-	levelMeterRight->setPaletteBackgroundColor( paletteBackgroundColor () );
 
         meterLayout = new QGridLayout();
         meterLayout->addWidget( levelMeterLeft, 1, 1 );
         meterLayout->addWidget( levelMeterRight, 1, 2 );
         layout->addLayout( meterLayout, 3, 1, 2, 1 );
 
-        playButton = new glowButton( this, "playButton" );
+        playButton = new glowButton( this );
 	playButton->setActivatedColor( QColor(150, 255, 150) );
         playButton->setIcon(QIcon(":/buttons/play_icon"));
         actionButtons->addWidget( playButton );
 
-	stopButton = new glowButton( this, "stopButton" );
+        stopButton = new glowButton( this );
 	stopButton->setActivatedColor( QColor(255, 150, 150) );
         stopButton->setIcon(QIcon(":/buttons/stop_icon"));
         stopButton->setState( true );
         actionButtons->addWidget( stopButton );
 
-	pauseButton = new blinkButton( this, "pauseButton" );
+        pauseButton = new blinkButton( this );
 	pauseButton->setActivatedColor( QColor(150, 150, 255) );
         pauseButton->setIcon(QIcon(":/buttons/pause_icon"));
         actionButtons->addWidget( pauseButton );
 
-	cueButton = new blinkButton( this, "cueButton" );
+        cueButton = new blinkButton( this );
 	cueButton->setActivatedColor( QColor(255, 180, 100) );
         cueButton->setIcon(QIcon(":/buttons/cue_icon"));
         actionButtons->addWidget( cueButton );
 	
-	openButton = new blinkButton( this, "openButton" );
+        openButton = new blinkButton( this );
 	openButton->setGeometry( QRect( 60, 250, 39, 26 ) );
         toolButtons->addWidget( openButton, 1, 1 );
         connect( openButton, SIGNAL(clicked()), this, SLOT(fileOpen()) );
 
-	tDisplay = new timeDisplay( this, "timeDisplay");
+        tDisplay = new timeDisplay( this );
         tDisplay->setMaximumHeight( 23 );
         layout->addWidget( tDisplay, 2, 1, 1, -1 );
 
-	loopButton = new glowButton( this, "loopButton" );
+        loopButton = new glowButton( this );
 	loopButton->setActivatedColor( QColor(255, 240, 0) );
         actionButtons->addWidget( loopButton );
 

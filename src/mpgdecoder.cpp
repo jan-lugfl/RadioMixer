@@ -21,12 +21,12 @@
  ***************************************************************************/
 #include "mpgdecoder.h"
 
-mpgDecoder::mpgDecoder(FILE* File, QObject *parent, const char *name)
- : fileDecoder(File, parent, name)
+mpgDecoder::mpgDecoder(FILE* File, QObject *parent )
+ : fileDecoder(File, parent )
 {
 	// use QFile as input Buffer, which is needed by libMad, cause it cannot detect EOF....
 	madFile = new QFile();
-	madFile->open(QIODevice::ReadOnly, fHandle);
+        madFile->open(fHandle, QIODevice::ReadOnly);
 
 	scanFile();
 #ifdef HAVE_MAD
@@ -100,8 +100,8 @@ unsigned int mpgDecoder::decode( float *** data, int count )
 			int readCnt = 0;
 			while( !madFile->atEnd() && readCnt < readSize)
 			{
-				readStart[readCnt] = madFile->getch();
-				readCnt++;
+                            readStart[readCnt] = madFile->read(1).at(0);
+                            readCnt++;
 			}
 			
                         //bei EOF ein paar GUARD 0Bytes anhaengen die MAD benötigt..
@@ -128,7 +128,7 @@ unsigned int mpgDecoder::decode( float *** data, int count )
 		mad_synth_frame( madSynth, madFrame );
 
 		if( !mad_outputBuffer[0].canWrite(madSynth->pcm.length))
-			qWarning("decoded more than fits in buffer....."+QString::number(madSynth->pcm.length)+QString::number(mad_outputBuffer[0].getFree()) );
+                        qWarning(QString("decoded more than fits in buffer....."+QString::number(madSynth->pcm.length)+QString::number(mad_outputBuffer[0].getFree()) ).toAscii());
 
 		// decoding done.. convert sampletype...
 		for( int j=0; j<channels; j++ )
@@ -231,7 +231,7 @@ void mpgDecoder::scanFile( )
 	readStart = buffer+remainder;
 	while( !madFile->atEnd() && readCnt < (4096 - remainder) )
 	{
-		readStart[readCnt] = madFile->getch();
+                readStart[readCnt] = madFile->read(1).at(0);
 		readCnt++;
 	}
 
@@ -307,7 +307,7 @@ void mpgDecoder::readMetaFromFile( playListItem * pli )
 	int readCnt = 0;
 	while( !madFile.atEnd() && readCnt < 65536 )
 	{
-		buffer[readCnt] = madFile.getch();
+                buffer[readCnt] = madFile.read(1).at(0);
 		readCnt++;
 	}
 

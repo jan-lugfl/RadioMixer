@@ -22,7 +22,7 @@
 #ifndef GLOWBUTTON_H
 #define GLOWBUTTON_H
 
-#include <qtoolbutton.h>
+#include <QToolButton>
 
 /**
 @author Jan Boysen
@@ -31,7 +31,7 @@ class glowButton : public QToolButton
 {
 Q_OBJECT
 public:
-    glowButton(QWidget *parent = 0, const char *name = 0);
+    glowButton(QWidget *parent = 0);
     ~glowButton();
 
 	virtual void setPaletteBackgroundColor ( const QColor & newCol);

@@ -23,8 +23,7 @@
 #define PLAYLISTWIDGET_H
 
 #include <QListWidgetItem>
-
-#include "../playlist.h"
+#include "playlist.h"
 
 #define LISTWIDGETITEM_PLAYLIST 1002
 

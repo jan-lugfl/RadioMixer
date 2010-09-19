@@ -78,7 +78,7 @@ void Jack::connect( QString client_name )
 		QMessageBox::warning( NULL, QObject::tr("RadioMixer - JackD"), QObject::tr("already connected to JackD Server with name %1...").arg(client_name), QMessageBox::Ok, QMessageBox::NoButton, QMessageBox::NoButton);
 	}else
 	{
-		if ((jack = jack_client_new(client_name)) == 0)
+                if ((jack = jack_client_new(client_name.toAscii())) == 0)
 			QMessageBox::warning( NULL, QObject::tr("RadioMixer - JackD"), QObject::tr("could not connect to JackD Server\nmaybe it is not running ? "), QMessageBox::Ok, QMessageBox::NoButton, QMessageBox::NoButton);
 		else
 		{
@@ -99,7 +99,7 @@ void Jack::connect( QString client_name )
 jack_port_t* Jack::newPort( QString name, unsigned long flags )
 {
     if( Jack::connected )
-        return  jack_port_register( jack, name, JACK_DEFAULT_AUDIO_TYPE, flags ,0 );
+        return  jack_port_register( jack, name.toAscii(), JACK_DEFAULT_AUDIO_TYPE, flags ,0 );
     else
 	return NULL;
 }
@@ -111,11 +111,11 @@ jack_MIDIControl* Jack::newController( QString name, bool bidirectional )
     if( Jack::connected )
     {
         controller = new jack_MIDIControl();
-        controller->input = jack_port_register( jack, name+"_in", JACK_DEFAULT_MIDI_TYPE, JackPortIsInput ,0 );
+        controller->input = jack_port_register( jack, QString(name+"_in").toAscii(), JACK_DEFAULT_MIDI_TYPE, JackPortIsInput ,0 );
         if( bidirectional )
         {
             controller->is_bidirectional = true;
-            controller->output = jack_port_register( jack, name+"_out", JACK_DEFAULT_MIDI_TYPE, JackPortIsOutput ,0 );
+            controller->output = jack_port_register( jack, QString(name+"_out").toAscii(), JACK_DEFAULT_MIDI_TYPE, JackPortIsOutput ,0 );
         }
         midi_controllers.append( controller );
     }

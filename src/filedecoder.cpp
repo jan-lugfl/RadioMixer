@@ -22,8 +22,8 @@
 
 #include "filedecoder.h"
 
-fileDecoder::fileDecoder( FILE * File, QObject * parent, const char * name )
-   :QObject( parent, name)
+fileDecoder::fileDecoder( FILE * File, QObject * parent )
+   :QObject( parent )
 {
 	fHandle = File;
 }

@@ -23,11 +23,11 @@
 
 #include <QMouseEvent>
 
-glowButton::glowButton(QWidget *parent, const char *name)
- : QToolButton(parent, name), state(FALSE)
+glowButton::glowButton(QWidget *parent)
+ : QToolButton(parent), state(FALSE)
 {
 	actColor = QColor( 255, 0, 0 );
-        deactColor = paletteBackgroundColor();
+        deactColor = palette().color( QPalette::Button );
         setMinimumHeight( 32 );
         setMinimumWidth( 32 );
         setAutoFillBackground( true );

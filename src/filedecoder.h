@@ -22,9 +22,8 @@
 #ifndef FILEDECODER_H
 #define FILEDECODER_H
 
-#include <qobject.h>
-#include <qstring.h>
-#include <stdio.h>
+#include <QObject>
+#include <QString>
 
 #include "playlistitem.h"
 
@@ -37,7 +36,7 @@ class fileDecoder : public QObject
 {
 Q_OBJECT
 public:
-	fileDecoder(FILE* File, QObject *parent = 0, const char *name = 0);
+        fileDecoder(FILE* File, QObject *parent = 0 );
 	~fileDecoder() ;
 
 	virtual unsigned int decode(float*** data, int count) =0;

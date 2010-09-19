@@ -32,7 +32,7 @@ class timeDisplay : public QLabel
 {
 Q_OBJECT
 public:
-    timeDisplay(QWidget *parent = 0, const char *name = 0);
+    timeDisplay(QWidget *parent = 0);
     ~timeDisplay();
 
     enum displayMode { FrameDisplay, SecordDisplay };
