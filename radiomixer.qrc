@@ -16,5 +16,6 @@
         <file>images/esd.png</file>
         <file>images/jack-icon.png</file>
         <file>images/channels_icon.png</file>
+        <file alias="playlist-icon">images/playlist-icon.png</file>
     </qresource>
 </RCC>

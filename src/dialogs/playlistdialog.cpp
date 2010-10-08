@@ -36,7 +36,10 @@ playlistDialog::playlistDialog(QWidget *parent) :
     plm = playlistManager::getInstance();
 
     foreach( playList* playlist, plm->getAllPlaylists() )
-        new playlistWidget( playlist, ui->playlistList );
+    {
+        playlistWidget* itm = new playlistWidget( playlist, ui->playlistList );
+        itm->setIcon( QIcon(":/icons/playlist-icon") );
+    }
     ui->playlistList->setCurrentRow(0);
 
     ui->playListView->setAlternatingRowColors( true );
