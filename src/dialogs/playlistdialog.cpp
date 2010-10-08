@@ -41,6 +41,12 @@ playlistDialog::playlistDialog(QWidget *parent) :
 
     ui->playListView->setAlternatingRowColors( true );
 
+    // set standard Icons...
+    ui->newPlaylist->setIcon( QApplication::style()->standardIcon( QStyle::SP_FileDialogNewFolder ));
+    ui->closePlaylist->setIcon( QApplication::style()->standardIcon( QStyle::SP_DialogCloseButton ));
+    ui->openPlaylist->setIcon( QApplication::style()->standardIcon( QStyle::SP_DialogOpenButton ));
+    ui->savePlaylist->setIcon( QApplication::style()->standardIcon( QStyle::SP_DialogSaveButton ));
+
     // append one initial file browser source tab...
     fileBrowser* filebrowser = new fileBrowser( ui->itemSourceTab );
     ui->itemSourceTab->insertTab( 0, filebrowser, tr("Filebrowser") );
@@ -135,4 +141,24 @@ void playlistDialog::addItemToCurrentPlaylist( playListItem* item )
         plst->playlist->addItem( item );
     else
         qWarning("FATAL: trying to add item to playlist but non selected...");
+}
+
+void playlistDialog::on_newPlaylist_clicked()
+{
+
+}
+
+void playlistDialog::on_closePlaylist_clicked()
+{
+
+}
+
+void playlistDialog::on_openPlaylist_clicked()
+{
+
+}
+
+void playlistDialog::on_savePlaylist_clicked()
+{
+
 }

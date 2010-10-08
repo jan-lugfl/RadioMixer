@@ -45,6 +45,10 @@ private:
     Ui::playlistDialog *ui;
 
 private slots:
+    void on_savePlaylist_clicked();
+    void on_openPlaylist_clicked();
+    void on_closePlaylist_clicked();
+    void on_newPlaylist_clicked();
     void on_playlistList_currentItemChanged(QListWidgetItem* current, QListWidgetItem* previous);
     void on_playlistList_itemChanged(QListWidgetItem* item);
 
