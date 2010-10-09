@@ -197,7 +197,10 @@ void playlistDialog::on_closePlaylist_clicked()
 
 void playlistDialog::on_openPlaylist_clicked()
 {
-
+    QString fname = QFileDialog::getOpenFileName( this, tr("load playlist") );
+    playList* newList = new playList();
+    if(!newList->loadFromFile( fname ))
+	delete newList; // remove list as it could not be loaded...
 }
 
 void playlistDialog::on_savePlaylist_clicked()

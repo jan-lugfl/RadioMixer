@@ -21,6 +21,7 @@
  ***************************************************************************/
 #include "playlist.h"
 #include "playlistmanager.h"
+#include "playlistitemsongdb.h"
 
 #include <QFile>
 
@@ -100,14 +101,46 @@ void playList::itemChanged()
     emit( changed() );
 }
 
-void playList::loadFromFile( QString filename )
+bool playList::loadFromFile( QString filename )
 {
-
+    QFile file( filename );
+    file.open( QIODevice::ReadOnly );
+    bool res = loadFromXML( file.readAll() );
+    file.close();
+    return res;
 }
 
-void playList::loadFromXML( QString xml )
+bool playList::loadFromXML( QString xml )
 {
+    QXmlStreamReader stream;
+    stream.addData( xml );
+    if( stream.readNextStartElement())
+    {
+	if(stream.name() != "playlist")
+	{
+	    qWarning( tr("No playlist file") );
+	    return false;
+	}
+	// set playlist name...
+	rename( stream.attributes().value("name").toString());
 
+	while(stream.readNextStartElement())
+	{
+	    if( stream.name() == "item")
+	    {
+		if( stream.attributes().value("type") == "STD" )
+		    addItem( new playListItem( stream.attributes().value("file").toString()));
+		else if( stream.attributes().value("type") == "SONGDB" )
+		    addItem( new playListItemSongDB( stream.attributes().value("id").toString().toInt() ));
+	    }
+	    stream.skipCurrentElement();
+	}
+    }else
+    {
+	qWarning( tr("Selected file might not be XML...") );
+	return false;
+    }
+    return true;
 }
 
 void playList::saveToFile( QString filename )

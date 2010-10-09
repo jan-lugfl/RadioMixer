@@ -46,6 +46,8 @@ public:
 	virtual QColor getBackgroundColor();
 	virtual void refreshMeta();
 
+	virtual QString getType(){ return "SONGDB";}
+
 	virtual QXmlStreamAttributes toXmlStreamAttributes();
 
 protected:
