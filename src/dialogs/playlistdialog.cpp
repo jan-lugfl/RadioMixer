@@ -50,6 +50,7 @@ playlistDialog::playlistDialog(QWidget *parent) :
     ui->closePlaylist->setIcon( QApplication::style()->standardIcon( QStyle::SP_DialogCloseButton ));
     ui->openPlaylist->setIcon( QApplication::style()->standardIcon( QStyle::SP_DialogOpenButton ));
     ui->savePlaylist->setIcon( QApplication::style()->standardIcon( QStyle::SP_DialogSaveButton ));
+    ui->resetPlaylist->setIcon( QApplication::style()->standardIcon( QStyle::SP_DialogResetButton ));
 
     // append one initial file browser source tab...
     fileBrowser* filebrowser = new fileBrowser( ui->itemSourceTab );
@@ -66,8 +67,20 @@ playlistDialog::~playlistDialog()
     delete ui;
 }
 
+playList* playlistDialog:: getCurrentSelectedPlaylist()
+{
+    if(ui->playlistList->currentItem())
+    {
+        playlistWidget* plst = dynamic_cast<playlistWidget*>(ui->playlistList->currentItem());
+        if(plst)
+            return plst->playlist;
+    }
+    return NULL;
+}
+
 void playlistDialog::reloadPlaylists()
 {
+    qWarning("reloading playlists");
     ui->playlistList->clear();
     foreach( playList* playlist, plm->getAllPlaylists() )
     {
@@ -91,9 +104,9 @@ void playlistDialog::changeEvent(QEvent *e)
 
 void playlistDialog::on_playlistList_itemChanged(QListWidgetItem* item)
 {
-    playlistWidget* pls = dynamic_cast<playlistWidget*>(item);
-    if(pls)
-        pls->playlist->rename( item->text() );
+    playList* pl = getCurrentSelectedPlaylist();
+    if(pl)
+        pl->rename( item->text() );
 }
 
 void playlistDialog::on_playlistList_currentItemChanged(QListWidgetItem* current, QListWidgetItem* previous)
@@ -110,9 +123,9 @@ void playlistDialog::on_playlistList_currentItemChanged(QListWidgetItem* current
 void playlistDialog::reloadPlaylist()
 {
     ui->playListView->clear();
-    if(!ui->playlistList->currentItem())
+    playList* plst = getCurrentSelectedPlaylist();
+    if(!plst)
         return;
-    playList* plst = dynamic_cast<playlistWidget*>(ui->playlistList->currentItem())->playlist;
     foreach(playListItem* item, plst->getItems())
     {
         QTreeWidgetItem* itm = new QTreeWidgetItem( ui->playListView );
@@ -153,13 +166,13 @@ void playlistDialog::reloadPlaylist()
 
 void playlistDialog::addItemToCurrentPlaylist( playListItem* item )
 {
-    if(!ui->playlistList->currentItem())
-        return;
-    playlistWidget* plst = dynamic_cast<playlistWidget*>(ui->playlistList->currentItem());
-    if(plst)
-        plst->playlist->addItem( item );
-    else
+    playList* pl = getCurrentSelectedPlaylist();
+    if(!pl)
+    {
         qWarning("FATAL: trying to add item to playlist but non selected...");
+        return;
+    }
+    pl->addItem( item );
 }
 
 void playlistDialog::on_newPlaylist_clicked()
@@ -175,13 +188,10 @@ void playlistDialog::on_newPlaylist_clicked()
 
 void playlistDialog::on_closePlaylist_clicked()
 {
-    if(!ui->playlistList->currentItem())
+    playList* pl = getCurrentSelectedPlaylist();
+    if(!pl)
         return;
-    playlistWidget* plst = dynamic_cast<playlistWidget*>(ui->playlistList->currentItem());
-    if(plst)
-        delete plst->playlist;
-    else
-        qWarning("FATAL: trying to add item to playlist but non selected...");
+    delete pl;
 }
 
 void playlistDialog::on_openPlaylist_clicked()
@@ -192,4 +202,12 @@ void playlistDialog::on_openPlaylist_clicked()
 void playlistDialog::on_savePlaylist_clicked()
 {
 
+}
+
+void playlistDialog::on_resetPlaylist_clicked()
+{
+    playList* pl = getCurrentSelectedPlaylist();
+    if(!pl)
+        return;
+    pl->reset();
 }

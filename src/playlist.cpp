@@ -59,6 +59,14 @@ QUuid playList::getUuid()
     return uuid;
 }
 
+void playList::reset()
+{
+    foreach( playListItem* pi, items)
+        pi->resetState();
+    currentIndex = 0;
+    emit( changed() );
+}
+
 void playList::rename(QString name)
 {
     if(name != this->name)

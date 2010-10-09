@@ -58,6 +58,7 @@ protected slots:
     virtual void itemChanged();
 
 public slots:
+    virtual void reset();
     virtual void rename( QString name );
     virtual void addItem( playListItem* newItem );
 };

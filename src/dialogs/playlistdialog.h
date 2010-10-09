@@ -44,7 +44,10 @@ protected:
 private:
     Ui::playlistDialog *ui;
 
+    playList* getCurrentSelectedPlaylist();
+
 private slots:
+    void on_resetPlaylist_clicked();
     void on_savePlaylist_clicked();
     void on_openPlaylist_clicked();
     void on_closePlaylist_clicked();

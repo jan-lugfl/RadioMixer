@@ -39,13 +39,13 @@ playlistManager* playlistManager::getInstance()
 void playlistManager::registerPlaylist( playList* newPlaylist )
 {
     playlists.append( newPlaylist );
-    connect( newPlaylist, SIGNAL(changed()), this, SLOT(onPlaylistChange()) );
+    connect( newPlaylist, SIGNAL(renamed(QString)), this, SLOT(onPlaylistChange()) );
     emit( changed() );
 }
 
 void playlistManager::unregisterPlaylist( playList* playlist )
 {
-    disconnect( playlist, SIGNAL(changed()), this, SLOT(onPlaylistChange()) );
+    disconnect( playlist, SIGNAL(renamed(QString)), this, SLOT(onPlaylistChange()) );
     playlists.removeOne( playlist );
     emit( changed() );
 }
