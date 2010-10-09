@@ -1,7 +1,7 @@
 /* $Id$ */
 /***************************************************************************
  *   OpenRadio - RadioMixer                                                *
- *   Copyright (C) 2006-2007 by Jan Boysen                                *
+ *   Copyright (C) 2006-2010 by Jan Boysen                                *
  *   trekkie@media-mission.de                                              *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
@@ -27,7 +27,7 @@
 #include <QObject>
 #include <QRegExp>
 #include <QColor>
-#include <QDomElement>
+#include <QXmlStreamAttributes>
 
 /**
 	@author Jan Boysen <trekkie@media-mission.de>
@@ -62,7 +62,7 @@ public:
 	virtual int getVote();
 	virtual void setVote( int vote );
 
-	virtual QDomElement toDomElement( QDomDocument* doc );
+	virtual QXmlStreamAttributes toXmlStreamAttributes();
 
 protected:
 	QString Path;

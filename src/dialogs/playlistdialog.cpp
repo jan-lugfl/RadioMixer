@@ -27,6 +27,7 @@
 #include "songdbbrowser.h"
 
 #include <QInputDialog>
+#include <QFileDialog>
 
 playlistDialog::playlistDialog(QWidget *parent) :
     QDialog(parent),
@@ -201,7 +202,10 @@ void playlistDialog::on_openPlaylist_clicked()
 
 void playlistDialog::on_savePlaylist_clicked()
 {
-
+    playList* pl = getCurrentSelectedPlaylist();
+    if(!pl)
+	return;
+    pl->saveToFile( QFileDialog::getSaveFileName( this, tr("Save playlist") ));
 }
 
 void playlistDialog::on_resetPlaylist_clicked()

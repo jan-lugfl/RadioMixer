@@ -42,6 +42,12 @@ public:
 
     virtual playListItem* getNext();
 
+    // load save functions for the paylist...
+    virtual void loadFromFile( QString filename );
+    virtual void loadFromXML( QString xml );
+    virtual void saveToFile( QString filename );
+    virtual QString getAsXML();
+
 protected:
     QString name;
     int currentIndex;

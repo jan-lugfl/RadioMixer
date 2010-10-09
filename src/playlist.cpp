@@ -22,6 +22,8 @@
 #include "playlist.h"
 #include "playlistmanager.h"
 
+#include <QFile>
+
 playList::playList(QUuid uuid, QObject *parent) :
     QObject(parent), currentIndex(0)
 {
@@ -96,4 +98,40 @@ void playList::itemChanged()
 {
     // currently only a signal wrapper...
     emit( changed() );
+}
+
+void playList::loadFromFile( QString filename )
+{
+
+}
+
+void playList::loadFromXML( QString xml )
+{
+
+}
+
+void playList::saveToFile( QString filename )
+{
+    QFile file( filename );
+    file.open( QIODevice::WriteOnly );
+    file.write( getAsXML() );
+    file.close();
+}
+
+QString playList::getAsXML()
+{
+    QString xml;
+    QXmlStreamWriter stream(&xml);
+    stream.setAutoFormatting( true );
+    stream.writeStartDocument( "1.0", true );
+    stream.writeStartElement("playlist");
+    stream.writeAttribute( "name", name );
+    foreach( playListItem* itm, items )
+    {
+	stream.writeStartElement( "item" );
+	stream.writeAttributes( itm->toXmlStreamAttributes() );
+	stream.writeEndElement();
+    }
+    stream.writeEndDocument();
+    return xml;
 }

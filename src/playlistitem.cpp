@@ -1,7 +1,7 @@
 /* $Id$ */
 /***************************************************************************
  *   OpenRadio - RadioMixer                                                *
- *   Copyright (C) 2006-2007 by Jan Boysen                                *
+ *   Copyright (C) 2006-2010 by Jan Boysen                                *
  *   trekkie@media-mission.de                                              *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
@@ -190,10 +190,10 @@ void playListItem::setVote(int vote)
 	this->vote = vote;
 }
 
-QDomElement playListItem::toDomElement( QDomDocument* doc )
+QXmlStreamAttributes playListItem::toXmlStreamAttributes()
 {
-	QDomElement entry = doc->createElement("playListEntry");
-	entry.setAttribute("file", getFile());
-
-	return entry;
+    QXmlStreamAttributes attrs;
+    attrs.append( QString("type"), getType() );
+    attrs.append( QString("file"), getFile() );
+    return attrs;
 }
