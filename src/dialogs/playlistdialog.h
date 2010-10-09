@@ -54,6 +54,7 @@ private slots:
 
     void addItemToCurrentPlaylist( playListItem* item );
     void reloadPlaylist();
+    void reloadPlaylists();
 };
 
 #endif // PLAYLISTDIALOG_H

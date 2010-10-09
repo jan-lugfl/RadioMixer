@@ -26,6 +26,8 @@
 #include "filebrowser.h"
 #include "songdbbrowser.h"
 
+#include <QInputDialog>
+
 playlistDialog::playlistDialog(QWidget *parent) :
     QDialog(parent),
     ui(new Ui::playlistDialog)
@@ -35,12 +37,11 @@ playlistDialog::playlistDialog(QWidget *parent) :
     // get playlist manager singleton...
     plm = playlistManager::getInstance();
 
-    foreach( playList* playlist, plm->getAllPlaylists() )
-    {
-        playlistWidget* itm = new playlistWidget( playlist, ui->playlistList );
-        itm->setIcon( QIcon(":/icons/playlist-icon") );
-    }
-    ui->playlistList->setCurrentRow(0);
+    // reload playlists here if the manager notifies us, that a list was added, removed, renamed or what ever...
+    connect( plm, SIGNAL(changed()), this, SLOT(reloadPlaylists()));
+
+    // load current playlists now...
+    reloadPlaylists();
 
     ui->playListView->setAlternatingRowColors( true );
 
@@ -63,6 +64,17 @@ playlistDialog::playlistDialog(QWidget *parent) :
 playlistDialog::~playlistDialog()
 {
     delete ui;
+}
+
+void playlistDialog::reloadPlaylists()
+{
+    ui->playlistList->clear();
+    foreach( playList* playlist, plm->getAllPlaylists() )
+    {
+        playlistWidget* itm = new playlistWidget( playlist, ui->playlistList );
+        itm->setIcon( QIcon(":/icons/playlist-icon") );
+    }
+    ui->playlistList->setCurrentRow(0);
 }
 
 void playlistDialog::changeEvent(QEvent *e)
@@ -98,6 +110,8 @@ void playlistDialog::on_playlistList_currentItemChanged(QListWidgetItem* current
 void playlistDialog::reloadPlaylist()
 {
     ui->playListView->clear();
+    if(!ui->playlistList->currentItem())
+        return;
     playList* plst = dynamic_cast<playlistWidget*>(ui->playlistList->currentItem())->playlist;
     foreach(playListItem* item, plst->getItems())
     {
@@ -139,6 +153,8 @@ void playlistDialog::reloadPlaylist()
 
 void playlistDialog::addItemToCurrentPlaylist( playListItem* item )
 {
+    if(!ui->playlistList->currentItem())
+        return;
     playlistWidget* plst = dynamic_cast<playlistWidget*>(ui->playlistList->currentItem());
     if(plst)
         plst->playlist->addItem( item );
@@ -148,12 +164,24 @@ void playlistDialog::addItemToCurrentPlaylist( playListItem* item )
 
 void playlistDialog::on_newPlaylist_clicked()
 {
-
+    bool ok;
+    QString name = QInputDialog::getText( this, tr("Name of new playlist"), tr("Please enter the name for the new playlist"), QLineEdit::Normal, tr("New Playlist"), &ok);
+    if(ok)
+    {
+        playList* newList = new playList();
+        newList->rename( name );
+    }
 }
 
 void playlistDialog::on_closePlaylist_clicked()
 {
-
+    if(!ui->playlistList->currentItem())
+        return;
+    playlistWidget* plst = dynamic_cast<playlistWidget*>(ui->playlistList->currentItem());
+    if(plst)
+        delete plst->playlist;
+    else
+        qWarning("FATAL: trying to add item to playlist but non selected...");
 }
 
 void playlistDialog::on_openPlaylist_clicked()
