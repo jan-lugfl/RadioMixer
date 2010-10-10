@@ -97,7 +97,7 @@ unsigned int mpgDecoder::decode( float *** data, int count )
 			}
 
 			// get some more Byte from File...
-			int readCnt = 0;
+			unsigned int readCnt = 0;
 			while( !madFile->atEnd() && readCnt < readSize)
 			{
                             readStart[readCnt] = madFile->read(1).at(0);
@@ -127,12 +127,9 @@ unsigned int mpgDecoder::decode( float *** data, int count )
 		mad_timer_add( madTimer, madFrame->header.duration );
 		mad_synth_frame( madSynth, madFrame );
 
-		if( !mad_outputBuffer[0].canWrite(madSynth->pcm.length))
-                        qWarning(QString("decoded more than fits in buffer....."+QString::number(madSynth->pcm.length)+QString::number(mad_outputBuffer[0].getFree()) ).toAscii());
-
 		// decoding done.. convert sampletype...
-		for( int j=0; j<channels; j++ )
-			for(int i=0; i<madSynth->pcm.length; i++ )
+		for( unsigned int j=0; j<channels; j++ )
+			for(unsigned int i=0; i<madSynth->pcm.length; i++ )
 			{
                                 float temp = scale( madSynth->pcm.samples[j][i]);
                                 mad_outputBuffer[j].write( &temp, 1 );
@@ -145,7 +142,7 @@ unsigned int mpgDecoder::decode( float *** data, int count )
         memset(returnBuffer[0], 0, 8192*sizeof(float));
         memset(returnBuffer[1], 0, 8192*sizeof(float));
 
-        for( int j=0; j<channels; j++ )
+        for( unsigned int j=0; j<channels; j++ )
 		mad_outputBuffer[j].read( returnBuffer[j], dataAvailable );
 
         return dataAvailable;

@@ -107,10 +107,10 @@ void alsaPlayerThread::open( QString device )
 		/* by the hardware, use nearest possible rate.         */ 
 		unsigned int origRate = alsaPlayer->outRate;
 		if (snd_pcm_hw_params_set_rate_near(alsa_handle, hwparams, &origRate, 0) < 0)
-                        qWarning( QObject::tr("Error setting rate.").toAscii() );
+                        qWarning( "%s", "Error setting rate." );
 
 		if (origRate != alsaPlayer->outRate)
-                        qWarning( QObject::tr("The rate %1Hz is not supported by your hardware.\nUsing %2Hz instead.").arg(origRate).arg(alsaPlayer->outRate).toAscii() );
+                        qWarning( "%s", QObject::tr("The rate %1Hz is not supported by your hardware.\nUsing %2Hz instead.").arg(origRate).arg(alsaPlayer->outRate).toAscii().data() );
 
 		/* Set number of channels */
 		if (snd_pcm_hw_params_set_channels(alsa_handle, hwparams, 2) < 0)
@@ -121,19 +121,19 @@ void alsaPlayerThread::open( QString device )
 
 		/* Set number of periods. Periods used to be called fragments. */ 
 		if (snd_pcm_hw_params_set_periods(alsa_handle, hwparams, periods, 0) < 0)
-                        qWarning( QObject::tr("Error setting periods.").toAscii() );
+                        qWarning( "%s", "Error setting periods." );
 
 		/* Set buffer size (in frames). The resulting latency is given by */
 		/* latency = periodsize * periods / (rate * bytes_per_frame)     */
 		if (snd_pcm_hw_params_set_buffer_size(alsa_handle, hwparams, (periodsize * periods)>>2) < 0)
-                        qWarning( QObject::tr("Error setting buffersize.").toAscii() );
+                        qWarning( "%s", "Error setting buffersize." );
 
 		/* Apply HW parameter settings to */
 		/* PCM device and prepare device  */
 		if (snd_pcm_hw_params(alsa_handle, hwparams) < 0)
-                        qWarning( QObject::tr("Error setting HW parms.").toAscii() );
+                        qWarning( "%s", "Error setting HW parms." );
 		alsaPlayer->devOpened = TRUE;
-                qDebug( QObject::tr("ALSA Device \"%1\"opened: ").arg(device).toAscii());
+                qDebug( "%s", QObject::tr("ALSA Device \"%1\"opened: ").arg(device).toAscii().data());
 #endif
 	}
 }
@@ -165,7 +165,7 @@ void alsaPlayerThread::run()
 			msleep(100);
 		}
 	}
-        qDebug( QObject::tr("ALSA Thread is exiting.....").toAscii());
+        qDebug( "%s", "ALSA Thread is exiting....." );
 }
 
 
@@ -184,7 +184,7 @@ QStringList soundPlayerALSA::getDevices( )
 
 	if ((err = snd_card_next(&card)) != 0)
 	{
-                qWarning(QString(" soundPlayerALSA::getDevices( ): snd_next_card() failed: "+QString(snd_strerror(-err))).toAscii());
+                qWarning( "%s", QString(" soundPlayerALSA::getDevices( ): snd_next_card() failed: ").append(snd_strerror(-err)).toAscii().data());
 	}
 	while( card > -1)
 	{
@@ -194,13 +194,13 @@ QStringList soundPlayerALSA::getDevices( )
 
 		if ((err = snd_card_get_name(card, &card_name)) != 0)
 		{
-                        qWarning(QString(" soundPlayerALSA::getDevices( ): snd_card_get_name() failed: "+QString( snd_strerror(-err))).toAscii());
-			card_name = "Unknown soundcard";
+                        qWarning( "%s", QString(QString("soundPlayerALSA::getDevices( ): snd_card_get_name() failed: ").append( snd_strerror(-err))).toAscii().data() );
+			card_name = QString("Unknown soundcard").toAscii().data();
 		}
 
                 if ((err = snd_ctl_open(&ctl, QString("hw:"+QString::number(card)).toAscii(), 0)) < 0)
 		{
-                        qWarning(QString(" soundPlayerALSA::getDevices( ): snd_ctl_open() failed: "+QString( snd_strerror(-err))).toAscii());
+                        qWarning( "%s", QString(" soundPlayerALSA::getDevices( ): snd_ctl_open() failed: "+QString( snd_strerror(-err))).toAscii().data());
 			return ret;
 		}
 
@@ -210,7 +210,7 @@ QStringList soundPlayerALSA::getDevices( )
 			snd_pcm_info_alloca(&pcm_info);
 			if ((err = snd_ctl_pcm_next_device(ctl, &pcm_device)) < 0)
 			{
-                                qWarning(QString(" soundPlayerALSA::getDevices( ): snd_ctl_pcm_next_device() failed: "+QString(snd_strerror(-err))).toAscii());
+                                qWarning( "%s", QString(" soundPlayerALSA::getDevices( ): snd_ctl_pcm_next_device() failed: "+QString(snd_strerror(-err))).toAscii().data());
 				pcm_device = -1;
 			}
 			if (pcm_device < 0)
@@ -220,7 +220,7 @@ QStringList soundPlayerALSA::getDevices( )
 
 			if( (err = snd_ctl_pcm_info(ctl, pcm_info)) < 0)
 			{
-                                qWarning(QString(" soundPlayerALSA::getDevices( ): snd_ctl_pcm_info() failed: "+QString(snd_strerror(-err))+"   at hw:"+QString::number(card)+","+QString::number(pcm_device)).toAscii());
+                                qWarning( "%s", QString(" soundPlayerALSA::getDevices( ): snd_ctl_pcm_info() failed: "+QString(snd_strerror(-err))+"   at hw:"+QString::number(card)+","+QString::number(pcm_device)).toAscii().data());
 				continue;
 			}
 			ret.append("hw:"+QString::number(card)+","+QString::number(pcm_device)+" ("+QString(card_name)+" -> "+QString(snd_pcm_info_get_name(pcm_info))+")");

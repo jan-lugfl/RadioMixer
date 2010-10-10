@@ -124,7 +124,7 @@ void playListItem::parseAbsFile( QString file )
 		}
 		else
 		{
-			qWarning( QString( "unknown Filepath: "+file).toAscii() );
+			qWarning( "%s", QString( "unknown Filepath: "+file).toAscii().data() );
 		}
 	}
 }
@@ -143,6 +143,8 @@ void playListItem::stopped( )
 			break;
 		case Playing:
 			state = Played;
+			break;
+                default:
 			break;
 	}
 	emit( refreshed() );
@@ -164,6 +166,8 @@ QColor playListItem::getBackgroundColor( )
 			return  QColor(Qt::yellow).light( 175 );
 		case playListItem::Playing:
 			return QColor(Qt::green).light( 175 );
+                default:
+                        break;
 	}
 	return Qt::white;
 }

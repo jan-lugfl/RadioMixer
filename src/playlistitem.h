@@ -65,14 +65,13 @@ public:
 	virtual QXmlStreamAttributes toXmlStreamAttributes();
 
 protected:
+	songState state;
 	QString Path;
 	QString Filename;
 	QString Format;
-	unsigned int channels;
 	unsigned int Samplerate;
+	unsigned int channels;
 	int vote;
-
-	songState state;
 
 	virtual void readMeta();
 	virtual void parseAbsFile( QString file );

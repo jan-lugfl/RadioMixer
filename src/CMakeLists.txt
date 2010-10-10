@@ -37,8 +37,6 @@ SET( SRC_CPPS
 )
 
 SET( SRC_MOC_HDRS
-	channelmixer.h
-	mixerchannelmanager.h
 	metainfo.h
 	mixergui.h
 	mixerguiplayer.h

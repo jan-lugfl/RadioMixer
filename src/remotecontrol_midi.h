@@ -36,7 +36,7 @@ class remoteControl_MIDI : public remoteControl
 {
 Q_OBJECT
 public:
-    explicit remoteControl_MIDI(QObject *parent = 0, QString name = QString('Remote Control'), bool biderectional = true);
+    explicit remoteControl_MIDI(QObject *parent = 0, QString name = QString("Remote Control"), bool biderectional = true);
 
     virtual remoteControlChannel* createChannel(QUuid uuid = QUuid());
 

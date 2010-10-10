@@ -117,10 +117,8 @@ bool playList::loadFromXML( QString xml )
     if( stream.readNextStartElement())
     {
 	if(stream.name() != "playlist")
-	{
-	    qWarning( tr("No playlist file").toAscii() );
 	    return false;
-	}
+
 	// set playlist name...
 	rename( stream.attributes().value("name").toString());
 
@@ -136,10 +134,8 @@ bool playList::loadFromXML( QString xml )
 	    stream.skipCurrentElement();
 	}
     }else
-    {
-	qWarning( tr("Selected file might not be XML...").toAscii() );
 	return false;
-    }
+
     return true;
 }
 

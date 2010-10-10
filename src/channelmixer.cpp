@@ -74,7 +74,7 @@ void channelMixer::run()
 		while(!mixed)
 		{
 		    mixed = TRUE;
-                    for(unsigned int bufPos = 0;bufPos < buffer_samples; bufPos++)
+                    for(int bufPos = 0;bufPos < buffer_samples; bufPos++)
 		    {
                         tempBufL[bufPos] = (mixBufL[bufPos] + chanBufL[bufPos]*chan_volumeLeft)*mix_volume;
                         tempBufR[bufPos] = (mixBufR[bufPos] + chanBufR[bufPos]*chan_volumeRight)*mix_volume;
@@ -152,7 +152,7 @@ void channelMixer::fetchSampleData( mixerChannel* channel, float * bufferLeft, f
         }
         else
         {
-            qWarning( QString(tr("channelMixer::fetchSampleData: Buffer underrun in Channel ")+channel->getName()+tr(" while Mixing....")).toAscii() );
+            qWarning( "%s", QString(tr("channelMixer::fetchSampleData: Buffer underrun in Channel ")+channel->getName()+tr(" while Mixing....")).toAscii().data() );
             // fill output buffer with empty data to not disturb the sound...
             memset(bufferLeft, 0, 1024*sizeof(float));
             memset(bufferRight, 0, 1024*sizeof(float));

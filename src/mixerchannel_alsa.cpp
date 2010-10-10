@@ -41,7 +41,7 @@ void mixerChannel_ALSA::startAlsa()
 #ifdef HAVE_ALSA
     snd_mixer_selem_id_alloca(&chId);
     if( snd_mixer_open( &alsaMixer, 0) )
-        qWarning( tr("Could not open AlsaMixer !!!").toAscii() );
+        qWarning( "%s", "Could not open AlsaMixer !!!" );
 
     char device[16];
     sprintf(device, "hw:%i", settings["alsa_card"].toInt() );
@@ -49,13 +49,13 @@ void mixerChannel_ALSA::startAlsa()
     snd_mixer_selem_register(alsaMixer, NULL, NULL);
     snd_mixer_load(alsaMixer); //load up the mixer
 
-    char* channel;
+    QString channel;
     if( settings["alsa_channel"].isNull() )
 	channel = "Mic";
     else
-	channel = (char*)settings["alsa_channel"].toString().toStdString().c_str();
+	channel = settings["alsa_channel"].toString();
 
-    snd_mixer_selem_id_set_name(chId, channel );
+    snd_mixer_selem_id_set_name(chId, channel.toAscii().data() );
     alsaChannel = snd_mixer_find_selem(alsaMixer, chId);
     // unmute the channel
     if(alsaChannel)

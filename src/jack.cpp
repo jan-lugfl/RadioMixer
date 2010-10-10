@@ -34,7 +34,7 @@ QVector<jack_MIDIControl*> Jack::midi_controllers;
 
 void Jack::errorHandler( const char* msg )
 {
-    qWarning(msg);
+    qWarning("%s", msg);
 }
 
 int Jack::process( jack_nframes_t frames, void * arg )

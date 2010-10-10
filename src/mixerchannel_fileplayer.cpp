@@ -60,7 +60,7 @@ void mixerChannel_filePlayer::open( playListItem* track )
         fHandle = fopen( track->getFile().toAscii(), "r");
 	if( !fHandle )
 	{
-                qWarning(QString(tr("file open error.. proberly not found..")+track->getFile()).toAscii());
+                qWarning( "%s", tr("file open error.. proberly not found..").append(track->getFile()).toAscii().data());
 		return;
 	}
 	fileName = track->getFile();
@@ -107,7 +107,7 @@ void mixerChannel_filePlayer::open( playListItem* track )
 	}
 	catch( decoderException* ex )
 	{
-		qWarning( ex->msg.toAscii() );
+		qWarning( "%s", ex->msg.toAscii().data() );
 		fileOpen = FALSE;
 	}
 }

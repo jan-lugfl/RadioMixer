@@ -67,6 +67,8 @@ void remoteControl_MIDI::setControllerState( QUuid uuid, remoteControlChannel::R
             queueMIDIMessage( controller_config[uuid][remoteControlChannel::event_playButton].toInt(), 0 );
             queueMIDIMessage( controller_config[uuid][remoteControlChannel::event_pauseButton].toInt(), 0 );
             break;
+        default:
+            break;
     }
 }
 
@@ -90,6 +92,8 @@ void remoteControl_MIDI::refreshTimerTimeout()
                     queueMIDIMessage( controller_config[uuid][remoteControlChannel::event_pauseButton].toInt(), 127 );
                 else
                     queueMIDIMessage( controller_config[uuid][remoteControlChannel::event_pauseButton].toInt(), 0 );
+                break;
+            default:
                 break;
         }
     }
