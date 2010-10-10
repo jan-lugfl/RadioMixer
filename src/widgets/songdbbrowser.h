@@ -22,7 +22,11 @@
 #ifndef SONGDBBROWSER_H
 #define SONGDBBROWSER_H
 
+#include "playlistitem.h"
+
 #include <QWidget>
+#include <QModelIndex>
+#include <QNetworkReply>
 
 namespace Ui {
     class songDbBrowser;
@@ -35,10 +39,20 @@ public:
     virtual ~songDbBrowser();
 
 protected:
+    void reloadGenres();
     void changeEvent(QEvent *e);
 
 private:
     Ui::songDbBrowser *ui;
+    QNetworkReply* apiReply;
+
+signals:
+    void itemSelected( playListItem* );
+
+private slots:
+    void on_songList_doubleClicked(QModelIndex index);
+    void on_searchButton_clicked();
+    virtual void apiReplyReceived();
 };
 
 #endif // SONGDBBROWSER_H

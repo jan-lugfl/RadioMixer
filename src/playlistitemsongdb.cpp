@@ -30,7 +30,7 @@ playListItemSongDB::playListItemSongDB( const unsigned int id,  unsigned int las
 	lastPlayed = lastPlayedTS;
 	songDBId = id;
 
-	apiUrl = Settings::get( "songDBURL", "http://localhost/xmlctrl.pl").toString();
+	apiUrl = Settings::get( "songDBURL", "http://songdb.mm.loc/xmlctrl.pl").toString();
 
 	if(songDBId)
 	    readMeta();
