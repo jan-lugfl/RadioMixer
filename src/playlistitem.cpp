@@ -95,7 +95,7 @@ void playListItem::readMeta( )
 	if( !Filename.isEmpty())
 	{
 		QRegExp rx( "^(.*)/(.*)[ |_]*\\-[ |_]*(.*)$" );
-	 	if ( rx.search( Filename ) != -1 ) {
+		if ( rx.indexIn( Filename ) != -1 ) {
 			Artist = rx.cap(2);
 			Title = rx.cap(3);
 			Artist.replace("_", " ");
@@ -118,13 +118,13 @@ void playListItem::parseAbsFile( QString file )
 	if( !file.isEmpty())
 	{
 		QRegExp rx1( "^(.*)/(.*\\..*)$" );
-	 	if ( rx1.search( file ) != -1 ) {
+		if ( rx1.indexIn( file ) != -1 ) {
 			Path = rx1.cap(1);
 			Filename = rx1.cap(2);
 		}
 		else
 		{
-			qWarning( QString( "unknown Filepath: " )+file );
+			qWarning( QString( "unknown Filepath: "+file).toAscii() );
 		}
 	}
 }

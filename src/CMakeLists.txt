@@ -26,7 +26,6 @@ SET( SRC_CPPS
 	remotecontrol.cpp
 	remotecontrol_midi.cpp
 	playlistitem.cpp
-	mipucom.cpp
 	oggdecoder.cpp
 	mixerguijackport.cpp
 	playlistitemsongdb.cpp
@@ -55,7 +54,6 @@ SET( SRC_MOC_HDRS
 	filedecoder.h
 	mixerguialsamix.h
 	mpgdecoder.h
-	mipucom.h
 	mixerguijackport.h
 	oggdecoder.h
 	playlistitemsongdb.h

@@ -23,6 +23,7 @@
 #define SETTINGS_H
 
 #include <QSettings>
+#include <QStringList>
 
 class Settings
 {

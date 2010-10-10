@@ -93,11 +93,11 @@ void oggDecoder::reset( )
 
 void oggDecoder::readMetaFromFile( playListItem * pli )
 {
-	FILE* fHandle = fopen( pli->getFile(), "r");
+	FILE* fHandle = fopen( pli->getFile().toAscii(), "r");
 	OggVorbis_File decoder;
 	if( !fHandle )
 	{
-		qWarning(tr("file open error.. proberly not found..")+pli->getFile());
+		qWarning(QString(tr("file open error.. proberly not found..")+pli->getFile()).toAscii());
 		return;
 	}
 	if(ov_open( fHandle, &decoder, NULL, 0) != 0 )

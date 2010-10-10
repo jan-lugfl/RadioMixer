@@ -104,16 +104,16 @@ void mixerChannel_jackOut::setName( QString newName )
     if(!jack_port[0]||!jack_port[1])
         return;
     mixerChannel::setName( newName );
-    jack_port_set_name(jack_port[0], settings["name"].toString()+QString("_L") );
-    jack_port_set_name(jack_port[1], settings["name"].toString()+QString("_R") );
+    jack_port_set_name(jack_port[0], QString( settings["name"].toString()+QString("_L")).toAscii() );
+    jack_port_set_name(jack_port[1], QString( settings["name"].toString()+QString("_R")).toAscii() );
 }
 
 void mixerChannel_jackOut::updateSettings( settingsType settings )
 {
     if(jack_port[0] && jack_port[1])
     {
-        jack_port_set_name(jack_port[0], settings["name"].toString()+QString("_L") );
-        jack_port_set_name(jack_port[1], settings["name"].toString()+QString("_R") );
+	jack_port_set_name(jack_port[0], QString( settings["name"].toString()+QString("_L")).toAscii() );
+	jack_port_set_name(jack_port[1], QString( settings["name"].toString()+QString("_R")).toAscii() );
     }
     mixerChannel::updateSettings( settings );
 }

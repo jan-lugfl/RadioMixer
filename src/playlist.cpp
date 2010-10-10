@@ -118,7 +118,7 @@ bool playList::loadFromXML( QString xml )
     {
 	if(stream.name() != "playlist")
 	{
-	    qWarning( tr("No playlist file") );
+	    qWarning( tr("No playlist file").toAscii() );
 	    return false;
 	}
 	// set playlist name...
@@ -137,7 +137,7 @@ bool playList::loadFromXML( QString xml )
 	}
     }else
     {
-	qWarning( tr("Selected file might not be XML...") );
+	qWarning( tr("Selected file might not be XML...").toAscii() );
 	return false;
     }
     return true;
@@ -147,7 +147,7 @@ void playList::saveToFile( QString filename )
 {
     QFile file( filename );
     file.open( QIODevice::WriteOnly );
-    file.write( getAsXML() );
+    file.write( getAsXML().toAscii() );
     file.close();
 }
 

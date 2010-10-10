@@ -68,26 +68,24 @@ void mixerChannel_filePlayer::open( playListItem* track )
 	try
 	{
 		QRegExp rx( "^(.*)\\.(\\w+)$" );
-		if ( rx.search( track->getFilename() ) != -1 ) {
+		if ( rx.indexIn( track->getFilename() ) != -1 ) {
 #ifdef HAVE_OGG
-			if( rx.cap(2).lower() == "ogg" )
+			if( rx.cap(2).toLower() == "ogg" )
 			{
-				qWarning( tr("OGG/Vorbis File detected") );
 				oggDecoder::readMetaFromFile( track );
                                 decoder = new oggDecoder( fHandle, this );
 			}
 #endif
 #ifdef HAVE_MAD
-			if( rx.cap(2).lower() == "mp3" )
+			if( rx.cap(2).toLower() == "mp3" )
 			{
-				qWarning( tr("MPEG-1 Layer III File detected") );
 				mpgDecoder::readMetaFromFile( track );
                                 decoder = new mpgDecoder( fHandle, this );
 			}
 #endif
 			if( decoder == NULL )
 			{
-				QMessageBox::warning( NULL, tr("RadioMixer - Playerchannel File"), tr("unknown Filetype: ")+rx.cap(2).lower(), QMessageBox::Ok, QMessageBox::NoButton, QMessageBox::NoButton);
+				QMessageBox::warning( NULL, tr("RadioMixer - Playerchannel File"), tr("unknown Filetype: ")+rx.cap(2).toLower(), QMessageBox::Ok, QMessageBox::NoButton, QMessageBox::NoButton);
 				fileOpen = FALSE;
 			}else{
 //				decoder->setMetaInfos( &meta );
@@ -101,7 +99,7 @@ void mixerChannel_filePlayer::open( playListItem* track )
                                 emit( cued( track ) );
                                 setState( Cued );
 
-				if(!bufferThread->running())
+				if(!bufferThread->isRunning())
 					bufferThread->start();
 				emit( refreshed() );
 			}
@@ -109,7 +107,7 @@ void mixerChannel_filePlayer::open( playListItem* track )
 	}
 	catch( decoderException* ex )
 	{
-		qWarning( ex->msg );
+		qWarning( ex->msg.toAscii() );
 		fileOpen = FALSE;
 	}
 }
@@ -196,7 +194,7 @@ void mixerChannel_filePlayer::checkBuffer( )
 
 void mixerChannel_filePlayer::stop( )
 {
-    if(bufferThread->running())
+    if(bufferThread->isRunning())
 	bufferThread->stop();
     if( state == Stopped )
         return;
