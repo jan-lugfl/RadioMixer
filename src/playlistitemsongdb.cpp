@@ -21,27 +21,23 @@
  ***************************************************************************/
 #include "playlistitemsongdb.h"
 
-playListItemSongDB::playListItemSongDB( const unsigned int id,  unsigned int lastPlayedTS, QObject *parent, const char *name  )
- : playListItem( "", parent, name )
+#include "settings.h"
+#include "httpcomm.h"
+
+playListItemSongDB::playListItemSongDB( const unsigned int id,  unsigned int lastPlayedTS, QObject *parent )
+ : playListItem( "", parent )
 {
 	lastPlayed = lastPlayedTS;
 	songDBId = id;
 
-	QSettings* config = new QSettings();
-	songDBHndl = new Q3Http( this, "httpSocket" );
-	songDBHndl->setHost( config->readEntry( "/radiomixer/network/songDBHostname", "localhost" ) );
-	connect( songDBHndl, SIGNAL(done(bool)), this, SLOT(receiveData(bool)));
+	apiUrl = Settings::get( "songDBURL", "http://localhost/xmlctrl.pl").toString();
 
-	songDB = new Q3HttpRequestHeader( "POST", config->readEntry( "/radiomixer/network/songDBScriptname", "/xmlctrl.pl" ) );
-	songDB->setValue( "Host", config->readEntry( "/radiomixer/network/songDBHostname", "localhost" ) );
-
-	delete config;
+	if(songDBId)
+	    readMeta();
 }
 
 playListItemSongDB::~playListItemSongDB()
 {
-	delete songDBHndl;
-	delete songDB;
 }
 
 bool playListItemSongDB::hasCostumBackgroundColor( )
@@ -72,48 +68,47 @@ const QString playListItemSongDB::getId( )
 
 void playListItemSongDB::readMeta( )
 {
-	songDBHndl->request( *songDB, QString("getSonginfo=1&songID="+QString::number(songDBId)).utf8() );
+    lastApiReply = httpComm::post( QNetworkRequest(QUrl(apiUrl)), QString("getSonginfo=1&songID="+QString::number(songDBId)).toAscii() );
+    connect( lastApiReply, SIGNAL(finished()), this, SLOT(receiveData()) );
 }
 
-void playListItemSongDB::receiveData( bool )
+void playListItemSongDB::receiveData( )
 {
-	QSettings* config = new QSettings();
-	QDomDocument readdata;
-
-	readdata.setContent( songDBHndl->readAll() );
-        if( !readdata.isDocument() )
-        {
-            qWarning( tr("Received an invalid Document") );
-        }else
-		if( readdata.doctype().name() == "songDBSongInfo" )
-		{
-			QDomElement dataroot = readdata.documentElement();
-			QDomElement song = dataroot.childNodes().item(0).toElement();
-
-			Filename = config->readEntry( "/radiomixer/network/songDBBasePath", "/songs/" )+song.attribute("relPath")+song.attribute("filename");
-			setArtist( song.attribute("interpret") );
-			setTitle( song.attribute("title") );
-			setVote( song.attribute("rated").toInt() );
-			setGenre( song.attribute("genre") );
-			setLength( song.attribute("length") );
-			setPreLength( song.attribute("preTime") );
-
- 			emit refreshed();
-			state = Normal;
-			emit( ready( this ) );
-		}
-	delete config;
+    QXmlStreamReader xml;
+    xml.addData( lastApiReply->readAll() );
+    if( xml.readNextStartElement() )
+    {
+	if(xml.name() == "songinfo")
+	{
+	    xml.readNextStartElement();
+	    Filename = Settings::get("songDBBasePath", "/songs/").toString()
+		       +xml.attributes().value("relPath").toString()
+		       +xml.attributes().value("filename").toString();
+	    setArtist( xml.attributes().value("interpret").toString() );
+	    setTitle( xml.attributes().value("title").toString() );
+	    setVote( xml.attributes().value("rated").toString().toInt() );
+	    setGenre( xml.attributes().value("genre").toString() );
+	    setLength( xml.attributes().value("length").toString() );
+	    setPreLength( xml.attributes().value("preTime").toString() );
+	    emit( refreshed() );
+	    state = Normal;
+	    emit( ready( this ) );
+	}
+	xml.skipCurrentElement();
+    }
+    lastApiReply->deleteLater();
 }
 
 void playListItemSongDB::setFile( QString file )
 {
-	parseAbsFile(file);
+    parseAbsFile(file);
 }
 
 void playListItemSongDB::startPlaying( )
 {
-	playListItem::startPlaying();
-	songDBHndl->request( *songDB, QString("updateLastPlayed=1&songID="+QString::number(songDBId)).utf8() );
+    playListItem::startPlaying();
+    lastApiReply = httpComm::post( QNetworkRequest(QUrl(apiUrl)), QString("updateLastPlayed=1&songID="+QString::number(songDBId)).toAscii() );
+    connect( lastApiReply, SIGNAL(finished()), this, SLOT(receiveData()) );
 }
 
 QXmlStreamAttributes playListItemSongDB::toXmlStreamAttributes()

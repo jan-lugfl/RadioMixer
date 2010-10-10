@@ -1,7 +1,7 @@
 /* $Id$ */
 /***************************************************************************
  *   OpenRadio - RadioMixer                                                *
- *   Copyright (C) 2006-2010 by Jan Boysen                                *
+ *   Copyright (C) 2010 by Jan Boysen                                      *
  *   trekkie@media-mission.de                                              *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
@@ -19,48 +19,27 @@
  *   Free Software Foundation, Inc.,                                       *
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
-#ifndef PLAYLISTITEMSONGDB_H
-#define PLAYLISTITEMSONGDB_H
 
-#include "playlistitem.h"
+#include "httpcomm.h"
 
-#include <QNetworkReply>
+QNetworkAccessManager* httpComm::nam = new QNetworkAccessManager( );
 
-/**
-	@author Jan Boysen <trekkie@media-mission.de>
-*/
-class playListItemSongDB : public playListItem
+QNetworkReply* httpComm::get( const QNetworkRequest& request )
 {
-Q_OBJECT
-public:
-	playListItemSongDB( const unsigned int id=0,  unsigned  int lastPlayedTS=0, QObject* parent = 0 );
-	~playListItemSongDB();
+    return httpComm::nam->get( request );
+}
 
-	virtual void load( const unsigned int id );
-	virtual const QString getId();
-	virtual void setFile(QString file);
-	virtual bool hasCostumBackgroundColor();
-	virtual QColor getBackgroundColor();
-	virtual void refreshMeta();
+QNetworkReply* httpComm::head( const QNetworkRequest& request )
+{
+    return httpComm::nam->head( request );
+}
 
-	virtual QString getType(){ return "SONGDB";}
+QNetworkReply* httpComm::post( const QNetworkRequest& request, QIODevice* data )
+{
+    return httpComm::nam->post( request, data );
+}
 
-	virtual QXmlStreamAttributes toXmlStreamAttributes();
-
-protected:
-	unsigned int songDBId;
-	unsigned int lastPlayed;
-	QString apiUrl;
-	QNetworkReply* lastApiReply;
-	virtual void readMeta();
-
-protected slots:
-	virtual void receiveData();
-
-public slots:
-	virtual void startPlaying();
-
-
-};
-
-#endif
+QNetworkReply* httpComm::post( const QNetworkRequest& request, const QByteArray& data )
+{
+    return httpComm::nam->post( request, data );
+}

@@ -1,7 +1,7 @@
 /* $Id$ */
 /***************************************************************************
  *   OpenRadio - RadioMixer                                                *
- *   Copyright (C) 2006-2010 by Jan Boysen                                *
+ *   Copyright (C) 2010 by Jan Boysen                                      *
  *   trekkie@media-mission.de                                              *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
@@ -19,48 +19,26 @@
  *   Free Software Foundation, Inc.,                                       *
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
-#ifndef PLAYLISTITEMSONGDB_H
-#define PLAYLISTITEMSONGDB_H
 
-#include "playlistitem.h"
+#ifndef HTTPCOMM_H
+#define HTTPCOMM_H
 
-#include <QNetworkReply>
+#include <QNetworkAccessManager>
 
-/**
-	@author Jan Boysen <trekkie@media-mission.de>
-*/
-class playListItemSongDB : public playListItem
+class httpComm
 {
-Q_OBJECT
 public:
-	playListItemSongDB( const unsigned int id=0,  unsigned  int lastPlayedTS=0, QObject* parent = 0 );
-	~playListItemSongDB();
+    // wrapper functions for QNetworkAccessManager class
+    static QNetworkReply* get( const QNetworkRequest & request );
+    static QNetworkReply* head( const QNetworkRequest & request );
+    static QNetworkReply* post( const QNetworkRequest & request, QIODevice * data );
+    static QNetworkReply* post( const QNetworkRequest & request, const QByteArray & data );
 
-	virtual void load( const unsigned int id );
-	virtual const QString getId();
-	virtual void setFile(QString file);
-	virtual bool hasCostumBackgroundColor();
-	virtual QColor getBackgroundColor();
-	virtual void refreshMeta();
+private:
+    httpComm(){} // Do not allow to create objects from this class
+    httpComm( httpComm& ){}  // disable copy contructor
 
-	virtual QString getType(){ return "SONGDB";}
-
-	virtual QXmlStreamAttributes toXmlStreamAttributes();
-
-protected:
-	unsigned int songDBId;
-	unsigned int lastPlayed;
-	QString apiUrl;
-	QNetworkReply* lastApiReply;
-	virtual void readMeta();
-
-protected slots:
-	virtual void receiveData();
-
-public slots:
-	virtual void startPlaying();
-
-
+    static QNetworkAccessManager* nam;
 };
 
-#endif
+#endif // HTTPCOMM_H

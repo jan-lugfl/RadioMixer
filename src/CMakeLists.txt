@@ -2,6 +2,7 @@ ADD_SUBDIRECTORY( widgets )
 ADD_SUBDIRECTORY( dialogs )
 
 SET( SRC_CPPS
+	httpcomm.cpp
 	jack.cpp
 	jack_midicontrol.cpp
 	mixerchannelmanager.cpp

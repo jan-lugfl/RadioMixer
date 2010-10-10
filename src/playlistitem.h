@@ -36,7 +36,7 @@ class playListItem : public QObject, public metaTag
 {
 Q_OBJECT
 public:
-	playListItem( QString fileName, QObject *parent = 0, const char *name = 0 );
+	playListItem( QString fileName, QObject *parent = 0 );
 	~playListItem();
 
 	enum songState { Loading, Normal, Cued, Playing, Played };

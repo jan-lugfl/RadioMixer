@@ -21,8 +21,8 @@
  ***************************************************************************/
 #include "playlistitem.h"
 
-playListItem::playListItem( QString fileName, QObject * parent, const char * name )
- : QObject( parent, name ), state( Loading ), Samplerate( 0 ), channels( 0 )
+playListItem::playListItem( QString fileName, QObject * parent )
+ : QObject( parent ), state( Loading ), Samplerate( 0 ), channels( 0 )
 {
 	if( !fileName.isEmpty())
 	{
