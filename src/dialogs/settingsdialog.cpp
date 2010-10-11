@@ -29,6 +29,7 @@
 #include "mixerchannel_jackout.h"
 
 #include "mainWindow.h"
+#include "settings.h"
 
 #include <QColorDialog>
 #include <QInputDialog>
@@ -53,6 +54,9 @@ settingsDialog::settingsDialog(QWidget *parent) :
     foreach( remoteControl* controller, remoteControl::getAllControls() )
         ui->remoteControllerList->insertItem( ui->remoteControllerList->count(), controller->getName() );
 
+    // set Song database options
+    ui->songDBURL->setText( Settings::get("songDBURL", "http://localhost/xmlctrl.pl").toString() );
+    ui->songDBBasePath->setText( Settings::get("songDBBasePath", "/songs/").toString() );
 }
 
 settingsDialog::~settingsDialog()
@@ -115,6 +119,10 @@ void settingsDialog::accept()
         listWidgetItemWithId* itm = dynamic_cast<listWidgetItemWithId*>(item);
         channels.append( itm->getUuid() );
     }
+
+    // save song database api settings
+    Settings::set( "songDBURL", ui->songDBURL->text() );
+    Settings::set( "songDBBasePath", ui->songDBBasePath->text() );
 
     QDialog::accept();
 }
