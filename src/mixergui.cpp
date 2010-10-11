@@ -96,20 +96,13 @@ QString mixerGUI::getName( )
 	return chName->text();
 }
 
-/*
-QColor mixerGUI::getColor( )
-{
-	return paletteBackgroundColor();
-}
-*/
-
 void mixerGUI::channelSettingsChanged( mixerChannel::settingsType settings )
 {
     this->settings = settings;
 
     changeName( settings["name"].toString() );
     QPalette pal = palette();
-    pal.setColor( QPalette::Base, settings["color"].value<QColor>() );
+    pal.setColor( QPalette::Window, settings["color"].value<QColor>() );
     setPalette( pal );
 }
 
