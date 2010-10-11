@@ -7,8 +7,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>752</width>
-    <height>805</height>
+    <width>470</width>
+    <height>565</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -62,8 +62,8 @@
             <widget class="QLabel" name="radiomixerlogo">
              <property name="maximumSize">
               <size>
-               <width>16777215</width>
-               <height>16777215</height>
+               <width>400</width>
+               <height>350</height>
               </size>
              </property>
              <property name="text">
@@ -199,7 +199,6 @@ p, li { white-space: pre-wrap; }
  <layoutdefault spacing="6" margin="11"/>
  <resources>
   <include location="../../../radiomixer.qrc"/>
-  <include location="../../radiomixer.qrc"/>
  </resources>
  <connections>
   <connection>
