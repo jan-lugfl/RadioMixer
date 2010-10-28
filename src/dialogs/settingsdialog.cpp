@@ -172,6 +172,7 @@ void settingsDialog::on_channelList_currentItemChanged(QListWidgetItem* current,
         previous->setText( ui->name->text() );
         settingsCache[prev_uuid]["color"] = pal.color( QPalette::Button );
         settingsCache[prev_uuid]["autoload_fromplaylist"] = ui->fileplayer_autoload->isChecked();
+        settingsCache[prev_uuid]["ignore_metadata"] = ui->fileplayer_ignoremeta->isChecked();
     }
 
     // get the settings from the new selected item from cache
@@ -191,6 +192,7 @@ void settingsDialog::on_channelList_currentItemChanged(QListWidgetItem* current,
     {
             ui->channelSettings->setItemEnabled(2, true);
             ui->fileplayer_autoload->setChecked(settingsCache[cur_uuid]["autoload_fromplaylist"].toBool());
+            ui->fileplayer_ignoremeta->setChecked(settingsCache[cur_uuid]["ignore_metadata"].toBool());
     }
     if( settingsCache[cur_uuid]["type"] == mixerChannel_ALSA::Type )
             ui->channelSettings->setItemEnabled(3, true);

@@ -257,7 +257,8 @@ void mixerChannel_filePlayer::play( )
     if( fileOpen )
         dynamic_cast<playListItem*>(meta)->startPlaying();
     setState( Playing );
-    emit( newMeta( *meta ) );
+    if( !settings["ignore_metadata"].toBool() )
+        emit( newMeta( *meta ) );
 }
 
 const float mixerChannel_filePlayer::getPosition_Samples( )
