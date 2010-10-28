@@ -11,7 +11,11 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>MainWindow</string>
+   <string>RadioMixer</string>
+  </property>
+  <property name="windowIcon">
+   <iconset resource="../../radiomixer.qrc">
+    <normaloff>:/logo/images/radiomixer-trans.png</normaloff>:/logo/images/radiomixer-trans.png</iconset>
   </property>
   <widget class="QWidget" name="centralWidget">
    <property name="sizePolicy">
@@ -70,6 +74,8 @@
    </property>
   </action>
  </widget>
- <resources/>
+ <resources>
+  <include location="../../radiomixer.qrc"/>
+ </resources>
  <connections/>
 </ui>

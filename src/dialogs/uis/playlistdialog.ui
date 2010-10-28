@@ -29,6 +29,9 @@
          <layout class="QHBoxLayout" name="horizontalLayout">
           <item>
            <widget class="QToolButton" name="newPlaylist">
+            <property name="toolTip">
+             <string>new playlist</string>
+            </property>
             <property name="text">
              <string/>
             </property>
@@ -36,6 +39,9 @@
           </item>
           <item>
            <widget class="QToolButton" name="closePlaylist">
+            <property name="toolTip">
+             <string>close playlist</string>
+            </property>
             <property name="text">
              <string/>
             </property>
@@ -43,6 +49,9 @@
           </item>
           <item>
            <widget class="QToolButton" name="openPlaylist">
+            <property name="toolTip">
+             <string>load playlist from file</string>
+            </property>
             <property name="text">
              <string/>
             </property>
@@ -50,6 +59,9 @@
           </item>
           <item>
            <widget class="QToolButton" name="savePlaylist">
+            <property name="toolTip">
+             <string>save playlist to file</string>
+            </property>
             <property name="text">
              <string/>
             </property>
@@ -57,6 +69,9 @@
           </item>
           <item>
            <widget class="QToolButton" name="resetPlaylist">
+            <property name="toolTip">
+             <string>reset the playlist to first item and reset states of the items</string>
+            </property>
             <property name="text">
              <string/>
             </property>
