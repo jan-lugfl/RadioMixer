@@ -25,7 +25,7 @@
 metaInfo::metaInfo(QObject *parent)
  : QObject(parent)
 {
-    enabled = TRUE;
+    enabled = Settings::get("/meta/enabled", TRUE).toBool();
     stationMode = FALSE;
     proc = new QProcess( this );
 }
@@ -44,7 +44,7 @@ void metaInfo::runCmd( )
             QStringList args;
             args.append( artist );
             args.append( title );
-            proc->start( Settings::get("/Meta/command").toString(), args );
+            proc->start( Settings::get("/meta/command").toString(), args );
         }
         else
             qWarning("Could not call meta update command as its still running...");

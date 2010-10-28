@@ -57,6 +57,10 @@ settingsDialog::settingsDialog(QWidget *parent) :
     // set Song database options
     ui->songDBURL->setText( Settings::get("songDBURL", "http://localhost/xmlctrl.pl").toString() );
     ui->songDBBasePath->setText( Settings::get("songDBBasePath", "/songs/").toString() );
+
+    // set metadata options
+    ui->meta_script->setText( Settings::get("meta/command").toString() );
+    ui->meta_enable->setChecked(Settings::get("meta/enabled", true).toBool() );
 }
 
 settingsDialog::~settingsDialog()
@@ -123,6 +127,10 @@ void settingsDialog::accept()
     // save song database api settings
     Settings::set( "songDBURL", ui->songDBURL->text() );
     Settings::set( "songDBBasePath", ui->songDBBasePath->text() );
+
+    // save metadata options
+    Settings::set( "meta/command", ui->meta_script->text() );
+    Settings::set( "meta/enabled", ui->meta_enable->isChecked() );
 
     QDialog::accept();
 }
