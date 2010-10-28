@@ -224,7 +224,7 @@
             </sizepolicy>
            </property>
            <property name="currentIndex">
-            <number>2</number>
+            <number>0</number>
            </property>
            <widget class="QWidget" name="general">
             <property name="geometry">
@@ -280,7 +280,7 @@
              <rect>
               <x>0</x>
               <y>0</y>
-              <width>307</width>
+              <width>317</width>
               <height>256</height>
              </rect>
             </property>
@@ -293,7 +293,7 @@
              <rect>
               <x>0</x>
               <y>0</y>
-              <width>307</width>
+              <width>317</width>
               <height>256</height>
              </rect>
             </property>
@@ -339,7 +339,7 @@
              <rect>
               <x>0</x>
               <y>0</y>
-              <width>307</width>
+              <width>317</width>
               <height>256</height>
              </rect>
             </property>
@@ -352,7 +352,7 @@
              <rect>
               <x>0</x>
               <y>0</y>
-              <width>307</width>
+              <width>317</width>
               <height>256</height>
              </rect>
             </property>
@@ -472,6 +472,19 @@
             <widget class="QPushButton" name="select_script">
              <property name="text">
               <string>&amp;Select</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLabel" name="label_15">
+             <property name="text">
+              <string>The selected command is executed whenever the global metadata
+changes.
+The metadata are passed to the command as arguments in the
+following order:
+%1 -&gt; Artist
+%2 -&gt; Title
+</string>
              </property>
             </widget>
            </item>

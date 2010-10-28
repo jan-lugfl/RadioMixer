@@ -33,6 +33,7 @@
 
 #include <QColorDialog>
 #include <QInputDialog>
+#include <QFileDialog>
 
 settingsDialog::settingsDialog(QWidget *parent) :
     QDialog(parent),
@@ -61,6 +62,12 @@ settingsDialog::settingsDialog(QWidget *parent) :
     // set metadata options
     ui->meta_script->setText( Settings::get("meta/command").toString() );
     ui->meta_enable->setChecked(Settings::get("meta/enabled", true).toBool() );
+
+    // Set the icons for the buttons..
+    ui->upButton->setIcon( QApplication::style()->standardIcon( QStyle::SP_ArrowUp ));
+    ui->upButton->setText("");
+    ui->downButton->setIcon( QApplication::style()->standardIcon( QStyle::SP_ArrowDown ));
+    ui->downButton->setText("");
 }
 
 settingsDialog::~settingsDialog()
@@ -381,4 +388,14 @@ void settingsDialog::on_remove_controller_channel_clicked()
     delete selected_controlChannel;
     ui->remoteController_channels->takeItem(ui->remoteController_channels->currentRow() );
     selected_controlChannel = NULL;
+}
+
+void settingsDialog::on_select_script_clicked()
+{
+    QString s = QFileDialog::getOpenFileName(
+                        this,
+                        tr("select meta script"),
+                        "");
+    if( s.length() >0)
+        ui->meta_script->setText( s );
 }
