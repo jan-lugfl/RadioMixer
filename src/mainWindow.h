@@ -1,7 +1,7 @@
 /* $Id:$ */
 /***************************************************************************
  *   OpenRadio - RadioMixer                                                *
- *   Copyright (C) 2005-2009 by Jan Boysen                                *
+ *   Copyright (C) 2005-2010 by Jan Boysen                                 *
  *   trekkie@media-mission.de                                              *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
@@ -23,7 +23,6 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
-#include "metainfo.h"
 #include "soundplayer.h"
 #include "mixerguialsamix.h"
 #include "channelmixer.h"
@@ -58,9 +57,6 @@ private:
     soundPlayer* player;
     // used for testing only
     remoteControl* rc;
-
-    // Meta Info for Live Streaming with Ices
-    metaInfo meta;
 
     // object for our channel mixer thread which the mixing engine for all channels...
     channelMixer* mixer;

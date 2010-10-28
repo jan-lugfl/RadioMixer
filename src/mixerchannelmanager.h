@@ -1,7 +1,7 @@
 /* $Id$ */
 /***************************************************************************
  *   OpenRadio - RadioMixer                                                *
- *   Copyright (C) 2009 by Jan Boysen                                      *
+ *   Copyright (C) 2009-2010 by Jan Boysen                                 *
  *   trekkie@media-mission.de                                              *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
@@ -24,6 +24,7 @@
 #define MIXERCHANNELMANAGER_H
 
 #include "mixerchannel.h"
+#include "metainfo.h"
 
 #include <QVector>
 #include <QThread>
@@ -49,6 +50,8 @@ public:
 
 private:
     static void removeChannelFromVector( storageType* stor, mixerChannel* chan );
+    // create an object for the metadata Manager...
+    static metaInfo metaManager;
 };
 
 #endif // MIXERCHANNELMANAGER_H

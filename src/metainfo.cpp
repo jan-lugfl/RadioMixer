@@ -1,7 +1,7 @@
 /* $Id$ */
 /***************************************************************************
  *   OpenRadio - RadioMixer                                                *
- *   Copyright (C) 2005-2007 by Jan Boysen                                *
+ *   Copyright (C) 2005-2010 by Jan Boysen                                 *
  *   trekkie@media-mission.de                                              *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
@@ -20,15 +20,14 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 #include "metainfo.h"
-#include <cstdlib>
-#include <QTextStream>
+#include "settings.h"
 
 metaInfo::metaInfo(QObject *parent)
  : QObject(parent)
 {
-	enabled = FALSE;
-	stationMode = FALSE;
-	metaMode = 1; // default we use Ices2 !!
+    enabled = TRUE;
+    stationMode = FALSE;
+    proc = new QProcess( this );
 }
 
 
@@ -38,81 +37,63 @@ metaInfo::~metaInfo()
 
 void metaInfo::runCmd( )
 {
-	if( enabled && metaMode==1) // Ices2 Mode !!
-	{
-		if (!fork())
-	  		if (execl( "/bin/killall", "killall", "-sUSR1", "ices",NULL)==-1) {
-   			exit(-1);
-  		}
-	}
+    if( enabled )
+    {
+        if( proc->state() == QProcess::NotRunning )
+        {
+            QStringList args;
+            args.append( artist );
+            args.append( title );
+            proc->start( Settings::get("/Meta/command").toString(), args );
+        }
+        else
+            qWarning("Could not call meta update command as its still running...");
+    }
 }
 
 void metaInfo::refresh( )
 {
+    runCmd();
+    emit( refreshed() );
 }
 
 void metaInfo::setMeta( metaTag newMeta )
 {
-	meta = newMeta;
-	if( enabled )
-	{
-		if( stationMode )
-		{
-			this->title = newMeta.getSong();
-			this->artist = station;
-		}	
-		else
-		{
-			this->artist = newMeta.getArtist();
-			this->title = newMeta.getTitle();
-		}
-
-		QFile file( "/tmp/radiomixer.current" );
-		if ( file.open( QIODevice::WriteOnly | QIODevice::Truncate ) ) {
-			QTextStream stream( &file );
-
-			switch ( metaMode )  // which Streaming client is used ??
-			{
-				case 1: // Ices 2
-					stream << "artist=" << artist << "\n";
-					stream << "title=" << title << "\n";
-					break;
-				case 2: // Oddcast V3
-					stream << artist << " - " << title << "\n";
-					break;
-			}
-        		file.close();
-    		}
-
-		runCmd();
-		emit( refreshed() );
-	}
+    meta = newMeta;
+    if( enabled )
+    {
+        if( stationMode )
+        {
+            this->title = newMeta.getSong();
+            this->artist = station;
+        }
+        else
+        {
+            this->artist = newMeta.getArtist();
+            this->title = newMeta.getTitle();
+        }
+        refresh();
+    }
 }
 
 void metaInfo::enable( )
 {
-	enabled = TRUE;
+    enabled = TRUE;
 }
 
 void metaInfo::disable( )
 {
-	enabled = FALSE;
+    enabled = FALSE;
 }
 
 void metaInfo::setStationMode( QString stationID )
 {
-	stationMode = TRUE;
-	station = stationID;
+    stationMode = TRUE;
+    station = stationID;
 }
 
 void metaInfo::setNormalMode( )
 {
-	stationMode = FALSE;
+    stationMode = FALSE;
 }
-
-void metaInfo::setMetaMode( const int metaMode )
-{
-	this->metaMode = metaMode;
-}
-
 

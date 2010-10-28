@@ -27,6 +27,7 @@ mixerChannelManager::storageType mixerChannelManager::allChannels = mixerChannel
 mixerChannelManager::storageType mixerChannelManager::inChannels = mixerChannelManager::storageType();
 mixerChannelManager::storageType mixerChannelManager::outChannels = mixerChannelManager::storageType();
 QMap<QString,QString> mixerChannelManager::supportedChannelTypes = QMap<QString,QString>();
+metaInfo mixerChannelManager::metaManager;
 
 void mixerChannelManager::registerChannel( mixerChannel* newChann )
 {
@@ -34,6 +35,7 @@ void mixerChannelManager::registerChannel( mixerChannel* newChann )
         return;
 
     allChannels.append( newChann );
+    metaManager.connect( newChann, SIGNAL(newMeta(metaTag)), &metaManager, SLOT(setMeta(metaTag)));
 
     if( newChann->getAudioDataType() == mixerChannel::AudioDataIn )
         inChannels.append(newChann );
@@ -47,6 +49,7 @@ void mixerChannelManager::unregisterChannel( mixerChannel* channel )
     if(!channel) // unregistering null pointer makes no sence :D
         return;
 
+    metaManager.disconnect( channel, SIGNAL(newMeta(metaTag)), &metaManager, SLOT(setMeta(metaTag)));
     removeChannelFromVector( &allChannels, channel );
     removeChannelFromVector( &inChannels, channel );
     removeChannelFromVector( &outChannels, channel );
