@@ -67,6 +67,13 @@ void mixerChannel_jackIn::mute( )
     if(muted)
         return;
     muted = true;
+    // reset buffers
+    soundBuffers[0].flush();
+    soundBuffers[1].flush();
+    // reset vuMeter by resetting last levels
+    emit( vuMeterChanged_left(0) );
+    emit( vuMeterChanged_right(0) );
+    // emit state change
     emit( muteChanged(muted) );
 }
 
