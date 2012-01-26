@@ -29,6 +29,10 @@
 // Includes libMAD for MPEG decoding
 #include <mad.h>
 
+#ifdef HAVE_ID3TAG
+#include <id3tag.h>
+#endif
+
 /**
 MPEG Decoder Class for decodeung MPEG 1 and 2 Layer I,II and II with libmad..
 
@@ -55,6 +59,11 @@ public:
 	virtual const float getRemainFrames();
 
 	static void readMetaFromFile( playListItem * pli );
+
+private:
+#ifdef HAVE_ID3TAG
+    static QString getID3String( id3_tag* idtag, const char* field_frame );
+#endif
 
 protected:
 	QFile* madFile;

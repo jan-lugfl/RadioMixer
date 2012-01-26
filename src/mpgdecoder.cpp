@@ -20,10 +20,6 @@
  ***************************************************************************/
 #include "mpgdecoder.h"
 
-#ifdef HAVE_ID3TAG
-#include <id3tag.h>
-#endif
-
 mpgDecoder::mpgDecoder(FILE* File, QObject *parent )
  : fileDecoder(File, parent )
 {
@@ -338,10 +334,25 @@ void mpgDecoder::readMetaFromFile( playListItem * pli )
     id3_file* id3f = id3_file_open( pli->getFile().toAscii(), ID3_FILE_MODE_READONLY );
     id3_tag* id3 = id3_file_tag( id3f );
 
-    pli->setArtist( (char*)id3_ucs4_utf8duplicate(id3_field_getstrings( id3_frame_field( id3_tag_findframe( id3, ID3_FRAME_ARTIST, 0 ), 1 ), 0 ) ) );
-    pli->setTitle( (char*)id3_ucs4_utf8duplicate(id3_field_getstrings( id3_frame_field( id3_tag_findframe( id3, ID3_FRAME_TITLE, 0 ), 1 ), 0 ) ) );
-    pli->setGenre( (char*)id3_ucs4_utf8duplicate(id3_field_getstrings( id3_frame_field( id3_tag_findframe( id3, ID3_FRAME_GENRE, 0 ), 1 ), 0 ) ) );
+    pli->setArtist( getID3String(id3, ID3_FRAME_ARTIST) );
+    pli->setTitle( getID3String(id3, ID3_FRAME_TITLE) );
+    pli->setGenre( getID3String(id3, ID3_FRAME_GENRE) );
     id3_file_close( id3f );
 
 #endif
 }
+
+#ifdef HAVE_ID3TAG
+QString mpgDecoder::getID3String( id3_tag* idtag, const char* field_frame )
+{
+    QString str;
+    id3_frame* frame = id3_tag_findframe( idtag, ID3_FRAME_ARTIST, 0 );
+    if(frame)
+    {
+        id3_field* field = id3_frame_field(frame, 1);
+        if(field)
+            str = (char*)id3_ucs4_utf8duplicate(id3_field_getstrings(field, 0));
+    }
+    return str;
+}
+#endif
