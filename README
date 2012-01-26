@@ -2,25 +2,21 @@ INSTALLATION
 ==================
 
 The installation of the RadioMixer is very simple.
-Just use the normal Linux way to Build it:
+Just use the normal CMake way to build it:
 
-./configure --help
-./configure *config options here*
-make
+mkdir build
+cd build
+cmake ..
 make install
 
 -You're done!-
 
 
-
 NOTES
 ==================
 
-We recommend to Install with JackD sopport cause this is the way the RadioMixer can be used
+We recommend to Install with JackD support as this is the way the RadioMixer can be used
 with all its features.
 
 Vorbis an libMAD support are also recommended, but not as important as the JackD support.
-
-The hardwaremixer and songDB supports are optional cause the code and specs for these systems
-has to be released in the future.
 
