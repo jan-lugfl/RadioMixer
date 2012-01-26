@@ -62,7 +62,6 @@ void jack_MIDIControl::process(int frames)
         read = jack_midi_event_get(&event, port_buffer, i);
         char buf[event.size];
         memcpy(buf, event.buffer, event.size);
-        printf( "%X %i %i\n",buf[0], buf[1], buf[2]);
         // Queue Midi message
         midi_message message;
         message.command = buf[0];
