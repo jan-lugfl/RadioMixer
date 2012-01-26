@@ -58,11 +58,10 @@ void mixerChannel_jackOut::process( jack_nframes_t frames  )
         getDataRight( destR, frames );
     }
     else
-        for(unsigned int i;i<=frames;i++)
-        {
-            destL[i] = 0;
-            destR[i] = 0;
-        }
+    {
+        memset( destL, 0, frames*sizeof(destL));
+        memset( destR, 0, frames*sizeof(destR));
+    }
 }
 
 void mixerChannel_jackOut::mute( )
