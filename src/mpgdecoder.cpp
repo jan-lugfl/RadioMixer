@@ -351,7 +351,11 @@ QString mpgDecoder::getID3String( id3_tag* idtag, const char* field_frame )
     {
         id3_field* field = id3_frame_field(frame, 1);
         if(field)
-            str = (char*)id3_ucs4_utf8duplicate(id3_field_getstrings(field, 0));
+        {
+            const id3_ucs4_t* id3_string = id3_field_getstrings(field, 0);
+            if(id3_string)
+                str = (char*)id3_ucs4_utf8duplicate(id3_string);
+        }
     }
     return str;
 }
