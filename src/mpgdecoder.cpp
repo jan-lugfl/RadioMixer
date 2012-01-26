@@ -346,7 +346,7 @@ void mpgDecoder::readMetaFromFile( playListItem * pli )
 QString mpgDecoder::getID3String( id3_tag* idtag, const char* field_frame )
 {
     QString str;
-    id3_frame* frame = id3_tag_findframe( idtag, ID3_FRAME_ARTIST, 0 );
+    id3_frame* frame = id3_tag_findframe( idtag, field_frame, 0 );
     if(frame)
     {
         id3_field* field = id3_frame_field(frame, 1);
