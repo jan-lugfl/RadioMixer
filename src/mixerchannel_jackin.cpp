@@ -64,12 +64,16 @@ void mixerChannel_jackIn::process( jack_nframes_t frames  )
 
 void mixerChannel_jackIn::mute( )
 {
+    if(muted)
+        return;
     muted = true;
     emit( muteChanged(muted) );
 }
 
 void mixerChannel_jackIn::unMute( )
 {
+    if(!muted)
+        return;
     muted = false;
     emit( muteChanged(muted) );
 }
@@ -111,4 +115,13 @@ void mixerChannel_jackIn::updateSettings( settingsType settings )
     jack_port_set_name(jack_port[0], QString( settings["name"].toString()+QString("_L")).toAscii() );
     jack_port_set_name(jack_port[1], QString( settings["name"].toString()+QString("_R")).toAscii() );
     mixerChannel::updateSettings( settings );
+}
+
+void mixerChannel_jackIn::setVolume( int newValue )
+{
+    mixerChannel::setVolume( newValue );
+    if(newValue < 3)
+        mute();
+    else if(newValue > 3)
+        unMute();
 }

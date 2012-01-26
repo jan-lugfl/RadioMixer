@@ -57,6 +57,8 @@ public slots:
     virtual void connectPort();
     virtual void disconnectPort();
     virtual void updateSettings( mixerChannel::settingsType settings ); // reimplement updateSettings as Jack Port names needs to be changes too
+    virtual void setVolume( int newValue ); // reimplement setVolume to automute and unmute the channel
+
 
 signals:
     void muteChanged( bool );
