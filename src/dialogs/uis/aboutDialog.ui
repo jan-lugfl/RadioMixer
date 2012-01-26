@@ -33,7 +33,7 @@
      <property name="currentIndex">
       <number>0</number>
      </property>
-     <widget class="QWidget" name="tab">
+     <widget class="QWidget" name="about_tab">
       <attribute name="title">
        <string>Abou&amp;t</string>
       </attribute>
@@ -123,13 +123,13 @@ p, li { white-space: pre-wrap; }
        </item>
       </layout>
      </widget>
-     <widget class="QWidget" name="tab">
+     <widget class="QWidget" name="license_tab">
       <attribute name="title">
        <string>&amp;License</string>
       </attribute>
       <layout class="QGridLayout">
        <item row="0" column="0">
-        <widget class="QTextBrowser" name="textBrowser">
+        <widget class="QTextBrowser" name="licenseText">
          <property name="acceptDrops">
           <bool>false</bool>
          </property>
