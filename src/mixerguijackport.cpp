@@ -26,7 +26,6 @@ mixerGuiJackport::mixerGuiJackport( QWidget* parent, Qt::WFlags fl )
         muteBut = new glowButton( this );
 	muteBut->setActivatedColor( QColor( 180, 50, 50 ) );
 	actionButtons->addWidget( muteBut );
-        connect( muteBut, SIGNAL(rightClicked()), this, SLOT(switchMuteButton()));
 
         levelMeterLeft = new vuMeter( this );
 	levelMeterLeft->setGeometry( QRect( 5, 60, 11, 321 ) );
@@ -89,9 +88,15 @@ void mixerGuiJackport::muteChanged( bool state )
         muteBut->setState( state );
 }
 
-void mixerGuiJackport::switchMuteButton()
+void mixerGuiJackport::channelSettingsChanged( mixerChannel::settingsType settings )
 {
-    mode_onAir = !mode_onAir;
+    setMuteButtonMode( settings["mute_button_mode"].toBool() );
+    mixerGUI::channelSettingsChanged( settings );
+}
+
+void mixerGuiJackport::setMuteButtonMode( bool mute_button = true )
+{
+    mode_onAir = !mute_button;
     languageChange();
     if(mode_onAir)
     {

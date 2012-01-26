@@ -177,8 +177,16 @@ void settingsDialog::on_channelList_currentItemChanged(QListWidgetItem* current,
         settingsCache[prev_uuid]["name"] = ui->name->text();
         previous->setText( ui->name->text() );
         settingsCache[prev_uuid]["color"] = pal.color( QPalette::Button );
-        settingsCache[prev_uuid]["autoload_fromplaylist"] = ui->fileplayer_autoload->isChecked();
-        settingsCache[prev_uuid]["ignore_metadata"] = ui->fileplayer_ignoremeta->isChecked();
+        // save type dependant settings..
+        if(settingsCache[prev_uuid]["type"] == mixerChannel_filePlayer::Type)
+        {
+            settingsCache[prev_uuid]["autoload_fromplaylist"] = ui->fileplayer_autoload->isChecked();
+            settingsCache[prev_uuid]["ignore_metadata"] = ui->fileplayer_ignoremeta->isChecked();
+        }
+        else if(settingsCache[prev_uuid]["type"] == mixerChannel_jackIn::Type || settingsCache[prev_uuid]["type"] == mixerChannel_jackOut::Type)
+        {
+            settingsCache[prev_uuid]["mute_button_mode"] = ui->mute_button->isChecked();
+        }
     }
 
     // get the settings from the new selected item from cache
@@ -203,7 +211,11 @@ void settingsDialog::on_channelList_currentItemChanged(QListWidgetItem* current,
     if( settingsCache[cur_uuid]["type"] == mixerChannel_ALSA::Type )
             ui->channelSettings->setItemEnabled(3, true);
     if( settingsCache[cur_uuid]["type"] == mixerChannel_jackIn::Type || settingsCache[cur_uuid]["type"] == mixerChannel_jackOut::Type )
-            ui->channelSettings->setItemEnabled(4, true);
+    {
+        ui->channelSettings->setItemEnabled(4, true);
+        ui->mute_button->setChecked(settingsCache[cur_uuid]["mute_button_mode"].toBool());
+        ui->onair_button->setChecked(!settingsCache[cur_uuid]["mute_button_mode"].toBool());
+    }
 }
 
 void settingsDialog::on_colorChooser_clicked()

@@ -42,20 +42,22 @@ public:
 
 protected:
 	QGridLayout* meterLayout;
-        vuMeter* levelMeterLeft;
-        vuMeter* levelMeterRight;
+    vuMeter* levelMeterLeft;
+    vuMeter* levelMeterRight;
 	glowButton*	muteBut;
 
 protected slots:
-        virtual void switchMuteButton();
+    virtual void setMuteButtonMode( bool mute_button );
+    virtual void channelSettingsChanged( mixerChannel::settingsType );
+
 
 private:
-        bool mode_onAir;
+    bool mode_onAir;
 
 public slots:
 	virtual void changeName( QString newName );
 	virtual void associateToChannel( mixerChannel* channel );
-        virtual void muteChanged( bool state );
+    virtual void muteChanged( bool state );
 
 };
 
