@@ -65,6 +65,7 @@ void scrollLabel::setText(const QString& new_text)
     else
     {
         scroll_position = 0;
+        scroll_left = false;
         scrollTimer.start( 200 );
         scroll_text();
     }
