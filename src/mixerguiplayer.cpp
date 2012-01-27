@@ -148,7 +148,7 @@ void mixerGuiPlayer::cued( playListItem* track )
 {
 	tDisplay->setTotal( track->getLength() );
 	tDisplay->setPreroll( track->getPreLength() );
-    chName->setText( channel_name.append(" - ").append(track->getSong()) );
+    chName->setText( track->getSong() );
 }
 
 void mixerGuiPlayer::cueTrack( unsigned int playerID, playListItem * song )
