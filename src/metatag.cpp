@@ -49,7 +49,14 @@ QString metaTag::getTitle( )
 
 QString metaTag::getSong( )
 {
-	return Artist+" - "+Title;
+    if(!Artist.isEmpty() && !Title.isEmpty())
+        return Artist+" - "+Title;
+    else if(!Title.isEmpty())
+        return Title;
+    else if(!Artist.isEmpty())
+        return Artist;
+    else
+        return QString();
 }
 
 void metaTag::setArtist( QString artist )
