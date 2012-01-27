@@ -48,6 +48,7 @@ public:
 	virtual void languageChange();
 	virtual QString getType();
         virtual void associateToChannel( mixerChannel* channel );
+    virtual QString getName();  // reimplement this as we not use the real name in the display label
 
 protected:
         QGridLayout* meterLayout;
@@ -61,6 +62,7 @@ protected:
 	vuMeter* levelMeterLeft;
 	vuMeter* levelMeterRight;
         QComboBox* playlist;
+    QString channel_name; // we need to save the name as we are appending Metadata to it..
 
 	// DnD
 	virtual void dragEnterEvent( QDragEnterEvent* evt );
@@ -77,6 +79,7 @@ protected slots:
 public slots:
 	virtual void cueTrack( unsigned int playerId, playListItem* song );
 	virtual void cueNewTrack();
+    virtual void changeName( QString newName );  // reimplemented as we need to save the real channel name..
 
 signals:
 	void getNextTrack( unsigned int );

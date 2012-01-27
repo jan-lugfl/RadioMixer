@@ -148,6 +148,7 @@ void mixerGuiPlayer::cued( playListItem* track )
 {
 	tDisplay->setTotal( track->getLength() );
 	tDisplay->setPreroll( track->getPreLength() );
+    chName->setText( channel_name.append(" - ").append(track->getSong()) );
 }
 
 void mixerGuiPlayer::cueTrack( unsigned int playerID, playListItem * song )
@@ -230,6 +231,7 @@ void mixerGuiPlayer::setState( int newState )
 	   tDisplay->reset();
 	   levelMeterLeft->reset();
 	   levelMeterRight->reset();
+       chName->setText( channel_name );
 	   break;
     case mixerChannel_filePlayer::Playing:
            playButton->setOn();
@@ -290,4 +292,15 @@ void mixerGuiPlayer::changePlaylist( int index )
         if(plst)
             emit( playlistChanged( plst ) );
     }
+}
+
+QString mixerGuiPlayer::getName()
+{
+    return channel_name;
+}
+
+void mixerGuiPlayer::changeName( QString newName )
+{
+    channel_name = newName;
+    mixerGUI::changeName( newName );
 }
