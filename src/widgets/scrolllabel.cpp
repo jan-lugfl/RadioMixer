@@ -21,7 +21,7 @@
 #include "scrolllabel.h"
 
 scrollLabel::scrollLabel(QWidget *parent)
-    : QLabel(parent), scroll_position(0), display_chars(10), scroll_left(false)
+    : QLabel(parent), scroll_position(0), display_chars(12), scroll_left(false)
 {
     display_font = font();
     display_font.setPointSize( 12 );
