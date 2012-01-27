@@ -33,6 +33,8 @@ Q_OBJECT
 public:
     scrollLabel(QWidget *parent = 0);
     ~scrollLabel();
+    void setDisplayedChars( unsigned int );
+    unsigned int displayedChars() const;
     QString text() const; // reimplented so we return the full text instead of what is currently displayed...
 
 protected:

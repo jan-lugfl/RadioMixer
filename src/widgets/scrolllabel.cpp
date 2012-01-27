@@ -51,7 +51,7 @@ void scrollLabel::scroll_text()
     if(scroll_position < 1)
         scroll_left = false;
 
-    QLabel::setText( full_text.mid( scroll_position, 10) );
+    QLabel::setText( full_text.mid( scroll_position, display_chars) );
 }
 
 void scrollLabel::setText(const QString& new_text)
@@ -73,4 +73,14 @@ void scrollLabel::setText(const QString& new_text)
 QString scrollLabel::text() const
 {
     return full_text;
+}
+
+void scrollLabel::setDisplayedChars( unsigned int displayed_chars )
+{
+    display_chars = displayed_chars;
+}
+
+unsigned int scrollLabel::displayedChars() const
+{
+    return display_chars;
 }
