@@ -334,9 +334,18 @@ void mpgDecoder::readMetaFromFile( playListItem * pli )
     id3_file* id3f = id3_file_open( pli->getFile().toAscii(), ID3_FILE_MODE_READONLY );
     id3_tag* id3 = id3_file_tag( id3f );
 
-    pli->setArtist( getID3String(id3, ID3_FRAME_ARTIST) );
-    pli->setTitle( getID3String(id3, ID3_FRAME_TITLE) );
-    pli->setGenre( getID3String(id3, ID3_FRAME_GENRE) );
+    // only overwrite metadata of playlist-item if files contains own ones...
+    QString temp = getID3String(id3, ID3_FRAME_ARTIST);
+    if(!temp.isEmpty())
+        pli->setArtist( temp );
+
+    temp = getID3String(id3, ID3_FRAME_TITLE);
+    if(!temp.isEmpty())
+        pli->setTitle( temp );
+
+    temp = getID3String(id3, ID3_FRAME_GENRE);
+    if(!temp.isEmpty())
+        pli->setGenre( temp );
     id3_file_close( id3f );
 
 #endif
