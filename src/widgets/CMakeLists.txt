@@ -6,6 +6,7 @@ SET( WIDGETS_CPPS
 	playlistwidget.cpp
 	songdbbrowser.cpp
 	filebrowser.cpp
+        scrolllabel.cpp
 )
 
 SET( WIDGETS_MOC_HDRS
@@ -15,6 +16,7 @@ SET( WIDGETS_MOC_HDRS
 	vumeter.h
 	songdbbrowser.h
 	filebrowser.h
+        scrolllabel.h
 )
 
 SET( WIDGETS_UIS

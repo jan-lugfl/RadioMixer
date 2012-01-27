@@ -49,11 +49,10 @@ mixerGUI::mixerGUI( QWidget* parent, Qt::WFlags fl )
     trebleSlider->setSingleStep(1);
     trebleSlider->setPageStep(10);
 
-    chName = new QLabel( this );
+    chName = new scrollLabel( this );
     chName->setMaximumHeight( 23 );
     chName->setFrameShape( QLabel::Panel );
     chName->setFrameShadow( QLabel::Sunken );
-    chName->setAlignment( Qt::AlignCenter );
 	
     layout->addWidget( chName, 1, 1, 1, -1 );
     layout->addLayout( actionButtons, 3, 3, Qt::AlignTop );
@@ -92,7 +91,7 @@ void mixerGUI::refresh( )
 
 QString mixerGUI::getName( )
 {
-	return chName->text();
+    return chName->text();
 }
 
 void mixerGUI::channelSettingsChanged( mixerChannel::settingsType settings )

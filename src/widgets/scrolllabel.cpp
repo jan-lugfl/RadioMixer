@@ -1,6 +1,6 @@
 /***************************************************************************
  *   OpenRadio - RadioMixer                                                *
- *   Copyright (C) 2005-2010 by Jan Boysen                                 *
+ *   Copyright (C) 2012 by Jan Boysen                                      *
  *   trekkie@media-mission.de                                              *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
@@ -18,71 +18,59 @@
  *   Free Software Foundation, Inc.,                                       *
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
-#ifndef MIXERGUI_H
-#define MIXERGUI_H
+#include "scrolllabel.h"
 
-#include <QFrame>
-#include <QGridLayout>
-#include <QToolButton>
-#include <QTimer>
-#include <QDial>
-#include <QSlider>
-
-#include "widgets/vumeter.h"
-#include "widgets/scrolllabel.h"
-#include "mixerchannel_fileplayer.h"
-#include "metatag.h"
-
-/**
-@author Jan Boysen
-*/
-class mixerGUI : public QFrame
+scrollLabel::scrollLabel(QWidget *parent)
+    : QLabel(parent), scroll_position(0), display_chars(10), scroll_left(false)
 {
-  Q_OBJECT
+    display_font = font();
+    display_font.setPointSize( 12 );
+    display_font.setBold( TRUE );
 
-public:
-    explicit mixerGUI( QWidget* parent = 0, Qt::WFlags fl = 0 );
-    virtual ~mixerGUI();
+    setFont( display_font );
+    setAlignment( Qt::AlignCenter );
 
-    QUuid getUuid();
+    setFrameShape( QLabel::Panel );
+    setFrameShadow( QLabel::Sunken );
 
-	virtual void languageChange();
-        virtual QString getName();
-//	virtual QColor getColor();
-	virtual QString getType() = 0;
-        virtual void associateToChannel( mixerChannel* channel );
+    connect( &scrollTimer, SIGNAL(timeout()), this, SLOT( scroll_text()));
+}
 
-protected:
-	// Gui Elements
-        QGridLayout* layout;
-        QGridLayout* actionButtons;
-        QGridLayout* toolButtons;
+scrollLabel::~scrollLabel()
+{
+}
 
-        QDial* trebleSlider;
-	QSlider* vuSlider;
+void scrollLabel::scroll_text()
+{
+    if(scroll_left)
+        scroll_position--;
+    else
+        scroll_position++;
+    if(scroll_position > full_text.length()-display_chars)
+        scroll_left = true;
+    if(scroll_position < 1)
+        scroll_left = false;
 
-    scrollLabel* chName;
-	
-	// channel settings Storage
-	mixerChannel::settingsType settings;
+    QLabel::setText( full_text.mid( scroll_position, 10) );
+}
 
-    QUuid uuid;
+void scrollLabel::setText(const QString& new_text)
+{
+    full_text = new_text;
+    if(full_text.length() <= display_chars)
+    {
+        scrollTimer.stop();
+        QLabel::setText(full_text);
+    }
+    else
+    {
+        scroll_position = 0;
+        scrollTimer.start( 200 );
+        scroll_text();
+    }
+}
 
-	bool refreshMeta;
-	int metaMode;
-	QString staticMetaText;
-			
-protected slots:
-	virtual void refresh();
-	virtual void channelSettingsChanged( mixerChannel::settingsType );
-
-public slots:
-	virtual void changeName( QString newName );
-
-signals:
-	void refreshed();
-	void newMeta( metaTag );
-	void updateSettings( mixerChannel::settingsType );
-};
-
-#endif
+QString scrollLabel::text() const
+{
+    return full_text;
+}
