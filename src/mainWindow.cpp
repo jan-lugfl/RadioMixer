@@ -180,6 +180,7 @@ QUuid mainWindow::addNewChannel( QString type, QUuid uuid )
     }
     newGui->associateToChannel( newChan );
     rm_ui->horizontalLayout->addWidget( newGui );
+    newChan->setVolume(0);
 
     return newChan->getUuid();
 }
