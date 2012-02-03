@@ -25,6 +25,7 @@
 #include "mixerguialsamix.h"
 #include "mixerguiplayer.h"
 #include "mixerguijackport.h"
+#include "mixerchannel_fileplayer.h"
 #include "mixerchannel_jackout.h"
 #include "settings.h"
 

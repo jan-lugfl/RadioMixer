@@ -24,6 +24,7 @@
 #include "listwidgetitemwithid.h"
 #include "remotecontrol_midi.h"
 
+#include "mixerchannel_fileplayer.h"
 #include "mixerchannel_jackin.h"
 #include "mixerchannel_jackout.h"
 

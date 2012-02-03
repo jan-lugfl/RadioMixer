@@ -30,7 +30,7 @@
 
 #include "widgets/vumeter.h"
 #include "widgets/scrolllabel.h"
-#include "mixerchannel_fileplayer.h"
+#include "mixerchannel.h"
 #include "metatag.h"
 
 /**
