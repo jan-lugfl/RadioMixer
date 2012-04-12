@@ -218,3 +218,8 @@ void mixerChannel::updateSettings( settingsType settings )
     Settings::set("channels/"+uuid.toString(), settings);
     emit( settingsChanged( this->settings ) );
 }
+
+bool mixerChannel::hasAutomationSupport()
+{
+    return false;
+}

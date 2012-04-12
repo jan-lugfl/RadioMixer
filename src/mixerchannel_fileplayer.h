@@ -53,6 +53,9 @@ public:
 
     static QString const Type;
 
+    // redefined as we have automation support
+    virtual bool hasAutomationSupport();
+
 	// Public Member for the BufferMngr Thread
 	virtual void checkBuffer();
 	virtual const bool isFileOpen();

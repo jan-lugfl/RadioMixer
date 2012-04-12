@@ -308,3 +308,8 @@ const float mixerChannel_filePlayer::getPrerollFrames( )
 {
 	return meta->getPreLength().second()*25;
 }
+
+bool mixerChannel_filePlayer::hasAutomationSupport()
+{
+    return true;
+}

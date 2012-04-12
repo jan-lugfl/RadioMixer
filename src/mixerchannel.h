@@ -56,6 +56,8 @@ public:
     QString getName();
     virtual void setName(QString newName);
     QUuid getUuid();
+    // used to determine if the concrete channel has automation support. Default is no
+    virtual bool hasAutomationSupport();
     
     virtual void checkBuffer();
 
