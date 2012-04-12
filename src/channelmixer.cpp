@@ -52,19 +52,19 @@ void channelMixer::run()
     int buffer_size = buffer_samples*sizeof(float);
     while(1)
     {
-	bool hasData = false;
-	// empy buffer
+        bool hasData = false;
+        // empy buffer
         memset(mixBufL, 0, buffer_size);
         memset(mixBufR, 0, buffer_size);
 
-	mixerChannelManager::storageType::iterator it;
-	for( it = mixerChannelManager::inChannels.begin(); it != mixerChannelManager::inChannels.end(); it++ )
+        mixerChannelManager::storageType::iterator it;
+        for( it = mixerChannelManager::inChannels.begin(); it != mixerChannelManager::inChannels.end(); it++ )
             if( (*it)->canGetData( buffer_samples ) )
-	    {
-		// WOW finaly I've got this mixengine working clipfree.....
-		// I had the Idea when I was trying to sleep some days ago :-)
-		bool mixed = FALSE;
-		float mix_volume = 1.0f;
+            {
+                // WOW finaly I've got this mixengine working clipfree.....
+                // I had the Idea when I was trying to sleep some days ago :-)
+                bool mixed = FALSE;
+                float mix_volume = 1.0f;
                 // This complex formular makes a nice logarithmic volume slide....
                 float chan_volumeLeft = (exp((*it)->getLevelLeft() * 1.2f)/exp(1.2f))*(*it)->getLevelLeft();
                 float chan_volumeRight = (exp((*it)->getLevelRight() * 1.2f)/exp(1.2f))*(*it)->getLevelRight();
