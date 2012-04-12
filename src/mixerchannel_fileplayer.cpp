@@ -291,6 +291,12 @@ void mixerChannel_filePlayer::pause( )
     if( state != Playing )
         return;
     setState( Paused );
+    // reset buffers
+    soundBuffers[0].flush();
+    soundBuffers[1].flush();
+    // reset vuMeter by resetting last levels
+    emit( vuMeterChanged_left(0) );
+    emit( vuMeterChanged_right(0) );
 }
 
 const bool mixerChannel_filePlayer::isLooping( )
