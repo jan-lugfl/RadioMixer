@@ -93,18 +93,18 @@ void playListItem::readMeta( )
 {
 	if( !Filename.isEmpty())
 	{
-		QRegExp rx( "^(.*)/(.*)[ |_]*\\-[ |_]*(.*)$" );
+        QRegExp rx( "^([^\\-]*)[ |_]*\\-[ |_]*(.*)\\.[^\\.]*$" );
 		if ( rx.indexIn( Filename ) != -1 ) {
-			Artist = rx.cap(2);
-			Title = rx.cap(3);
+            Artist = rx.cap(1);
+            Title = rx.cap(2);
 			Artist.replace("_", " ");
 			Title.replace("_", " ");
 		}
 		else
 		{
-			Title = Filename;
-			Title.replace("_", " ");
-			Title = Title.left( Title.length()-4);
+            Title = Filename;
+            Title.replace("_", " ");
+            Title = Title.left( Title.length()-4);
 		}
 	}
 	emit refreshed();
