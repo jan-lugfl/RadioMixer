@@ -26,6 +26,9 @@
 
 class Settings
 {
+private:
+    static void init();
+
 public:
     static QVariant get(const QString &key, const QVariant &defaultValue = QVariant());
     static void set( const QString &key, const QVariant &value );
@@ -35,7 +38,7 @@ public:
     static void sync();
 
 protected:
-    static QSettings settings;
+    static QSettings* settings;
 
 };
 

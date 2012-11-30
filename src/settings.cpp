@@ -20,44 +20,56 @@
  ***************************************************************************/
 #include "settings.h"
 
-QSettings Settings::settings("RadioMixer", "RadioMixer");
+QSettings* Settings::settings = NULL;
+
+void Settings::init()
+{
+    if(!settings)
+        settings = new QSettings("RadioMixer", "RadioMixer");
+}
 
 QVariant Settings::get(const QString &key, const QVariant &defaultValue)
 {
-    return Settings::settings.value( key, defaultValue);
+    init();
+    return settings->value( key, defaultValue);
 }
 
 void Settings::set( const QString &key, const QVariant &value )
 {
-    Settings::settings.setValue( key, value );
+    init();
+    settings->setValue( key, value );
 }
 
 void Settings::remove( const QString &key )
 {
-    Settings::settings.remove( key );
-    Settings::settings.beginGroup( key );
-    foreach( QString del_key, Settings::settings.allKeys() )
-        Settings::settings.remove( del_key );
-    Settings::settings.endGroup();
+    init();
+    settings->remove( key );
+    settings->beginGroup( key );
+    foreach( QString del_key, settings->allKeys() )
+        settings->remove( del_key );
+    settings->endGroup();
 }
 
 QStringList Settings::getSubKeys(const QString &key)
 {
-    Settings::settings.beginGroup( key );
-    QStringList ret = Settings::settings.childKeys();
-    Settings::settings.endGroup();
+    init();
+    settings->beginGroup( key );
+    QStringList ret = settings->childKeys();
+    settings->endGroup();
     return ret;
 }
 
 QStringList Settings::getSubGroups( const QString& key )
 {
-    Settings::settings.beginGroup( key );
-    QStringList ret = Settings::settings.childGroups();
-    Settings::settings.endGroup();
+    init();
+    settings->beginGroup( key );
+    QStringList ret = settings->childGroups();
+    settings->endGroup();
     return ret;
 }
 
 void Settings::sync()
 {
-    Settings::settings.sync();
+    init();
+    settings->sync();
 }
