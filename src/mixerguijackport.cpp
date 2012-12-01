@@ -97,7 +97,6 @@ void mixerGuiJackport::channelSettingsChanged( mixerChannel::settingsType settin
 void mixerGuiJackport::setMuteButtonMode( bool mute_button = true )
 {
     mode_onAir = !mute_button;
-    languageChange();
     if(mode_onAir)
     {
         muteBut->setActivatedColor( QColor( 255, 0, 0 ) );
@@ -107,4 +106,5 @@ void mixerGuiJackport::setMuteButtonMode( bool mute_button = true )
         muteBut->setActivatedColor( QColor( 180, 50, 50 ) );
         muteBut->toggle();
     }
+    languageChange();
 }
