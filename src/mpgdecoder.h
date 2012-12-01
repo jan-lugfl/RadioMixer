@@ -70,8 +70,9 @@ protected:
 	mad_stream* madStream;
 	mad_frame* madFrame;
 	mad_synth* madSynth;
-	mad_timer_t* madTimer;
-	unsigned int frameCounter;
+    mad_timer_t* currentPositionTimer;
+    mad_timer_t* endPositionTimer;
+    unsigned int frameCounter;
 
 	unsigned char* mad_inputBuffer;
 	soundRingBuffer* mad_outputBuffer;
@@ -81,7 +82,6 @@ protected:
 	virtual void scanFile();
 
 	unsigned int channels;
-	unsigned int maxFrames;
 };
 
 

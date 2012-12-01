@@ -27,21 +27,24 @@ mpgDecoder::mpgDecoder(FILE* File, QObject *parent )
 	madFile = new QFile();
         madFile->open(fHandle, QIODevice::ReadOnly);
 
+    // current position timer needs to be initialized first as its set in scanFile()
+    endPositionTimer = new mad_timer_t;
+
 	scanFile();
 #ifdef HAVE_MAD
 	// Allocate Memory for the MAD decoder Library
 	madStream = new mad_stream;
 	madFrame = new mad_frame;
 	madSynth = new mad_synth;
-	madTimer = new mad_timer_t;
-	mad_inputBuffer = new unsigned char[163840+MAD_BUFFER_GUARD];
+    currentPositionTimer = new mad_timer_t;
+    mad_inputBuffer = new unsigned char[163840+MAD_BUFFER_GUARD];
         memset(mad_inputBuffer,0 , 163840+MAD_BUFFER_GUARD);
 
 	// Initiate libMad structs
 	mad_stream_init( madStream );
 	mad_frame_init( madFrame );
 	mad_synth_init( madSynth );
-	mad_timer_reset( madTimer );
+    mad_timer_reset( currentPositionTimer );
 #endif
 
 	//allocate decoder output ringbuffers
@@ -123,7 +126,7 @@ unsigned int mpgDecoder::decode( float *** data, int count )
 		if(madStream->error==MAD_ERROR_BUFLEN || frameCounter ==1)
 			continue;
 
-		mad_timer_add( madTimer, madFrame->header.duration );
+        mad_timer_add( currentPositionTimer, madFrame->header.duration );
 		mad_synth_frame( madSynth, madFrame );
 
 		// decoding done.. convert sampletype...
@@ -151,25 +154,29 @@ unsigned int mpgDecoder::decode( float *** data, int count )
 const int mpgDecoder::getRTime( )
 {
 #ifdef HAVE_MAD
-	return getTime()-mad_timer_count( *madTimer, MAD_UNITS_SECONDS);
+    return getTime()-mad_timer_count( *currentPositionTimer, MAD_UNITS_SECONDS);
 #endif
 }
 
 const int mpgDecoder::getTime( )
 {
-	return 9999;
+#ifdef HAVE_MAD
+    return mad_timer_count( *endPositionTimer, MAD_UNITS_SECONDS);
+#endif
 }
 
 const float mpgDecoder::getPosition_Samples( )
 {
 #ifdef HAVE_MAD
-	return getTime()-mad_timer_count( *madTimer, MAD_UNITS_SECONDS);
+    return getTime()-mad_timer_count( *currentPositionTimer, (mad_units)sampleRate);
 #endif
 }
 
 const float mpgDecoder::getTotal_Samples( )
 {
-	return 9999999;
+#ifdef HAVE_MAD
+    return mad_timer_count( *endPositionTimer, (mad_units)sampleRate);
+#endif
 }
 
 /* convert libmad's fixed point representation to 16 bit signed integers. This
@@ -183,13 +190,15 @@ inline float mpgDecoder::scale(mad_fixed_t sample)
 
 const float mpgDecoder::getTotalFrames( )
 {
-	return maxFrames;
+#ifdef HAVE_MAD
+    return mad_timer_count( *endPositionTimer, MAD_UNITS_25_FPS);
+#endif
 }
 
 const float mpgDecoder::getPlayedFrames( )
 {
 #ifdef HAVE_MAD
-	return mad_timer_count( *madTimer, MAD_UNITS_25_FPS);
+    return mad_timer_count( *currentPositionTimer, MAD_UNITS_25_FPS);
 #endif
 }
 
@@ -205,7 +214,6 @@ void mpgDecoder::scanFile( )
 #ifdef HAVE_MAD
   mad_stream scanStream;
   mad_header scanHeader;
-  mad_timer_t scanTimer;
   int remainder = 0;
   int data_used = 0;
   int pos = 0;
@@ -213,10 +221,10 @@ void mpgDecoder::scanFile( )
 
   // reset file, so we can read from the beginning
   madFile->reset();
+  mad_timer_reset( endPositionTimer );
 
   mad_stream_init (&scanStream);
   mad_header_init (&scanHeader);
-  mad_timer_reset(&scanTimer );
   while (1)
     {
       remainder = scanStream.bufend - scanStream.next_frame;
@@ -252,17 +260,16 @@ void mpgDecoder::scanFile( )
 	    }
 	  pos++;
 	  data_used += scanStream.next_frame - scanStream.this_frame;
-	  mad_timer_add( &scanTimer, scanHeader.duration );
+      mad_timer_add( endPositionTimer, scanHeader.duration );
 	  if (pos == 1)
 	    {
-	      sampleRate = scanHeader.samplerate;
+          sampleRate = scanHeader.samplerate;
 	      channels = MAD_NCHANNELS(&scanHeader);
 	    }
 	}
       if (scanStream.error != MAD_ERROR_BUFLEN)
 	break;
     }
-   maxFrames = mad_timer_count( scanTimer, MAD_UNITS_25_FPS);
 
   mad_header_finish (&scanHeader);
   mad_stream_finish (&scanStream);
@@ -276,7 +283,7 @@ void mpgDecoder::reset( )
 {
 #ifdef HAVE_MAD
 	madFile->reset();
-	mad_timer_reset( madTimer );
+    mad_timer_reset( currentPositionTimer );
 	mad_stream_init( madStream );
 	mad_frame_init( madFrame );
 	frameCounter = 0;
