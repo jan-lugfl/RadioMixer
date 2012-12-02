@@ -1,6 +1,6 @@
 /***************************************************************************
  *   OpenRadio - RadioMixer                                                *
- *   Copyright (C) 2005-2010 by Jan Boysen                                 *
+ *   Copyright (C) 2012 by Jan Boysen                                      *
  *   trekkie@media-mission.de                                              *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
@@ -19,55 +19,28 @@
  *   59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.             *
  ***************************************************************************/
 
-#ifndef MAINWINDOW_H
-#define MAINWINDOW_H
+#ifndef AUTOMATION_H
+#define AUTOMATION_H
 
-#include "soundplayer.h"
-#include "mixerguialsamix.h"
-#include "channelmixer.h"
-#include "remotecontrol_midi.h"
-#include "automation.h"
+#include "mixerchannel.h"
+#include <QString>
+#include <QMetaMethod>
+#include <QVector>
 
-#include "dialogs/playlistdialog.h"
-
-#include <QtGui/QMainWindow>
-
-namespace Ui {
-    class RadioMixer;
-}
-
-class mainWindow : public QMainWindow {
-    Q_OBJECT
-    Q_DISABLE_COPY(mainWindow)
+class Automation
+{
 public:
-    explicit mainWindow(QWidget *parent = 0);
-    virtual ~mainWindow();
+    static void add(mixerChannel* sender, mixerChannel* receiver, QString sender_action, QString recv_action);
+    static void loadSettings();
+    static void saveSettings();
 
-    QUuid addNewChannel( QString type, QUuid uuid = QUuid() );
-    Ui::RadioMixer *rm_ui;
-
-public slots:
-    virtual void aboutQt();
-    virtual void showSettings();
-
-protected:
-    virtual void changeEvent(QEvent *e);
-
-private:
-    soundPlayer* player;
-    remoteControl* rc;
-
-    // object for our channel mixer thread which the mixing engine for all channels...
-    channelMixer* mixer;
-
-    playlistDialog* playlistDlg;
-
-signals:
-    void showAboutQt();
-
-private slots:
-    void on_action_Playlist_Manager_triggered();
-    void on_action_About_triggered();
+    struct Action {
+        mixerChannel* sender;
+        QMetaMethod signal;
+        mixerChannel* receiver;
+        QMetaMethod action;
+    };
+    static QVector<Action> actions;
 };
 
-#endif // MAINWINDOW_H
+#endif // AUTOMATION_H

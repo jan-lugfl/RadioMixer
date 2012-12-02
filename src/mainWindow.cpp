@@ -80,11 +80,15 @@ mainWindow::mainWindow(QWidget *parent) :
     // start the mixer thread...
     mixer = new channelMixer();
     mixer->start();
+
+    // load automation
+    Automation::loadSettings();
 }
 
 mainWindow::~mainWindow()
 {
     Jack::disconnect();
+    Automation::saveSettings();
     Settings::sync();
     delete rc;
     delete mixer;

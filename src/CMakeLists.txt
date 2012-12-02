@@ -2,6 +2,7 @@ ADD_SUBDIRECTORY( widgets )
 ADD_SUBDIRECTORY( dialogs )
 
 SET( SRC_CPPS
+        automation.cpp
 	httpcomm.cpp
 	jack.cpp
 	jack_midicontrol.cpp
@@ -37,6 +38,7 @@ SET( SRC_CPPS
 )
 
 SET( SRC_MOC_HDRS
+        automation.h
 	metainfo.h
 	mixergui.h
 	mixerguiplayer.h
