@@ -73,25 +73,26 @@ void Jack::jackShutdown( void * arg )
 void Jack::connect( QString client_name )
 {
 	if(connected)
-	{
+    {
 		QMessageBox::warning( NULL, QObject::tr("RadioMixer - JackD"), QObject::tr("already connected to JackD Server with name %1...").arg(client_name), QMessageBox::Ok, QMessageBox::NoButton, QMessageBox::NoButton);
-	}else
-	{
-                if ((jack = jack_client_new(client_name.toAscii())) == 0)
-			QMessageBox::warning( NULL, QObject::tr("RadioMixer - JackD"), QObject::tr("could not connect to JackD Server\nmaybe it is not running ? "), QMessageBox::Ok, QMessageBox::NoButton, QMessageBox::NoButton);
-		else
-		{
-			connected = true;
-			// register new Jack Ports
-			jack_set_process_callback(jack, process, NULL );
-			jack_on_shutdown(jack, jackShutdown, NULL);
-			jack_set_error_function( errorHandler );
-			jack_activate (jack);
+        return;
+    }
 
-			bufSize = jack_get_buffer_size( jack );
-			smplRate = jack_get_sample_rate( jack );
-		}
-	}
+    if ((jack = jack_client_open(client_name.toAscii(), JackNullOption, NULL)) == 0)
+        QMessageBox::warning( NULL, QObject::tr("RadioMixer - JackD"), QObject::tr("could not connect to JackD Server\nmaybe it is not running ? "), QMessageBox::Ok, QMessageBox::NoButton, QMessageBox::NoButton);
+    else
+    {
+        connected = true;
+        // register new Jack Ports
+        jack_set_process_callback(jack, process, NULL );
+        jack_on_shutdown(jack, jackShutdown, NULL);
+        jack_set_error_function( errorHandler );
+        jack_activate (jack);
+
+        bufSize = jack_get_buffer_size( jack );
+        smplRate = jack_get_sample_rate( jack );
+    }
+}
 }
 
 // this is just a wrapper for registering a new port within the actual client connection we are using...
