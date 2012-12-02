@@ -47,6 +47,7 @@ private:
     float* tempBufL;
     float* tempBufR;
 
+    bool running;
 };
 
 #endif

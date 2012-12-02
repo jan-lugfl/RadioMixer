@@ -38,6 +38,8 @@ channelMixer::channelMixer( )
 
 channelMixer::~channelMixer()
 {
+    running = false;
+    wait(); // wait until thread terminates
     delete[] mixBufL;
     delete[] mixBufR;
     delete[] tempBufL;
@@ -50,7 +52,8 @@ void channelMixer::run()
 {
     int buffer_samples = 1024;
     int buffer_size = buffer_samples*sizeof(float);
-    while(1)
+    running = true;
+    while(running)
     {
         bool hasData = false;
         // empy buffer

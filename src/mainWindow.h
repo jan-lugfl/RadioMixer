@@ -54,7 +54,6 @@ protected:
 
 private:
     soundPlayer* player;
-    // used for testing only
     remoteControl* rc;
 
     // object for our channel mixer thread which the mixing engine for all channels...

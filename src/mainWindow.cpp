@@ -75,7 +75,7 @@ mainWindow::mainWindow(QWidget *parent) :
 
     // load remote controls from Config...
     foreach(QString itm, Settings::getSubGroups("remote_controls"))
-        remoteControl::createFromConfig( itm );
+        rc = remoteControl::createFromConfig( itm );
 
     // start the mixer thread...
     mixer = new channelMixer();
@@ -86,6 +86,8 @@ mainWindow::~mainWindow()
 {
     Jack::disconnect();
     Settings::sync();
+    delete rc;
+    delete mixer;
     delete rm_ui;
 }
 

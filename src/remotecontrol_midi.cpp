@@ -38,6 +38,14 @@ remoteControl_MIDI::remoteControl_MIDI(QObject *parent, QString name, bool bidir
     queue_thread->start();
 }
 
+remoteControl_MIDI::~remoteControl_MIDI()
+{
+    // Stop Midi thread so we can shut down
+    queue_thread->stop();
+    queue_thread->wait();
+}
+
+
 void remoteControl_MIDI::setControllerState( QUuid uuid, remoteControlChannel::RemoteControlerEvent event, QString value )
 {
     switch( event )
@@ -120,9 +128,15 @@ remoteControlChannel* remoteControl_MIDI::createChannel(QUuid uuid)
 
 
 // remoteControl_MIDIQueueThread implementations below...
+void remoteControl_MIDIQueueThread::stop()
+{
+    running = false;
+}
+
 void remoteControl_MIDIQueueThread::run()
 {
-    while(1)
+    running = true;
+    while(running)
     {
         while(!controller->isInQueueEmpty())
         {
