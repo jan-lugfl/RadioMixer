@@ -1,6 +1,6 @@
 /***************************************************************************
  *   OpenRadio - RadioMixer                                                *
- *   Copyright (C) 2005-2010 by Jan Boysen                                 *
+ *   Copyright (C) 2005-2012 by Jan Boysen                                 *
  *   trekkie@media-mission.de                                              *
  *                                                                         *
  *   This program is free software; you can redistribute it and/or modify  *
@@ -29,24 +29,22 @@ metaInfo::metaInfo(QObject *parent)
     proc = new QProcess( this );
 }
 
-
 metaInfo::~metaInfo()
 {
+    proc->kill();
 }
 
 void metaInfo::runCmd( )
 {
     if( enabled )
     {
-        if( proc->state() == QProcess::NotRunning )
-        {
-            QStringList args;
-            args.append( artist );
-            args.append( title );
-            proc->start( Settings::get("/meta/command").toString(), args );
-        }
-        else
-            qWarning("Could not call meta update command as its still running...");
+        if( proc->state() != QProcess::NotRunning )
+            proc->kill();
+
+        QStringList args;
+        args.append( artist );
+        args.append( title );
+        proc->start( Settings::get("/meta/command").toString(), args );
     }
 }
 
