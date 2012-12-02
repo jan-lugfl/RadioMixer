@@ -93,6 +93,12 @@ void Jack::connect( QString client_name )
         smplRate = jack_get_sample_rate( jack );
     }
 }
+
+void Jack::disconnect()
+{
+    if(!connected)
+        return;
+    jack_client_close( jack );
 }
 
 // this is just a wrapper for registering a new port within the actual client connection we are using...

@@ -84,6 +84,7 @@ mainWindow::mainWindow(QWidget *parent) :
 
 mainWindow::~mainWindow()
 {
+    Jack::disconnect();
     Settings::sync();
     delete rm_ui;
 }

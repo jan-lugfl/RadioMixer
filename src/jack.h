@@ -38,6 +38,7 @@ class Jack
 public:
     static void errorHandler( const char* msg );
     static void connect( QString client_name = QString("RadioMixer") );
+    static void disconnect();
     static jack_port_t* newPort(QString name, unsigned long flags);
     static void unregisterPort( jack_port_t* port );
     static jack_MIDIControl* newController( QString name = QString("Remote Control"), bool bidirectional = true );
