@@ -30,6 +30,7 @@
 
 #include "widgets/vumeter.h"
 #include "widgets/scrolllabel.h"
+#include "widgets/glowbutton.h"
 #include "mixerchannel.h"
 #include "metatag.h"
 
@@ -60,6 +61,8 @@ protected:
 
         QDial* trebleSlider;
 	QSlider* vuSlider;
+    glowButton* automationButton;
+
 
     scrollLabel* chName;
 	

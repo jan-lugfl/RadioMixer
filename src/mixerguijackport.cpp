@@ -68,6 +68,8 @@ QString mixerGuiJackport::getType( )
 
 void mixerGuiJackport::associateToChannel( mixerChannel* channel )
 {
+    if(channel->getAudioDataType() == mixerChannel::AudioDataOut )
+        automationButton->hide();
     mixerGUI::associateToChannel( channel );
 
     connect( channel, SIGNAL(muteChanged(bool)), this, SLOT(muteChanged(bool)));

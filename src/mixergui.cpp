@@ -53,13 +53,19 @@ mixerGUI::mixerGUI( QWidget* parent, Qt::WFlags fl )
     chName->setMaximumHeight( 23 );
     chName->setFrameShape( QLabel::Panel );
     chName->setFrameShadow( QLabel::Sunken );
-	
+
+    automationButton = new glowButton( this );
+    automationButton->setActivatedColor( QColor(255, 255, 150) );
+    automationButton->setMaximumHeight( 17 );
+
     layout->addWidget( chName, 1, 1, 1, -1 );
     layout->addLayout( actionButtons, 3, 3, Qt::AlignTop );
     layout->addWidget( vuSlider, 3, 2, 2, 1 );
     layout->addLayout( toolButtons, 4, 3, Qt::AlignBottom );
 
     toolButtons->addWidget( trebleSlider, 10, 1, Qt::AlignBottom );
+    toolButtons->addWidget( automationButton, 11, 1, Qt::AlignBottom);
+
 }
 
 
@@ -72,6 +78,7 @@ mixerGUI::~mixerGUI()
 
 void mixerGUI::languageChange()
 {
+    automationButton->setText( tr("AUTO") );
 }
 
 QUuid mixerGUI::getUuid()
@@ -113,6 +120,9 @@ void mixerGUI::associateToChannel( mixerChannel* channel )
     connect( channel, SIGNAL(trebleChanged( int )), trebleSlider, SLOT( setValue( int ) ) );
     connect( channel, SIGNAL(settingsChanged( mixerChannel::settingsType ) ), this, SLOT( channelSettingsChanged( mixerChannel::settingsType ) ) );
     connect( this, SIGNAL(updateSettings( mixerChannel::settingsType ) ), channel, SLOT( updateSettings( mixerChannel::settingsType ) ) );
+    connect( automationButton, SIGNAL(clicked()), channel, SLOT(toggleAutomation()) );
+    connect( channel, SIGNAL(automationChanged(bool)), automationButton, SLOT(setState(bool)) );
+
     // fetch settings..
     channelSettingsChanged( channel->getSettings() );
 }

@@ -27,7 +27,7 @@
 QString const mixerChannel::Type = QString("unknown");
 
 mixerChannel::mixerChannel(  QString name, QUuid uuid )
- : QObject(0), volume(1), sendVuMeterChanged_left(0), sendVuMeterChanged_right(0)
+    : QObject(0), volume(1), sendVuMeterChanged_left(0), sendVuMeterChanged_right(0), emitAutomationActions(false)
 {
     // register settings type in QT
     qRegisterMetaType<mixerChannel::settingsType>("mixerChannel::settingsType");
@@ -222,4 +222,15 @@ void mixerChannel::updateSettings( settingsType settings )
 bool mixerChannel::hasAutomationSupport()
 {
     return false;
+}
+
+void mixerChannel::setAutomation( bool state )
+{
+    emitAutomationActions = state;
+    emit automationChanged(emitAutomationActions);
+}
+
+void mixerChannel::toggleAutomation()
+{
+    setAutomation(!emitAutomationActions);
 }

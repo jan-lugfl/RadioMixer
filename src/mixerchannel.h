@@ -83,8 +83,9 @@ protected:
 	float volume;
 	unsigned int smplRate;
 	unsigned int channels;
-        QString type;
-        QUuid uuid;
+    QString type;
+    QUuid uuid;
+    bool emitAutomationActions;
 
 	metaTag*	meta;
 	soundRingBuffer* soundBuffers;
@@ -100,9 +101,11 @@ protected slots:
 	
 public slots:
 	virtual void setVolume( int newValue );
-        virtual void setTreble( int newValue );
-        virtual void updateSettings( mixerChannel::settingsType settings );
-	
+    virtual void setTreble( int newValue );
+    virtual void updateSettings( mixerChannel::settingsType settings );
+    virtual void setAutomation( bool state );
+    virtual void toggleAutomation();
+
 signals:
         void volumeChanged( int );
         void trebleChanged( int );
@@ -112,6 +115,7 @@ signals:
         void stateChanged(int);
 	void refreshed();
 	void settingsChanged( mixerChannel::settingsType );
+    void automationChanged( bool );
 };
 
 #endif
