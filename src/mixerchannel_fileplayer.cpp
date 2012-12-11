@@ -94,7 +94,14 @@ void mixerChannel_filePlayer::open( playListItem* track )
                                 decoder = new mpgDecoder( fHandle, this );
 			}
 #endif
-			if( decoder == NULL )
+#ifdef HAVE_SNDFILE
+            if( sndfileDecoder::getSupportedFileExtensions().contains( rx.cap(2).toLower() )  )
+            {
+                sndfileDecoder::readMetaFromFile( track );
+                decoder = new sndfileDecoder( fHandle, this );
+            }
+#endif
+            if( decoder == NULL )
 			{
 				QMessageBox::warning( NULL, tr("RadioMixer - Playerchannel File"), tr("unknown Filetype: ")+rx.cap(2).toLower(), QMessageBox::Ok, QMessageBox::NoButton, QMessageBox::NoButton);
 				fileOpen = FALSE;

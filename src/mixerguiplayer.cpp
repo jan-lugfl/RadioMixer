@@ -111,6 +111,9 @@ void mixerGuiPlayer::fileOpen( )
 #ifdef HAVE_MAD
    +QString(" *.mp2 *.mp3")
 #endif
+#ifdef HAVE_SNDFILE
+   +QString(" *.wav *.bwf *.flac")
+#endif
    ;
    QString fileTypes = tr("all supported soundfiles (%1)").arg(extensions)
 #ifdef HAVE_OGG
@@ -118,6 +121,9 @@ void mixerGuiPlayer::fileOpen( )
 #endif
 #ifdef HAVE_MAD
    +QString(";;MPEG-1 Layer III (*.mp2 *.mp3)")
+#endif
+#ifdef HAVE_SNDFILE
+   +QString(";;libSndFile (*.wav *.bwf *.flac)")
 #endif
    ;
    QString s = QFileDialog::getOpenFileName(
