@@ -28,6 +28,7 @@ SET( SRC_CPPS
 	remotecontrol_midi.cpp
 	playlistitem.cpp
 	oggdecoder.cpp
+        sndfiledecoder.cpp
 	mixerguijackport.cpp
 	playlistitemsongdb.cpp
 	soundplayer.cpp
@@ -56,6 +57,7 @@ SET( SRC_MOC_HDRS
 	mpgdecoder.h
 	mixerguijackport.h
 	oggdecoder.h
+        sndfiledecoder.h
 	playlistitemsongdb.h
 	mainWindow.h
 	playlist.h
@@ -76,5 +78,5 @@ QT4_WRAP_UI( SRC_UI_HDRS ${SRC_UIS} )
 QT4_ADD_RESOURCES( RADIOMIXER_RC_SRCS ${RADIOMIXER_RCS} )
 ADD_EXECUTABLE(radiomixer ${SRC_CPPS} ${SRC_UI_HDRS} ${SRC_MOC_SRCS} ${RADIOMIXER_RC_SRCS} )
 
-TARGET_LINK_LIBRARIES(radiomixer ${QT_LIBRARIES} ${ALSA_LIBRARIES} ${JACKD_LIBRARIES} ${MAD_LIBRARIES} ${OGG_LIBRARIES} ${SAMPLERATE_LIBRARIES} ${ID3TAG_LIBRARIES} dialogs widgets )
+TARGET_LINK_LIBRARIES(radiomixer ${QT_LIBRARIES} ${ALSA_LIBRARIES} ${JACKD_LIBRARIES} ${MAD_LIBRARIES} ${OGG_LIBRARIES} ${SAMPLERATE_LIBRARIES} ${ID3TAG_LIBRARIES} ${SNDFILE_LIBRARIES} dialogs widgets )
 ADD_DEPENDENCIES( radiomixer dialogs widgets )

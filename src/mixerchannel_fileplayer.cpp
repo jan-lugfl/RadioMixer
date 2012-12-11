@@ -29,6 +29,10 @@
 #include "mpgdecoder.h"
 #endif
 
+#ifdef HAVE_SNDFILE
+#include "sndfiledecoder.h"
+#endif
+
 QString const mixerChannel_filePlayer::Type = QString("PLAYER");
 
 mixerChannel_filePlayer::mixerChannel_filePlayer( QString name, QUuid uuid )

@@ -18,5 +18,5 @@ NOTES
 We recommend to Install with JackD support as this is the way the RadioMixer can be used
 with all its features.
 
-Vorbis an libMAD support are also recommended, but not as important as the JackD support.
+libSndFile, Vorbis an libMAD support are also recommended, but not as important as the JackD support.
 
