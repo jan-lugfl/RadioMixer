@@ -64,7 +64,9 @@ mpgDecoder::mpgDecoder(FILE* File, QObject *parent )
 mpgDecoder::~mpgDecoder()
 {
 	delete []mad_outputBuffer;
-	delete []returnBuffer;
+    delete []returnBuffer[0];
+    delete []returnBuffer[1];
+    delete []returnBuffer;
 }
 
 unsigned int mpgDecoder::decode( float *** data, int count )
