@@ -21,6 +21,14 @@
 #include "mixerchannel_fileplayer.h"
 #include "mixerchannelmanager.h"
 
+#ifdef HAVE_OGG
+#include "oggdecoder.h"
+#endif
+
+#ifdef HAVE_MAD
+#include "mpgdecoder.h"
+#endif
+
 QString const mixerChannel_filePlayer::Type = QString("PLAYER");
 
 mixerChannel_filePlayer::mixerChannel_filePlayer( QString name, QUuid uuid )

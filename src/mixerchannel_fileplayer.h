@@ -29,14 +29,6 @@
 #include <stdio.h>
 #include <qregexp.h>
 
-#ifdef HAVE_OGG
-#include "oggdecoder.h"
-#endif
-
-#ifdef HAVE_MAD
-#include "mpgdecoder.h"
-#endif
-
 // forward declaration
 class channelBufMngr;
 
