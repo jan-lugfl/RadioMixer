@@ -90,6 +90,11 @@ void oggDecoder::reset( )
 	ov_raw_seek( decoder, 0);
 }
 
+QStringList oggDecoder::getSupportedFileExtensions()
+{
+    return QStringList("ogg");
+}
+
 void oggDecoder::readMetaFromFile( playListItem * pli )
 {
 	FILE* fHandle = fopen( pli->getFile().toAscii(), "r");

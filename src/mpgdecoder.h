@@ -58,6 +58,7 @@ public:
 	virtual const float getPlayedFrames();
 	virtual const float getRemainFrames();
 
+    static QStringList getSupportedFileExtensions();
 	static void readMetaFromFile( playListItem * pli );
 
 private:

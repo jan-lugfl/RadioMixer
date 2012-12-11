@@ -104,6 +104,13 @@ void sndfileDecoder::reset( )
     played_frames = sf_seek(sndfile, 0, SEEK_SET);
 }
 
+QStringList sndfileDecoder::getSupportedFileExtensions()
+{
+    QStringList list = QStringList();
+    list << "bwf" << "wav" << "aif" << "snd" << "paf" << "svx" << "voc" << "w64" << "pvf" << "xi" << "htk" << "fla" << "flac";
+    return list;
+}
+
 void sndfileDecoder::readMetaFromFile( playListItem * pli )
 {
     // TODO: Implement me..

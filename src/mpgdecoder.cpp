@@ -292,6 +292,13 @@ void mpgDecoder::reset( )
 #endif
 }
 
+QStringList mpgDecoder::getSupportedFileExtensions()
+{
+    QStringList list = QStringList();
+    list << "mp3" << "mp2" << "m2a";
+    return list;
+}
+
 // This is a shorter and faster version of scanFile(), that only scans the samplerate and number of Channels of the stream.
 void mpgDecoder::readMetaFromFile( playListItem * pli )
 {

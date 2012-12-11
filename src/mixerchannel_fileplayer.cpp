@@ -81,14 +81,14 @@ void mixerChannel_filePlayer::open( playListItem* track )
 		QRegExp rx( "^(.*)\\.(\\w+)$" );
 		if ( rx.indexIn( track->getFilename() ) != -1 ) {
 #ifdef HAVE_OGG
-			if( rx.cap(2).toLower() == "ogg" )
+            if( oggDecoder::getSupportedFileExtensions().contains( rx.cap(2).toLower() ) )
 			{
 				oggDecoder::readMetaFromFile( track );
                                 decoder = new oggDecoder( fHandle, this );
 			}
 #endif
 #ifdef HAVE_MAD
-			if( rx.cap(2).toLower() == "mp3" )
+            if( mpgDecoder::getSupportedFileExtensions().contains( rx.cap(2).toLower() ) )
 			{
 				mpgDecoder::readMetaFromFile( track );
                                 decoder = new mpgDecoder( fHandle, this );

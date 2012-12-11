@@ -52,7 +52,8 @@ public:
 	virtual const float getPlayedFrames();
 	virtual const float getRemainFrames();
 
-	static void readMetaFromFile( playListItem* pli );
+    static QStringList getSupportedFileExtensions();
+    static void readMetaFromFile( playListItem* pli );
 
 private:
 	// OGGVorbis Decoder

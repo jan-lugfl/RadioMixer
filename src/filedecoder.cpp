@@ -31,6 +31,11 @@ fileDecoder::~ fileDecoder( )
 {
 }
 
+QStringList fileDecoder::getSupportedFileExtensions()
+{
+    return QStringList();
+}
+
 void fileDecoder::readMetaFromFile( playListItem * pli )
 {
 }
