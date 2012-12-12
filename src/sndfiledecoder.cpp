@@ -113,5 +113,35 @@ QStringList sndfileDecoder::getSupportedFileExtensions()
 
 void sndfileDecoder::readMetaFromFile( playListItem * pli )
 {
-    // TODO: Implement me..
+    SF_INFO  my_sfinfo;
+    SNDFILE* my_sndfile;
+
+    my_sndfile = sf_open(pli->getFile().toAscii(), SFM_READ, &my_sfinfo );
+
+    // set some generic information we already have in SF_INFO
+    pli->setChannels( my_sfinfo.channels );
+    pli->setSamplerate( my_sfinfo.samplerate );
+    pli->setLength( QTime(0,0,my_sfinfo.frames/my_sfinfo.samplerate) );
+
+    SF_INSTRUMENT inst;
+    sf_command(my_sndfile, SFC_GET_INSTRUMENT, &inst, sizeof(inst));
+
+    SF_BROADCAST_INFO bc_info;
+    if(sf_command(my_sndfile, SFC_GET_LOOP_INFO, &bc_info, sizeof(bc_info)) == SF_TRUE)
+    {
+            // read Meta from Broadcast header
+    }
+    else // try generic get_string otherwise
+    {
+        const char* str = sf_get_string(my_sndfile, SF_STR_TITLE);
+        if(str)
+            pli->setTitle( str );
+        str = sf_get_string(my_sndfile, SF_STR_ARTIST);
+        if(str)
+            pli->setArtist( str );
+        str = sf_get_string(my_sndfile, SF_STR_GENRE);
+        if(str)
+            pli->setGenre( str );
+    }
+    sf_close(my_sndfile);
 }
