@@ -49,6 +49,9 @@ fileBrowser::fileBrowser(QWidget *parent) :
 #ifdef HAVE_OGG
     supported_filetypes.append("*.ogg");
 #endif
+#ifdef HAVE_SNDFILE
+    supported_filetypes << "*.wav" << "*.bwf" << "*.flac" << "*.fla";
+#endif
     fs_file->setNameFilters( supported_filetypes );
     ui->file_view->setModel( fs_file );
     ui->file_view->setColumnHidden(3, true);
