@@ -25,7 +25,7 @@
 #include <QFile>
 
 playList::playList(QUuid uuid, QObject *parent) :
-    QObject(parent), currentIndex(0)
+    QObject(parent)
 {
     if(!uuid.isNull())
         this->uuid = uuid;
@@ -65,7 +65,6 @@ void playList::reset()
 {
     foreach( playListItem* pi, items)
         pi->resetState();
-    currentIndex = 0;
     emit( changed() );
 }
 
@@ -86,12 +85,15 @@ void playList::addItem( playListItem* newItem )
     emit( changed() );
 }
 
+// returns first item in Normal state
 playListItem* playList::getNext()
 {
-    if(currentIndex >= items.count())
-        return new playListItem("");
+    playListItem* item;
+    foreach(item, items)
+        if(item->getState() == playListItem::Normal)
+            return item;
 
-    return items[currentIndex++];
+    return new playListItem("");
 }
 
 void playList::itemChanged()

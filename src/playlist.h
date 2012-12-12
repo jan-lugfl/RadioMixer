@@ -49,7 +49,6 @@ public:
 
 protected:
     QString name;
-    int currentIndex;
     QList<playListItem*> items;
 
 private:
