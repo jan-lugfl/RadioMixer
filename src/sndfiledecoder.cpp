@@ -123,8 +123,8 @@ void sndfileDecoder::readMetaFromFile( playListItem * pli )
     pli->setSamplerate( my_sfinfo.samplerate );
     pli->setLength( QTime(0,0,my_sfinfo.frames/my_sfinfo.samplerate) );
 
-    SF_INSTRUMENT inst;
-    sf_command(my_sndfile, SFC_GET_INSTRUMENT, &inst, sizeof(inst));
+    // TODO: Add support for reading CART CHUCK Data once libsndfile supports it
+    //       https://github.com/erikd/libsndfile/pull/11
 
     SF_BROADCAST_INFO bc_info;
     if(sf_command(my_sndfile, SFC_GET_LOOP_INFO, &bc_info, sizeof(bc_info)) == SF_TRUE)
