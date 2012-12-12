@@ -131,6 +131,8 @@ void playlistDialog::reloadPlaylist()
         QTreeWidgetItem* itm = new QTreeWidgetItem( ui->playListView );
         itm->setText( 0, item->getTitle() );
         itm->setText( 1, item->getArtist() );
+        itm->setText( 2, item->getGenre() );
+        itm->setText( 3, item->getLength().toString() );
         switch( item->getState() )
         {
         case playListItem::Loading:
