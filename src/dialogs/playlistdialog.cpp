@@ -135,38 +135,35 @@ void playlistDialog::reloadPlaylist()
         itm->setText( 1, item->getArtist() );
         itm->setText( 2, item->getGenre() );
         itm->setText( 3, item->getLength().toString() );
+        QBrush bg = QBrush();
+        QBrush fg = QBrush();
         switch( item->getState() )
         {
         case playListItem::Loading:
-            itm->setBackgroundColor( 0, Qt::yellow);
-            itm->setBackgroundColor( 1, Qt::yellow);
-            itm->setBackgroundColor( 2, Qt::yellow);
-            itm->setBackgroundColor( 3, Qt::yellow);
+            bg = QBrush(Qt::yellow);
             break;
         case playListItem::Normal:
             break;
         case playListItem::Cued:
-            itm->setBackgroundColor( 0, Qt::gray );
-            itm->setBackgroundColor( 1, Qt::gray );
-            itm->setBackgroundColor( 2, Qt::gray );
-            itm->setBackgroundColor( 3, Qt::gray );
+            bg = QBrush(Qt::green);
             ui->playListView->scrollToItem( itm, QAbstractItemView::PositionAtCenter );
             break;
         case playListItem::Playing:
-            itm->setBackgroundColor( 0, Qt::green );
-            itm->setBackgroundColor( 1, Qt::green );
-            itm->setBackgroundColor( 2, Qt::green );
-            itm->setBackgroundColor( 3, Qt::green );
+            bg = QBrush(Qt::red);
             ui->playListView->scrollToItem( itm, QAbstractItemView::PositionAtCenter );
             break;
         case playListItem::Played:
-            QBrush foreground = QBrush(Qt::gray);
-            itm->setForeground( 0, foreground );
-            itm->setForeground( 1, foreground );
-            itm->setForeground( 2, foreground );
-            itm->setForeground( 3, foreground );
+            fg = QBrush(Qt::gray);
             break;
         }
+        itm->setForeground( 0, fg );
+        itm->setBackground( 0, bg );
+        itm->setForeground( 1, fg );
+        itm->setBackground( 1, bg );
+        itm->setForeground( 2, fg );
+        itm->setBackground( 2, bg );
+        itm->setForeground( 3, fg );
+        itm->setBackground( 3, bg );
     }
     ui->playListView->resizeColumnToContents(0);
     ui->playListView->resizeColumnToContents(1);
