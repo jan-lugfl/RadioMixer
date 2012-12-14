@@ -27,6 +27,7 @@
 
 #include <QInputDialog>
 #include <QFileDialog>
+#include <QMenu>
 
 playlistDialog::playlistDialog(QWidget *parent) :
     QDialog(parent),
@@ -129,6 +130,7 @@ void playlistDialog::reloadPlaylist()
     foreach(playListItem* item, plst->getItems())
     {
         QTreeWidgetItem* itm = new QTreeWidgetItem( ui->playListView );
+        itm->setData( 0, Qt::UserRole, item->getUuid().toString() );
         itm->setText( 0, item->getTitle() );
         itm->setText( 1, item->getArtist() );
         itm->setText( 2, item->getGenre() );
@@ -158,7 +160,11 @@ void playlistDialog::reloadPlaylist()
             ui->playListView->scrollToItem( itm, QAbstractItemView::PositionAtCenter );
             break;
         case playListItem::Played:
-            itm->setDisabled( true );
+            QBrush foreground = QBrush(Qt::gray);
+            itm->setForeground( 0, foreground );
+            itm->setForeground( 1, foreground );
+            itm->setForeground( 2, foreground );
+            itm->setForeground( 3, foreground );
             break;
         }
     }
@@ -218,4 +224,34 @@ void playlistDialog::on_resetPlaylist_clicked()
     if(!pl)
         return;
     pl->reset();
+}
+
+void playlistDialog::on_playListView_customContextMenuRequested(const QPoint &pos)
+{
+    QPoint displayPos = ui->playListView->viewport()->mapToGlobal(pos);
+    QMenu contextMenu;
+    QAction* act_delete = contextMenu.addAction(tr("Delete"));
+    connect(act_delete, SIGNAL(triggered()), this, SLOT(deleteCurrentPlaylistItem()));
+    QAction* act_reset = contextMenu.addAction(tr("Reset state"));
+    connect(act_reset, SIGNAL(triggered()), this, SLOT(resetCurrentPlaylistItem()));
+
+    contextMenu.exec(displayPos);
+}
+
+void playlistDialog::deleteCurrentPlaylistItem()
+{
+    playList* pl = getCurrentSelectedPlaylist();
+    if(pl)
+        pl->deleteItem(QUuid(ui->playListView->currentItem()->data(0, Qt::UserRole).toString()));
+}
+
+void playlistDialog::resetCurrentPlaylistItem()
+{
+    playList* pl = getCurrentSelectedPlaylist();
+    if(pl)
+    {
+        playListItem* item = pl->getItem(QUuid(ui->playListView->currentItem()->data(0, Qt::UserRole).toString()));
+        if(item)
+            item->resetState();
+    }
 }

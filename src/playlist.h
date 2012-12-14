@@ -40,6 +40,8 @@ public:
     QUuid getUuid();
 
     virtual playListItem* getNext();
+    virtual playListItem* getItem(QUuid item_uuid);
+    virtual void deleteItem(QUuid item_uuid);
 
     // load save functions for the paylist...
     virtual bool loadFromFile( QString filename );

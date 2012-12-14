@@ -27,6 +27,7 @@
 #include <QRegExp>
 #include <QColor>
 #include <QXmlStreamAttributes>
+#include <QUuid>
 
 /**
 	@author Jan Boysen <trekkie@media-mission.de>
@@ -61,9 +62,12 @@ public:
 	virtual int getVote();
 	virtual void setVote( int vote );
 
+    virtual QUuid getUuid();
+
 	virtual QXmlStreamAttributes toXmlStreamAttributes();
 
 protected:
+    QUuid uuid;
 	songState state;
 	QString Path;
 	QString Filename;

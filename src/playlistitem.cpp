@@ -23,6 +23,9 @@
 playListItem::playListItem( QString fileName, QObject * parent )
  : QObject( parent ), state( Loading ), Samplerate( 0 ), channels( 0 )
 {
+    // always generate UUID as its only used to identify the item in the view layer
+    this->uuid = QUuid::createUuid();
+
 	if( !fileName.isEmpty())
 	{
 		parseAbsFile( fileName );
@@ -199,4 +202,9 @@ QXmlStreamAttributes playListItem::toXmlStreamAttributes()
     attrs.append( QString("type"), getType() );
     attrs.append( QString("file"), getFile() );
     return attrs;
+}
+
+QUuid playListItem::getUuid()
+{
+    return uuid;
 }

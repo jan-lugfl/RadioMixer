@@ -53,10 +53,13 @@ private slots:
     void on_newPlaylist_clicked();
     void on_playlistList_currentItemChanged(QListWidgetItem* current, QListWidgetItem* previous);
     void on_playlistList_itemChanged(QListWidgetItem* item);
+    void on_playListView_customContextMenuRequested(const QPoint &pos);
 
     void addItemToCurrentPlaylist( playListItem* item );
     void reloadPlaylist();
     void reloadPlaylists();
+    void deleteCurrentPlaylistItem();
+    void resetCurrentPlaylistItem();
 };
 
 #endif // PLAYLISTDIALOG_H

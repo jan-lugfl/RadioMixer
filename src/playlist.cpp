@@ -96,6 +96,28 @@ playListItem* playList::getNext()
     return new playListItem("");
 }
 
+void playList::deleteItem(QUuid item_uuid)
+{
+    playListItem* item = getItem( item_uuid );
+    if(item)
+    {
+        // cueued and playing items are not removable..
+        if(item->getState() == playListItem::Cued || item->getState() == playListItem::Playing)
+            return;
+        items.removeOne(item);
+        emit( changed() );
+    }
+}
+
+playListItem* playList::getItem(QUuid item_uuid)
+{
+    playListItem* item;
+    foreach(item, items)
+        if(item->getUuid() == item_uuid)
+            return item;
+    return NULL;
+}
+
 void playList::itemChanged()
 {
     // currently only a signal wrapper...
