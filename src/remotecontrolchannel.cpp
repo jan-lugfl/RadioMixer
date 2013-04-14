@@ -44,25 +44,32 @@ void remoteControlChannel::process_event( RemoteControlerEvent event, QString va
                     emit balanceChanged( value.toInt() );
                     break;
         case event_playButton:
-                    emit play( );
+                    if(value != "0") // buttons only fire on value
+                        emit play( );
                     break;
         case event_stopButton:
-                    emit stop( );
+                    if(value != "0") // buttons only fire on value
+                        emit stop( );
                     break;
         case event_pauseButton:
-                    emit pause( );
+                    if(value != "0") // buttons only fire on value
+                        emit pause( );
                     break;
         case event_queueButton:
-                    emit queue( );
+                    if(value != "0") // buttons only fire on value
+                        emit queue( );
                     break;
         case event_repeatButton:
-                    emit repeat( );
+                    if(value != "0") // buttons only fire on value
+                        emit repeat( );
                     break;
         case event_openButton:
-                    emit open( );
+                    if(value != "0") // buttons only fire on value
+                        emit open( );
                     break;
         case event_muteButton:
-                    emit toggleMute( );
+                    if(value != "0") // buttons only fire on value
+                        emit toggleMute( );
                     break;
         default:
                 qWarning("unknown event triggered...");
