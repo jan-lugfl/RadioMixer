@@ -45,6 +45,8 @@ protected:
     jack_port_t*	jack_port[2];
     jack_nframes_t	frames;
     bool muted;
+    bool automute_unmute;  // enable/disable auto(un)mute mute feature
+    int automute_unmute_th; // set threshold in level to mute/unmute the channel
 
 private:
     float levelMeterLeft;

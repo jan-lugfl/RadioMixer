@@ -67,6 +67,7 @@ private slots:
     void on_channel_remove_clicked();
     void on_downButton_clicked();
     void on_upButton_clicked();
+    void on_jack_autounmute_enable_toggled(bool checked);
 };
 
 #endif // SETTINGSDIALOG_H

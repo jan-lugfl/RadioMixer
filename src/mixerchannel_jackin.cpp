@@ -24,7 +24,7 @@
 QString const mixerChannel_jackIn::Type = QString("JACKIN");
 
 mixerChannel_jackIn::mixerChannel_jackIn( QString name, QUuid uuid )
- : mixerChannel( name, uuid ), levelMeterLeft(0), levelMeterRight(0)
+    : mixerChannel( name, uuid ), levelMeterLeft(0), levelMeterRight(0), automute_unmute(false), automute_unmute_th(10)
 {
     type = Type;
     smplRate = Jack::getSmplRate();
@@ -121,14 +121,19 @@ void mixerChannel_jackIn::updateSettings( settingsType settings )
         return;
     jack_port_set_name(jack_port[0], QString( settings["name"].toString()+QString("_L")).toAscii() );
     jack_port_set_name(jack_port[1], QString( settings["name"].toString()+QString("_R")).toAscii() );
+    automute_unmute = settings["automute_unmute"].toBool();
+    automute_unmute_th = settings["automute_unmute_threshold"].toInt();
     mixerChannel::updateSettings( settings );
 }
 
 void mixerChannel_jackIn::setVolume( int newValue )
 {
     mixerChannel::setVolume( newValue );
-    if(newValue < 3)
-        mute();
-    else if(newValue > 3)
-        unMute();
+    if(automute_unmute)
+    {
+        if(newValue < automute_unmute_th)
+            mute();
+        else if(newValue >= automute_unmute_th)
+            unMute();
+    }
 }

@@ -187,6 +187,8 @@ void settingsDialog::on_channelList_currentItemChanged(QListWidgetItem* current,
         else if(settingsCache[prev_uuid]["type"] == mixerChannel_jackIn::Type || settingsCache[prev_uuid]["type"] == mixerChannel_jackOut::Type)
         {
             settingsCache[prev_uuid]["mute_button_mode"] = ui->mute_button->isChecked();
+            settingsCache[prev_uuid]["automute_unmute"] = ui->jack_autounmute_enable->isChecked();
+            settingsCache[prev_uuid]["automute_unmute_threshold"] = ui->jack_autounmute_threshold->value();
         }
     }
 
@@ -216,6 +218,9 @@ void settingsDialog::on_channelList_currentItemChanged(QListWidgetItem* current,
         ui->channelSettings->setItemEnabled(4, true);
         ui->mute_button->setChecked(settingsCache[cur_uuid]["mute_button_mode"].toBool());
         ui->onair_button->setChecked(!settingsCache[cur_uuid]["mute_button_mode"].toBool());
+        ui->jack_autounmute_enable->setChecked(settingsCache[cur_uuid]["automute_unmute"].toBool());
+        ui->jack_autounmute_threshold->setValue(settingsCache[cur_uuid]["automute_unmute_threshold"].toInt());
+
     }
 }
 
@@ -410,4 +415,10 @@ void settingsDialog::on_select_script_clicked()
                         "");
     if( s.length() >0)
         ui->meta_script->setText( s );
+}
+
+void settingsDialog::on_jack_autounmute_enable_toggled(bool checked)
+{
+    ui->jack_autounmute_th_label->setEnabled(checked);
+    ui->jack_autounmute_threshold->setEnabled(checked);
 }
