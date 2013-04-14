@@ -60,16 +60,14 @@ void remoteControlChannel::process_event( RemoteControlerEvent event, QString va
                         emit queue( );
                     break;
         case event_repeatButton:
-                    if(value != "0") // buttons only fire on value
-                        emit repeat( );
+                    emit repeat( );
                     break;
         case event_openButton:
                     if(value != "0") // buttons only fire on value
                         emit open( );
                     break;
         case event_muteButton:
-                    if(value != "0") // buttons only fire on value
-                        emit toggleMute( );
+                    emit toggleMute( );
                     break;
         default:
                 qWarning("unknown event triggered...");
