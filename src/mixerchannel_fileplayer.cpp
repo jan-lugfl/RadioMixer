@@ -270,8 +270,11 @@ void mixerChannel_filePlayer::setName( QString newName )
 
 void mixerChannel_filePlayer::play( )
 {
-    if( !fileOpen || state == Playing )
+    if( !fileOpen )
         return;
+    // reset / restart track if hitting play again
+   if( state == Playing )
+        decoder->reset();
     if( fileOpen )
         dynamic_cast<playListItem*>(meta)->startPlaying();
     setState( Playing );
