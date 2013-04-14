@@ -78,6 +78,7 @@ public slots:
     virtual void changeVolume( int value );
     virtual void changeBalance( int value );
     virtual void changeState( int state );
+    virtual void changeMute( bool state );
     virtual void repeat( bool state );
 };
 

@@ -104,6 +104,11 @@ void remoteControlChannel::changeState( int state )
     }
 }
 
+void remoteControlChannel::changeMute( bool state )
+{
+    emit stateChanged( uuid, event_muteButton, QString::number(state?0:127));
+}
+
 void remoteControlChannel::repeat( bool state )
 {
 
@@ -124,7 +129,7 @@ void remoteControlChannel::associateToChannel( mixerChannel* channel )
     connect( this, SIGNAL(pause() ), channel, SLOT( pause() ) );
 
     connect( this, SIGNAL(toggleMute()), channel, SLOT(toggleMute()));
-    connect( channel, SIGNAL(muteChanged()), this, SLOT(changeMute()));
+    connect( channel, SIGNAL(muteChanged(bool)), this, SLOT(changeMute(bool)));
 }
 
 void remoteControlChannel::setName(QString newName)

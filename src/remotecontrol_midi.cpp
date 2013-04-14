@@ -74,6 +74,9 @@ void remoteControl_MIDI::setControllerState( QUuid uuid, remoteControlChannel::R
             queueMIDIMessage( controller_config[uuid][remoteControlChannel::event_playButton].toInt(), 0 );
             queueMIDIMessage( controller_config[uuid][remoteControlChannel::event_pauseButton].toInt(), 0 );
             break;
+        case remoteControlChannel::event_muteButton:
+            queueMIDIMessage( controller_config[uuid][remoteControlChannel::event_muteButton].toInt(), value.toInt() );
+            break;
         default:
             break;
     }
