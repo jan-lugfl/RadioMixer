@@ -274,7 +274,16 @@ void mixerChannel_filePlayer::play( )
         return;
     // reset / restart track if hitting play again
    if( state == Playing )
+   {
+        // reset buffers
+        soundBuffers[0].flush();
+        soundBuffers[1].flush();
+        // reset vuMeter by resetting last levels
+        emit( vuMeterChanged_left(0) );
+        emit( vuMeterChanged_right(0) );
         decoder->reset();
+        return;
+   }
     if( fileOpen )
         dynamic_cast<playListItem*>(meta)->startPlaying();
     setState( Playing );
