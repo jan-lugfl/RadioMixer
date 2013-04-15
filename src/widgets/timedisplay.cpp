@@ -79,7 +79,10 @@ void timeDisplay::refresh( )
     if( remain < QTime(0,0,15) && remain != QTime(0,0,0,0) )
         pal.setColor( QPalette::WindowText, Qt::red );
     else if( curPos < preroll )
+    {
         pal.setColor( QPalette::WindowText, Qt::yellow );
+        remain = QTime(0,0).addMSecs(curPos.msecsTo(preroll));
+    }
     else
         pal.setColor( QPalette::WindowText, Qt::black );
     setPalette(pal);
