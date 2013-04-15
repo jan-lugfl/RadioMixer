@@ -77,11 +77,12 @@ void timeDisplay::refresh( )
 
     QPalette pal = palette();
     if( remain < QTime(0,0,15) && remain != QTime(0,0,0,0) )
-        pal.setColor( QPalette::Text, Qt::red );
+        pal.setColor( QPalette::WindowText, Qt::red );
     else if( curPos < preroll )
-        pal.setColor( QPalette::Text, QColor( 255,255,0,0 ) );
+        pal.setColor( QPalette::WindowText, Qt::yellow );
     else
-        pal.setColor( QPalette::Text, Qt::black );
+        pal.setColor( QPalette::WindowText, Qt::black );
+    setPalette(pal);
 
     switch( dMode )
     {
